@@ -12,7 +12,8 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
     "screenshots": "node scripts/screenshots.mjs",
-    "smoke": "node scripts/smoke.mjs && node scripts/smoke-workspace.mjs && node scripts/smoke-indicators.mjs && node scripts/smoke-lessons.mjs && node scripts/smoke-trainer.mjs && node scripts/smoke-trading.mjs && node scripts/smoke-replay.mjs && node scripts/smoke-backtest.mjs && node scripts/smoke-futures.mjs && node scripts/smoke-options.mjs && node scripts/smoke-journal.mjs",
+    "smoke": "node scripts/smoke.mjs && node scripts/smoke-workspace.mjs && node scripts/smoke-indicators.mjs && node scripts/smoke-lessons.mjs && node scripts/smoke-trainer.mjs && node scripts/smoke-trading.mjs && node scripts/smoke-replay.mjs && node scripts/smoke-backtest.mjs && node scripts/smoke-futures.mjs && node scripts/smoke-options.mjs && node scripts/smoke-journal.mjs && node scripts/smoke-home.mjs",
+    "a11y": "node scripts/a11y.mjs",
     "fetch-data": "node scripts/fetch-static-data.mjs"
   },
   "dependencies": {
@@ -28,6 +29,7 @@
     "zustand": "^5.0.15"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@eslint/js": "^10.0.1",
     "@tailwindcss/vite": "^4.3.3",
     "@types/node": "^26.6.5",

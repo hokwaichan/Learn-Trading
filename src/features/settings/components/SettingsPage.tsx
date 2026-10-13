@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Moon, RotateCcw, Sun } from 'lucide-react';
-import { Link } from 'react-router-dom';
 import {
   Badge,
   Button,
@@ -17,6 +16,7 @@ import {
 import { formatMoney } from '@/lib/format';
 import { DEFAULT_SETTINGS, useAccount, useSettings } from '@/stores';
 import type { Theme } from '@/types';
+import { DataCard } from './DataCard';
 
 /** A percentage text field bound to a fraction in settings (0.001 <-> "0.1"). */
 function PercentField({
@@ -76,6 +76,7 @@ export function SettingsPage() {
               variant="pill"
               label="Theme"
               idBase="theme"
+            choice
               className="rounded-control border border-border p-0.5"
               value={settings.theme}
               onChange={(theme) => settings.update({ theme })}
@@ -156,16 +157,7 @@ export function SettingsPage() {
         </div>
       </Card>
 
-      <Card title="Your data">
-        <p className="text-sm text-muted">
-          Everything is stored in this browser only. Export and import of all data arrives in milestone 12.
-        </p>
-        <p className="mt-3 text-sm">
-          <Link to="/dev/components" className="text-accent-text underline underline-offset-4">
-            Open the component gallery
-          </Link>
-        </p>
-      </Card>
+      <DataCard />
 
       <ConfirmDialog
         open={confirmReset}

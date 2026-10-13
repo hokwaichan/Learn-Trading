@@ -147,7 +147,7 @@ await page.screenshot({ path: `${OUT}/trade.history.png` });
 // ── Size from risk, then a stop-loss ───────────────────────────────────
 await push('BTCUSDT', P);
 await tab(/^Positions/).click();
-await ticket.getByRole('tab', { name: 'Size from risk' }).click();
+await ticket.getByRole('radio', { name: 'Size from risk' }).click();
 await field('Stop-loss').fill(String(P * 0.98));
 await field('Take-profit').fill('');
 const sizing = await ticket.getByText(/gives a size of/).innerText();
@@ -186,8 +186,8 @@ await page.waitForTimeout(300);
 check('Close closes the position at market', (await rows('Open positions').count()) === 0);
 
 // ── Limit order ────────────────────────────────────────────────────────
-await ticket.getByRole('tab', { name: 'Set quantity' }).click();
-await ticket.getByRole('tab', { name: 'Limit' }).click();
+await ticket.getByRole('radio', { name: 'Set quantity' }).click();
+await ticket.getByRole('radio', { name: 'Limit' }).click();
 await field('Limit price').fill(String(P * 0.95));
 await field('Quantity').fill('0.01');
 await field('Stop-loss').fill(String(P * 0.94));
@@ -217,7 +217,7 @@ await rows('Open orders').first().getByRole('button', { name: /Cancel/ }).click(
 check('a waiting order can be cancelled', (await rows('Open orders').count()) === 0);
 
 // ── Too large, and going short ─────────────────────────────────────────
-await ticket.getByRole('tab', { name: 'Market' }).click();
+await ticket.getByRole('radio', { name: 'Market' }).click();
 await field('Stop-loss').fill('');
 await field('Quantity').fill('5');
 await submit();

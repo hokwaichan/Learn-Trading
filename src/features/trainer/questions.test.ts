@@ -2,7 +2,7 @@ import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { CANDLESTICK_PATTERNS, CHART_PATTERNS, PATTERNS } from '@/content/patterns';
 import { OPTION_STRATEGIES, OUTLOOK_SCENARIOS, getStrategyTemplate } from '@/content/strategies';
-import { getLesson } from '@/content/lessons';
+import { getLesson, MODULES } from '@/content/lessons';
 import { parseStaticFile } from '@/lib/data/static';
 import { CANDLE_PATTERN_IDS, patternsAt, type CandlePatternId } from '@/lib/patterns/detectors';
 import { breakEvens, payoffExtremes, strategyPnlAtExpiry } from '@/lib/pricing/payoff';
@@ -10,6 +10,7 @@ import { buildLegs, roundStrike, strikeStepFor } from '@/lib/pricing/templates';
 import { seededRandom } from '@/lib/random';
 import { newCard } from '@/lib/srs/sm2';
 import type { ReviewCard } from '@/types';
+import { conceptQuestion, patternQuestion } from './challenge';
 import {
   availableKinds,
   buildQuestion,
@@ -304,5 +305,56 @@ describe('buildQuestion', () => {
     for (let i = 0; i < 400; i++) seen.add(buildQuestion('candlestick', c)!.refId);
     expect([...seen].sort()).toEqual([...(Object.keys(index) as CandlePatternId[])].sort());
     expect(seen.size).toBe(12);
+  });
+});
+
+describe('daily challenge', () => {
+  const patternIndex = indexPatterns(datasets);
+
+  it('asks the same pattern question all day and a different one on other days', () => {
+    const a = patternQuestion('2026-01-05', datasets, patternIndex)!;
+    const again = patternQuestion('2026-01-05', datasets, patternIndex)!;
+    expect(again).toEqual(a);
+    expect(a.key).toBe('pattern:2026-01-05');
+    expect(a.kind).toBe('pattern');
+    expect(a.choices.some((c) => c.id === a.correctId)).toBe(true);
+    const days = Array.from({ length: 30 }, (_, i) => `2026-02-${String(i + 1).padStart(2, '0')}`);
+    const asked = days.map((d) => patternQuestion(d, datasets, patternIndex)!);
+    expect(asked.every(Boolean)).toBe(true);
+    expect(new Set(asked.map((q) => q.refId)).size).toBeGreaterThan(8);
+    // Both families come up over a month.
+    expect(new Set(asked.map((q) => q.drill))).toEqual(new Set(['candlestick', 'chart']));
+  });
+
+  it('falls back to a chart pattern before any price history has loaded', () => {
+    for (const day of ['2026-01-05', '2026-01-06', '2026-01-07', '2026-01-08']) {
+      expect(patternQuestion(day, [], {})?.drill).toBe('chart');
+    }
+  });
+
+  it('takes the concept question from the first module until a lesson is finished', () => {
+    const q = conceptQuestion('2026-01-05', []);
+    expect(q.refId.startsWith(`${MODULES[0].id}/`)).toBe(true);
+    expect(q.kind).toBe('concept');
+    expect(q.choices.length).toBeGreaterThanOrEqual(3);
+    expect(q.choices.some((c) => c.id === q.correctId)).toBe(true);
+    expect(q.explanation.heading).toBe(q.choices.find((c) => c.id === q.correctId)!.label);
+    expect(getLesson(...(q.explanation.lesson!.split('/') as [string, string]))).toBeDefined();
+    expect(conceptQuestion('2026-01-05', [])).toEqual(q);
+  });
+
+  it('revises completed lessons once there are some', () => {
+    const lesson = MODULES[3].lessons[0];
+    const key = `${lesson.moduleId}/${lesson.id}`;
+    for (const day of ['2026-01-05', '2026-01-06', '2026-01-07']) {
+      expect(conceptQuestion(day, [key]).explanation.lesson).toBe(key);
+    }
+    // An unknown lesson key is ignored.
+    expect(conceptQuestion('2026-01-05', ['nope/nothing']).refId.startsWith(`${MODULES[0].id}/`)).toBe(true);
+  });
+
+  it('varies the concept question from day to day', () => {
+    const days = Array.from({ length: 20 }, (_, i) => `2026-03-${String(i + 1).padStart(2, '0')}`);
+    expect(new Set(days.map((d) => conceptQuestion(d, []).refId)).size).toBeGreaterThan(5);
   });
 });

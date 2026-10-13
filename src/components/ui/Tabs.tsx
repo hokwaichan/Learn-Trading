@@ -18,6 +18,12 @@ export interface TabsProps<T extends string = string> {
   /** Prefix shared with the matching TabPanel ids. */
   idBase: string;
   variant?: 'underline' | 'pill';
+  /**
+   * Set when the control picks one of a few values (order type, theme) and
+   * does not switch between panels. It is then announced as a group of radio
+   * buttons, which is what it is, instead of tabs with nothing to show.
+   */
+  choice?: boolean;
   className?: string;
   /** Extra controls on the right edge of the tab strip. */
   trailing?: ReactNode;
@@ -31,6 +37,7 @@ export function Tabs<T extends string = string>({
   label,
   idBase,
   variant = 'underline',
+  choice = false,
   className,
   trailing,
 }: TabsProps<T>) {
@@ -56,7 +63,7 @@ export function Tabs<T extends string = string>({
         className,
       )}
     >
-      <div role="tablist" aria-label={label} className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
+      <div role={choice ? 'radiogroup' : 'tablist'} aria-label={label} className="flex min-w-0 flex-1 items-center gap-1 overflow-x-auto">
         {items.map((item, i) => {
           const selected = item.id === value;
           return (
@@ -66,10 +73,11 @@ export function Tabs<T extends string = string>({
                 refs.current[i] = el;
               }}
               type="button"
-              role="tab"
+              role={choice ? 'radio' : 'tab'}
               id={`${idBase}-tab-${item.id}`}
-              aria-selected={selected}
-              aria-controls={`${idBase}-panel-${item.id}`}
+              aria-selected={choice ? undefined : selected}
+              aria-checked={choice ? selected : undefined}
+              aria-controls={choice ? undefined : `${idBase}-panel-${item.id}`}
               tabIndex={selected ? 0 : -1}
               onClick={() => onChange(item.id)}
               onKeyDown={(e) => onKeyDown(e, i)}

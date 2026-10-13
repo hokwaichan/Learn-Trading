@@ -22,6 +22,8 @@ interface ProgressStore extends ProgressState {
   visitLesson: (moduleId: string, lessonId: string) => void;
   /** Records a finished quiz. `score` is the fraction answered correctly. */
   completeLesson: (key: string, score: number) => void;
+  /** Records that today's daily challenge was finished. */
+  completeChallenge: () => void;
   /** Records one trainer answer and reschedules that item. */
   recordReview: (kind: ReviewCard['kind'], refId: string, wasCorrect: boolean) => void;
   reset: () => void;
@@ -66,6 +68,14 @@ export const useProgress = create<ProgressStore>()(
             activeDays: s.activeDays.includes(today) ? s.activeDays : [...s.activeDays, today],
           };
         }),
+      completeChallenge: () =>
+        set((s) => {
+          const today = dayKey();
+          return {
+            challengeDays: s.challengeDays.includes(today) ? s.challengeDays : [...s.challengeDays, today],
+            activeDays: s.activeDays.includes(today) ? s.activeDays : [...s.activeDays, today],
+          };
+        }),
       reset: () => set(DEFAULT_PROGRESS),
     }),
     {
@@ -75,7 +85,7 @@ export const useProgress = create<ProgressStore>()(
         // v1 -> v2: the trainer added spaced-repetition cards.
         1: (old) => ({ ...old, cards: {} }),
       }) as (p: unknown, v: number) => ProgressStore,
-      partialize: ({ markActiveToday: _m, visitLesson: _v, completeLesson: _c, recordReview: _rr, reset: _r, ...data }) => data,
+      partialize: ({ markActiveToday: _m, visitLesson: _v, completeLesson: _c, completeChallenge: _cc, recordReview: _rr, reset: _r, ...data }) => data,
     },
   ),
 );

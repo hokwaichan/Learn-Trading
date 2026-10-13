@@ -26,12 +26,12 @@ export function AppLayout() {
 
   // Move focus to the page on navigation so keyboard and screen-reader users
   // land in the new content rather than staying on the link they activated.
-  const first = useRef(true);
+  // Compared with the last path rather than a first-run flag, so the first
+  // load never steals focus: the skip link must stay the first tab stop.
+  const previous = useRef(pathname);
   useEffect(() => {
-    if (first.current) {
-      first.current = false;
-      return;
-    }
+    if (previous.current === pathname) return;
+    previous.current = pathname;
     mainRef.current?.focus({ preventScroll: true });
   }, [pathname]);
 

@@ -147,6 +147,7 @@ export function TrainerPage() {
             variant="pill"
             label="Drill"
             idBase="trainer-mode"
+            choice
             className="rounded-control border border-border p-0.5"
             items={MODES}
             value={mode}

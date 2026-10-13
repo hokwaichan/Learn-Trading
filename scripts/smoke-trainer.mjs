@@ -33,7 +33,7 @@ const stat = async (label) => (await page.getByRole('group', { name: 'This sessi
 const topic = () => page.locator('main section span span').first().innerText();
 const waitQuestion = () => page.locator('#trainer-prompt').waitFor({ timeout: 15000 });
 const pickMode = async (name) => {
-  await page.getByRole('tab', { name, exact: true }).click();
+  await page.getByRole('radio', { name, exact: true }).click();
   await waitQuestion();
   await page.waitForTimeout(500);
 };
@@ -124,7 +124,7 @@ const saved = await page.evaluate(() => Object.keys(JSON.parse(localStorage.getI
 await page.reload({ waitUntil: 'domcontentloaded' });
 await waitQuestion();
 check('answers are saved between visits', saved >= 4 && (await page.getByRole('table', { name: 'Accuracy by item' }).locator('tbody tr').count()) >= 4, `${saved} cards`);
-check('the chosen drill is remembered', (await page.getByRole('tab', { name: 'Options', exact: true }).getAttribute('aria-selected')) === 'true');
+check('the chosen drill is remembered', (await page.getByRole('radio', { name: 'Options', exact: true }).getAttribute('aria-checked')) === 'true');
 
 // Saved progress from before the trainer existed still loads.
 await page.evaluate(() => {

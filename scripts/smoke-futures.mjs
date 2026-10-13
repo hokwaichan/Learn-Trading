@@ -95,7 +95,7 @@ const P = Math.round(money(await u.ticket.locator('.num').first().innerText()) /
 await push('BTCUSDT', P);
 
 // ── The ticket ─────────────────────────────────────────────────────────
-check('the futures ticket has a leverage slider and margin modes', (await u.ticket.getByRole('slider', { name: /Leverage/ }).isVisible()) && (await u.ticket.getByRole('tab', { name: 'Isolated' }).isVisible()) && (await u.ticket.getByRole('tab', { name: 'Cross' }).isVisible()));
+check('the futures ticket has a leverage slider and margin modes', (await u.ticket.getByRole('slider', { name: /Leverage/ }).isVisible()) && (await u.ticket.getByRole('radio', { name: 'Isolated' }).isVisible()) && (await u.ticket.getByRole('radio', { name: 'Cross' }).isVisible()));
 check('leverage is explained in plain words', await u.ticket.getByText(/Every \$1 of your money controls \$3 of BTC/).isVisible());
 check('isolated margin is explained', await u.ticket.getByText(/Isolated: this trade can lose only the margin put into it/).isVisible());
 
@@ -114,11 +114,11 @@ check('at 5x there is no leverage warning', !(await u.ticket.getByText(/5x lever
 await u.leverage(20);
 check('20x is the most allowed, with liquidation 4.5% away', /4\.5% away/.test(await u.row('Liquidation price')));
 
-await u.ticket.getByRole('tab', { name: 'Cross' }).click();
+await u.ticket.getByRole('radio', { name: 'Cross' }).click();
 const crossText = await u.row('Liquidation price');
 check('cross margin puts liquidation much further away', crossText === 'None' || Number(crossText.match(/([\d.]+)% away/)?.[1]) > 30, crossText);
 check('cross margin is explained with its danger', await u.ticket.getByText(/a liquidation can empty the account/).isVisible());
-await u.ticket.getByRole('tab', { name: 'Isolated' }).click();
+await u.ticket.getByRole('radio', { name: 'Isolated' }).click();
 
 await u.leverage(10);
 await u.field('Stop-loss').fill(String(P * 0.85));
@@ -217,7 +217,7 @@ await phone.page.locator('canvas').first().waitFor({ timeout: 20000 });
 await phone.page.getByRole('button', { name: 'Order', exact: true }).tap();
 const sheet = phone.page.getByRole('dialog', { name: 'Order' });
 await sheet.getByRole('slider', { name: /Leverage/ }).waitFor({ timeout: 15000 });
-check('phone: the futures ticket opens in a sheet with leverage', await sheet.getByRole('tab', { name: 'Cross' }).isVisible());
+check('phone: the futures ticket opens in a sheet with leverage', await sheet.getByRole('radio', { name: 'Cross' }).isVisible());
 check('phone: no horizontal overflow', (await phone.page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth)) <= 0);
 await phone.page.waitForTimeout(300);
 await phone.page.screenshot({ path: `${OUT}/futures.phone.png` });

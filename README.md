@@ -23,28 +23,39 @@ npm run dev          # http://localhost:5173
 | `npm run typecheck` | TypeScript check |
 | `npm run lint` | ESLint, including the folder-boundary rules |
 | `npm run build` | Type-check and build to `dist/` |
-| `npm run screenshots` | Screenshot every route at desktop and phone width in both themes (dev server must be running; first run `npx playwright install chromium`) |
-| `npm run smoke` | Click through the app shell, chart workspace, indicators, every lesson, the trainer and paper trading and report pass/fail (dev server and internet needed) |
+| `npm run smoke` | Drive every screen in a real browser and report pass or fail |
+| `npm run a11y` | Accessibility audit of every screen in both themes |
+| `npm run screenshots` | Screenshot every route at desktop and phone width in both themes |
 | `npm run fetch-data` | Re-download the bundled daily history in `public/data/` |
 
-## Build status
+The last four need the dev server running. `smoke`, `a11y` and
+`screenshots` use Playwright: run `npx playwright install chromium` once
+first. `smoke` also needs internet, for live crypto prices.
 
-The app is being built in twelve milestones.
+## What is in it
 
-| # | Milestone | Status |
+| Screen | Address | What it is for |
 | --- | --- | --- |
-| 1 | Project setup, theme, UI components, app shell | Done |
-| 2 | Chart workspace | Done |
-| 3 | Indicators | Done |
-| 4 | Lessons and glossary | Done |
-| 5 | Pattern trainer | Done |
-| 6 | Spot paper trading | Done |
-| 7 | Replay | Done |
-| 8 | Backtester | Done |
-| 9 | Futures | Done |
-| 10 | Options | Done |
-| 11 | Journal and analytics | Done |
-| 12 | Dashboard and polish | Next |
+| Home | `/` | Where you left off, the daily challenge, your account and what to practise |
+| Lessons | `/learn` | 11 modules, 52 lessons, each with interactive charts and a quiz |
+| Trainer | `/trainer` | Pattern and options drills, scheduled by spaced repetition |
+| Glossary | `/glossary` | Every term, searchable; terms are linked automatically in lessons |
+| Charts | `/charts/:symbol` | Chart workspace with indicators, drawings and spot paper trading |
+| Futures | `/futures/:symbol` | The same workspace with leverage, margin, liquidation and funding |
+| Options | `/options/:symbol` | Simulated option chain, strategy builder, what-if sliders |
+| Replay | `/replay` | Trade past prices candle by candle with the future hidden |
+| Backtester | `/backtest` | Test a rule-based strategy on history, with no code |
+| Journal | `/journal` | Every paper trade, logged automatically, with your notes |
+| Analytics | `/analytics` | What your trades add up to, and where results come from |
+| Calculators | `/tools` | Position size, risk/reward, compounding and more |
+| Settings | `/settings` | Theme, fees, account reset, export and import |
+
+Ctrl+K (Cmd+K on a Mac) opens a command palette that searches screens,
+symbols, lessons and glossary terms.
+
+**No real money, anywhere.** There is no brokerage connection and no way to
+place a real order. Prices for crypto are real and live; every balance,
+order, fill and option price is simulated.
 
 ## Folder map
 
@@ -55,13 +66,14 @@ src/
   components/chart/ Chart wrapper around lightweight-charts
   features/         One folder per screen; each exposes only its index.ts
   lib/              Pure TypeScript, no React: indicators, pricing, trading,
-                    replay, backtest, data, srs. Unit tests live next to the code.
+                    replay, backtest, journal, data, srs. Unit tests live next
+                    to the code.
   content/          Lessons, quizzes, glossary, patterns, strategies (typed data)
   stores/           Zustand stores, persisted with a schema version
   types/            Shared TypeScript types
   styles/           Theme variables (theme.css) and global CSS
 public/data/        Bundled historical price files
-scripts/            Screenshot and smoke-test scripts
+scripts/            Browser tests, accessibility audit, screenshots, data download
 ```
 
 Rules, enforced by ESLint:
@@ -427,6 +439,97 @@ price, an indicator line with its settings, or a fixed number. The content
 tests check that every preset is valid and takes trades on real history.
 
 Any indicator in the registry can be used in a rule without further work.
+
+## Home and the daily challenge
+
+Home shows a continue-learning card, the daily challenge, the paper account
+with a small equity line, progress per module, recent trades, and the
+patterns answered worst in the Trainer.
+
+The daily challenge is one pattern question and one concept question
+(`src/features/trainer/challenge.ts`). Both are chosen from the date, so the
+challenge is the same all day and changes at local midnight. The concept
+question comes from the quizzes of lessons already completed, or from the
+first module before any are. Finishing it counts towards the daily streak.
+
+## Calculators
+
+Seven calculators on one page: position size, risk/reward, compounding,
+break-even win rate, leverage and liquidation price, option profit, and the
+probability of a price level. The arithmetic is in `src/lib/calculators.ts`,
+`src/lib/trading/sizing.ts` and `src/lib/trading/futures.ts`, with tests. Each
+keeps what was typed while you switch between them. The option and
+probability figures come from the Black-Scholes model and say so.
+
+## Your data
+
+Everything is saved in the browser the app is opened in. Nothing is sent
+anywhere, and clearing the browser data erases it.
+
+| Where | What |
+| --- | --- |
+| `localStorage`, keys starting `tradeschool.` | Settings, both accounts, progress, journal notes, layouts, drawings, replay set-up, saved strategies |
+| IndexedDB | Cached price history and the chart saved with each journal trade |
+
+**Settings → Export all data** saves the localStorage entries as one JSON
+file. **Import a backup** replaces everything with a file's contents after
+a confirmation, and **Erase everything** returns the app to new. The code is
+`src/lib/backup.ts`. Journal charts are not in the backup; they are rebuilt from
+price history when a trade is opened.
+
+Each store has a schema version and a list of upgrade steps
+(`src/lib/migrate.ts`), so data saved by an older build, including an imported
+backup, is upgraded when the app loads instead of being discarded. To change
+a store's shape, raise its version and add a step from the old version.
+
+## Accessibility
+
+- Text and controls meet WCAG AA contrast in both themes. The palette is
+  checked by a unit test (`src/styles/theme.test.ts`) and every screen by
+  `npm run a11y`, which runs axe-core on each screen and its main dialogs
+  at desktop and phone width.
+- Everything works from the keyboard, with a visible focus ring. Dialogs
+  trap focus and return it when closed.
+- Colour is never the only signal: profit and loss carry a sign, buy and sell
+  are labelled, and there is a colour-blind palette (blue and orange) in
+  Settings.
+- Motion is short, and switched off when the system asks for reduced motion.
+
+The audit is automated, so it catches markup and contrast problems, not
+everything. The price chart is drawn on a canvas, which a screen reader
+cannot read; the legend, the Explain panel and the tables carry the same
+information as text.
+
+## Tests
+
+`npm test` runs the unit tests, which sit next to the code in `src/lib/`.
+They cover every indicator against published reference values, order fills,
+fees and profit-and-loss arithmetic, futures margin, funding and
+liquidation, Black-Scholes prices and Greeks against published values and
+put-call parity, the implied-volatility solver, option strategies and
+expiry, the backtest engine against hand-worked trades, the journal and CSV
+export, the calculators, backup round-trips, and the lesson content itself
+(every lesson has a quiz and an interactive block, every link resolves).
+
+`npm run smoke` runs twelve scripts in `scripts/` that use the app in a real
+browser at desktop and phone width. Where a test needs the market to move,
+the live price stream is replaced by one the script controls.
+
+## Known limits
+
+These are deliberate simplifications. Each is also stated where it applies.
+
+- Option prices are from a model, not a market. Options are European and
+  cash-settled; dividends are ignored.
+- Futures use one flat maintenance margin rate and a fixed funding rate.
+  Where Binance futures data is blocked, futures charts show the spot price.
+- Orders and stops are only checked while the app is open.
+- Stocks and EUR/USD have bundled daily history only, so they can be
+  charted, replayed, backtested and analysed, but not traded live.
+- When one candle reaches both a stop-loss and a take-profit, the stop-loss
+  is assumed to have come first.
+- The lessons are written to be accurate and plain, but have not been
+  reviewed by a licensed professional. Nothing here is financial advice.
 
 ## Trainer
 

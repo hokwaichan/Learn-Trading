@@ -107,6 +107,7 @@ export function StrategyBuilder() {
             <Tabs<Direction>
               label="Direction"
               idBase="bt-direction"
+            choice
               variant="pill"
               value={strategy.direction}
               onChange={(direction) => edit({ direction })}

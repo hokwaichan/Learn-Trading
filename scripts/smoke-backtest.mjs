@@ -152,11 +152,11 @@ await u.runButton.waitFor({ timeout: 10000 });
 check('a reload keeps the strategy, the set-up and the run history', (await u.input('Name').inputValue()) === 'My RSI idea' && (await u.input('Symbol').inputValue()) === 'AAPL' && (await u.input('From').inputValue()) === '2019-01-01' && (await u.history.count()) === 4);
 
 // ── Short ──────────────────────────────────────────────────────────────
-await u.form.getByRole('tab', { name: /Short/ }).click();
+await u.form.getByRole('radio', { name: /Short/ }).click();
 check('short flips the wording', (await u.form.getByText('Enter (sell short) when').isVisible()) && (await u.form.getByText('Profits when price falls after entry.').isVisible()));
 await u.run();
 check('a short test says so', await page.getByText(/· Short$/).or(page.getByText(/· Short ·/)).first().isVisible());
-await u.form.getByRole('tab', { name: /Long/ }).click();
+await u.form.getByRole('radio', { name: /Long/ }).click();
 
 // ── Errors ─────────────────────────────────────────────────────────────
 await u.period('2023-12-31', '2019-01-01');

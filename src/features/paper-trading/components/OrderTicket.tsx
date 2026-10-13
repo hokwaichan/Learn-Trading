@@ -293,6 +293,7 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
             variant="pill"
             label="Margin mode"
             idBase="ticket-margin"
+            choice
             className="mt-2 rounded-control border border-border p-0.5"
             value={marginChoice}
             onChange={setMarginMode}
@@ -316,6 +317,7 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
         variant="pill"
         label="Order type"
         idBase="ticket-type"
+            choice
         className="rounded-control border border-border p-0.5"
         value={kind}
         onChange={setKind}
@@ -347,6 +349,7 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
         variant="pill"
         label="How to size the trade"
         idBase="ticket-size"
+            choice
         className="rounded-control border border-border p-0.5"
         value={sizeMode}
         onChange={setSizeMode}
