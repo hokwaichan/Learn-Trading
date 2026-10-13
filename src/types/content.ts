@@ -26,7 +26,8 @@ export type LessonWidget =
   | 'payoff'
   | 'order-book'
   | 'position-size'
-  | 'candle-anatomy';
+  | 'candle-anatomy'
+  | 'expectancy-sim';
 
 export type LessonBlock =
   | { type: 'heading'; text: string }
@@ -80,6 +81,11 @@ export interface GlossaryEntry {
   term: string;
   /** Other spellings; these also drive auto-linking in lessons. */
   aliases: string[];
+  /**
+   * Set to false for everyday words ("long", "range") so that only the
+   * aliases are linked automatically in lesson text, not the bare term.
+   */
+  autoLink?: boolean;
   /** One plain sentence, shown on hover. */
   definition: string;
   details?: string;

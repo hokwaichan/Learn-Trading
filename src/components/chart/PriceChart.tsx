@@ -40,6 +40,16 @@ export interface PriceChartProps {
   selectedIndex?: number | null;
   /** Called when the user scrolls near the oldest loaded candle. */
   onNeedOlder?: () => void;
+  /**
+   * For charts inside a scrolling page (lessons): shows every candle, and
+   * leaves the mouse wheel and vertical touch drags to the page so the chart
+   * does not trap scrolling. Drag sideways to pan; pinch to zoom.
+   */
+  embedded?: boolean;
+  /** Hide the date axis, for hand-made examples whose dates mean nothing. */
+  hideTimeAxis?: boolean;
+  /** Extra prices the scale must keep in view, such as an annotated stop level. */
+  includePrices?: number[];
   /** Indicator rows for the legend. */
   legendExtra?: ReactNode;
   /** Overlays and extra series; they read the chart through useChartApi(). */
@@ -132,6 +142,9 @@ export function PriceChart({
   onSelectCandle,
   selectedIndex = null,
   onNeedOlder,
+  embedded = false,
+  hideTimeAxis = false,
+  includePrices,
   legendExtra,
   children,
 }: PriceChartProps) {
@@ -204,6 +217,33 @@ export function PriceChart({
     };
   }, []);
 
+  useEffect(() => {
+    chart?.applyOptions({
+      handleScroll: { mouseWheel: !embedded, pressedMouseMove: true, horzTouchDrag: true, vertTouchDrag: !embedded },
+      handleScale: { mouseWheel: !embedded, pinch: true, axisPressedMouseMove: true },
+    });
+  }, [chart, embedded]);
+
+  // Keep annotated prices inside the visible scale.
+  const includeKey = (includePrices ?? []).join(',');
+  useEffect(() => {
+    if (!series) return;
+    const extra = includeKey ? includeKey.split(',').map(Number) : [];
+    series.applyOptions({
+      autoscaleInfoProvider: (original: () => { priceRange: { minValue: number; maxValue: number } | null } | null) => {
+        const info = original();
+        if (!info?.priceRange || extra.length === 0) return info;
+        return {
+          ...info,
+          priceRange: {
+            minValue: Math.min(info.priceRange.minValue, ...extra),
+            maxValue: Math.max(info.priceRange.maxValue, ...extra),
+          },
+        };
+      },
+    });
+  }, [series, includeKey]);
+
   // Theme changes restyle the existing chart.
   useEffect(() => {
     chart?.applyOptions(chartOptions(theme));
@@ -249,8 +289,17 @@ export function PriceChart({
     series?.applyOptions({
       priceFormat: { type: 'price', precision: decimalsFor(tickSize), minMove: tickSize },
     });
-    chart?.applyOptions({ timeScale: { timeVisible: timeframe !== '1d', secondsVisible: false, rightOffset: RIGHT_GAP } });
-  }, [chart, series, tickSize, timeframe]);
+    chart?.applyOptions({
+      timeScale: {
+        visible: !hideTimeAxis,
+        timeVisible: timeframe !== '1d',
+        secondsVisible: false,
+        rightOffset: embedded ? 1 : RIGHT_GAP,
+      },
+      // With no date axis there is nothing for the vertical crosshair label to sit on.
+      crosshair: { vertLine: { labelVisible: !hideTimeAxis } },
+    });
+  }, [chart, series, tickSize, timeframe, embedded, hideTimeAxis]);
 
   // Push data. A new last candle uses update(); anything else replaces the set.
   const shown = useRef<{
@@ -290,7 +339,11 @@ export function PriceChart({
       series.setData(display.map(point));
       volume?.setData(display.map(bar));
       if (!prev || prev.viewKey !== viewKey || prev.length === 0) {
-        if (n > 0) chart.timeScale().setVisibleLogicalRange({ from: n - INITIAL_BARS, to: n + RIGHT_GAP });
+        if (n > 0) {
+          chart.timeScale().setVisibleLogicalRange(
+            embedded ? { from: -1.5, to: n + 0.5 } : { from: n - INITIAL_BARS, to: n + RIGHT_GAP },
+          );
+        }
       } else if (sameTarget && range && prev.first !== first) {
         // Older candles were added on the left: keep the same candles in view.
         const added = n - prev.length;
@@ -300,7 +353,7 @@ export function PriceChart({
       }
     }
     shown.current = { series, volume, theme, viewKey, first, length: n };
-  }, [chart, series, volume, display, chartType, viewKey, theme]);
+  }, [chart, series, volume, display, chartType, viewKey, theme, embedded]);
 
   // Mark the selected candle.
   const markers = useRef<ISeriesMarkersPluginApi<Time> | null>(null);

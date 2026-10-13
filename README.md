@@ -24,7 +24,7 @@ npm run dev          # http://localhost:5173
 | `npm run lint` | ESLint, including the folder-boundary rules |
 | `npm run build` | Type-check and build to `dist/` |
 | `npm run screenshots` | Screenshot every route at desktop and phone width in both themes (dev server must be running; first run `npx playwright install chromium`) |
-| `npm run smoke` | Click through the app shell, chart workspace and indicators and report pass/fail (dev server and internet needed) |
+| `npm run smoke` | Click through the app shell, chart workspace, indicators and every lesson and report pass/fail (dev server and internet needed) |
 | `npm run fetch-data` | Re-download the bundled daily history in `public/data/` |
 
 ## Build status
@@ -36,8 +36,8 @@ The app is being built in twelve milestones.
 | 1 | Project setup, theme, UI components, app shell | Done |
 | 2 | Chart workspace | Done |
 | 3 | Indicators | Done |
-| 4 | Lessons and glossary | Next |
-| 5 | Pattern trainer | |
+| 4 | Lessons and glossary | Done |
+| 5 | Pattern trainer | Next |
 | 6 | Spot paper trading | |
 | 7 | Replay | |
 | 8 | Backtester | |
@@ -139,4 +139,96 @@ intraday charts and each calendar month on daily charts.
    `case` to `reading()` in `src/lib/explain/indicator.ts` for the sentence
    that interprets the current value. TypeScript reports both if you forget.
 
-A guide for adding lessons will be added here when lessons are built.
+## Lessons, quizzes and glossary
+
+All teaching content is typed data in `src/content/`, never text inside
+components:
+
+| File | Holds |
+| --- | --- |
+| `content/lessons/NN-<module>.ts` | One module: its lessons, each a list of blocks |
+| `content/quizzes/NN-<module>.ts` | The quiz for each lesson in that module |
+| `content/lessons/index.ts`, `content/quizzes/index.ts` | The list of modules, in curriculum order |
+| `content/glossary.ts` | Every glossary term |
+| `content/indicators.ts` | Indicator explanations |
+
+`src/content/content.test.ts` checks every lesson, quiz and glossary entry on
+`npm test`: each lesson has enough text, an interactive block and a 3 to 6
+question quiz; chart annotations land on the chart; glossary links resolve.
+
+### Adding a lesson
+
+1. Open the module file and add an object to its `lessons` array:
+
+   ```ts
+   {
+     id: 'my-lesson',             // used in the address: /learn/<module>/my-lesson
+     title: 'My lesson',
+     summary: 'One sentence shown under the title and in the lesson list.',
+     minutes: 6,
+     blocks: [
+       p('A paragraph. Use **double asterisks** for bold.'),
+       h('A heading'),
+       ul('A bullet', 'Another bullet'),          // ol(...) for numbered
+       note('Title', 'An info box.'),             // warn(...) and danger(...) too
+       formula('a = b / c', 'What the formula means.'),
+       worked('A worked example', 'Step one.', 'Step two.'),
+       chart(real('SPY', '2025-01-02', '2025-06-30', 'Caption.', [{ id: 'sma', params: { period: 20 } }])),
+       widget('position-size'),
+     ],
+   }
+   ```
+
+2. Add its quiz to the matching file in `content/quizzes/`, under the same id:
+
+   ```ts
+   'my-lesson': [
+     q('The question?', ['Choice A', 'Choice B', 'Choice C'], 1, 'Why B is right.'),
+     // 3 to 6 questions. The number is the position of the right answer, from 0.
+   ],
+   ```
+
+   Answers are shown in a shuffled order on every attempt, so do not write
+   choices such as "all of the above" that depend on position.
+
+3. Run `npm test`.
+
+Glossary terms are linked automatically the first time each appears in a
+lesson. Every lesson needs at least one `chart(...)` or `widget(...)`.
+
+### Charts in lessons
+
+- `real(symbol, from, to, caption, indicators?)` shows bundled daily history
+  (AAPL, TSLA, SPY, EURUSD), so lessons work offline.
+- `made(candles, caption, annotations?)` shows a hand-made example. Build the
+  candles with `walk([100, 108, 104, ...])`, a price path through waypoints, or
+  `ohlc([[open, high, low, close], ...])` for exact candles, and combine pieces
+  with `join(...)`.
+- Annotations: `mark(index, 'Label')` labels a candle, `level(price, 'Label')`
+  draws a horizontal line, `seg(i1, p1, i2, p2, 'Label')` a sloping line and
+  `zone(i1, p1, i2, p2, 'Label')` a shaded box. `index` counts candles from 0;
+  `walk` draws 6 candles per waypoint unless you pass `{ per }`.
+
+### Adding a module
+
+Create `content/lessons/NN-<name>.ts` with `defineModule(order, id, title,
+description, [lessons])` and `content/quizzes/NN-<name>.ts` with
+`defineQuizzes(id, {...})`, then add both to the two `index.ts` files.
+
+### Adding an interactive widget
+
+Write the component in `src/features/lessons/components/widgets/`, add its name
+to `LessonWidget` in `src/types/content.ts`, and add a `case` for it in
+`LessonBlocks.tsx`. Keep its maths in `src/lib/` with a test.
+
+### Adding a glossary term
+
+Add one line to `content/glossary.ts`:
+
+```ts
+e('id', 'Term', 'One plain sentence ending in a full stop.', 'module/lesson', ['alias'], ['related-id']),
+```
+
+An alias is linked using the entry's definition, so it must be a true synonym.
+For an everyday word that would be linked by mistake ("long" in "a long wick"),
+pass `{ autoLink: false }` as the last argument; then only its aliases link.

@@ -31,7 +31,8 @@ const TOOL_NAMES: Record<DrawingTool, string> = {
   text: 'Note',
 };
 
-function project(api: ChartApi, point: DrawingPoint): XY | null {
+/** Chart (time, price) -> pixel position inside the price pane. */
+export function project(api: ChartApi, point: DrawingPoint): XY | null {
   const logical = timeToLogical(api.candles, point.time, api.stepSeconds) as Logical;
   const x = api.chart.timeScale().logicalToCoordinate(logical);
   const y = api.series.priceToCoordinate(point.price);
@@ -50,7 +51,7 @@ function unproject(api: ChartApi, xy: XY): DrawingPoint | null {
  * changes but not price-axis ones, so this samples a few projected
  * coordinates each frame and updates only when they differ.
  */
-function useViewVersion(api: ChartApi | null): { width: number; height: number } {
+export function useViewVersion(api: ChartApi | null): { width: number; height: number } {
   const [view, setView] = useState({ width: 0, height: 0, signature: '' });
   useEffect(() => {
     if (!api) return;

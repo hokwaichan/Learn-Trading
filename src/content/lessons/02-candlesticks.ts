@@ -1,0 +1,137 @@
+import { chart, defineModule, h, join, made, mark, note, ohlc, p, real, ul, walk, warn, widget } from './helpers';
+
+export const candlesticks = defineModule(2, 'candlesticks', 'Reading candlesticks', 'What one candle tells you, and the handful of candle patterns worth knowing.', [
+  {
+    id: 'candle-anatomy',
+    title: 'Body and wicks',
+    summary: 'Each candle packs four prices into one shape: where price opened, closed, and how far it travelled.',
+    minutes: 5,
+    blocks: [
+      p('A price chart could just be a line joining closing prices, but that hides most of what happened. A **candlestick** shows four prices for one period of time:'),
+      ul(
+        '**Open**: the first price of the period.',
+        '**High**: the highest price reached.',
+        '**Low**: the lowest price reached.',
+        '**Close**: the last price of the period.',
+      ),
+      p('Together these are called **OHLC**. The thick part of the candle, the **body**, spans the open and the close. The thin lines above and below, the **wicks** (also called shadows), reach to the high and the low.'),
+      p('Colour tells you the direction. If the close is above the open, price rose during the period and the candle is drawn in the "up" colour. If the close is below the open, price fell and it is drawn in the "down" colour. Drag the sliders to build your own candle:'),
+      widget('candle-anatomy'),
+      h('Reading the shape'),
+      ul(
+        'A **long body** means price moved decisively one way and stayed there. One side was in control.',
+        'A **short body** means the open and close were close together: buyers and sellers roughly cancelled out.',
+        'A **long upper wick** means price went up and was pushed back down. Sellers rejected the higher prices.',
+        'A **long lower wick** means price went down and was pushed back up. Buyers rejected the lower prices.',
+      ),
+      note('Try it on a real chart', 'Open the Charts page and click any candle. The Explain tab describes that exact candle in these terms.'),
+    ],
+  },
+  {
+    id: 'timeframes',
+    title: 'Timeframes',
+    summary: 'The same market looks different depending on how much time each candle covers.',
+    minutes: 5,
+    blocks: [
+      p('The **timeframe** is how much time one candle represents. On a 1-hour chart each candle is one hour of trading; on a daily chart each is one day. The app offers 1 minute, 5 minutes, 15 minutes, 1 hour, 4 hours and 1 day.'),
+      p('It is all the same price data, grouped differently. Twenty-four 1-hour candles contain exactly the same trading as one daily candle: the daily open is the first hourly open, the daily close is the last hourly close, and the daily high and low are the extremes of the whole day.'),
+      chart(real('AAPL', '2025-06-02', '2025-12-31', 'Apple on the daily timeframe. Each candle is one full trading day. On a 1-hour chart every one of these would be several candles, with far more small wiggles.')),
+      h('What changes with the timeframe'),
+      ul(
+        '**Short timeframes** (1 to 15 minutes) show a lot of detail and a lot of noise: small moves that mean little. Patterns appear often and fail often.',
+        '**Long timeframes** (4 hours, 1 day) hide the noise and show the bigger direction. Signals are rarer and more reliable, but you wait longer and stops need to be wider.',
+      ),
+      h('Which to use'),
+      p('It depends on how long you plan to hold a trade. Someone holding for minutes watches the 1 and 5 minute charts. Someone holding for days or weeks watches the daily. As a beginner, start with the 4-hour or daily chart: things happen slowly enough to think.'),
+      note('Look one level up', 'A common habit is to check the next timeframe up before trading. A rise on the 15-minute chart is less convincing if the daily chart is falling hard. Trade in the direction of the bigger picture when you can.'),
+      warn('The newest candle is unfinished', 'The last candle on a live chart is still forming. Its close, high and low keep changing until its period ends, so wait for a candle to finish before reading its shape.'),
+    ],
+  },
+  {
+    id: 'single-candle-patterns',
+    title: 'Single-candle patterns',
+    summary: 'Doji, hammer, shooting star and marubozu: four shapes that say something about who is in control.',
+    minutes: 8,
+    blocks: [
+      p('A few candle shapes have names because traders have long read them the same way. A named shape is a hint about the balance between buyers and sellers, never a promise. Where it appears matters as much as the shape.'),
+      h('Doji'),
+      p('A **doji** opens and closes at almost the same price, so its body is a thin line with wicks either side. Buyers and sellers ended in a draw. After a strong move it suggests the move is tiring.'),
+      h('Hammer'),
+      p('A **hammer** has a small body at the top and a long lower wick, at least twice the body. Price fell hard during the period and buyers pushed it all the way back. It matters after a decline, where it can mark buyers stepping in. The same shape after a rise is called a **hanging man** and is a warning instead.'),
+      h('Shooting star'),
+      p('A **shooting star** is the hammer upside down: small body at the bottom, long upper wick. Price rose hard and sellers pushed it back. It matters after a rise. The same shape after a decline is an **inverted hammer**.'),
+      h('Marubozu'),
+      p('A **marubozu** is almost all body, with little or no wick. Price opened at one extreme and closed at the other. It shows one side in control from start to finish, and suggests the move may continue.'),
+      chart(
+        made(
+          join(
+            walk([110, 104, 100], { per: 4, seed: 5 }),
+            ohlc([[100, 100.5, 96, 100.3]]),
+            walk([100.3, 106, 110], { per: 4, seed: 9 }),
+            ohlc([[110, 114.2, 109.6, 109.9]]),
+            walk([109.9, 105], { per: 4, seed: 2 }),
+            ohlc([[105, 106.6, 103.4, 105.06], [105.06, 109.05, 105.0, 109.0]]),
+          ),
+          'Four named candles in context. The hammer comes after a fall and the shooting star after a rise, which is what gives them meaning.',
+          [mark(8, 'Hammer', 94.8), mark(17, 'Shooting star'), mark(22, 'Doji', 102.4), mark(23, 'Marubozu')],
+        ),
+      ),
+      h('How to use them'),
+      ul(
+        '**Context first.** A hammer in the middle of a sideways market means nothing. A hammer after a long fall, at a price where buyers appeared before, is worth noticing.',
+        '**Wait for confirmation.** Many traders want the next candle to move in the expected direction before acting.',
+        '**They fail often.** Treat a pattern as one piece of evidence, and always have a stop-loss.',
+      ),
+      note('Practise spotting them', 'The Trainer page will show you real chart segments and ask which pattern you see.'),
+    ],
+  },
+  {
+    id: 'multi-candle-patterns',
+    title: 'Multi-candle patterns',
+    summary: 'Engulfing, morning and evening star, harami, and three soldiers or crows: patterns made of two or three candles.',
+    minutes: 9,
+    blocks: [
+      p('Some patterns take two or three candles to form. They describe a small story: one side in control, then losing it. As with single candles, they matter most after a clear move.'),
+      h('Engulfing (two candles)'),
+      p('A **bullish engulfing** pattern is a down candle followed by a larger up candle whose body completely covers the first body. Sellers were in charge, then buyers overwhelmed them in a single period. A **bearish engulfing** is the reverse: an up candle swallowed by a larger down candle.'),
+      h('Harami (two candles)'),
+      p('A **harami** is the opposite arrangement: a large candle followed by a small one whose body sits entirely inside the first. The strong move has stalled. It is a weaker signal than engulfing: it shows hesitation, not a takeover.'),
+      h('Morning star and evening star (three candles)'),
+      p('A **morning star** appears after a decline: a long down candle, then a small-bodied candle showing indecision, then a long up candle that closes well into the first candle. Selling, a pause, then buying. The **evening star** is the mirror image after a rise.'),
+      chart(
+        made(
+          join(
+            walk([112, 106, 101.5], { per: 4, seed: 4 }),
+            ohlc([[101.5, 101.8, 99.9, 100.2], [99.9, 103.4, 99.7, 103.1]]),
+            walk([103.1, 108, 111], { per: 3, seed: 8 }),
+            ohlc([[111, 114.6, 110.8, 114.3], [114.6, 115.4, 114.1, 114.7], [114.4, 114.6, 110.6, 111.0]]),
+            walk([111, 107, 104], { per: 3, seed: 6 }),
+          ),
+          'A bullish engulfing pattern ends the fall on the left. An evening star ends the rise on the right.',
+          [mark(9, 'Bullish engulfing', 98.6), mark(17, 'Evening star')],
+        ),
+      ),
+      h('Three white soldiers and three black crows'),
+      p('**Three white soldiers** are three long up candles in a row, each opening inside the previous body and closing higher. Buyers are firmly in control. **Three black crows** are three long down candles in a row: sellers in control. They show strength, though after three big candles the move may already be stretched.'),
+      chart(
+        made(
+          join(
+            walk([104, 101, 100], { per: 4, seed: 12 }),
+            ohlc([[100, 102.6, 99.8, 102.4], [101.6, 104.9, 101.4, 104.7], [103.9, 107.3, 103.7, 107.1]]),
+            walk([107.1, 108.5, 108], { per: 3, seed: 3 }),
+            ohlc([[108, 108.2, 105.4, 105.6], [106.3, 106.5, 103.1, 103.3], [104.0, 104.2, 100.8, 101.0]]),
+          ),
+          'Three white soldiers on the way up, three black crows on the way down.',
+          [mark(9, 'Three white soldiers'), mark(18, 'Three black crows')],
+        ),
+      ),
+      h('Keep them in proportion'),
+      ul(
+        'These patterns say who won the last two or three periods. They say nothing certain about the next ten.',
+        'They carry more weight on longer timeframes and at prices that have mattered before (support and resistance, in the next module).',
+        'Higher volume on the candle that completes the pattern makes it more convincing.',
+      ),
+      warn('Easy to see in hindsight', 'Looking back at a chart, every turning point seems to have a pattern on it. You do not see all the times the same pattern appeared and nothing happened. Judge patterns by trading them on paper, not by scrolling back.'),
+    ],
+  },
+]);
