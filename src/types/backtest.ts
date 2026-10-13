@@ -59,7 +59,13 @@ export interface BacktestConfig {
   initialCapital: number;
   feeRate: number;
   slippagePct: number;
-  futures?: { leverage: number; maintenanceMarginRate: number; applyFunding: boolean };
+  futures?: {
+    leverage: number;
+    maintenanceMarginRate: number;
+    applyFunding: boolean;
+    /** Funding per eight hours as a fraction. Positive means longs pay. Defaults to 0.01%. */
+    fundingRate?: number;
+  };
 }
 
 export interface BacktestTrade {

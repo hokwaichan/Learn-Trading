@@ -40,8 +40,8 @@ The app is being built in twelve milestones.
 | 5 | Pattern trainer | Done |
 | 6 | Spot paper trading | Done |
 | 7 | Replay | Done |
-| 8 | Backtester | Next |
-| 9 | Futures | |
+| 8 | Backtester | Done |
+| 9 | Futures | Next |
 | 10 | Options | |
 | 11 | Journal and analytics | |
 | 12 | Dashboard and polish | |
@@ -274,6 +274,48 @@ candle at a time (or press Play), trading as you go.
 - The bundled symbols (AAPL, TSLA, SPY, EUR/USD) replay on daily candles.
   Crypto replays on any candle size, loading history as it goes.
 - Keyboard: Space plays and pauses, N reveals the next candle.
+
+## Backtester
+
+The Backtester runs a rule-based strategy over past candles. The engine is
+pure code in `src/lib/backtest/`: `rules.ts` turns conditions into values per
+candle, `engine.ts` simulates the trades, and `stats.ts` works out the numbers.
+
+How a test trades:
+
+- **No looking ahead.** Rules are read at a candle's close and filled at the
+  next candle's open.
+- **One position at a time**, long or short, sized as a share of the account.
+- **Stop-loss and take-profit** are checked against each candle's high and
+  low, starting with the entry candle. If one candle reaches both, the
+  stop-loss is assumed to have come first. A price that gaps past a stop
+  fills at the open.
+- **Costs.** Every fill pays the fee from Settings. Market and stop fills pay
+  slippage; take-profit fills get their price exactly.
+- **Futures mode** (crypto only) adds leverage, a liquidation price
+  (`lib/trading/futures.ts`, one flat 0.5% maintenance rate) and funding at a
+  fixed 0.01% every eight hours. A liquidation loses the whole margin of that
+  trade. If the account is emptied, trading stops.
+- **Warm-up.** Candles from before the test period are loaded so indicators
+  have settled; no trades are taken on them.
+- **Buy and hold** buys at the first open of the period, pays the fee once,
+  and never sells.
+- **Sharpe ratio** uses per-candle returns, a zero risk-free rate, and 365
+  days a year for crypto or 252 for the bundled markets.
+
+A test loads at most 20,000 candles. Results are kept in memory only; the
+strategy being edited, saved strategies, the set-up and the headline numbers
+of the last 12 runs are saved by `src/stores/backtest.ts`.
+
+### Adding a preset strategy
+
+Append an entry to `BACKTEST_PRESETS` in `src/content/strategies.ts`. A
+strategy is an entry rule and an exit rule, each a list of conditions
+(left side, comparison, right side) joined by "all" or "any". A side is a
+price, an indicator line with its settings, or a fixed number. The content
+tests check that every preset is valid and takes trades on real history.
+
+Any indicator in the registry can be used in a rule without further work.
 
 ## Trainer
 

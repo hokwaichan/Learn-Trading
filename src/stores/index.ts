@@ -5,4 +5,6 @@ export { useProgress, useStreak } from './progress';
 export { fetchCandleRange, quoteKey, seriesKey, streamPrice, useCandleSeries, useLastPrice, useMarket } from './market';
 export type { SeriesState, WatchlistItem, WorkspaceMode } from './market';
 export { useDrawings, useSymbolDrawings } from './drawings';
+export { MAX_BACKTEST_CANDLES, useBacktest } from './backtest';
+export type { BacktestRunSummary, BacktestSetup } from './backtest';
 export { REPLAY_SPEEDS, replayPricesNow, useReplay } from './replay';

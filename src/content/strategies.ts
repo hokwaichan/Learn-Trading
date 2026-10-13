@@ -1,4 +1,5 @@
 import type { LegSpec } from '@/lib/pricing/templates';
+import type { BacktestStrategy, Comparator, Condition, IndicatorId, Operand } from '@/types';
 
 export type Outlook = 'bullish' | 'bearish' | 'neutral' | 'volatile';
 
@@ -331,5 +332,84 @@ export const OUTLOOK_SCENARIOS: OutlookScenario[] = [
     answer: 'short-call',
     distractors: ['long-call', 'iron-condor', 'bear-put-spread'],
     why: 'An uncovered short call must deliver at the strike something that could cost any amount to buy. The other three all have a fixed maximum loss.',
+  },
+];
+
+// ── Backtester presets ──────────────────────────────────────────────────
+
+const closePrice: Operand = { kind: 'price', field: 'close' };
+const value = (n: number): Operand => ({ kind: 'constant', value: n });
+const ind = (indicator: IndicatorId, params: Record<string, number>, output?: string): Operand => ({ kind: 'indicator', indicator, params, output });
+const when = (id: string, left: Operand, op: Comparator, right: Operand): Condition => ({ id, left, op, right });
+
+/**
+ * Starting points for the Backtester. Each one is a well-known idea in its
+ * simplest form, so the rules are easy to read and change. None is a
+ * recommendation: the point is to see how an idea behaves, and how much the
+ * result moves when the symbol, the period or a number changes.
+ *
+ * To add one, append an entry. Ids must be unique.
+ */
+export const BACKTEST_PRESETS: BacktestStrategy[] = [
+  {
+    id: 'ema-crossover',
+    name: 'EMA crossover',
+    description:
+      'Trend following. Buy when the faster average (20) crosses above the slower one (50), which says recent prices are rising faster than older ones. Sell when it crosses back. Expect many small losses in sideways markets and a few large wins in trends.',
+    direction: 'long',
+    entry: { combine: 'all', conditions: [when('e1', ind('ema', { period: 20 }), 'crosses_above', ind('ema', { period: 50 }))] },
+    exit: { combine: 'all', conditions: [when('x1', ind('ema', { period: 20 }), 'crosses_below', ind('ema', { period: 50 }))] },
+    positionSizePct: 100,
+    preset: true,
+  },
+  {
+    id: 'rsi-mean-reversion',
+    name: 'RSI mean reversion',
+    description:
+      'Buys weakness. Enter when RSI drops below 30 (oversold), on the bet that a sharp fall tends to bounce. Exit once RSI recovers above 55. The stop-loss matters here: in a real downtrend, oversold can stay oversold.',
+    direction: 'long',
+    entry: { combine: 'all', conditions: [when('e1', ind('rsi', { period: 14 }), 'crosses_below', value(30))] },
+    exit: { combine: 'all', conditions: [when('x1', ind('rsi', { period: 14 }), 'gt', value(55))] },
+    stopLossPct: 8,
+    positionSizePct: 100,
+    preset: true,
+  },
+  {
+    id: 'bollinger-breakout',
+    name: 'Bollinger breakout',
+    description:
+      'Buys strength. Enter when the close breaks above the upper Bollinger Band, which means price has moved unusually far up for recent conditions. Exit when it falls back below the middle band. Many breakouts fail, so the stop-loss keeps the failures small.',
+    direction: 'long',
+    entry: { combine: 'all', conditions: [when('e1', closePrice, 'crosses_above', ind('bollinger', { period: 20, multiplier: 2 }, 'upper'))] },
+    exit: { combine: 'all', conditions: [when('x1', closePrice, 'crosses_below', ind('bollinger', { period: 20, multiplier: 2 }, 'middle'))] },
+    stopLossPct: 6,
+    positionSizePct: 100,
+    preset: true,
+  },
+  {
+    id: 'macd-crossover',
+    name: 'MACD crossover',
+    description:
+      'Momentum. Buy when the MACD line crosses above its signal line, a sign that upward momentum is building. Sell when it crosses back below. Reacts faster than the EMA crossover, so it trades more often and pays more in fees.',
+    direction: 'long',
+    entry: { combine: 'all', conditions: [when('e1', ind('macd', { fast: 12, slow: 26, signal: 9 }, 'macd'), 'crosses_above', ind('macd', { fast: 12, slow: 26, signal: 9 }, 'signal'))] },
+    exit: { combine: 'all', conditions: [when('x1', ind('macd', { fast: 12, slow: 26, signal: 9 }, 'macd'), 'crosses_below', ind('macd', { fast: 12, slow: 26, signal: 9 }, 'signal'))] },
+    positionSizePct: 100,
+    preset: true,
+  },
+  {
+    id: 'trend-pullback',
+    name: 'Pullback in an uptrend',
+    description:
+      'Two conditions together. Only buy when price is above its 200-period average (the long-term trend is up) and RSI has dipped below 40 (a short-term pullback). Exit when RSI recovers above 65, or at the stop-loss. Shows how a trend filter changes a mean-reversion entry.',
+    direction: 'long',
+    entry: {
+      combine: 'all',
+      conditions: [when('e1', closePrice, 'gt', ind('sma', { period: 200 })), when('e2', ind('rsi', { period: 14 }), 'lt', value(40))],
+    },
+    exit: { combine: 'all', conditions: [when('x1', ind('rsi', { period: 14 }), 'gt', value(65))] },
+    stopLossPct: 7,
+    positionSizePct: 100,
+    preset: true,
   },
 ];

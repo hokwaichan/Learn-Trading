@@ -1,5 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
+import { runBacktest, validateStrategy, warmupBars } from '@/lib/backtest';
 import { parseStaticFile } from '@/lib/data/static';
 import { buildMatcher, linkGlossary } from '@/lib/glossaryLinker';
 import { INDICATORS } from '@/lib/indicators';
@@ -7,6 +8,7 @@ import type { Candle, ChartExample, LessonBlock } from '@/types';
 import { GLOSSARY, getGlossaryEntry } from './glossary';
 import { allLessons, getLesson, lessonKey, MODULES, neighbours, nextLesson } from './lessons';
 import { getQuiz, QUIZZES } from './quizzes';
+import { BACKTEST_PRESETS } from './strategies';
 
 const lessons = allLessons();
 const WIDGETS = ['greek-slider', 'leverage-demo', 'payoff', 'order-book', 'position-size', 'candle-anatomy', 'expectancy-sim'];
@@ -212,5 +214,34 @@ describe('glossary', () => {
       for (const block of lesson.blocks) for (const text of blockText(block)) linkGlossary(text, matcher, seen);
       expect(seen.size, lessonKey(lesson)).toBeGreaterThan(0);
     }
+  });
+});
+
+describe('backtester presets', () => {
+  it('has four or five presets with unique ids', () => {
+    expect(BACKTEST_PRESETS.length).toBeGreaterThanOrEqual(4);
+    expect(BACKTEST_PRESETS.length).toBeLessThanOrEqual(5);
+    expect(new Set(BACKTEST_PRESETS.map((p) => p.id)).size).toBe(BACKTEST_PRESETS.length);
+  });
+
+  it.each(BACKTEST_PRESETS.map((p) => [p.name, p] as const))('%s is valid, explained, and trades on real history', (_name, preset) => {
+    expect(validateStrategy(preset)).toEqual([]);
+    expect(preset.preset).toBe(true);
+    expect(preset.description.length).toBeGreaterThan(80);
+    const ids = [...preset.entry.conditions, ...preset.exit.conditions].map((c) => c.id);
+    expect(new Set(ids).size).toBe(ids.length);
+
+    const candles = parseStaticFile(JSON.parse(readFileSync('public/data/SPY.json', 'utf8')));
+    const from = candles[warmupBars(preset)].time * 1000;
+    const config = { symbol: 'SPY', timeframe: '1d' as const, from, to: Number.MAX_SAFE_INTEGER, initialCapital: 10_000, feeRate: 0.001, slippagePct: 0.0005 };
+    const { trades, equityCurve, stats } = runBacktest(preset, config, candles, { stepSeconds: 86_400, periodsPerYear: 252 });
+    expect(trades.length).toBeGreaterThan(3);
+    expect(equityCurve.every((p) => Number.isFinite(p.equity) && p.equity > 0)).toBe(true);
+    expect(Number.isFinite(stats.sharpe)).toBe(true);
+    // Trades never overlap: one position at a time.
+    for (let i = 1; i < trades.length; i++) expect(trades[i].entryTime).toBeGreaterThanOrEqual(trades[i - 1].exitTime);
+    // The account at the end is the start plus every trade's result.
+    const total = trades.reduce((sum, t) => sum + t.pnl, 0);
+    expect(equityCurve[equityCurve.length - 1].equity).toBeCloseTo(10_000 + total, 4);
   });
 });

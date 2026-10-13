@@ -3,6 +3,8 @@ export type { PriceChartProps, PriceLine } from './PriceChart';
 export { DrawingLayer, DRAWING_TOOL_NAMES } from './DrawingLayer';
 export type { DrawingLayerProps } from './DrawingLayer';
 export { AnnotationLayer } from './AnnotationLayer';
+export { TradeMarkerLayer } from './TradeMarkerLayer';
+export type { TradeMarker } from './TradeMarkerLayer';
 export { IndicatorLayer } from './IndicatorLayer';
 export type { IndicatorLayerProps } from './IndicatorLayer';
 export { Legend } from './Legend';
