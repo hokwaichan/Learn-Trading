@@ -5,6 +5,7 @@ import { CommandPalette } from './CommandPalette';
 import { MobileTabBar } from './MobileTabBar';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
+import { captureSnapshotsOnClose } from '@/stores';
 import { usePaperEngine } from './usePaperEngine';
 
 function Disclaimer() {
@@ -20,6 +21,8 @@ export function AppLayout() {
   const { pathname } = useLocation();
   const mainRef = useRef<HTMLElement>(null);
   usePaperEngine();
+  // Keep a chart of the market with each trade as it closes, for the journal.
+  useEffect(() => captureSnapshotsOnClose(), []);
 
   // Move focus to the page on navigation so keyboard and screen-reader users
   // land in the new content rather than staying on the link they activated.

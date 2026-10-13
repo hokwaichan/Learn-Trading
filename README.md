@@ -43,8 +43,8 @@ The app is being built in twelve milestones.
 | 8 | Backtester | Done |
 | 9 | Futures | Done |
 | 10 | Options | Done |
-| 11 | Journal and analytics | Next |
-| 12 | Dashboard and polish | |
+| 11 | Journal and analytics | Done |
+| 12 | Dashboard and polish | Next |
 
 ## Folder map
 
@@ -328,6 +328,35 @@ Paper trading for options is in `src/lib/trading/options.ts`:
 Append an entry to `OPTION_STRATEGIES` in `src/content/strategies.ts`, with
 each strike given as a fraction away from the current price. It appears in
 the builder, the Options lessons and the trainer.
+
+## Journal and analytics
+
+Nothing has to be logged by hand. The Journal lists every closed trade and
+open position straight from the paper accounts: spot, futures and options.
+The logic is in `src/lib/journal/journal.ts`.
+
+- **Notes** (reasoning, setup, feeling, review, a 1 to 5 rating for following
+  the plan) are saved by `src/stores/journal.ts`, keyed by position, so notes
+  written while a trade is open stay with it when it closes.
+- **Chart snapshots** are stored as candles and markers, not as images, so
+  they follow the theme and stay zoomable. One is saved to IndexedDB when a
+  trade closes; if that fails it is rebuilt from history when the trade is
+  opened in the Journal. The candle size is the smallest that fits the whole
+  trade in about 150 candles.
+- **Funding payments and liquidations** are read from the account ledger and
+  listed on the trade.
+- **CSV export** writes the trades currently shown, with notes. Text that
+  starts with =, +, - or @ is prefixed with an apostrophe so a spreadsheet
+  does not run it as a formula.
+- **Replay trades** live in their own account. The Journal shows them when
+  asked, and Analytics leaves them out unless the switch is on.
+- **Analytics** works on closed trades only: net result, win rate,
+  expectancy, average R and achieved reward-to-risk, profit factor, drawdown
+  of the running total, and results by setup, instrument type, day of the
+  week, feeling and symbol.
+
+Resetting the paper account clears its trades. Notes for cleared trades are
+kept but no longer shown.
 
 ## Replay
 

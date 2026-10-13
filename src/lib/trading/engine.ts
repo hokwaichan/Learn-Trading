@@ -356,6 +356,8 @@ function applyFill(account: Account, order: Order, price: number, prices: Prices
         netPnl,
         returnPct: cost > 0 ? netPnl / cost : 0,
         initialRisk: existing.initialRisk,
+        stopLoss: existing.stopLoss,
+        takeProfit: existing.takeProfit,
         rMultiple: existing.initialRisk ? netPnl / existing.initialRisk : undefined,
         leverage: existing.futures?.leverage,
         exitReason: options.exitReason ?? exitReasonOf(order),

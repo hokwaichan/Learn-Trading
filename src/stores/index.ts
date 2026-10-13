@@ -7,4 +7,5 @@ export type { SeriesState, WatchlistItem, WorkspaceMode } from './market';
 export { useDrawings, useSymbolDrawings } from './drawings';
 export { MAX_BACKTEST_CANDLES, useBacktest } from './backtest';
 export type { BacktestRunSummary, BacktestSetup } from './backtest';
+export { captureSnapshotsOnClose, loadSnapshot, useJournal } from './journal';
 export { REPLAY_SPEEDS, replayPricesNow, useReplay } from './replay';

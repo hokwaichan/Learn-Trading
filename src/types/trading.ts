@@ -105,6 +105,9 @@ export interface Trade {
   /** Net P&L as a fraction of the margin or cost committed. */
   returnPct: number;
   initialRisk?: number;
+  /** The stop-loss and take-profit the position had when it closed, for the journal's chart. */
+  stopLoss?: number;
+  takeProfit?: number;
   /** netPnl / initialRisk */
   rMultiple?: number;
   leverage?: number;

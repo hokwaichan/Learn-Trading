@@ -1,8 +1,8 @@
 export { cn } from './cn';
 export { Button, IconButton } from './Button';
 export type { ButtonProps, ButtonSize, ButtonVariant, IconButtonProps } from './Button';
-export { Input, Select, Slider, Switch } from './Field';
-export type { InputProps, SelectOption, SelectProps, SliderProps, SwitchProps } from './Field';
+export { Input, Select, Slider, Switch, Textarea } from './Field';
+export type { InputProps, SelectOption, SelectProps, SliderProps, SwitchProps, TextareaProps } from './Field';
 export { Tabs, TabPanel } from './Tabs';
 export type { TabItem, TabsProps } from './Tabs';
 export { Badge, Card, Pnl, ProgressBar, StatTile, toneOf } from './Card';

@@ -1,4 +1,4 @@
-import { useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes } from 'react';
+import { useId, type InputHTMLAttributes, type ReactNode, type SelectHTMLAttributes, type TextareaHTMLAttributes } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from './cn';
 
@@ -87,6 +87,31 @@ export function Input({
         />
         {suffix && <span className="pointer-events-none absolute right-2 text-xs text-muted">{suffix}</span>}
       </div>
+    </FieldShell>
+  );
+}
+
+export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  label?: ReactNode;
+  hint?: ReactNode;
+  error?: ReactNode;
+  wrapperClassName?: string;
+}
+
+/** A multi-line text field, for notes. */
+export function Textarea({ label, hint, error, className, wrapperClassName, id: idProp, rows = 3, ...rest }: TextareaProps) {
+  const auto = useId();
+  const id = idProp ?? auto;
+  return (
+    <FieldShell id={id} label={label} hint={hint} error={error} className={wrapperClassName}>
+      <textarea
+        id={id}
+        rows={rows}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error || hint ? `${id}-msg` : undefined}
+        className={cn(CONTROL.replace('h-8 ', ''), 'min-h-16 resize-y py-1.5 leading-relaxed', error ? 'border-down' : 'border-border', className)}
+        {...rest}
+      />
     </FieldShell>
   );
 }
