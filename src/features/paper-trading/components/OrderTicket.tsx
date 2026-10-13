@@ -4,10 +4,12 @@ import { Link } from 'react-router-dom';
 import { Button, cn, ConfirmDialog, EmptyState, Input, Pnl, Slider, Tabs, toast } from '@/components/ui';
 import { displaySymbol } from '@/lib/data';
 import { floorToStep, formatMoney, formatPct, formatPrice, formatQty, roundToTick } from '@/lib/format';
-import { feeFor, findPosition, referencePrice, unrealizedPnl, validateStops, withSlippage, type OrderRequest, type Prices } from '@/lib/trading/engine';
+import { feeFor, findPosition, liquidationPriceOf, marginOf, referencePrice, unrealizedPnl, validateStops, withSlippage, type OrderRequest, type Prices } from '@/lib/trading/engine';
+import { DEFAULT_MAINTENANCE_MARGIN_RATE, MAX_LEVERAGE } from '@/lib/trading/futures';
 import { positionSize, riskReward } from '@/lib/trading/sizing';
-import { useAccount, useAccountSnapshot, useLastPrice, useSettings } from '@/stores';
-import type { AccountId, Instrument, Side } from '@/types';
+import { useAccount, useAccountSnapshot, useLastPrice, useMarket, useSettings } from '@/stores';
+import type { AccountId, Instrument, MarginMode, Position, Side } from '@/types';
+import { FuturesPositionCard } from './FuturesPositionCard';
 
 export interface OrderTicketProps {
   instrument: Instrument;
@@ -25,6 +27,8 @@ type SizeMode = 'quantity' | 'risk';
 
 /** Above this share of the account at risk on one trade, the ticket asks for confirmation. */
 export const RISK_WARNING = 0.02;
+/** Above this leverage the ticket warns and asks for confirmation. */
+export const LEVERAGE_WARNING = 5;
 
 const num = (text: string): number | undefined => {
   const n = Number(text);
@@ -50,6 +54,9 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
   const feeRate = useSettings((s) => s.feeRate);
   const slippagePct = useSettings((s) => s.slippagePct);
   const market = priceOverride ?? live;
+  const livePrices = useMarket((s) => s.lastPrices);
+  const allPrices = prices ?? livePrices;
+  const isFutures = instrument.kind === 'perpetual';
 
   const [side, setSide] = useState<Side>('buy');
   const [kind, setKind] = useState<OrderKind>('market');
@@ -63,6 +70,11 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
   const [submitted, setSubmitted] = useState(false);
 
   const position = findPosition(account, instrument.symbol, instrument.kind);
+  // Start from the open position's settings, so adding to it does not silently change them.
+  const [leverageChoice, setLeverage] = useState(position?.futures?.leverage ?? 3);
+  const [marginChoice, setMarginMode] = useState<MarginMode>(position?.futures?.marginMode ?? 'isolated');
+  const leverage = isFutures ? leverageChoice : 1;
+  const marginMode = marginChoice;
   const direction = side === 'buy' ? 'long' : 'short';
   const base = instrument.base;
   const fmtPrice = (v: number) => formatPrice(v, instrument.tickSize);
@@ -83,7 +95,33 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
 
   const value = entry != null && quantity != null ? entry * quantity : undefined;
   const fee = entry != null && quantity != null ? feeFor(entry, quantity, feeRate) : undefined;
+  const margin = value != null ? value / leverage : undefined;
   const riskAmount = entry != null && quantity != null && stopLoss != null ? Math.abs(entry - stopLoss) * quantity : undefined;
+
+  // Where this order would be liquidated, estimated as if it filled at the entry price.
+  const direction0 = side === 'buy' ? 'long' : 'short';
+  const liquidation = useMemo(() => {
+    if (!isFutures || entry == null || quantity == null) return undefined;
+    const adding = position != null && position.direction === direction0;
+    const total = quantity + (adding ? position.quantity : 0);
+    const average = adding ? (position.entryPrice * position.quantity + entry * quantity) / total : entry;
+    const planned = {
+      id: 'planned',
+      symbol: instrument.symbol,
+      kind: instrument.kind,
+      direction: direction0,
+      quantity: total,
+      entryPrice: average,
+      futures: { leverage, marginMode, margin: (average * total) / leverage, maintenanceMargin: 0, liquidationPrice: 0, fundingPaid: 0, lastFundingAt: 0 },
+    } as Position;
+    if (marginMode === 'isolated') {
+      const distance = 1 / leverage - DEFAULT_MAINTENANCE_MARGIN_RATE;
+      return direction0 === 'long' ? Math.max(0, average * (1 - distance)) : average * (1 + distance);
+    }
+    const others = account.positions.filter((p) => !(p.symbol === instrument.symbol && p.kind === instrument.kind));
+    return liquidationPriceOf({ ...account, positions: [...others, planned] }, planned, allPrices) ?? undefined;
+  }, [isFutures, entry, quantity, position, direction0, instrument, leverage, marginMode, account, allPrices]);
+  const liquidationMove = liquidation != null && liquidation > 0 && entry != null ? Math.abs(entry - liquidation) / entry : undefined;
   const riskShare = riskAmount != null && snapshot.equity > 0 ? riskAmount / snapshot.equity : undefined;
   const ratio = entry != null && stopLoss != null && takeProfit != null ? riskReward(entry, stopLoss, takeProfit) : null;
 
@@ -103,15 +141,27 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
     const problem = validateStops(direction, reference, stopLoss, takeProfit);
     if (problem) errors[problem.includes('stop-loss') ? 'stop' : 'target'] = problem;
   }
-  const needed = opens && value != null ? (reducing ? (value / quantity!) * (quantity! - position!.quantity) : value) + (fee ?? 0) : 0;
-  const freeAfterClose = snapshot.freeMargin + (reducing && market != null ? market * position!.quantity : 0);
+  const needed = opens && value != null ? (reducing ? (value / quantity!) * (quantity! - position!.quantity) : value) / leverage + (fee ?? 0) : 0;
+  const freeAfterClose = snapshot.freeMargin + (reducing && market != null ? marginOf(position!, market) : 0);
   if (!errors.quantity && needed > freeAfterClose * (1 + 1e-9)) {
     errors.quantity = `Not enough free funds. This needs ${formatMoney(needed)} and ${formatMoney(Math.max(0, freeAfterClose))} is available.`;
   }
   const hasErrors = Object.values(errors).some(Boolean);
 
   const warnings: string[] = [];
-  if (opens && stopLoss == null) warnings.push('No stop-loss. Nothing limits the loss on this trade.');
+  if (opens && stopLoss == null) {
+    warnings.push(isFutures && leverage > 1 ? 'No stop-loss. The only thing limiting the loss on this trade is liquidation.' : 'No stop-loss. Nothing limits the loss on this trade.');
+  }
+  if (opens && isFutures && leverage > LEVERAGE_WARNING) {
+    warnings.push(
+      liquidationMove != null
+        ? `${leverage}x leverage. A move of only ${formatPct(liquidationMove, 1)} against you liquidates this position${marginMode === 'isolated' && margin != null ? ` and loses its ${formatMoney(margin)} margin` : ''}.`
+        : `${leverage}x leverage. Small moves against you become large losses.`,
+    );
+  }
+  if (opens && isFutures && stopLoss != null && liquidation != null && liquidation > 0 && (direction === 'long' ? stopLoss <= liquidation : stopLoss >= liquidation)) {
+    warnings.push('Your stop-loss is beyond the liquidation price, so the position would be liquidated before the stop is reached.');
+  }
   if (opens && riskShare != null && riskShare > RISK_WARNING) {
     warnings.push(`This risks ${formatPct(riskShare, 1)} of your account (${formatMoney(riskAmount!)}), above the 2% guideline.`);
   }
@@ -144,6 +194,8 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
       stopPrice: request.stopPrice != null ? roundToTick(request.stopPrice, instrument.tickSize) : undefined,
       stopLoss: opens ? stopLoss : undefined,
       takeProfit: opens ? takeProfit : undefined,
+      leverage: isFutures ? leverage : undefined,
+      marginMode: isFutures ? marginMode : undefined,
     };
     const events = place(accountId, order, market, prices, now);
     const rejected = events.find((e) => e.type === 'order_rejected');
@@ -176,8 +228,8 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
   const setShare = (share: number) => {
     if (entry == null) return;
     // Leave room for the fee so "100%" is not rejected.
-    const budget = (Math.max(0, snapshot.freeMargin) * share) / (1 + feeRate);
-    setQuantityText(formatQty(floorToStep(budget / entry, instrument.stepSize), instrument.stepSize));
+    const budget = (Math.max(0, snapshot.freeMargin) * share) / (1 + feeRate * leverage);
+    setQuantityText(formatQty(floorToStep((budget * leverage) / entry, instrument.stepSize), instrument.stepSize).replace(/,/g, ''));
   };
   const actionLabel = `${side === 'buy' ? 'Buy' : 'Sell'}${reducing ? '' : side === 'buy' ? ' / Long' : ' / Short'}${quantity != null ? ` ${formatQty(quantity, instrument.stepSize)} ${base}` : ''}`;
 
@@ -216,6 +268,7 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
           >
             Close position at market
           </Button>
+          <FuturesPositionCard account={account} position={position} instrument={instrument} mark={market} prices={allPrices} />
         </div>
       )}
 
@@ -227,6 +280,37 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
           Sell / Short
         </Button>
       </div>
+
+      {isFutures && (
+        <div className="rounded-control border border-border bg-bg p-3">
+          <Slider label="Leverage" min={1} max={MAX_LEVERAGE} step={1} value={leverageChoice} onChange={setLeverage} format={(v) => `${v}x`} />
+          <p className="mt-1.5 text-xs text-muted">
+            {leverage === 1
+              ? 'No leverage: the position is worth what you put in.'
+              : `Every $1 of your money controls ${`$${leverage}`} of ${base}. Gains and losses are ${leverage} times larger.`}
+          </p>
+          <Tabs<MarginMode>
+            variant="pill"
+            label="Margin mode"
+            idBase="ticket-margin"
+            className="mt-2 rounded-control border border-border p-0.5"
+            value={marginChoice}
+            onChange={setMarginMode}
+            items={[
+              { id: 'isolated', label: 'Isolated' },
+              { id: 'cross', label: 'Cross' },
+            ]}
+          />
+          <p className="mt-1.5 text-xs text-muted">
+            {marginMode === 'isolated'
+              ? 'Isolated: this trade can lose only the margin put into it. It is liquidated sooner, but the rest of the account is safe.'
+              : 'Cross: the whole account backs this trade. It is liquidated later, but a liquidation can empty the account.'}
+          </p>
+          {position && position.direction === direction && position.futures && (position.futures.leverage !== leverage || position.futures.marginMode !== marginMode) && (
+            <p className="mt-1.5 text-xs text-warning-text">Adding to the open position applies these settings to all of it.</p>
+          )}
+        </div>
+      )}
 
       <Tabs<OrderKind>
         variant="pill"
@@ -337,12 +421,19 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
       <dl className="rounded-control border border-border px-3 py-1.5">
         <Row label="Estimated entry">{entry != null ? fmtPrice(entry) : '–'}</Row>
         <Row label="Position value">{value != null ? formatMoney(value) : '–'}</Row>
+        {isFutures && <Row label={`Margin needed (${leverage}x)`}>{margin != null ? formatMoney(margin) : '–'}</Row>}
+        {isFutures && (
+          <Row label="Liquidation price (est.)">
+            {!opens || liquidation == null ? '–' : liquidation > 0 ? `${fmtPrice(liquidation)} (${formatPct(liquidationMove ?? 0, 1)} away)` : 'None'}
+          </Row>
+        )}
         <Row label={`Fee (${formatPct(feeRate, 2)})`}>{fee != null ? formatMoney(fee) : '–'}</Row>
         <Row label="Risk if stopped out" strong>
           {riskAmount != null ? `${formatMoney(riskAmount)} (${formatPct(riskShare ?? 0, 2)})` : stopLoss != null ? '–' : 'No stop-loss'}
         </Row>
         <Row label="Reward to risk">{ratio != null ? `${ratio.toFixed(2)} : 1` : '–'}</Row>
-        <Row label="Free funds">{formatMoney(snapshot.freeMargin)}</Row>
+        {isFutures && <Row label="Margin in use">{formatMoney(snapshot.marginUsed)}</Row>}
+        <Row label={isFutures ? 'Free margin' : 'Free funds'}>{formatMoney(snapshot.freeMargin)}</Row>
       </dl>
 
       {warnings.length > 0 && (

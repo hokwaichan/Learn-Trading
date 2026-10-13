@@ -18,8 +18,16 @@ export function announceTradeEvents(events: EngineEvent[]): void {
       const name = instrument ? displaySymbol(instrument) : trade.symbol;
       const text = `${name} ${trade.direction} closed at ${formatPrice(trade.exitPrice, instrument?.tickSize)}: ${formatSignedMoney(trade.netPnl)}`;
       const title = EXIT_TITLE[trade.exitReason] ?? 'Position closed';
-      if (trade.netPnl >= 0) toast.success(title, text);
+      if (trade.exitReason === 'liquidation') toast.error(title, `${text}. The loss reached the margin backing the position.`);
+      else if (trade.netPnl >= 0) toast.success(title, text);
       else toast.warning(title, text);
+      continue;
+    }
+    if (event.type === 'funding') {
+      const instrument = findInstrument(event.position.symbol, event.position.kind);
+      const name = instrument ? displaySymbol(instrument) : event.position.symbol;
+      const paid = event.amount >= 0;
+      toast.info(paid ? 'Funding paid' : 'Funding received', `${name} ${event.position.direction}: ${formatSignedMoney(-event.amount)}`);
       continue;
     }
     if (event.type !== 'order_filled' && event.type !== 'order_rejected') continue;

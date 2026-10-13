@@ -1,4 +1,5 @@
-import type { Account, Direction, ExitReason, InstrumentKind, LedgerEntry, MarginMode, Order, Position, Side, Trade } from '@/types';
+import type { Account, Direction, ExitReason, FuturesPositionState, InstrumentKind, LedgerEntry, MarginMode, Order, Position, Side, Trade } from '@/types';
+import { DEFAULT_MAINTENANCE_MARGIN_RATE, fundingPayment, fundingPeriods, liquidationPrice, MAX_LEVERAGE } from './futures';
 
 /**
  * The paper-trading engine: order validation, fills, fees, slippage and
@@ -19,6 +20,20 @@ import type { Account, Direction, ExitReason, InstrumentKind, LedgerEntry, Margi
  * There is one position per instrument. An order in the opposite direction
  * reduces it, closes it, or closes it and opens the other way with whatever
  * is left over.
+ *
+ * Futures
+ * -------
+ * A perpetual position carries leverage and a margin mode.
+ *
+ * - Isolated: the position can lose at most its own margin (entry value /
+ *   leverage). Its liquidation price depends only on its entry and leverage.
+ * - Cross: the whole account backs the position. It is liquidated when
+ *   account equity falls to the maintenance margin of the open futures
+ *   positions, so its liquidation price moves with the rest of the account.
+ *
+ * A liquidation closes the position at the liquidation price and takes
+ * what is left of its maintenance margin as a fee. Funding is charged by
+ * applyFunding() for every funding time that has passed.
  */
 
 export interface EngineContext {
@@ -28,6 +43,8 @@ export interface EngineContext {
   feeRate: number;
   /** How much worse than the quoted price market and stop orders fill, as a fraction. */
   slippagePct: number;
+  /** Share of a futures position's value that must remain as margin. Defaults to 0.5%. */
+  maintenanceMarginRate?: number;
   newId: () => string;
 }
 
@@ -64,7 +81,9 @@ export type EngineEvent =
   | { type: 'order_rejected'; order: Order; reason: string }
   | { type: 'order_cancelled'; order: Order }
   | { type: 'position_opened'; position: Position }
-  | { type: 'trade_closed'; trade: Trade; position: Position };
+  | { type: 'trade_closed'; trade: Trade; position: Position }
+  /** Positive amount: the position paid. Negative: it received. */
+  | { type: 'funding'; position: Position; amount: number };
 
 export interface EngineResult {
   account: Account;
@@ -93,8 +112,49 @@ export function unrealizedPnl(position: Position, price: number): number {
   return (price - position.entryPrice) * position.quantity * sign(position.direction);
 }
 
+/** Money tied up by a position: its full value for spot, its margin for futures. */
 export function marginOf(position: Position, price: number): number {
-  return (price * position.quantity) / (position.futures?.leverage ?? 1);
+  return position.futures ? position.futures.margin : price * position.quantity;
+}
+
+const mmrOf = (ctx: Pick<EngineContext, 'maintenanceMarginRate'>) => ctx.maintenanceMarginRate ?? DEFAULT_MAINTENANCE_MARGIN_RATE;
+
+function futuresState(direction: Direction, entryPrice: number, quantity: number, leverage: number, marginMode: MarginMode, mmr: number, previous: FuturesPositionState | undefined, now: number): FuturesPositionState {
+  const value = entryPrice * quantity;
+  return {
+    leverage,
+    marginMode,
+    margin: value / leverage,
+    maintenanceMargin: value * mmr,
+    liquidationPrice: liquidationPrice(direction, entryPrice, leverage, mmr),
+    fundingPaid: previous?.fundingPaid ?? 0,
+    lastFundingAt: previous?.lastFundingAt ?? now,
+  };
+}
+
+/**
+ * The price at which a futures position would be liquidated right now, or
+ * null for a spot position. For an isolated position this is fixed by its
+ * entry and leverage. For a cross position it is the price at which account
+ * equity equals the maintenance margin of all futures positions, holding
+ * every other price still; zero means it cannot be reached.
+ */
+export function liquidationPriceOf(account: Account, position: Position, prices: Prices, maintenanceMarginRate = DEFAULT_MAINTENANCE_MARGIN_RATE): number | null {
+  if (!position.futures) return null;
+  if (position.futures.marginMode === 'isolated') return position.futures.liquidationPrice;
+  const s = sign(position.direction);
+  let otherPnl = 0;
+  let otherMaintenance = 0;
+  for (const p of account.positions) {
+    if (p.id === position.id) continue;
+    const mark = markOf(p, prices);
+    otherPnl += unrealizedPnl(p, mark);
+    if (p.futures) otherMaintenance += mark * p.quantity * maintenanceMarginRate;
+  }
+  // cash + otherPnl + (P - entry) * q * s = mmr * P * q + otherMaintenance, solved for P.
+  const q = position.quantity;
+  const price = (position.entryPrice * q * s - account.cash - otherPnl + otherMaintenance) / (q * (s - maintenanceMarginRate));
+  return Number.isFinite(price) && price > 0 ? price : 0;
 }
 
 function markOf(position: Position, prices: Prices): number {
@@ -155,7 +215,7 @@ function openingQuantity(account: Account, request: Pick<OrderRequest, 'symbol' 
 function affordable(account: Account, request: OrderRequest, price: number, prices: Prices, ctx: EngineContext): string | null {
   const opening = openingQuantity(account, request);
   if (opening <= 0) return null;
-  const leverage = request.leverage ?? 1;
+  const leverage = request.kind === 'perpetual' ? (request.leverage ?? 1) : 1;
   const needed = (opening * price) / leverage + feeFor(price, request.quantity, ctx.feeRate);
   // Margin freed by the part of the order that closes an existing position.
   const position = findPosition(account, request.symbol, request.kind);
@@ -173,6 +233,12 @@ function recordEquity(account: Account, prices: Prices, ctx: EngineContext): Acc
   return { ...account, equityHistory: [...account.equityHistory, { time: ctx.now, equity: equityOf(account, prices) }] };
 }
 
+interface FillOptions {
+  exitReason?: ExitReason;
+  /** Charged on top of the normal fee and recorded as a liquidation fee. */
+  liquidationFee?: number;
+}
+
 function exitReasonOf(order: Order): ExitReason {
   if (order.positionId && order.type === 'stop') return 'stop_loss';
   if (order.positionId && order.type === 'take_profit') return 'take_profit';
@@ -183,11 +249,17 @@ function exitReasonOf(order: Order): ExitReason {
  * Applies one fill to the account: opens, adds to, reduces, closes or flips
  * the position for that instrument, charges the fee, and records the result.
  */
-function applyFill(account: Account, order: Order, price: number, prices: Prices, ctx: EngineContext, events: EngineEvent[]): Account {
-  const fee = feeFor(price, order.quantity, ctx.feeRate);
+function applyFill(account: Account, order: Order, price: number, prices: Prices, ctx: EngineContext, events: EngineEvent[], options: FillOptions = {}): Account {
+  const tradingFee = feeFor(price, order.quantity, ctx.feeRate);
+  const liquidationFee = options.liquidationFee ?? 0;
+  const fee = tradingFee + liquidationFee;
   const filled: Order = { ...order, status: 'filled', filledAt: ctx.now, avgFillPrice: price, fee };
   let next: Account = { ...account, cash: account.cash - fee };
-  next = ledger(next, { time: ctx.now, type: 'fee', amount: -fee, refId: order.id }, ctx);
+  next = ledger(next, { time: ctx.now, type: 'fee', amount: -tradingFee, refId: order.id }, ctx);
+  if (liquidationFee > 0) next = ledger(next, { time: ctx.now, type: 'liquidation', amount: -liquidationFee, refId: order.positionId, note: 'Remaining margin taken on liquidation' }, ctx);
+  const leverage = order.kind === 'perpetual' ? (order.leverage ?? 1) : 1;
+  const marginMode: MarginMode = order.marginMode ?? 'isolated';
+  const mmr = mmrOf(ctx);
   events.push({ type: 'order_filled', order: filled, price, fee });
 
   const direction = directionOf(order.side);
@@ -212,6 +284,7 @@ function applyFill(account: Account, order: Order, price: number, prices: Prices
       peakQuantity: quantity,
       closedQuantity: 0,
       exitNotional: 0,
+      futures: order.kind === 'perpetual' ? futuresState(direction, price, quantity, leverage, marginMode, mmr, undefined, ctx.now) : undefined,
     };
     events.push({ type: 'position_opened', position });
     return position;
@@ -232,6 +305,8 @@ function applyFill(account: Account, order: Order, price: number, prices: Prices
       initialRisk: stopLoss != null ? Math.abs(entryPrice - stopLoss) * quantity : existing.initialRisk,
       feesPaid: existing.feesPaid + fee,
       peakQuantity: Math.max(existing.peakQuantity, quantity),
+      // Adding to a futures position applies the order's leverage and margin mode to all of it.
+      futures: existing.futures ? futuresState(direction, entryPrice, quantity, order.leverage ?? existing.futures.leverage, order.marginMode ?? existing.futures.marginMode, mmr, existing.futures, ctx.now) : undefined,
     };
     next = { ...next, positions: [...others, added] };
   } else {
@@ -248,13 +323,17 @@ function applyFill(account: Account, order: Order, price: number, prices: Prices
       feesPaid: existing.feesPaid + closingFee,
       closedQuantity: existing.closedQuantity + closing,
       exitNotional: existing.exitNotional + price * closing,
+      futures: existing.futures
+        ? futuresState(existing.direction, existing.entryPrice, existing.quantity - closing, existing.futures.leverage, existing.futures.marginMode, mmr, existing.futures, ctx.now)
+        : undefined,
     };
 
     if (reduced.quantity > 1e-12) {
       next = { ...next, positions: [...others, reduced] };
     } else {
       const fees = reduced.feesPaid;
-      const netPnl = reduced.realizedPnl - fees;
+      const funding = existing.futures?.fundingPaid ?? 0;
+      const netPnl = reduced.realizedPnl - fees - funding;
       const cost = (existing.entryPrice * reduced.peakQuantity) / (existing.futures?.leverage ?? 1);
       const trade: Trade = {
         id: ctx.newId(),
@@ -270,13 +349,13 @@ function applyFill(account: Account, order: Order, price: number, prices: Prices
         closedAt: ctx.now,
         grossPnl: reduced.realizedPnl,
         fees,
-        funding: existing.futures?.fundingPaid ?? 0,
+        funding,
         netPnl,
         returnPct: cost > 0 ? netPnl / cost : 0,
         initialRisk: existing.initialRisk,
         rMultiple: existing.initialRisk ? netPnl / existing.initialRisk : undefined,
         leverage: existing.futures?.leverage,
-        exitReason: exitReasonOf(order),
+        exitReason: options.exitReason ?? exitReasonOf(order),
       };
       const remainder = order.quantity - closing;
       const positions = remainder > 1e-12 && !order.reduceOnly ? [...others, open(remainder, fee - closingFee)] : others;
@@ -299,8 +378,10 @@ function reject(account: Account, order: Order, reason: string, events: EngineEv
  * Places an order. Market orders, and limit orders already at or through the
  * market, fill at once; other limit and stop orders wait for processBar().
  */
-export function placeOrder(account: Account, request: OrderRequest, marketPrice: number, prices: Prices, ctx: EngineContext): EngineResult {
+export function placeOrder(account: Account, input: OrderRequest, marketPrice: number, prices: Prices, ctx: EngineContext): EngineResult {
   const events: EngineEvent[] = [];
+  // Spot is never leveraged.
+  const request: OrderRequest = input.kind === 'perpetual' ? { ...input, leverage: input.leverage ?? 1, marginMode: input.marginMode ?? 'isolated' } : { ...input, leverage: undefined, marginMode: undefined };
   const order: Order = {
     id: ctx.newId(),
     accountId: account.id,
@@ -325,6 +406,7 @@ export function placeOrder(account: Account, request: OrderRequest, marketPrice:
   if (!(request.quantity > 0)) return fail('Enter a quantity above zero.');
   if (request.type === 'limit' && !(request.limitPrice! > 0)) return fail('Enter a limit price.');
   if (request.type === 'stop' && !(request.stopPrice! > 0)) return fail('Enter a stop price.');
+  if (request.leverage != null && !(request.leverage >= 1 && request.leverage <= MAX_LEVERAGE)) return fail(`Leverage must be between 1x and ${MAX_LEVERAGE}x.`);
 
   const buy = request.side === 'buy';
   if (request.type === 'stop' && (buy ? request.stopPrice! <= marketPrice : request.stopPrice! >= marketPrice)) {
@@ -427,6 +509,9 @@ export function setStops(
  *   gapped past it, which is worse than the stop.
  * - If one bar reaches both the stop-loss and the take-profit, the stop-loss
  *   is assumed to have been hit first.
+ * - A futures position is checked for liquidation before its stop-loss. The
+ *   stop-loss comes first only when it is nearer than the liquidation price
+ *   and the bar did not open beyond the liquidation price.
  * - A position opened during a bar is not checked for exits until the next
  *   bar, because the order of events inside a bar is unknown. (Live ticks
  *   are single prices, so this does not apply to them.)
@@ -474,6 +559,33 @@ export function processBar(account: Account, symbol: string, kind: InstrumentKin
   if (position && (isTick || position.id === before)) {
     const long = position.direction === 'long';
     const side = closingSide(position.direction);
+    const reached = (level: number, price: number) => (long ? price <= level : price >= level);
+    const adverse = long ? bar.low : bar.high;
+    const liquidation = liquidationPriceOf(next, position, here, mmrOf(ctx));
+    const liquidated = liquidation != null && liquidation > 0 && reached(liquidation, adverse);
+    const stopBeforeLiquidation =
+      position.stopLoss != null && reached(position.stopLoss, adverse) && (long ? position.stopLoss > liquidation! : position.stopLoss < liquidation!) && !reached(liquidation!, bar.open);
+    if (liquidated && !stopBeforeLiquidation) {
+      const exit: Order = {
+        id: ctx.newId(),
+        accountId: next.id,
+        symbol,
+        kind,
+        side,
+        type: 'market',
+        quantity: position.quantity,
+        reduceOnly: true,
+        positionId: position.id,
+        status: 'open',
+        createdAt: ctx.now,
+      };
+      const tradingFee = feeFor(liquidation, position.quantity, ctx.feeRate);
+      const loss = -unrealizedPnl(position, liquidation);
+      // Isolated: the position loses exactly its margin. Cross: its maintenance margin is forfeited.
+      const remaining = position.futures!.marginMode === 'isolated' ? position.futures!.margin - loss : liquidation * position.quantity * mmrOf(ctx);
+      next = applyFill(next, exit, liquidation, here, ctx, events, { exitReason: 'liquidation', liquidationFee: Math.max(0, remaining - tradingFee) });
+      return { account: next, events };
+    }
     const stopHit = position.stopLoss != null && (long ? bar.low <= position.stopLoss : bar.high >= position.stopLoss);
     const targetHit = position.takeProfit != null && (long ? bar.high >= position.takeProfit : bar.low <= position.takeProfit);
 
@@ -502,5 +614,30 @@ export function processBar(account: Account, symbol: string, kind: InstrumentKin
     }
   }
 
+  return { account: next, events };
+}
+
+/**
+ * Charges funding on every futures position for each funding time that has
+ * passed since it was last charged, at the current price. With a positive
+ * rate longs pay and shorts receive.
+ *
+ * If the app was closed over several funding times they are all charged at
+ * once, at today's price.
+ */
+export function applyFunding(account: Account, prices: Prices, ctx: EngineContext, rateFor: (symbol: string) => number): EngineResult {
+  const events: EngineEvent[] = [];
+  let next = account;
+  for (const position of account.positions) {
+    if (!position.futures) continue;
+    const periods = fundingPeriods(position.futures.lastFundingAt, ctx.now);
+    if (periods <= 0) continue;
+    const amount = periods * fundingPayment(position.direction, markOf(position, prices) * position.quantity, rateFor(position.symbol));
+    const updated: Position = { ...position, futures: { ...position.futures, fundingPaid: position.futures.fundingPaid + amount, lastFundingAt: ctx.now } };
+    next = { ...next, cash: next.cash - amount, positions: next.positions.map((p) => (p.id === position.id ? updated : p)) };
+    next = ledger(next, { time: ctx.now, type: 'funding', amount: -amount, refId: position.id, note: periods > 1 ? `${periods} funding payments` : undefined }, ctx);
+    events.push({ type: 'funding', position: updated, amount });
+  }
+  if (events.length) next = recordEquity(next, prices, ctx);
   return { account: next, events };
 }

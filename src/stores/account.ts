@@ -5,6 +5,7 @@ import { createMigrate } from '@/lib/migrate';
 import { advance, type AdvanceResult } from '@/lib/replay/session';
 import { createAccount, resetAccount } from '@/lib/trading/account';
 import {
+  applyFunding,
   cancelOrder,
   closePosition,
   placeOrder,
@@ -16,6 +17,7 @@ import {
   type OrderRequest,
   type Prices,
 } from '@/lib/trading/engine';
+import { DEFAULT_FUNDING_RATE } from '@/lib/trading/futures';
 import { accountSnapshot } from '@/lib/trading/snapshot';
 import type { Account, AccountId, AccountSnapshot, Candle, InstrumentKind } from '@/types';
 import { useMarket } from './market';
@@ -41,6 +43,8 @@ interface AccountStore extends AccountData {
   setStops: (id: AccountId, positionId: string, stops: { stopLoss?: number; takeProfit?: number }, marketPrice: number) => string | null;
   /** Feeds a price update to the engine: fills waiting orders and checks stops. */
   onBar: (id: AccountId, symbol: string, kind: InstrumentKind, bar: Bar, prices?: Prices) => TradeResult;
+  /** Charges any funding that has come due on futures positions. */
+  fund: (id: AccountId, now?: number) => TradeResult;
   /** Closes every position at the given prices and cancels every waiting order. */
   flatten: (id: AccountId, prices: Prices, now: number) => void;
   /** Moves the replay account forward through newly revealed candles. */
@@ -82,6 +86,8 @@ export const useAccount = create<AccountStore>()(
         },
         onBar: (id, symbol, kind, bar, prices = livePrices()) =>
           apply(id, processBar(get().accounts[id], symbol, kind, bar, prices, context(bar.time))),
+        // The real funding rate is not reachable from every region, so a fixed typical rate is used.
+        fund: (id, now) => apply(id, applyFunding(get().accounts[id], livePrices(), context(now), () => DEFAULT_FUNDING_RATE)),
         flatten: (id, prices, now) => {
           let account = get().accounts[id];
           for (const order of account.orders.filter((o) => o.status === 'open')) account = cancelOrder(account, order.id).account;

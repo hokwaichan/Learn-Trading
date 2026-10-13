@@ -41,8 +41,8 @@ The app is being built in twelve milestones.
 | 6 | Spot paper trading | Done |
 | 7 | Replay | Done |
 | 8 | Backtester | Done |
-| 9 | Futures | Next |
-| 10 | Options | |
+| 9 | Futures | Done |
+| 10 | Options | Next |
 | 11 | Journal and analytics | |
 | 12 | Dashboard and polish | |
 
@@ -246,6 +246,36 @@ How the simulation behaves:
   is never stopped out by the same candle that opened it.
 - **Nothing runs while the app is closed.** Orders are checked against the
   price when the app is next open, not against what happened in between.
+
+## Futures
+
+The Futures page is the chart workspace trading perpetual contracts on the
+same paper account. The rules live in the trading engine and
+`src/lib/trading/futures.ts`.
+
+- **Leverage** from 1x to 20x. Margin is the position value divided by
+  leverage. It is set aside, not spent: opening a position costs only the fee.
+- **Isolated margin**: a position can lose at most its own margin. It is
+  liquidated at entry x (1 - 1/leverage + 0.5%) for a long, and the mirror
+  image for a short.
+- **Cross margin**: the whole account backs the position. It is liquidated
+  when account equity falls to the maintenance margin of the open futures
+  positions, so its liquidation price moves as other positions gain or lose.
+- **Maintenance margin** is one flat 0.5% of position value. Real exchanges
+  use tiers that rise with size.
+- **Liquidation** closes the position at the liquidation price and takes
+  what is left of its margin as a fee. It is checked before the stop-loss; the
+  stop-loss wins only when it is nearer and price did not gap past both.
+- **Funding** is charged every 8 hours (00:00, 08:00, 16:00 UTC) at a fixed
+  0.01% of position value, paid by longs and received by shorts. Funding
+  times missed while the app was closed are charged when it is next opened.
+- **Warnings**: above 5x the ticket states the move that would liquidate the
+  position and asks for confirmation. A stop-loss beyond the liquidation
+  price is flagged.
+
+Binance futures data is blocked in some regions. When it is, the page shows
+the spot price of the same coin with a notice, and funding stays at the
+fixed rate.
 
 ## Replay
 

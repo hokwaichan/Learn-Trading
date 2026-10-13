@@ -4,6 +4,8 @@ import type { Direction } from '@/types';
 export const FUNDING_INTERVAL_MS = 8 * 3_600_000;
 /** Used when the real funding rate is not available: 0.01% per eight hours, paid by longs. */
 export const DEFAULT_FUNDING_RATE = 0.0001;
+/** The most leverage the simulator allows. */
+export const MAX_LEVERAGE = 20;
 /** Share of the position's value that must stay as margin. One flat rate, where real exchanges use tiers. */
 export const DEFAULT_MAINTENANCE_MARGIN_RATE = 0.005;
 

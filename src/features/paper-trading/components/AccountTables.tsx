@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Badge, Button, DataTable, EmptyState, IconButton, Input, Modal, Pnl, toast, type Column } from '@/components/ui';
 import { displaySymbol, findInstrument } from '@/lib/data';
 import { formatPrice, formatQty, formatSignedMoney } from '@/lib/format';
-import { priceKey, unrealizedPnl, type Prices } from '@/lib/trading/engine';
+import { liquidationPriceOf, priceKey, unrealizedPnl, type Prices } from '@/lib/trading/engine';
 import { useAccount, useMarket } from '@/stores';
 import type { AccountId, Order, Position, Trade } from '@/types';
 
@@ -98,7 +98,8 @@ function EditStopsDialog({ position, price, accountId, onClose }: { position: Po
 
 /** Open positions with live profit or loss. */
 export function PositionsTable({ accountId = 'main', prices: override, now }: TableProps) {
-  const positions = useAccount((s) => s.accounts[accountId].positions);
+  const account = useAccount((s) => s.accounts[accountId]);
+  const positions = account.positions;
   const close = useAccount((s) => s.close);
   const live = useMarket((s) => s.lastPrices);
   const prices = override ?? live;
@@ -109,7 +110,16 @@ export function PositionsTable({ accountId = 'main', prices: override, now }: Ta
 
   const columns: Column<Position>[] = [
     { id: 'symbol', header: 'Symbol', cell: (p) => <SymbolCell symbol={p.symbol} kind={p.kind} />, sortValue: (p) => p.symbol },
-    { id: 'side', header: 'Side', cell: (p) => <SideBadge long={p.direction === 'long'} /> },
+    {
+      id: 'side',
+      header: 'Side',
+      cell: (p) => (
+        <span className="inline-flex items-center gap-1.5">
+          <SideBadge long={p.direction === 'long'} />
+          {p.futures && <span className="num text-[11px] text-muted">{p.futures.leverage}x</span>}
+        </span>
+      ),
+    },
     { id: 'qty', header: 'Quantity', numeric: true, cell: (p) => formatQty(p.quantity, step(p.symbol, p.kind)), hideOnPhone: true },
     { id: 'entry', header: 'Entry', numeric: true, cell: (p) => formatPrice(p.entryPrice, tick(p.symbol, p.kind)), hideOnPhone: true },
     { id: 'mark', header: 'Price', numeric: true, cell: (p) => formatPrice(mark(p), tick(p.symbol, p.kind)), hideOnPhone: true },
@@ -122,7 +132,8 @@ export function PositionsTable({ accountId = 'main', prices: override, now }: Ta
         return (
           <span className="inline-flex flex-col items-end leading-tight">
             <Pnl value={pnl} />
-            <Pnl value={pnl / (p.entryPrice * p.quantity)} format="pct" className="text-[11px]" />
+            {/* For futures this is the return on the margin put up, which leverage multiplies. */}
+            <Pnl value={pnl / (p.futures?.margin ?? p.entryPrice * p.quantity)} format="pct" className="text-[11px]" />
           </span>
         );
       },
@@ -130,6 +141,17 @@ export function PositionsTable({ accountId = 'main', prices: override, now }: Ta
     },
     { id: 'stop', header: 'Stop', numeric: true, cell: (p) => (p.stopLoss != null ? formatPrice(p.stopLoss, tick(p.symbol, p.kind)) : <span className="text-warning-text">None</span>) },
     { id: 'target', header: 'Target', numeric: true, cell: (p) => (p.takeProfit != null ? formatPrice(p.takeProfit, tick(p.symbol, p.kind)) : <span className="text-muted">None</span>), hideOnPhone: true },
+    {
+      id: 'liq',
+      header: 'Liq. price',
+      numeric: true,
+      hideOnPhone: true,
+      cell: (p) => {
+        const liquidation = liquidationPriceOf(account, p, prices);
+        if (liquidation == null) return <span className="text-muted">–</span>;
+        return liquidation > 0 ? <span className="text-warning-text">{formatPrice(liquidation, tick(p.symbol, p.kind))}</span> : <span className="text-muted">None</span>;
+      },
+    },
     {
       id: 'actions',
       header: '',

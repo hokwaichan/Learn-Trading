@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import { ClipboardList, History, Lightbulb, PanelBottomClose, PanelRightClose, ReceiptText, Star, Wallet } from 'lucide-react';
-import { EmptyState, IconButton, TabPanel, Tabs } from '@/components/ui';
+import { IconButton, TabPanel, Tabs } from '@/components/ui';
 import { HistoryTable, OrdersTable, PositionsTable } from '@/features/paper-trading';
 import type { Prices } from '@/lib/trading/engine';
 import { useAccount } from '@/stores';
@@ -26,17 +26,6 @@ export interface AccountView {
   accountId: AccountId;
   prices?: Prices;
   now?: number;
-}
-
-/** Order ticket stand-in for futures until the futures simulator is built. */
-export function FuturesOrderPlaceholder() {
-  return (
-    <EmptyState
-      icon={<ReceiptText />}
-      title="Futures order ticket"
-      description="Leverage, margin mode and the liquidation gauge arrive with the futures simulator in milestone 9. Spot paper trading is on the Charts page."
-    />
-  );
 }
 
 export function BottomTabContent({ tab, accountId, prices, now }: { tab: BottomTab } & AccountView) {

@@ -172,7 +172,7 @@ check('live candle stream is connected and receiving', stream.some((s) => s.fram
 // Other instruments
 await page.goto(`${BASE}/futures/BTCUSDT`, { waitUntil: 'domcontentloaded' });
 await page.locator('canvas').first().waitFor({ timeout: 20000 });
-const fallbackNotice = await page.getByText(/shows the spot price of the same coin/).isVisible();
+const fallbackNotice = await page.getByText(/shows the spot price, which stays very close/).isVisible();
 console.log(`INFO  futures data source: ${fallbackNotice ? 'blocked here, using spot fallback with a notice' : 'Binance futures reachable'}`);
 check('futures workspace shows a chart either way', (await page.locator('canvas').count()) > 0);
 

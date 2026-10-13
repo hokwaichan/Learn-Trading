@@ -24,7 +24,8 @@ function instrumentsInPlay(account: Account): Instrument[] {
  *
  * It keeps a price stream open for every symbol with a position or a waiting
  * order, whichever page is showing, and passes each new price to the engine
- * so limit orders, stop-losses and take-profits trigger.
+ * so limit orders, stop-losses, take-profits and liquidations trigger.
+ * It also charges funding on futures positions.
  *
  * Nothing runs while the app is closed: orders are checked against the
  * current price when it is next opened, not against what happened in between.
@@ -60,4 +61,14 @@ export function usePaperEngine() {
       }
     });
   }, []);
+
+  // Charge funding on futures positions as each funding time passes, including any missed while the app was closed.
+  const hasFutures = account.positions.some((p) => p.futures);
+  useEffect(() => {
+    if (!hasFutures) return;
+    const charge = () => announceTradeEvents(useAccount.getState().fund('main'));
+    charge();
+    const timer = setInterval(charge, 60_000);
+    return () => clearInterval(timer);
+  }, [hasFutures]);
 }

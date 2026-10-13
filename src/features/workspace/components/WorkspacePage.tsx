@@ -6,7 +6,6 @@ import { OrderTicket } from '@/features/paper-trading';
 import { displaySymbol, findInstrument, instrumentsOfKind } from '@/lib/data';
 import { useCandleSeries, useMarket } from '@/stores';
 import type { Instrument } from '@/types';
-import { FuturesOrderPlaceholder } from './Panels';
 import { WorkspaceNotice, WorkspaceView } from './WorkspaceView';
 
 type LiveMode = 'spot' | 'futures';
@@ -67,13 +66,13 @@ function LiveWorkspace({ instrument, mode }: { instrument: Instrument; mode: Liv
       loadingOlder={series.loadingOlder}
       live={instrument.live}
       viewKey={`${instrument.kind}:${instrument.symbol}:${timeframe}`}
-      order={mode === 'spot' ? <OrderTicket instrument={instrument} /> : <FuturesOrderPlaceholder />}
+      order={<OrderTicket instrument={instrument} />}
       account={MAIN_ACCOUNT}
       notices={
         <>
           {series.fallback && (
             <WorkspaceNotice icon={<Info aria-hidden className="size-3.5" />}>
-              Binance futures data is not available from your region, so this chart shows the spot price of the same coin. The two stay very close.
+              Futures data is not available from your region, so this shows the spot price, which stays very close. Funding is a fixed 0.01% every 8 hours.
             </WorkspaceNotice>
           )}
           {series.stale && (
