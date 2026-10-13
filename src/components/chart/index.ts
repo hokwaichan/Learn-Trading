@@ -1,5 +1,5 @@
 export { PriceChart } from './PriceChart';
-export type { PriceChartProps } from './PriceChart';
+export type { PriceChartProps, PriceLine } from './PriceChart';
 export { DrawingLayer, DRAWING_TOOL_NAMES } from './DrawingLayer';
 export type { DrawingLayerProps } from './DrawingLayer';
 export { AnnotationLayer } from './AnnotationLayer';

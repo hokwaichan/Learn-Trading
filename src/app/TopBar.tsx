@@ -2,17 +2,14 @@ import { Flame, Moon, Search, Sun } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { IconButton, Pnl, Tooltip } from '@/components/ui';
 import { formatMoney } from '@/lib/format';
-import { useAccount, useSettings, useStreak } from '@/stores';
+import { useAccountSnapshot, useSettings, useStreak } from '@/stores';
 import { useCommandPalette } from './commandPaletteStore';
 import { SymbolSearch } from './SymbolSearch';
 
 const IS_MAC = typeof navigator !== 'undefined' && /Mac|iPhone|iPad/.test(navigator.platform);
 
 function AccountSummary() {
-  // Equity and today's P&L become live once paper trading lands; with no
-  // open positions, equity is simply the cash balance.
-  const equity = useAccount((s) => s.accounts.main.cash);
-  const todayPnl = 0;
+  const { equity, todayPnl } = useAccountSnapshot('main');
   return (
     <Link
       to="/journal"

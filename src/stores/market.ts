@@ -51,6 +51,9 @@ interface MarketStore extends MarketData {
   series: Record<string, SeriesState>;
   /** Keyed by quoteKey(). */
   quotes: Record<string, Quote>;
+  /** Latest known price per instrument, keyed by quoteKey() ("kind:symbol"). */
+  lastPrices: Record<string, number>;
+  setPrice: (kind: InstrumentKind, symbol: string, price: number) => void;
   load: (instrument: Instrument, timeframe: Timeframe) => Promise<void>;
   loadOlder: (instrument: Instrument, timeframe: Timeframe) => Promise<void>;
   applyLiveCandle: (key: string, candle: Candle) => void;
@@ -102,6 +105,13 @@ export const useMarket = create<MarketStore>()(
         ...DEFAULTS,
         series: {},
         quotes: {},
+        lastPrices: {},
+
+        setPrice: (kind, symbol, price) =>
+          set((s) => {
+            const key = `${kind}:${symbol}`;
+            return s.lastPrices[key] === price || !(price > 0) ? s : { lastPrices: { ...s.lastPrices, [key]: price } };
+          }),
 
         load(instrument, timeframe) {
           const key = seriesKey(instrument, timeframe);
@@ -136,6 +146,7 @@ export const useMarket = create<MarketStore>()(
                 noMoreHistory: instrument.source === 'static' || fresh.candles.length < PAGE,
               });
               void cache.write(key, candles);
+              if (candles.length) get().setPrice(instrument.kind, instrument.symbol, candles[candles.length - 1].close);
             } catch (error) {
               const message = describeDataError(error);
               const hasData = (get().series[key]?.candles.length ?? 0) > 0;
@@ -175,6 +186,9 @@ export const useMarket = create<MarketStore>()(
           const candles =
             candle.time === last.time ? [...current.candles.slice(0, -1), candle] : [...current.candles, candle];
           patch(key, { candles });
+          // A series key is 'kind:symbol:timeframe'.
+          const [kind, symbol] = key.split(':');
+          get().setPrice(kind as InstrumentKind, symbol, candle.close);
         },
 
         async refreshQuotes() {
@@ -183,7 +197,11 @@ export const useMarket = create<MarketStore>()(
             .filter((i): i is Instrument => Boolean(i));
           const quotes = await marketData.fetchQuotes(instruments);
           if (quotes.length === 0) return;
-          set((s) => ({ quotes: { ...s.quotes, ...Object.fromEntries(quotes.map((q) => [quoteKey(q), q])) } }));
+          set((s) => ({
+            quotes: { ...s.quotes, ...Object.fromEntries(quotes.map((q) => [quoteKey(q), q])) },
+            // A quote fills in a price for symbols that are not being streamed.
+            lastPrices: { ...Object.fromEntries(quotes.filter((q) => q.last > 0).map((q) => [quoteKey(q), q.last])), ...s.lastPrices },
+          }));
         },
 
         setLayout: (mode, changes) =>
@@ -229,4 +247,19 @@ export function useCandleSeries(instrument: Instrument | undefined, timeframe: T
   }, [instrument, timeframe, ready, providerId, key, applyLiveCandle]);
 
   return state;
+}
+
+/**
+ * Streams the latest price of an instrument into the store, for symbols that
+ * have open positions or orders but no chart on screen. Returns a function
+ * that stops the stream. Does nothing for instruments with no live price.
+ */
+export function streamPrice(instrument: Instrument): () => void {
+  if (!instrument.live) return () => {};
+  const { setPrice } = useMarket.getState();
+  return marketData.subscribeCandles(instrument, '1m', (candle) => setPrice(instrument.kind, instrument.symbol, candle.close));
+}
+
+export function useLastPrice(instrument: Instrument | undefined): number | undefined {
+  return useMarket((s) => (instrument ? s.lastPrices[quoteKey(instrument)] : undefined));
 }

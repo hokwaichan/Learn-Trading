@@ -1,7 +1,8 @@
 import type { ReactNode } from 'react';
 import { ClipboardList, History, Lightbulb, PanelBottomClose, PanelRightClose, ReceiptText, Star, Wallet } from 'lucide-react';
 import { EmptyState, IconButton, TabPanel, Tabs } from '@/components/ui';
-import type { WorkspaceMode } from '@/stores';
+import { HistoryTable, OrdersTable, PositionsTable } from '@/features/paper-trading';
+import { useAccount, type WorkspaceMode } from '@/stores';
 
 export type RightTab = 'order' | 'explain' | 'watchlist';
 export type BottomTab = 'positions' | 'orders' | 'history';
@@ -26,31 +27,25 @@ export function OrderPlaceholder({ mode }: { mode: WorkspaceMode }) {
       title={mode === 'futures' ? 'Futures order ticket' : 'Order ticket'}
       description={
         mode === 'futures'
-          ? 'Leverage, margin mode and the liquidation gauge arrive with the futures simulator in milestone 9.'
-          : 'Market, limit and stop orders with a position-size calculator arrive with paper trading in milestone 6.'
+          ? 'Leverage, margin mode and the liquidation gauge arrive with the futures simulator in milestone 9. Spot paper trading is on the Charts page.'
+          : 'Not available.'
       }
     />
   );
 }
 
-const BOTTOM_EMPTY: Record<BottomTab, { title: string; description: string }> = {
-  positions: {
-    title: 'No open positions',
-    description: 'Trades you open will appear here with their live profit or loss. Paper trading arrives in milestone 6.',
-  },
-  orders: {
-    title: 'No open orders',
-    description: 'Limit and stop orders wait here until price reaches them. Paper trading arrives in milestone 6.',
-  },
-  history: {
-    title: 'No trade history yet',
-    description: 'Every closed trade will be listed here and logged to your journal.',
-  },
-};
-
 export function BottomTabContent({ tab }: { tab: BottomTab }) {
-  const icon = BOTTOM_TABS.find((t) => t.id === tab)!.icon;
-  return <EmptyState className="py-6" icon={icon} {...BOTTOM_EMPTY[tab]} />;
+  if (tab === 'positions') return <PositionsTable />;
+  if (tab === 'orders') return <OrdersTable />;
+  return <HistoryTable />;
+}
+
+/** Counts shown on the account tabs. */
+function useTabCounts(): Record<BottomTab, number | undefined> {
+  const positions = useAccount((s) => s.accounts.main.positions);
+  const waiting = useAccount((s) => s.accounts.main.orders.filter((o) => o.status === 'open').length);
+  const attached = positions.reduce((n, p) => n + (p.stopLoss != null ? 1 : 0) + (p.takeProfit != null ? 1 : 0), 0);
+  return { positions: positions.length, orders: waiting + attached, history: undefined };
 }
 
 export interface RightPanelProps {
@@ -104,12 +99,13 @@ export interface BottomPanelProps {
 }
 
 export function BottomPanel({ tab, onTab, collapsed, onToggle }: BottomPanelProps) {
+  const counts = useTabCounts();
   return (
     <div className="flex h-full flex-col">
       <Tabs
         label="Account"
         idBase="ws-bottom"
-        items={BOTTOM_TABS}
+        items={BOTTOM_TABS.map((t) => ({ ...t, badge: counts[t.id] || undefined }))}
         value={tab}
         onChange={(next) => {
           onTab(next);

@@ -17,6 +17,7 @@ import {
   toast,
   useIsPhone,
 } from '@/components/ui';
+import { OrderTicket, useTradeLines } from '@/features/paper-trading';
 import { displaySymbol, findInstrument, instrumentsOfKind } from '@/lib/data';
 import { quoteKey, useCandleSeries, useDrawings, useMarket, useSymbolDrawings, type WorkspaceMode } from '@/stores';
 import type { DrawingPoint, DrawingTool, Instrument } from '@/types';
@@ -82,6 +83,7 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
   const series = useCandleSeries(instrument, timeframe);
   const { candles } = series;
 
+  const tradeLines = useTradeLines(instrument);
   const drawings = useSymbolDrawings(instrument.symbol);
   const addDrawing = useDrawings((s) => s.add);
   const removeDrawing = useDrawings((s) => s.remove);
@@ -106,7 +108,7 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
   const explainIndicator = layout.indicators.find((i) => i.key === explainKey && i.visible);
 
   const [explainMode, setExplainMode] = usePersistentState('explainMode', true);
-  const [rightTab, setRightTab] = usePersistentState<RightTab>(`${mode}.rightTab`, 'explain');
+  const [rightTab, setRightTab] = usePersistentState<RightTab>(`${mode}.rightTab`, 'order');
   const [bottomTab, setBottomTab] = usePersistentState<BottomTab>(`${mode}.bottomTab`, 'positions');
   const [rightCollapsed, setRightCollapsed] = usePersistentState('rightCollapsed', false);
   const [bottomCollapsed, setBottomCollapsed] = usePersistentState('bottomCollapsed', false);
@@ -190,7 +192,7 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
       indicator={explainIndicator}
     />
   );
-  const order = <OrderPlaceholder mode={mode} />;
+  const order = mode === 'spot' ? <OrderTicket instrument={instrument} /> : <OrderPlaceholder mode={mode} />;
   const watchlist = <WatchlistPanel current={instrument} />;
   const lastDay = candles.length ? new Date(candles[candles.length - 1].time * 1000).toISOString().slice(0, 10) : '';
 
@@ -219,6 +221,7 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
           selectedIndex={selectedIndex}
           onSelectCandle={onSelectCandle}
           onNeedOlder={needOlder}
+          priceLines={tradeLines}
         >
           <IndicatorLayer indicators={layout.indicators} onSelect={onSelectIndicator} selectedKey={explainIndicator?.key} />
           <DrawingLayer

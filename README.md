@@ -24,7 +24,7 @@ npm run dev          # http://localhost:5173
 | `npm run lint` | ESLint, including the folder-boundary rules |
 | `npm run build` | Type-check and build to `dist/` |
 | `npm run screenshots` | Screenshot every route at desktop and phone width in both themes (dev server must be running; first run `npx playwright install chromium`) |
-| `npm run smoke` | Click through the app shell, chart workspace, indicators, every lesson and the trainer and report pass/fail (dev server and internet needed) |
+| `npm run smoke` | Click through the app shell, chart workspace, indicators, every lesson, the trainer and paper trading and report pass/fail (dev server and internet needed) |
 | `npm run fetch-data` | Re-download the bundled daily history in `public/data/` |
 
 ## Build status
@@ -38,8 +38,8 @@ The app is being built in twelve milestones.
 | 3 | Indicators | Done |
 | 4 | Lessons and glossary | Done |
 | 5 | Pattern trainer | Done |
-| 6 | Spot paper trading | Next |
-| 7 | Replay | |
+| 6 | Spot paper trading | Done |
+| 7 | Replay | Next |
 | 8 | Backtester | |
 | 9 | Futures | |
 | 10 | Options | |
@@ -220,6 +220,32 @@ description, [lessons])` and `content/quizzes/NN-<name>.ts` with
 Write the component in `src/features/lessons/components/widgets/`, add its name
 to `LessonWidget` in `src/types/content.ts`, and add a `case` for it in
 `LessonBlocks.tsx`. Keep its maths in `src/lib/` with a test.
+
+## Paper trading
+
+The engine is pure code in `src/lib/trading/engine.ts`: it takes an account
+and an order or a price update and returns a new account plus a list of
+events. The account store calls it; `app/usePaperEngine.ts` feeds it live
+prices for every symbol with an open position or waiting order.
+
+How the simulation behaves:
+
+- **Balance and equity.** Cash is the realised balance. Equity is cash plus
+  the unrealised profit or loss of open positions. Spot positions cannot
+  exceed equity (no leverage).
+- **One position per symbol.** An order the other way reduces it, closes it,
+  or closes it and opens the opposite position with what is left.
+- **Fees and slippage** come from Settings. The fee is charged on every fill.
+  Slippage makes market and stop fills slightly worse; limit and take-profit
+  fills get their price exactly.
+- **Gaps.** If price jumps past a stop, it fills at the price it jumped to,
+  which is worse than the stop. If it jumps past a limit, the fill is better.
+- **Same-bar ambiguity** (matters in Replay and the backtester, where a whole
+  candle arrives at once): if one candle reaches both the stop-loss and the
+  take-profit, the stop-loss is assumed to have been hit first, and a position
+  is never stopped out by the same candle that opened it.
+- **Nothing runs while the app is closed.** Orders are checked against the
+  price when the app is next open, not against what happened in between.
 
 ## Trainer
 

@@ -5,6 +5,7 @@ import { CommandPalette } from './CommandPalette';
 import { MobileTabBar } from './MobileTabBar';
 import { Sidebar } from './Sidebar';
 import { TopBar } from './TopBar';
+import { usePaperEngine } from './usePaperEngine';
 
 function Disclaimer() {
   return (
@@ -18,6 +19,7 @@ function Disclaimer() {
 export function AppLayout() {
   const { pathname } = useLocation();
   const mainRef = useRef<HTMLElement>(null);
+  usePaperEngine();
 
   // Move focus to the page on navigation so keyboard and screen-reader users
   // land in the new content rather than staying on the link they activated.

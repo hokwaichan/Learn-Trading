@@ -12,7 +12,7 @@
     "lint": "eslint .",
     "typecheck": "tsc -b --noEmit",
     "screenshots": "node scripts/screenshots.mjs",
-    "smoke": "node scripts/smoke.mjs && node scripts/smoke-workspace.mjs && node scripts/smoke-indicators.mjs && node scripts/smoke-lessons.mjs && node scripts/smoke-trainer.mjs",
+    "smoke": "node scripts/smoke.mjs && node scripts/smoke-workspace.mjs && node scripts/smoke-indicators.mjs && node scripts/smoke-lessons.mjs && node scripts/smoke-trainer.mjs && node scripts/smoke-trading.mjs",
     "fetch-data": "node scripts/fetch-static-data.mjs"
   },
   "dependencies": {

@@ -25,6 +25,14 @@ import { ChartContext, ChartCursorContext, type ChartApi } from './ChartContext'
 import { Legend } from './Legend';
 import { useChartTheme, withAlpha, type ChartTheme } from './theme';
 
+/** A labelled horizontal line on the price pane, such as an entry or a stop-loss. */
+export interface PriceLine {
+  price: number;
+  title: string;
+  tone: 'accent' | 'up' | 'down' | 'warning' | 'muted';
+  dashed?: boolean;
+}
+
 export interface PriceChartProps {
   candles: Candle[];
   chartType: ChartType;
@@ -50,6 +58,8 @@ export interface PriceChartProps {
   hideTimeAxis?: boolean;
   /** Extra prices the scale must keep in view, such as an annotated stop level. */
   includePrices?: number[];
+  /** Horizontal lines for positions and orders. */
+  priceLines?: PriceLine[];
   /** Indicator rows for the legend. */
   legendExtra?: ReactNode;
   /** Overlays and extra series; they read the chart through useChartApi(). */
@@ -145,6 +155,7 @@ export function PriceChart({
   embedded = false,
   hideTimeAxis = false,
   includePrices,
+  priceLines,
   legendExtra,
   children,
 }: PriceChartProps) {
@@ -243,6 +254,33 @@ export function PriceChart({
       },
     });
   }, [series, includeKey]);
+
+  // Position and order lines. Rebuilt whenever they change; there are only a handful.
+  const linesKey = JSON.stringify(priceLines ?? []);
+  useEffect(() => {
+    if (!series) return;
+    const colors = { accent: theme.accent, up: theme.up, down: theme.down, warning: theme.warning, muted: theme.text };
+    const created = (JSON.parse(linesKey) as PriceLine[]).map((line) =>
+      series.createPriceLine({
+        price: line.price,
+        title: line.title,
+        color: colors[line.tone],
+        lineWidth: 1,
+        lineStyle: line.dashed ? LineStyle.Dashed : LineStyle.Solid,
+        axisLabelVisible: true,
+      }),
+    );
+    return () => {
+      if (disposed.current) return;
+      for (const line of created) {
+        try {
+          series.removePriceLine(line);
+        } catch {
+          // The series was swapped out with its lines.
+        }
+      }
+    };
+  }, [series, linesKey, theme]);
 
   // Theme changes restyle the existing chart.
   useEffect(() => {

@@ -21,6 +21,10 @@ export interface Order {
   marginMode?: MarginMode;
   /** Set for multi-leg option orders. */
   strategyId?: string;
+  /** Stop-loss to attach to the position this order opens. */
+  stopLoss?: number;
+  /** Take-profit to attach to the position this order opens. */
+  takeProfit?: number;
   status: OrderStatus;
   createdAt: UnixMs;
   filledAt?: UnixMs;
@@ -59,6 +63,11 @@ export interface Position {
   /** Realised from partial closes. */
   realizedPnl: number;
   feesPaid: number;
+  /** The largest size the position has reached; becomes the trade's quantity. */
+  peakQuantity: number;
+  /** Quantity closed so far and what it sold (or was bought back) for, to average the exit price. */
+  closedQuantity: number;
+  exitNotional: number;
   futures?: FuturesPositionState;
   option?: { strategy: Strategy; lastMarkedAt: UnixMs; markValue: number };
 }
