@@ -22,7 +22,7 @@ const nameOf = (symbol: string, kind: Position['kind']) => {
   const instrument = findInstrument(symbol, kind);
   return instrument ? displaySymbol(instrument) : symbol;
 };
-const pathOf = (symbol: string, kind: Position['kind']) => `${kind === 'perpetual' ? '/futures' : '/charts'}/${symbol}`;
+const pathOf = (symbol: string, kind: Position['kind']) => `${kind === 'perpetual' ? '/futures' : kind === 'option' ? '/options' : '/charts'}/${symbol}`;
 
 function SymbolCell({ symbol, kind }: { symbol: string; kind: Position['kind'] }) {
   return (
@@ -99,7 +99,8 @@ function EditStopsDialog({ position, price, accountId, onClose }: { position: Po
 /** Open positions with live profit or loss. */
 export function PositionsTable({ accountId = 'main', prices: override, now }: TableProps) {
   const account = useAccount((s) => s.accounts[accountId]);
-  const positions = account.positions;
+  // Option strategies have their own list on the Options page.
+  const positions = useMemo(() => account.positions.filter((p) => !p.option), [account.positions]);
   const close = useAccount((s) => s.close);
   const live = useMarket((s) => s.lastPrices);
   const prices = override ?? live;
@@ -291,10 +292,11 @@ export function HistoryTable({ accountId = 'main' }: TableProps) {
   const columns: Column<Trade>[] = [
     { id: 'closed', header: 'Closed', cell: (t) => <span className="num text-muted">{when(t.closedAt)}</span>, sortValue: (t) => t.closedAt },
     { id: 'symbol', header: 'Symbol', cell: (t) => <SymbolCell symbol={t.symbol} kind={t.kind} />, sortValue: (t) => t.symbol },
-    { id: 'side', header: 'Side', cell: (t) => <SideBadge long={t.direction === 'long'} /> },
-    { id: 'qty', header: 'Quantity', numeric: true, cell: (t) => formatQty(t.quantity, step(t.symbol, t.kind)), hideOnPhone: true },
-    { id: 'entry', header: 'Entry', numeric: true, cell: (t) => formatPrice(t.entryPrice, tick(t.symbol, t.kind)), hideOnPhone: true },
-    { id: 'exit', header: 'Exit', numeric: true, cell: (t) => formatPrice(t.exitPrice, tick(t.symbol, t.kind)), hideOnPhone: true },
+    // An option strategy shows its name; its entry and exit are what the whole strategy cost and returned.
+    { id: 'side', header: 'Side', cell: (t) => (t.kind === 'option' ? <Badge>{t.label ?? 'Options'}</Badge> : <SideBadge long={t.direction === 'long'} />) },
+    { id: 'qty', header: 'Quantity', numeric: true, cell: (t) => (t.kind === 'option' ? <span className="text-muted">–</span> : formatQty(t.quantity, step(t.symbol, t.kind))), hideOnPhone: true },
+    { id: 'entry', header: 'Entry', numeric: true, cell: (t) => formatPrice(t.entryPrice, t.kind === 'option' ? 0.01 : tick(t.symbol, t.kind)), hideOnPhone: true },
+    { id: 'exit', header: 'Exit', numeric: true, cell: (t) => formatPrice(t.exitPrice, t.kind === 'option' ? 0.01 : tick(t.symbol, t.kind)), hideOnPhone: true },
     { id: 'pnl', header: 'Net P&L', numeric: true, cell: (t) => <Pnl value={t.netPnl} />, sortValue: (t) => t.netPnl },
     {
       id: 'r',

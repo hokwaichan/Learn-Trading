@@ -36,7 +36,8 @@ export function BottomTabContent({ tab, accountId, prices, now }: { tab: BottomT
 
 /** Counts shown on the account tabs. */
 function useTabCounts(accountId: AccountId): Record<BottomTab, number | undefined> {
-  const positions = useAccount((s) => s.accounts[accountId].positions);
+  const all = useAccount((s) => s.accounts[accountId].positions);
+  const positions = all.filter((p) => !p.option);
   const waiting = useAccount((s) => s.accounts[accountId].orders.filter((o) => o.status === 'open').length);
   const attached = positions.reduce((n, p) => n + (p.stopLoss != null ? 1 : 0) + (p.takeProfit != null ? 1 : 0), 0);
   return { positions: positions.length, orders: waiting + attached, history: undefined };

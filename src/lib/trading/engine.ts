@@ -112,8 +112,9 @@ export function unrealizedPnl(position: Position, price: number): number {
   return (price - position.entryPrice) * position.quantity * sign(position.direction);
 }
 
-/** Money tied up by a position: its full value for spot, its margin for futures. */
+/** Money tied up by a position: its full value for spot, its margin for futures and option strategies. */
 export function marginOf(position: Position, price: number): number {
+  if (position.option) return position.option.margin;
   return position.futures ? position.futures.margin : price * position.quantity;
 }
 
@@ -158,6 +159,8 @@ export function liquidationPriceOf(account: Account, position: Position, prices:
 }
 
 function markOf(position: Position, prices: Prices): number {
+  // An option strategy carries its own model value.
+  if (position.option) return position.option.markValue;
   return prices[priceKey(position.kind, position.symbol)] ?? position.entryPrice;
 }
 

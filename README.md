@@ -42,8 +42,8 @@ The app is being built in twelve milestones.
 | 7 | Replay | Done |
 | 8 | Backtester | Done |
 | 9 | Futures | Done |
-| 10 | Options | Next |
-| 11 | Journal and analytics | |
+| 10 | Options | Done |
+| 11 | Journal and analytics | Next |
 | 12 | Dashboard and polish | |
 
 ## Folder map
@@ -276,6 +276,58 @@ same paper account. The rules live in the trading engine and
 Binance futures data is blocked in some regions. When it is, the page shows
 the spot price of the same coin with a notice, and funding stays at the
 fixed rate.
+
+## Options
+
+The pricing code is in `src/lib/pricing/`:
+
+| File | What it does |
+| --- | --- |
+| `blackScholes.ts` | Price and Greeks of a European option |
+| `impliedVol.ts` | Implied-volatility solver, and historical volatility from candles |
+| `chain.ts` | The simulated chain: expiries, strikes, volatility smile, bid and ask |
+| `payoff.ts` | Payoff at expiry, break-evens, maximum profit and loss |
+| `strategy.ts` | Value, Greeks and payoff curves of a multi-leg strategy on any date; chance of profit; margin |
+| `draft.ts`, `templates.ts` | Turning builder choices and strategy templates into priced legs |
+
+**Every option price in the app is simulated.** There is no options market
+data. The chain is built from the real price of the underlying and the
+volatility of its last 30 daily closes, priced with Black-Scholes, and the
+page says so above the chain.
+
+- **Expiries** are five Fridays at 08:00 UTC, from this week to about three
+  months out. **Strikes** are 12 either side of the price, about 1% apart.
+- **Volatility** per strike is the historical figure with a mild smile.
+- **Bid and ask** sit 2% apart around the model price. A bought leg pays the
+  ask and a sold leg receives the bid.
+- **Contract size** is 1 unit for crypto and 100 for the bundled symbols.
+- **The builder** takes up to four option legs plus the underlying. The solid
+  line is the payoff at expiry; the dashed line follows the what-if sliders
+  for price, time and implied volatility, as do the Greeks.
+- **Chance of profit** is the probability of finishing in profit at expiry if
+  price moves log-normally at the historical volatility. A model figure.
+
+Paper trading for options is in `src/lib/trading/options.ts`:
+
+- A strategy is held as one position, valued by the model whenever the
+  underlying price changes and every 30 seconds.
+- Each leg keeps the volatility it was opened at. Real implied volatility
+  moves; the sliders show what that would do.
+- Funds tied up are the most the strategy can lose, or for an uncovered short
+  call 20% of the underlying it covers plus the premium.
+- Options are European and cash-settled. At expiry each leg is paid or
+  charged its exercise value at the underlying price at that moment (looked
+  up from history if the app was closed). A short leg that finishes in the
+  money is recorded as an assignment.
+- A strategy with two expiries is settled whole at the first one.
+- The bundled symbols can be analysed but not paper traded, because their
+  price never updates.
+
+### Adding an option strategy template
+
+Append an entry to `OPTION_STRATEGIES` in `src/content/strategies.ts`, with
+each strike given as a fraction away from the current price. It appears in
+the builder, the Options lessons and the trainer.
 
 ## Replay
 

@@ -25,10 +25,16 @@ export interface LineDiagramProps {
   /** Shade the area between the first series and zero in the up and down colours. */
   shadeProfit?: boolean;
   height?: number;
+  /**
+   * Width of the drawing in its own units. The diagram always fills its
+   * container, so set this near the container's pixel width to keep the
+   * labels at their intended size in a narrow panel.
+   */
+  width?: number;
   className?: string;
 }
 
-const W = 560;
+const DEFAULT_WIDTH = 560;
 const PAD = { top: 12, right: 14, bottom: 30, left: 50 };
 
 function niceTicks(min: number, max: number, count: number): number[] {
@@ -56,6 +62,7 @@ export function LineDiagram({
   guidesX = [],
   shadeProfit,
   height = 220,
+  width: W = DEFAULT_WIDTH,
   className,
 }: LineDiagramProps) {
   const clipId = useId();

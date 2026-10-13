@@ -3,7 +3,13 @@ import { displaySymbol, findInstrument } from '@/lib/data';
 import { formatPrice, formatQty, formatSignedMoney } from '@/lib/format';
 import type { EngineEvent } from '@/lib/trading/engine';
 
-const EXIT_TITLE: Record<string, string> = { stop_loss: 'Stop-loss hit', take_profit: 'Take-profit hit', liquidation: 'Position liquidated' };
+const EXIT_TITLE: Record<string, string> = {
+  stop_loss: 'Stop-loss hit',
+  take_profit: 'Take-profit hit',
+  liquidation: 'Position liquidated',
+  expiry: 'Options expired',
+  assignment: 'Options expired: short leg assigned',
+};
 
 /**
  * Shows a toast for things the engine did without the user pressing a
@@ -16,7 +22,10 @@ export function announceTradeEvents(events: EngineEvent[]): void {
       const { trade } = event;
       const instrument = findInstrument(trade.symbol, trade.kind);
       const name = instrument ? displaySymbol(instrument) : trade.symbol;
-      const text = `${name} ${trade.direction} closed at ${formatPrice(trade.exitPrice, instrument?.tickSize)}: ${formatSignedMoney(trade.netPnl)}`;
+      const text =
+        trade.kind === 'option'
+          ? `${trade.label ?? 'Strategy'} on ${findInstrument(trade.symbol, 'spot')?.base ?? trade.symbol}: ${formatSignedMoney(trade.netPnl)}`
+          : `${name} ${trade.direction} closed at ${formatPrice(trade.exitPrice, instrument?.tickSize)}: ${formatSignedMoney(trade.netPnl)}`;
       const title = EXIT_TITLE[trade.exitReason] ?? 'Position closed';
       if (trade.exitReason === 'liquidation') toast.error(title, `${text}. The loss reached the margin backing the position.`);
       else if (trade.netPnl >= 0) toast.success(title, text);

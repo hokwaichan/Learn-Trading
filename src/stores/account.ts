@@ -18,8 +18,9 @@ import {
   type Prices,
 } from '@/lib/trading/engine';
 import { DEFAULT_FUNDING_RATE } from '@/lib/trading/futures';
+import { closeOptionPosition, markOptionPositions, openOptionPosition, settleExpiredOptions } from '@/lib/trading/options';
 import { accountSnapshot } from '@/lib/trading/snapshot';
-import type { Account, AccountId, AccountSnapshot, Candle, InstrumentKind } from '@/types';
+import type { Account, AccountId, AccountSnapshot, Candle, InstrumentKind, Strategy } from '@/types';
 import { useMarket } from './market';
 import { useSettings } from './settings';
 
@@ -45,6 +46,14 @@ interface AccountStore extends AccountData {
   onBar: (id: AccountId, symbol: string, kind: InstrumentKind, bar: Bar, prices?: Prices) => TradeResult;
   /** Charges any funding that has come due on futures positions. */
   fund: (id: AccountId, now?: number) => TradeResult;
+  /** Opens an option strategy as one position. `spot` is the underlying price now. */
+  openStrategy: (id: AccountId, strategy: Strategy, spot: number) => TradeResult;
+  /** Closes an option strategy at the model price for the given underlying price. */
+  closeStrategy: (id: AccountId, positionId: string, spot: number, tickSize?: number) => TradeResult;
+  /** Revalues open option strategies. `spotOf` gives each underlying's price, if known. */
+  markOptions: (id: AccountId, spotOf: (underlying: string) => number | undefined) => void;
+  /** Settles option strategies whose expiry has passed, at the underlying price at that time. */
+  settleOptions: (id: AccountId, spotAtExpiry: (underlying: string, expiry: number) => number | undefined) => TradeResult;
   /** Closes every position at the given prices and cancels every waiting order. */
   flatten: (id: AccountId, prices: Prices, now: number) => void;
   /** Moves the replay account forward through newly revealed candles. */
@@ -88,6 +97,13 @@ export const useAccount = create<AccountStore>()(
           apply(id, processBar(get().accounts[id], symbol, kind, bar, prices, context(bar.time))),
         // The real funding rate is not reachable from every region, so a fixed typical rate is used.
         fund: (id, now) => apply(id, applyFunding(get().accounts[id], livePrices(), context(now), () => DEFAULT_FUNDING_RATE)),
+        openStrategy: (id, strategy, spot) => apply(id, openOptionPosition(get().accounts[id], strategy, spot, livePrices(), context(), useSettings.getState().riskFreeRate)),
+        closeStrategy: (id, positionId, spot, tickSize) =>
+          apply(id, closeOptionPosition(get().accounts[id], positionId, spot, livePrices(), context(), useSettings.getState().riskFreeRate, tickSize)),
+        markOptions: (id, spotOf) => {
+          apply(id, { account: markOptionPositions(get().accounts[id], spotOf, Date.now(), useSettings.getState().riskFreeRate), events: [] });
+        },
+        settleOptions: (id, spotAtExpiry) => apply(id, settleExpiredOptions(get().accounts[id], spotAtExpiry, livePrices(), context(), useSettings.getState().riskFreeRate)),
         flatten: (id, prices, now) => {
           let account = get().accounts[id];
           for (const order of account.orders.filter((o) => o.status === 'open')) account = cancelOrder(account, order.id).account;

@@ -69,7 +69,11 @@ export interface Position {
   closedQuantity: number;
   exitNotional: number;
   futures?: FuturesPositionState;
-  option?: { strategy: Strategy; lastMarkedAt: UnixMs; markValue: number };
+  /**
+   * Set for an option strategy held as one position. `markValue` is what the
+   * whole strategy is worth by the model; `margin` is the money it ties up.
+   */
+  option?: { strategy: Strategy; lastMarkedAt: UnixMs; markValue: number; margin: number };
 }
 
 export type ExitReason =
@@ -106,6 +110,8 @@ export interface Trade {
   leverage?: number;
   exitReason: ExitReason;
   strategyTemplateId?: string;
+  /** A name to show instead of the symbol alone, e.g. the option strategy's name. */
+  label?: string;
 }
 
 export interface LedgerEntry {
