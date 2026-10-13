@@ -67,7 +67,7 @@ await page.goto(`${BASE}/backtest`, { waitUntil: 'domcontentloaded' });
 await page.getByRole('heading', { name: 'Backtester', level: 1 }).waitFor({ timeout: 10000 });
 check('the builder and an empty results panel are shown', (await u.runButton.isVisible()) && (await page.getByText('No results yet').isVisible()));
 const presets = await u.input('Start from').locator('option').allInnerTexts();
-check('five presets are offered', presets.filter((p) => p.startsWith('Preset')).length === 5, presets.join(' | '));
+check('eight presets are offered', presets.filter((p) => p.startsWith('Preset')).length === 8, presets.join(' | '));
 check('the first preset is loaded with its rule in words', await u.form.getByText('EMA 20 crosses above EMA 50').isVisible());
 check('fees and slippage from Settings are stated', await u.form.getByText(/Every fill pays a 0\.1% fee and 0\.05% slippage/).isVisible());
 await page.screenshot({ path: `${OUT}/backtest.empty.png` });

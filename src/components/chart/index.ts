@@ -5,6 +5,8 @@ export type { DrawingLayerProps } from './DrawingLayer';
 export { AnnotationLayer } from './AnnotationLayer';
 export { TradeMarkerLayer } from './TradeMarkerLayer';
 export type { TradeMarker } from './TradeMarkerLayer';
+export { NO_OVERLAYS, OVERLAY_OPTIONS, StructureLayer } from './StructureLayer';
+export type { StructureOverlays } from './StructureLayer';
 export { IndicatorLayer } from './IndicatorLayer';
 export type { IndicatorLayerProps } from './IndicatorLayer';
 export { Legend } from './Legend';

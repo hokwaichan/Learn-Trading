@@ -83,6 +83,60 @@ export const INDICATOR_INFO: Record<IndicatorId, IndicatorInfo> = {
     ],
     related: ['candle'],
   },
+  donchian: {
+    id: 'donchian',
+    summary: 'The highest high and lowest low of the last N candles. Shows when price makes a genuine new high or low.',
+    measures: 'The top and bottom of the recent trading range. Price closing outside it has gone somewhere it has not been for N candles.',
+    calculation:
+      'The upper line is the highest high of the N candles before the current one; the lower line is the lowest low. The middle line is halfway between. The current candle is left out, so a close above the upper line is a new high for the period.',
+    signals: [
+      'A close above the upper line is a breakout: the classic "turtle" trend-following entry was a 20-day high.',
+      'A close below the lower line is a breakdown, used the same way for shorts or as an exit for longs.',
+      'The lines mark where stop orders gather, which is where liquidity sweeps happen.',
+      'A narrow channel means a quiet market; breakouts from narrow channels tend to travel further.',
+    ],
+    weaknesses: [
+      'Most breakouts fail. Trend followers using it lose more often than they win and rely on a few large winners.',
+      'In a range price touches both lines repeatedly, giving one false signal after another.',
+      'It only looks at extremes, so one freak wick can hold a line in place for the whole period.',
+    ],
+    related: ['breakout', 'resistance', 'support'],
+  },
+  prevDay: {
+    id: 'prevDay',
+    summary: "Yesterday's high, low and close as lines on today's chart. The levels day traders watch first.",
+    measures: "Where the previous day's trading began to fail in each direction, and where it settled. Many traders place stops and breakout orders just beyond these prices.",
+    calculation: "The highest price, lowest price and final price of the previous UTC day, drawn across every candle of the current day. On a daily chart this is simply the previous candle.",
+    signals: [
+      "Price holding above yesterday's high suggests buyers are in control today; holding below yesterday's low suggests sellers are.",
+      'A poke beyond the level that quickly reverses is a liquidity sweep, often followed by a move the other way.',
+      "Yesterday's close marks whether today is up or down; price often returns to it in a quiet session.",
+    ],
+    weaknesses: [
+      'Crypto never closes, so the day boundary (midnight UTC) is a convention, not a real open and close.',
+      'The levels are widely known, which is exactly why price often runs through them briefly to trigger orders.',
+      'They say nothing about direction on their own; they are places to watch, not signals.',
+    ],
+    related: ['support', 'resistance'],
+  },
+  openingRange: {
+    id: 'openingRange',
+    summary: 'The high and low of the first minutes of the day. A break of either is a classic day-trading entry.',
+    measures: 'The range set while the day finds its footing. Early trading is busy and two-sided; once it settles, the side that breaks out often sets the tone.',
+    calculation:
+      'The highest and lowest price during the first N minutes after the start hour, then held as two lines for the rest of the day. The lines only appear once the opening period is over. Needs candles shorter than the range.',
+    signals: [
+      'A close above the range high is an opening-range breakout to the upside; below the range low, to the downside.',
+      'The opposite side of the range is the natural stop-loss, which fixes the risk before entry.',
+      'A break that fails and comes back through the range often runs to the other side.',
+    ],
+    weaknesses: [
+      'On quiet days price chops across both lines and stops out breakouts in both directions.',
+      'A wide opening range means a wide stop, so the position must be smaller.',
+      'For crypto the start of the day is a convention. Set the start hour to the session you actually trade.',
+    ],
+    related: ['breakout', 'stop-loss'],
+  },
   volumeMa: {
     id: 'volumeMa',
     summary: 'The average volume over the last N candles, drawn over the volume bars. Shows what normal trading looks like.',

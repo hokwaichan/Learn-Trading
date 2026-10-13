@@ -279,9 +279,9 @@ describe('series helpers', () => {
 describe('indicator registry', () => {
   const candles = hlc(RSI_CLOSES.map((c, i) => [c + 0.4, c - 0.4, c, 1000 + i * 10]));
 
-  it('lists the nine indicators', () => {
+  it('lists the twelve indicators', () => {
     expect(INDICATORS.map((d) => d.id).sort()).toEqual(
-      ['atr', 'bollinger', 'ema', 'macd', 'rsi', 'sma', 'stochastic', 'volumeMa', 'vwap'].sort(),
+      ['atr', 'bollinger', 'donchian', 'ema', 'macd', 'openingRange', 'prevDay', 'rsi', 'sma', 'stochastic', 'volumeMa', 'vwap'].sort(),
     );
   });
 

@@ -200,7 +200,9 @@ export function LeverageDemo() {
             <ProgressBar label="Share of margin lost" value={used} tone={used >= 1 ? 'down' : used > 0.5 ? 'warning' : 'accent'} showValue />
           </div>
         </div>
-        <dl aria-live="polite">
+        {/* A <dl> may only hold term and description pairs, so the status badge sits beside it and the live region wraps both. */}
+        <div aria-live="polite">
+          <dl>
           <Readout label="Your margin">{formatMoney(margin)}</Readout>
           <Readout label="Position value">{formatMoney(result.positionValue)}</Readout>
           <Readout label="Profit or loss">
@@ -210,6 +212,7 @@ export function LeverageDemo() {
             <Pnl value={result.returnOnMargin} format="pct" decimals={1} />
           </Readout>
           <Readout label="Move that wipes you out">{formatPct(result.wipeoutMove, 1)} against you</Readout>
+          </dl>
           <div className="pt-2">
             {result.liquidated ? (
               <Badge tone="down">Liquidated: the whole $1,000 is gone</Badge>
@@ -219,7 +222,7 @@ export function LeverageDemo() {
               <Badge tone="up">Position still open</Badge>
             )}
           </div>
-        </dl>
+        </div>
       </div>
     </WidgetFrame>
   );
@@ -246,7 +249,8 @@ export function PositionSizeWidget() {
           </div>
         </div>
         {result ? (
-          <dl aria-live="polite">
+          <div aria-live="polite">
+            <dl>
             <Readout label="Direction">{result.direction === 'long' ? 'Long (stop below entry)' : 'Short (stop above entry)'}</Readout>
             <Readout label="Dollars at risk">{formatMoney(result.riskAmount)}</Readout>
             <Readout label="Risk per unit">
@@ -256,6 +260,7 @@ export function PositionSizeWidget() {
               {formatQty(result.quantity, 0.01)} units
             </Readout>
             <Readout label="Position value">{formatMoney(result.positionValue)}</Readout>
+            </dl>
             <div className="flex flex-col items-start gap-1.5 pt-2">
               {risk > 2 && <Badge tone="warning">Risking more than 2% per trade</Badge>}
               {result.leverageNeeded > 1 && (
@@ -263,7 +268,7 @@ export function PositionSizeWidget() {
               )}
               {risk <= 2 && result.leverageNeeded <= 1 && <Badge tone="up">Within the 1% to 2% guideline, no leverage needed</Badge>}
             </div>
-          </dl>
+          </div>
         ) : (
           <p role="status" className="self-center text-sm text-muted">
             Enter an account size, an entry price and a different stop price to see the size.

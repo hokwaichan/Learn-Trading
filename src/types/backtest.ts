@@ -10,7 +10,10 @@ export type IndicatorId =
   | 'macd'
   | 'stochastic'
   | 'atr'
-  | 'volumeMa';
+  | 'volumeMa'
+  | 'donchian'
+  | 'prevDay'
+  | 'openingRange';
 
 export type Operand =
   | { kind: 'price'; field: 'open' | 'high' | 'low' | 'close' | 'volume' }

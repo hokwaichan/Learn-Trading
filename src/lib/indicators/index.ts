@@ -3,6 +3,7 @@ import { atr } from './atr';
 import { bollinger } from './bollinger';
 import { ema } from './ema';
 import { macd } from './macd';
+import { donchian, openingRange, previousDayLevels } from '@/lib/structure/sessions';
 import { rsi } from './rsi';
 import type { Series } from './series';
 import { sma } from './sma';
@@ -63,7 +64,8 @@ const period = (def: number, label = 'Period'): IndicatorParam => ({
 /**
  * Every indicator the chart and the backtester can use.
  *
- * To add one: write a pure function in its own file in this folder, test it
+ * To add one: write a pure function (in this folder, or lib/structure for
+ * session and structure levels), test it
  * against known values in indicators.test.ts, add its id to IndicatorId in
  * types/backtest.ts, add an entry here, and add its explanation to
  * content/indicators.ts. The chart, the Indicators dialog, the legend, the
@@ -177,6 +179,47 @@ export const INDICATORS: IndicatorDefinition[] = [
     params: [period(14)],
     outputs: [{ key: 'value', label: 'ATR', style: 'line' }],
     compute: (c, p) => ({ value: atr(c, p.period) }),
+  },
+  {
+    id: 'donchian',
+    name: 'Donchian Channel',
+    short: 'DC',
+    placement: 'overlay',
+    params: [period(20)],
+    outputs: [
+      { key: 'upper', label: 'Upper', style: 'line' },
+      { key: 'middle', label: 'Middle', style: 'dashed' },
+      { key: 'lower', label: 'Lower', style: 'line' },
+    ],
+    compute: (c, p) => ({ ...donchian(c, p.period) }),
+  },
+  {
+    id: 'prevDay',
+    name: 'Previous Day Levels',
+    short: 'Prev day',
+    placement: 'overlay',
+    params: [],
+    outputs: [
+      { key: 'high', label: 'High', style: 'line' },
+      { key: 'close', label: 'Close', style: 'dashed' },
+      { key: 'low', label: 'Low', style: 'line' },
+    ],
+    compute: (c) => ({ ...previousDayLevels(c) }),
+  },
+  {
+    id: 'openingRange',
+    name: 'Opening Range',
+    short: 'OR',
+    placement: 'overlay',
+    params: [
+      { key: 'minutes', label: 'Minutes', default: 60, min: 5, max: 240, step: 5 },
+      { key: 'startHour', label: 'Start hour (UTC)', default: 0, min: 0, max: 23, step: 1 },
+    ],
+    outputs: [
+      { key: 'high', label: 'High', style: 'line' },
+      { key: 'low', label: 'Low', style: 'line' },
+    ],
+    compute: (c, p, ctx) => ({ ...openingRange(c, ctx.stepSeconds, p.minutes, p.startHour) }),
   },
 ];
 

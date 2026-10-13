@@ -12,6 +12,7 @@ const MODES: { id: DrillMode; label: string }[] = [
   { id: 'mixed', label: 'Mixed' },
   { id: 'candlestick', label: 'Candlesticks' },
   { id: 'chart', label: 'Chart patterns' },
+  { id: 'structure', label: 'Smart money' },
   { id: 'next', label: 'What next?' },
   { id: 'options', label: 'Options' },
 ];

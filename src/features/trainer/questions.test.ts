@@ -22,6 +22,9 @@ import {
   outlookQuestion,
   PAYOFF_STRATEGIES,
   payoffQuestion,
+  STRUCTURE_ITEMS,
+  structureEvents,
+  structureQuestion,
   type Dataset,
   type TrainerQuestion,
 } from './questions';
@@ -275,7 +278,7 @@ describe('buildQuestion', () => {
   it('mixes every drill in mixed mode', () => {
     const c = context(6);
     const seen = new Set(Array.from({ length: 120 }, () => buildQuestion('mixed', c)!.drill));
-    expect(seen.size).toBe(5);
+    expect(seen.size).toBe(6);
   });
 
   it('asks a weak pattern far more often than mastered ones', () => {
@@ -356,5 +359,60 @@ describe('daily challenge', () => {
   it('varies the concept question from day to day', () => {
     const days = Array.from({ length: 20 }, (_, i) => `2026-03-${String(i + 1).padStart(2, '0')}`);
     expect(new Set(days.map((d) => conceptQuestion(d, []).refId)).size).toBeGreaterThan(5);
+  });
+});
+
+describe('smart money drill', () => {
+  it('finds plenty of each kind of event in the bundled history', () => {
+    for (const item of STRUCTURE_ITEMS) {
+      const total = datasets.reduce((sum, d) => sum + structureEvents(d.candles)[item.id].length, 0);
+      expect(total, item.id).toBeGreaterThan(20);
+    }
+  });
+
+  it.each(STRUCTURE_ITEMS.map((s) => s.id))('%s: the marked candles really show it', (id) => {
+    const rand = seededRandom(31);
+    for (let n = 0; n < 40; n++) {
+      const question = structureQuestion(id, datasets, rand)!;
+      const { candles, mark, reveal } = question.chart!;
+      expect(candles).toHaveLength(54);
+      expect(reveal.length).toBe(8);
+      expect(mark!.to).toBe(candles.length - 1);
+      expect(mark!.from).toBeGreaterThanOrEqual(0);
+      expect(question.correctId).toBe(id);
+      expect(question.kind).toBe('concept');
+      expect(question.refId).toBe(`smc-${id}`);
+      expect(question.choices.map((c) => c.id).sort()).toEqual(STRUCTURE_ITEMS.map((s) => s.id).sort());
+      expect(getLesson(...(question.explanation.lesson!.split('/') as [string, string]))).toBeDefined();
+
+      const first = candles[mark!.from];
+      const last = candles[mark!.to];
+      if (id === 'fair-value-gap') {
+        expect(mark!.to - mark!.from).toBe(2);
+        // The first and third candles do not overlap.
+        expect(last.low > first.high || last.high < first.low).toBe(true);
+      } else {
+        // The box starts on the swing point named in the question, which the last candle traded beyond.
+        const high = question.prompt.includes('swing high');
+        expect(high ? last.high > first.high : last.low < first.low).toBe(true);
+        const closedBeyond = high ? last.close > first.high : last.close < first.low;
+        // A sweep closes back inside; a break closes beyond.
+        expect(closedBeyond).toBe(id !== 'liquidity-sweep');
+      }
+    }
+  });
+
+  it('is offered in its own mode and needs price history', () => {
+    const c = { datasets, index: indexPatterns(datasets), cards: {}, now: 0, rand: seededRandom(8) };
+    for (let i = 0; i < 20; i++) expect(buildQuestion('structure', c)!.drill).toBe('structure');
+    expect(availableKinds('structure', { datasets: [], index: {} })).toEqual([]);
+  });
+
+  it('never hides the answer in the future: the event ends on the last visible candle', () => {
+    const rand = seededRandom(5);
+    for (let n = 0; n < 30; n++) {
+      const q = structureQuestion('change-of-character', datasets, rand)!;
+      expect(q.chart!.reveal[0].time).toBeGreaterThan(q.chart!.candles[q.chart!.candles.length - 1].time);
+    }
   });
 });

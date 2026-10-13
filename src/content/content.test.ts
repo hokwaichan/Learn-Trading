@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 import { runBacktest, validateStrategy, warmupBars } from '@/lib/backtest';
 import { parseStaticFile } from '@/lib/data/static';
 import { buildMatcher, linkGlossary } from '@/lib/glossaryLinker';
+import { seededRandom } from '@/lib/random';
 import { INDICATORS } from '@/lib/indicators';
 import type { Candle, ChartExample, LessonBlock } from '@/types';
 import { GLOSSARY, getGlossaryEntry } from './glossary';
@@ -81,12 +82,13 @@ function checkChart(example: ChartExample, where: string) {
 }
 
 describe('curriculum', () => {
-  it('has the eleven modules in order', () => {
+  it('has the eighteen modules in order', () => {
     expect(MODULES.map((m) => m.id)).toEqual([
       'basics', 'candlesticks', 'market-structure', 'chart-patterns', 'indicators', 'strategies',
       'risk-management', 'futures', 'options', 'psychology', 'fundamentals',
+      'bigger-picture', 'smart-money', 'ict', 'day-trading', 'trade-management', 'markets-in-practice', 'staying-in-the-game',
     ]);
-    expect(MODULES.map((m) => m.order)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]);
+    expect(MODULES.map((m) => m.order)).toEqual(MODULES.map((_, i) => i + 1));
   });
 
   it('has unique lesson ids within each module and numbered order', () => {
@@ -218,9 +220,9 @@ describe('glossary', () => {
 });
 
 describe('backtester presets', () => {
-  it('has four or five presets with unique ids', () => {
+  it('has a handful of presets with unique ids', () => {
     expect(BACKTEST_PRESETS.length).toBeGreaterThanOrEqual(4);
-    expect(BACKTEST_PRESETS.length).toBeLessThanOrEqual(5);
+    expect(BACKTEST_PRESETS.length).toBeLessThanOrEqual(8);
     expect(new Set(BACKTEST_PRESETS.map((p) => p.id)).size).toBe(BACKTEST_PRESETS.length);
   });
 
@@ -231,10 +233,23 @@ describe('backtester presets', () => {
     const ids = [...preset.entry.conditions, ...preset.exit.conditions].map((c) => c.id);
     expect(new Set(ids).size).toBe(ids.length);
 
-    const candles = parseStaticFile(JSON.parse(readFileSync('public/data/SPY.json', 'utf8')));
+    // A preset built on the opening range needs intraday candles. The bundled history is daily, so it
+    // gets a made-up but realistic 15-minute series: about 60 days of a random walk with a daily rhythm.
+    const intraday = [...preset.entry.conditions, ...preset.exit.conditions].some((c) => [c.left, c.right].some((o) => o.kind === 'indicator' && o.indicator === 'openingRange'));
+    const daily = parseStaticFile(JSON.parse(readFileSync('public/data/SPY.json', 'utf8')));
+    const rand = seededRandom(11);
+    let last = 100;
+    const quarterHours: Candle[] = Array.from({ length: 96 * 60 }, (_, i) => {
+      const open = last;
+      const close = open * (1 + (rand() - 0.495) * 0.004);
+      last = close;
+      return { time: i * 900, open, high: Math.max(open, close) * (1 + rand() * 0.001), low: Math.min(open, close) * (1 - rand() * 0.001), close, volume: 1000 };
+    });
+    const candles = intraday ? quarterHours : daily;
+    const stepSeconds = intraday ? 900 : 86_400;
     const from = candles[warmupBars(preset)].time * 1000;
-    const config = { symbol: 'SPY', timeframe: '1d' as const, from, to: Number.MAX_SAFE_INTEGER, initialCapital: 10_000, feeRate: 0.001, slippagePct: 0.0005 };
-    const { trades, equityCurve, stats } = runBacktest(preset, config, candles, { stepSeconds: 86_400, periodsPerYear: 252 });
+    const config = { symbol: 'SPY', timeframe: intraday ? ('15m' as const) : ('1d' as const), from, to: Number.MAX_SAFE_INTEGER, initialCapital: 10_000, feeRate: 0.001, slippagePct: 0.0005 };
+    const { trades, equityCurve, stats } = runBacktest(preset, config, candles, { stepSeconds, periodsPerYear: 252 });
     expect(trades.length).toBeGreaterThan(3);
     expect(equityCurve.every((p) => Number.isFinite(p.equity) && p.equity > 0)).toBe(true);
     expect(Number.isFinite(stats.sharpe)).toBe(true);

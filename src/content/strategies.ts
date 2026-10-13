@@ -412,4 +412,40 @@ export const BACKTEST_PRESETS: BacktestStrategy[] = [
     positionSizePct: 100,
     preset: true,
   },
+  {
+    id: 'donchian-breakout',
+    name: 'Donchian breakout (turtle)',
+    description:
+      'Classic trend following. Buy when the close makes a new 20-candle high, and sell when it makes a new 10-candle low. It loses small and often in ranges and depends on a few long trends, so judge it over many trades and several markets.',
+    direction: 'long',
+    entry: { combine: 'all', conditions: [when('e1', closePrice, 'crosses_above', ind('donchian', { period: 20 }, 'upper'))] },
+    exit: { combine: 'all', conditions: [when('x1', closePrice, 'crosses_below', ind('donchian', { period: 10 }, 'lower'))] },
+    positionSizePct: 100,
+    preset: true,
+  },
+  {
+    id: 'vwap-reclaim',
+    name: 'VWAP reclaim',
+    description:
+      'A day-trading idea. Buy when the close crosses back above VWAP while price is above its 50-period average, on the view that buyers have taken control again. Exit when it closes back below VWAP, or at the stop-loss. On daily candles VWAP restarts each month; on intraday candles, each day.',
+    direction: 'long',
+    entry: { combine: 'all', conditions: [when('e1', closePrice, 'crosses_above', ind('vwap', {})), when('e2', closePrice, 'gt', ind('ema', { period: 50 }))] },
+    exit: { combine: 'all', conditions: [when('x1', closePrice, 'crosses_below', ind('vwap', {}))] },
+    stopLossPct: 3,
+    positionSizePct: 100,
+    preset: true,
+  },
+  {
+    id: 'opening-range-breakout',
+    name: 'Opening range breakout',
+    description:
+      'A day-trading setup that needs intraday candles: choose a crypto symbol with 5 or 15-minute candles. Buy when the close breaks above the high of the first hour of the UTC day. Exit when it closes back below the range low, at the 1.5% stop-loss or at the 3% target. On daily candles it never trades, because there is no opening range to form.',
+    direction: 'long',
+    entry: { combine: 'all', conditions: [when('e1', closePrice, 'crosses_above', ind('openingRange', { minutes: 60, startHour: 0 }, 'high'))] },
+    exit: { combine: 'all', conditions: [when('x1', closePrice, 'crosses_below', ind('openingRange', { minutes: 60, startHour: 0 }, 'low'))] },
+    stopLossPct: 1.5,
+    takeProfitPct: 3,
+    positionSizePct: 100,
+    preset: true,
+  },
 ];

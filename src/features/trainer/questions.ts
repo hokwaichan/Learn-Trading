@@ -6,11 +6,12 @@ import { classifyOutcome, type Outcome } from '@/lib/patterns/outcome';
 import type { PayoffLeg } from '@/lib/pricing/payoff';
 import { buildLegs } from '@/lib/pricing/templates';
 import { shuffled } from '@/lib/random';
+import { findFairValueGaps, findStructureBreaks, findSweeps, findSwings } from '@/lib/structure/structure';
 import { pickWeighted } from '@/lib/srs/sm2';
 import type { Candle, ReviewCard } from '@/types';
 
-export type DrillMode = 'mixed' | 'candlestick' | 'chart' | 'next' | 'options';
-export type DrillKind = 'candlestick' | 'chart' | 'next' | 'payoff' | 'outlook';
+export type DrillMode = 'mixed' | 'candlestick' | 'chart' | 'structure' | 'next' | 'options';
+export type DrillKind = 'candlestick' | 'chart' | 'structure' | 'next' | 'payoff' | 'outlook';
 
 /** A series of real candles the trainer can cut questions from. */
 export interface Dataset {
@@ -50,21 +51,23 @@ export interface TrainerQuestion {
 export const DRILL_NAMES: Record<DrillKind, string> = {
   candlestick: 'Candlestick pattern',
   chart: 'Chart pattern',
+  structure: 'Smart money concept',
   next: 'What happened next?',
   payoff: 'Payoff diagram',
   outlook: 'Strategy for an outlook',
 };
 
 const KINDS_BY_MODE: Record<DrillMode, DrillKind[]> = {
-  mixed: ['candlestick', 'chart', 'next', 'payoff', 'outlook'],
+  mixed: ['candlestick', 'chart', 'structure', 'next', 'payoff', 'outlook'],
   candlestick: ['candlestick'],
   chart: ['chart'],
+  structure: ['structure'],
   next: ['next'],
   options: ['payoff', 'outlook'],
 };
 
 /** How often each drill comes up in mixed mode. */
-const MIX_WEIGHT: Record<DrillKind, number> = { candlestick: 3, chart: 3, next: 2, payoff: 1.5, outlook: 1.5 };
+const MIX_WEIGHT: Record<DrillKind, number> = { candlestick: 3, chart: 3, structure: 2, next: 2, payoff: 1.5, outlook: 1.5 };
 
 const CONTEXT = 44; // candles shown before a candlestick pattern
 const AFTER_PATTERN = 8; // candles revealed after it
@@ -213,6 +216,115 @@ export function chartQuestion(id: string, rand: () => number): TrainerQuestion |
 
 const OUTCOME_LABEL: Record<Outcome, string> = { up: 'Up', sideways: 'Sideways', down: 'Down' };
 
+// ── Smart money concepts ───────────────────────────────────────────────
+
+export type StructureItemId = 'fair-value-gap' | 'liquidity-sweep' | 'break-of-structure' | 'change-of-character';
+
+/** The structure events the trainer asks about, each found on real charts by the rules in lib/structure. */
+export const STRUCTURE_ITEMS: { id: StructureItemId; name: string; lesson: string; rule: string; reading: string }[] = [
+  {
+    id: 'fair-value-gap',
+    name: 'Fair value gap',
+    lesson: 'smart-money/fair-value-gaps',
+    rule: 'Three candles where the first and the third do not overlap, so the prices between them were traded only by the large middle candle.',
+    reading: 'Traders watch for price to come back into the gap and treat it as a zone where the move may resume. Many gaps are simply filled.',
+  },
+  {
+    id: 'liquidity-sweep',
+    name: 'Liquidity sweep',
+    lesson: 'smart-money/liquidity',
+    rule: 'The last candle trades beyond the earlier swing point at the start of the box, but closes back on the original side of it.',
+    reading: 'Stops resting beyond the level were triggered and price could not stay there. It often leads to a move the other way, but only the close made it a sweep and not a breakout.',
+  },
+  {
+    id: 'break-of-structure',
+    name: 'Break of structure',
+    lesson: 'smart-money/structure-bos-choch',
+    rule: 'The last candle closes beyond the earlier swing point at the start of the box, in the same direction as the trend before it.',
+    reading: 'The trend is continuing. Traders look for a pullback to join it.',
+  },
+  {
+    id: 'change-of-character',
+    name: 'Change of character',
+    lesson: 'smart-money/structure-bos-choch',
+    rule: 'The last candle closes beyond the earlier swing point at the start of the box, against the trend before it: the first break in the new direction.',
+    reading: 'The trend may be turning. It is a reason to stop trading the old direction, not yet proof of a new one.',
+  },
+];
+
+const STRUCTURE_CONTEXT = 54; // candles shown, ending at the event
+const SWING_STRENGTH = 3;
+/** Longest stretch, in candles, between the swing point and the candle that breaks or sweeps it. */
+const MAX_SPAN = 30;
+
+interface StructureEvent {
+  /** First and last candle of the box, as positions in the dataset. */
+  from: number;
+  to: number;
+  direction: 'up' | 'down';
+}
+
+const structureCache = new WeakMap<Candle[], Record<StructureItemId, StructureEvent[]>>();
+
+/** Every structure event in a dataset that is clear enough, and has room around it, to ask about. */
+export function structureEvents(candles: Candle[]): Record<StructureItemId, StructureEvent[]> {
+  const cached = structureCache.get(candles);
+  if (cached) return cached;
+  const swings = findSwings(candles, SWING_STRENGTH);
+  const breaks = findStructureBreaks(candles, swings);
+  const breakAt = new Set(breaks.map((b) => b.index));
+  const room = (e: StructureEvent) => e.to >= STRUCTURE_CONTEXT && e.to + AFTER_PATTERN < candles.length;
+  const spanOk = (e: StructureEvent) => e.to - e.from >= 4 && e.to - e.from <= MAX_SPAN;
+  const events: Record<StructureItemId, StructureEvent[]> = {
+    // Only gaps of at least 0.5% of price, and not ones made by a candle that also broke structure.
+    'fair-value-gap': findFairValueGaps(candles, 0.005)
+      .filter((g) => !breakAt.has(g.index) && !breakAt.has(g.index + 1))
+      .map((g) => ({ from: g.index - 1, to: g.index + 1, direction: g.direction === 'bullish' ? ('up' as const) : ('down' as const) }))
+      .filter(room),
+    'liquidity-sweep': findSweeps(candles, swings)
+      .map((s) => ({ from: s.swingIndex, to: s.index, direction: s.side === 'high' ? ('up' as const) : ('down' as const) }))
+      .filter((e) => room(e) && spanOk(e)),
+    'break-of-structure': breaks.filter((b) => b.kind === 'bos').map((b) => ({ from: b.swingIndex, to: b.index, direction: b.direction === 'bullish' ? ('up' as const) : ('down' as const) })).filter((e) => room(e) && spanOk(e)),
+    'change-of-character': breaks.filter((b) => b.kind === 'choch').map((b) => ({ from: b.swingIndex, to: b.index, direction: b.direction === 'bullish' ? ('up' as const) : ('down' as const) })).filter((e) => room(e) && spanOk(e)),
+  };
+  structureCache.set(candles, events);
+  return events;
+}
+
+export function structureQuestion(id: StructureItemId, datasets: Dataset[], rand: () => number): TrainerQuestion | null {
+  const item = STRUCTURE_ITEMS.find((s) => s.id === id);
+  const usable = datasets.map((d) => ({ data: d, events: structureEvents(d.candles)[id] })).filter((d) => d.events.length > 0);
+  if (!item || usable.length === 0) return null;
+  const { data, events } = usable[int(rand, usable.length)];
+  const event = events[int(rand, events.length)];
+  const start = event.to + 1 - STRUCTURE_CONTEXT;
+  const candles = data.candles.slice(start, event.to + 1);
+  const reveal = data.candles.slice(event.to + 1, event.to + 1 + AFTER_PATTERN);
+  const after = reveal.length ? reveal[reveal.length - 1].close / candles[candles.length - 1].close - 1 : 0;
+  const gap = id === 'fair-value-gap';
+  const side = event.direction === 'up' ? 'high' : 'low';
+  return {
+    key: `structure-${id}-${data.symbol}-${event.to}`,
+    drill: 'structure',
+    kind: 'concept',
+    refId: `smc-${id}`,
+    topic: DRILL_NAMES.structure,
+    prompt: gap ? 'What do the 3 marked candles show?' : `The box runs from an earlier swing ${side} to the last candle. What has just happened?`,
+    chart: { title: `${data.title} · daily`, tickSize: data.tickSize, candles, reveal, mark: { from: event.from - start, to: event.to - start }, real: true },
+    choices: shuffled(STRUCTURE_ITEMS.map((s) => ({ id: s.id, label: s.name })), int(rand, 1e9)),
+    correctId: id,
+    explanation: {
+      heading: `${item.name}${gap ? (event.direction === 'up' ? ' (bullish)' : ' (bearish)') : `, of a swing ${side}`}`,
+      paragraphs: [
+        `The rule: ${item.rule}`,
+        `How traders read it: ${item.reading}`,
+        `What happened here: over the next ${reveal.length} candles price moved ${formatSignedPct(after)}. These are descriptions of what price did, found by fixed rules. They are not predictions, and they fail often.`,
+      ],
+      lesson: item.lesson,
+    },
+  };
+}
+
 export function nextQuestion(datasets: Dataset[], rand: () => number): TrainerQuestion | null {
   const usable = datasets.filter((d) => d.candles.length > NEXT_VISIBLE + NEXT_HORIZON + 20);
   if (usable.length === 0) return null;
@@ -313,7 +425,7 @@ export interface QuestionContext {
 export function availableKinds(mode: DrillMode, context: Pick<QuestionContext, 'datasets' | 'index'>): DrillKind[] {
   return KINDS_BY_MODE[mode].filter((kind) => {
     if (kind === 'candlestick') return Object.keys(context.index).length > 0;
-    if (kind === 'next') return context.datasets.length > 0;
+    if (kind === 'next' || kind === 'structure') return context.datasets.length > 0;
     return true;
   });
 }
@@ -340,6 +452,9 @@ export function buildQuestion(mode: DrillMode, context: QuestionContext): Traine
     } else if (drill === 'chart') {
       const ids = CHART_PATTERNS.map((p) => p.id);
       question = chartQuestion(pickWeighted(ids, cards, (id) => `pattern:${id}`, now, rand, avoid), rand);
+    } else if (drill === 'structure') {
+      const ids = STRUCTURE_ITEMS.map((s) => s.id);
+      question = structureQuestion(pickWeighted(ids, cards, (id) => `concept:smc-${id}`, now, rand, avoid?.replace('smc-', '') as StructureItemId | undefined), context.datasets, rand);
     } else if (drill === 'next') {
       question = nextQuestion(context.datasets, rand);
     } else if (drill === 'payoff') {

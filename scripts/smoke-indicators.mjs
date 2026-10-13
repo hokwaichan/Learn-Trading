@@ -63,7 +63,7 @@ const legendButton = (label) => page.getByRole('button', { name: `Explain ${labe
 await page.getByRole('button', { name: 'Indicators' }).click();
 const dialog = page.getByRole('dialog', { name: 'Indicators' });
 check('Indicators dialog opens with a beginner explanation', await dialog.getByText('No indicators yet').isVisible());
-check('dialog lists all nine indicators', (await dialog.getByRole('button', { name: /^Add / }).count()) === 9);
+check('dialog lists all twelve indicators', (await dialog.getByRole('button', { name: /^Add / }).count()) === 12);
 for (const name of NAMES) await dialog.getByRole('button', { name: `Add ${name}`, exact: true }).click();
 check('eighth indicator fills the chart and disables Add', await dialog.getByRole('button', { name: 'Add Average True Range' }).isDisabled());
 check('dialog explains the limit', await dialog.getByText(/holds up to 8 indicators/).isVisible());

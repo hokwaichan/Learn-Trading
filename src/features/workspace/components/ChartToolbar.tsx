@@ -1,5 +1,6 @@
 import {
   ChartSpline,
+  Layers,
   CircleHelp,
   Minus,
   MousePointer2,
@@ -45,6 +46,8 @@ export interface ChartToolbarProps {
   onChartType: (type: ChartType) => void;
   indicatorCount: number;
   onOpenIndicators: () => void;
+  overlayCount: number;
+  onOpenOverlays: () => void;
   tool: DrawingTool | null;
   onTool: (tool: DrawingTool | null) => void;
   drawingCount: number;
@@ -135,6 +138,10 @@ export function ChartToolbar(props: ChartToolbarProps) {
       >
         Indicators
         {props.indicatorCount > 0 && <span className="num text-xs text-accent-text">{props.indicatorCount}</span>}
+      </Button>
+      <Button variant="ghost" className="shrink-0" icon={<Layers aria-hidden className="size-4" />} onClick={props.onOpenOverlays}>
+        Overlays
+        {props.overlayCount > 0 && <span className="num text-xs text-accent-text">{props.overlayCount}</span>}
       </Button>
 
       <Divider />

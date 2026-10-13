@@ -12,6 +12,8 @@ const SCREENS = [
   { path: '/', name: 'Home' },
   { path: '/learn', name: 'Lessons' },
   { path: '/learn/basics/what-is-trading', name: 'Lesson', fallback: '/learn' },
+  { path: '/learn/smart-money/order-blocks', name: 'Smart money lesson', wait: 800 },
+  { path: '/learn/ict/ict-trade-plan', name: 'ICT lesson', wait: 800 },
   { path: '/trainer', name: 'Trainer', wait: 1500 },
   { path: '/glossary', name: 'Glossary' },
   { path: '/charts/BTCUSDT', name: 'Charts', wait: 2500 },
@@ -29,6 +31,7 @@ const SCREENS = [
   { path: '/settings', name: 'Confirmation dialog', prepare: (page) => click(page.getByRole('button', { name: 'Reset account' }), page.getByRole('dialog')) },
   { path: '/settings', name: 'Command palette', prepare: async (page) => { await page.keyboard.press('Control+k'); await page.getByRole('dialog').waitFor({ timeout: 3000 }).catch(() => {}); } },
   { path: '/charts/BTCUSDT', name: 'Indicators dialog', wait: 2500, desktopOnly: true, prepare: (page) => click(page.getByRole('button', { name: 'Indicators' }), page.getByRole('dialog')) },
+  { path: '/charts/BTCUSDT', name: 'Overlays dialog', wait: 2500, prepare: (page) => click(page.getByRole('toolbar', { name: 'Chart' }).getByRole('button', { name: /^Overlays/ }), page.getByRole('dialog', { name: 'Chart overlays' })) },
   { path: '/trainer', name: 'Trainer answered', wait: 1500, prepare: (page) => click(page.getByRole('group', { name: 'Answers' }).getByRole('button').first(), page.getByText(/^(Right|Not quite)\./)) },
   {
     path: '/backtest',

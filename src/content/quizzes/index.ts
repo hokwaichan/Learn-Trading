@@ -10,6 +10,13 @@ import { futuresQuizzes } from './08-futures';
 import { optionsQuizzes } from './09-options';
 import { psychologyQuizzes } from './10-psychology';
 import { fundamentalsQuizzes } from './11-fundamentals';
+import { biggerPictureQuizzes } from './12-bigger-picture';
+import { smartMoneyQuizzes } from './13-smart-money';
+import { ictQuizzes } from './14-ict';
+import { dayTradingQuizzes } from './15-day-trading';
+import { tradeManagementQuizzes } from './16-trade-management';
+import { marketsInPracticeQuizzes } from './17-markets-in-practice';
+import { stayingInTheGameQuizzes } from './18-staying-in-the-game';
 
 /** Every quiz, one per lesson. A quiz id is `${moduleId}/${lessonId}`. */
 export const QUIZZES: Quiz[] = [
@@ -24,6 +31,13 @@ export const QUIZZES: Quiz[] = [
   ...optionsQuizzes,
   ...psychologyQuizzes,
   ...fundamentalsQuizzes,
+  ...biggerPictureQuizzes,
+  ...smartMoneyQuizzes,
+  ...ictQuizzes,
+  ...dayTradingQuizzes,
+  ...tradeManagementQuizzes,
+  ...marketsInPracticeQuizzes,
+  ...stayingInTheGameQuizzes,
 ];
 
 const BY_ID = new Map(QUIZZES.map((quiz) => [quiz.id, quiz]));

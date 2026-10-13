@@ -37,10 +37,10 @@ first. `smoke` also needs internet, for live crypto prices.
 | Screen | Address | What it is for |
 | --- | --- | --- |
 | Home | `/` | Where you left off, the daily challenge, your account and what to practise |
-| Lessons | `/learn` | 11 modules, 52 lessons, each with interactive charts and a quiz |
-| Trainer | `/trainer` | Pattern and options drills, scheduled by spaced repetition |
+| Lessons | `/learn` | 18 modules, 86 lessons, each with interactive charts and a quiz |
+| Trainer | `/trainer` | Pattern, smart money and options drills, scheduled by spaced repetition |
 | Glossary | `/glossary` | Every term, searchable; terms are linked automatically in lessons |
-| Charts | `/charts/:symbol` | Chart workspace with indicators, drawings and spot paper trading |
+| Charts | `/charts/:symbol` | Chart workspace with indicators, structure overlays, drawings and spot paper trading |
 | Futures | `/futures/:symbol` | The same workspace with leverage, margin, liquidation and funding |
 | Options | `/options/:symbol` | Simulated option chain, strategy builder, what-if sliders |
 | Replay | `/replay` | Trade past prices candle by candle with the future hidden |
@@ -232,6 +232,70 @@ description, [lessons])` and `content/quizzes/NN-<name>.ts` with
 Write the component in `src/features/lessons/components/widgets/`, add its name
 to `LessonWidget` in `src/types/content.ts`, and add a `case` for it in
 `LessonBlocks.tsx`. Keep its maths in `src/lib/` with a test.
+
+## Curriculum
+
+| # | Module | What it covers |
+| --- | --- | --- |
+| 1 | Basics | Markets, order types, the spread, long and short, leverage |
+| 2 | Reading candlesticks | Bodies and wicks, timeframes, candle patterns |
+| 3 | Market structure | Trends, support and resistance, trend lines, breakouts |
+| 4 | Chart patterns | Head and shoulders, double tops, triangles, flags, cup and handle |
+| 5 | Indicators | Moving averages, Bollinger Bands, ATR, RSI, Stochastic, MACD, volume, VWAP |
+| 6 | Strategies | Trend following, breakouts, mean reversion, trading styles |
+| 7 | Risk management | Position sizing, stops, risk/reward, expectancy, drawdown |
+| 8 | Futures | Contracts, margin, liquidation, funding, hedging |
+| 9 | Options | Calls and puts, pricing, the Greeks, implied volatility, strategies |
+| 10 | Psychology | FOMO, revenge trading, loss aversion, trading plans |
+| 11 | Fundamentals | Earnings, interest rates, economic news |
+| 12 | Reading the bigger picture | Top-down analysis, Fibonacci, divergence, volume and Wyckoff |
+| 13 | Smart money concepts | Breaks of structure, liquidity, order blocks, fair value gaps, premium and discount |
+| 14 | ICT concepts | Sessions and kill zones, the power of three, optimal trade entry, breaker blocks |
+| 15 | Day trading | The trading day, opening range, VWAP, key levels, momentum and scalping, a daily routine |
+| 16 | Managing a trade and an account | Scaling in and out, trailing stops, correlation, risk of ruin |
+| 17 | Crypto, forex and costs | Crypto markets, funding and open interest, pips and lots, the true cost of a trade |
+| 18 | Testing, reviewing and staying safe | Honest backtesting, a playbook, trade reviews, scams and prop firms, paper to real money |
+
+Nothing is locked; the order is a suggestion.
+
+### How SMC and ICT are taught
+
+Smart money concepts and ICT are popular and contested. They have no single
+agreed definition, and there is no independent evidence that they beat simpler
+methods. The lessons teach the vocabulary with one explicit rule for each
+idea, say where teachers differ, point out when a concept is an older idea
+under a new name, and repeatedly send the reader to test setups in Replay and
+log them in the Journal. The claim that institutions deliberately hunt retail
+stops is presented as a story, not a fact.
+
+## Structure overlays and session tools
+
+The detection code is in `src/lib/structure/`, pure and tested:
+
+| What | Rule used |
+| --- | --- |
+| Swing high or low | Higher (or lower) than the 3 candles before and at least as high (low) as the 3 after. Known only once those 3 have printed. |
+| Break of structure, change of character | A candle **closes** beyond the latest confirmed swing. With the trend: BOS. First one against it: CHoCH. |
+| Fair value gap | Three candles where the first and third do not overlap, at least 0.1% of price apart. Removed from the chart once filled. |
+| Order block | The last candle against the move, at the origin of a move that broke structure. Removed once price returns to it. |
+| Equal highs and lows | Consecutive swings of one kind within 0.2% of each other. |
+| Liquidity sweep | A candle trades beyond a confirmed swing and closes back inside. The ten most recent are shown. |
+| Sessions and kill zones | Defined in New York time and converted with daylight saving. Intraday charts only. |
+
+They are switched on from **Overlays** in the chart toolbar (`StructureLayer` in
+`src/components/chart/`), work in Replay as well, and look only at the last 500
+candles. Because swings need three later candles to be confirmed, a marking
+never depends on candles that have not printed yet, so Replay cannot leak
+the future through them.
+
+Three indicators were added to the registry, so they also work in the
+Backtester: **Donchian Channel**, **Previous Day Levels** and **Opening
+Range**. Three presets use them: Donchian breakout, VWAP reclaim and Opening
+range breakout (which needs intraday candles).
+
+The Trainer has a **Smart money** drill: it marks a stretch of a real chart and
+asks whether it shows a fair value gap, a liquidity sweep, a break of
+structure or a change of character.
 
 ## Paper trading
 
@@ -511,7 +575,7 @@ expiry, the backtest engine against hand-worked trades, the journal and CSV
 export, the calculators, backup round-trips, and the lesson content itself
 (every lesson has a quiz and an interactive block, every link resolves).
 
-`npm run smoke` runs twelve scripts in `scripts/` that use the app in a real
+`npm run smoke` runs thirteen scripts in `scripts/` that use the app in a real
 browser at desktop and phone width. Where a test needs the market to move,
 the live price stream is replaced by one the script controls.
 
@@ -528,6 +592,8 @@ These are deliberate simplifications. Each is also stated where it applies.
   charted, replayed, backtested and analysed, but not traded live.
 - When one candle reaches both a stop-loss and a take-profit, the stop-loss
   is assumed to have come first.
+- The structure overlays apply one fixed rule to ideas that practitioners
+  draw in different ways. They are a consistent reading, not the only one.
 - The lessons are written to be accurate and plain, but have not been
   reviewed by a licensed professional. Nothing here is financial advice.
 

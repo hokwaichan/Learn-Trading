@@ -36,7 +36,7 @@ await page.getByRole('heading', { name: 'Lessons', level: 1 }).waitFor();
 check('overview offers a place to start', await page.getByText('Start here').isVisible());
 const links = await page.locator('main ol a[href^="/learn/"]').evaluateAll((as) => as.map((a) => a.getAttribute('href')));
 check('overview lists every lesson', links.length >= 50, `${links.length} lessons`);
-check('overview shows eleven modules', (await page.locator('main section[aria-labelledby^="module-"]').count()) === 11);
+check('overview shows all eighteen modules', (await page.locator('main section[aria-labelledby^="module-"]').count()) === 18);
 await page.screenshot({ path: `${OUT}/learn.overview.png` });
 
 // ── Every lesson renders ───────────────────────────────────────────────

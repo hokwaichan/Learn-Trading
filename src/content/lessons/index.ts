@@ -10,6 +10,13 @@ import { futures } from './08-futures';
 import { options } from './09-options';
 import { psychology } from './10-psychology';
 import { fundamentals } from './11-fundamentals';
+import { biggerPicture } from './12-bigger-picture';
+import { smartMoney } from './13-smart-money';
+import { ict } from './14-ict';
+import { dayTrading } from './15-day-trading';
+import { tradeManagement } from './16-trade-management';
+import { marketsInPractice } from './17-markets-in-practice';
+import { stayingInTheGame } from './18-staying-in-the-game';
 
 /**
  * The curriculum, in recommended order. Nothing is locked: the order is only
@@ -32,6 +39,13 @@ export const MODULES: Module[] = [
   options,
   psychology,
   fundamentals,
+  biggerPicture,
+  smartMoney,
+  ict,
+  dayTrading,
+  tradeManagement,
+  marketsInPractice,
+  stayingInTheGame,
 ];
 
 export function getModule(moduleId: string): Module | undefined {

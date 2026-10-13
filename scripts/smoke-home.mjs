@@ -43,9 +43,9 @@ await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
 check('a first visit is welcomed and pointed at lesson one', (await seen(page.getByRole('heading', { level: 1, name: 'Welcome to TradeSchool' }))) && (await page.getByRole('link', { name: /Start the first lesson/ }).isVisible()));
 check('it says no real money is involved', await page.getByText(/Nothing here uses real money/).isVisible());
 const tile = async (label) => (await page.locator('div.rounded-card').filter({ has: page.getByText(label, { exact: true }) }).first().innerText()).replace(/\s+/g, ' ');
-check('progress starts at zero', /0 of 52/.test(await tile('Lessons completed')) && /0 days/.test(await tile('Daily streak')), await tile('Lessons completed'));
+check('progress starts at zero', /0 of 86/.test(await tile('Lessons completed')) && /0 days/.test(await tile('Daily streak')), await tile('Lessons completed'));
 check('the paper account is summarised', (await page.getByText('Equity (simulated money)').isVisible()) && /\$10,000\.00/.test(await page.locator('section').filter({ hasText: 'Paper account' }).first().innerText()));
-check('every module has a progress bar', (await page.locator('section').filter({ hasText: 'Progress by module' }).getByRole('progressbar').count()) === 11);
+check('every module has a progress bar', (await page.locator('section').filter({ hasText: 'Progress by module' }).getByRole('progressbar').count()) === 18);
 check('empty lists explain themselves', (await page.getByText(/No closed trades yet/).isVisible()) && (await page.getByText(/Nothing to show yet\. Answer a few pattern drills/).isVisible()));
 await page.screenshot({ path: `${OUT}/home.first.png`, fullPage: true });
 
@@ -213,10 +213,10 @@ await bp.evaluate(([ids, seed]) => {
 await bp.reload({ waitUntil: 'domcontentloaded' });
 check('a returning learner is welcomed back', await seen(bp.getByRole('heading', { level: 1, name: 'Welcome back' })));
 const btile = async (label) => (await bp.locator('div.rounded-card').filter({ has: bp.getByText(label, { exact: true }) }).first().innerText()).replace(/\s+/g, ' ');
-check('lesson progress and quiz scores are summarised', /2 of 52/.test(await btile('Lessons completed')) && /80%/.test(await btile('Average quiz score')) && /3 days/.test(await btile('Daily streak')), `${await btile('Lessons completed')} | ${await btile('Average quiz score')} | ${await btile('Daily streak')}`);
+check('lesson progress and quiz scores are summarised', /2 of 86/.test(await btile('Lessons completed')) && /80%/.test(await btile('Average quiz score')) && /3 days/.test(await btile('Daily streak')), `${await btile('Lessons completed')} | ${await btile('Average quiz score')} | ${await btile('Daily streak')}`);
 const cont = bp.locator('section').filter({ hasText: 'Continue learning' }).first();
 const href = await cont.getByRole('link', { name: /Continue/ }).first().getAttribute('href');
-check('continue learning points at the next unfinished lesson', href === `/learn/${lessonIds[2]}` && /lesson 3 of 52/.test((await cont.innerText()).replace(/\s+/g, ' ')), href);
+check('continue learning points at the next unfinished lesson', href === `/learn/${lessonIds[2]}` && /lesson 3 of 86/.test((await cont.innerText()).replace(/\s+/g, ' ')), href);
 check('the weakest pattern is suggested as the next thing to practise', /Hammer/.test(await cont.innerText()) && /30%/.test(await cont.innerText()));
 const weak = (await bp.locator('section').filter({ hasText: 'Weakest patterns to practise' }).first().innerText()).replace(/\s+/g, ' ');
 check('weakest patterns are listed worst first', weak.indexOf('Hammer') < weak.indexOf('Head and shoulders') && weak.indexOf('Head and shoulders') < weak.indexOf('Doji') && /30% right over 10 tries/.test(weak), weak.slice(0, 140));

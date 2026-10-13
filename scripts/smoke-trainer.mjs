@@ -91,6 +91,18 @@ check('the result is given in percent and ATRs', await page.getByText(/price mov
 check('it is honest that this cannot be predicted reliably', await page.getByText(/Nobody predicts this reliably/).isVisible());
 await page.screenshot({ path: `${OUT}/trainer.next-answered.png` });
 
+// ── Smart money drill ──────────────────────────────────────────────────
+await pickMode('Smart money');
+await page.getByRole('group', { name: 'Answers' }).waitFor({ timeout: 10000 });
+check('smart money: asks about a marked stretch of a real chart', (await topic()).includes('Smart money') && /marked candles show|What has just happened/.test(await page.locator('#trainer-prompt').innerText()));
+const smcChoices = await page.getByRole('group', { name: 'Answers' }).getByRole('button').allInnerTexts();
+check('smart money: offers the four structure events', ['Fair value gap', 'Liquidity sweep', 'Break of structure', 'Change of character'].every((name) => smcChoices.some((c) => c.includes(name))), smcChoices.map((c) => c.replace(/\s+/g, ' ').trim()).join(' | '));
+await page.screenshot({ path: `${OUT}/trainer.smart-money.png` });
+await page.getByRole('group', { name: 'Answers' }).getByRole('button').first().click();
+await page.waitForTimeout(400);
+check('smart money: explains the rule and says it is not a prediction', (await page.getByText(/^The rule:/).isVisible()) && (await page.getByText(/They are not predictions, and they fail often/).isVisible()));
+check('smart money: links to its lesson', (await page.getByRole('link', { name: 'Read the lesson' }).getAttribute('href'))?.startsWith('/learn/smart-money/') === true);
+
 // ── Options drills ─────────────────────────────────────────────────────
 await pickMode('Options');
 let sawPayoff = false;
@@ -147,7 +159,7 @@ for (let i = 0; i < 40; i++) {
   await page.keyboard.press('Enter');
   await page.waitForTimeout(120);
 }
-check('mixed mode cycles through all five drills', topics.size === 5, [...topics].join(', '));
+check('mixed mode cycles through all six drills', topics.size === 6, [...topics].join(', '));
 check('40 questions in a row with no error', errors.length === 0, [...new Set(errors)].slice(0, 3).join(' | '));
 await context.close();
 

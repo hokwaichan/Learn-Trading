@@ -1,6 +1,6 @@
 import { useCallback, useMemo, useState, type ReactNode } from 'react';
 import { PanelRightOpen } from 'lucide-react';
-import { DrawingLayer, IndicatorLayer, PriceChart } from '@/components/chart';
+import { DrawingLayer, IndicatorLayer, NO_OVERLAYS, OVERLAY_OPTIONS, PriceChart, StructureLayer, type StructureOverlays } from '@/components/chart';
 import {
   BottomSheet,
   Button,
@@ -17,13 +17,14 @@ import {
   useIsPhone,
 } from '@/components/ui';
 import { useTradeLines } from '@/features/paper-trading';
-import { displaySymbol } from '@/lib/data';
+import { displaySymbol, TIMEFRAME_SECONDS } from '@/lib/data';
 import { quoteKey, useDrawings, useMarket, useSymbolDrawings, type WorkspaceMode } from '@/stores';
 import type { Candle, DrawingPoint, DrawingTool, Instrument, Timeframe } from '@/types';
 import { usePersistentState } from '../hooks/usePersistentState';
 import { ChartToolbar } from './ChartToolbar';
 import { ExplainPanel } from './ExplainPanel';
 import { IndicatorsDialog } from './IndicatorsDialog';
+import { OverlaysDialog } from './OverlaysDialog';
 import { BOTTOM_TABS, BottomPanel, BottomTabContent, RIGHT_TABS, RightPanel, type AccountView, type BottomTab, type RightTab } from './Panels';
 import { WatchlistPanel } from './WatchlistPanel';
 
@@ -100,6 +101,12 @@ export function WorkspaceView(props: WorkspaceViewProps) {
 
   const tabs = useMemo(() => (showWatchlist ? RIGHT_TABS : RIGHT_TABS.filter((t) => t.id !== 'watchlist')), [showWatchlist]);
   const [explainMode, setExplainMode] = usePersistentState('explainMode', true);
+  const [savedOverlays, setOverlays] = usePersistentState<StructureOverlays>('overlays', NO_OVERLAYS);
+  // Saved choices from an older build may lack newer overlays.
+  const overlays = useMemo(() => ({ ...NO_OVERLAYS, ...savedOverlays }), [savedOverlays]);
+  const [overlaysOpen, setOverlaysOpen] = useState(false);
+  const intraday = TIMEFRAME_SECONDS[timeframe] <= 3600;
+  const overlayCount = OVERLAY_OPTIONS.filter((o) => overlays[o.key] && (intraday || !o.intraday)).length;
   const [savedRightTab, setRightTab] = usePersistentState<RightTab>(`${mode}.rightTab`, 'order');
   const rightTab = tabs.some((t) => t.id === savedRightTab) ? savedRightTab : 'order';
   const [bottomTab, setBottomTab] = usePersistentState<BottomTab>(`${mode}.bottomTab`, 'positions');
@@ -211,6 +218,7 @@ export function WorkspaceView(props: WorkspaceViewProps) {
               onNeedOlder={props.onNeedOlder}
               priceLines={tradeLines}
             >
+              <StructureLayer overlays={overlays} />
               <IndicatorLayer indicators={layout.indicators} onSelect={onSelectIndicator} selectedKey={explainIndicator?.key} />
               <DrawingLayer
                 drawings={drawings}
@@ -252,6 +260,8 @@ export function WorkspaceView(props: WorkspaceViewProps) {
         onChartType={(chartType) => setLayout(mode, { chartType })}
         indicatorCount={layout.indicators.length}
         onOpenIndicators={() => setIndicatorsOpen(true)}
+        overlayCount={overlayCount}
+        onOpenOverlays={() => setOverlaysOpen(true)}
         tool={tool}
         onTool={(next) => {
           setTool(next);
@@ -347,6 +357,7 @@ export function WorkspaceView(props: WorkspaceViewProps) {
         </div>
       )}
 
+      <OverlaysDialog open={overlaysOpen} onClose={() => setOverlaysOpen(false)} overlays={overlays} onChange={setOverlays} intraday={intraday} />
       <IndicatorsDialog
         open={indicatorsOpen}
         onClose={() => setIndicatorsOpen(false)}

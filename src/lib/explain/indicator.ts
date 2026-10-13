@@ -118,6 +118,28 @@ function reading(config: IndicatorConfig, values: Values, ctx: ReadingContext): 
             : 'That is an ordinary amount.')
       );
     }
+    case 'donchian': {
+      const { upper, lower } = values;
+      if (upper == null || lower == null) return null;
+      if (close > upper) return `The close of ${price(close)} is above the channel top at ${price(upper)}: the highest close in the look-back period. Breakout traders read that as the start of a move; many such breaks fail and fall back inside.`;
+      if (close < lower) return `The close of ${price(close)} is below the channel bottom at ${price(lower)}: the lowest close in the look-back period. Breakout traders read that as the start of a fall; many such breaks fail and recover.`;
+      const position = upper > lower ? (close - lower) / (upper - lower) : 0.5;
+      return `The close of ${price(close)} is inside the channel (${price(lower)} to ${price(upper)}), ${formatPct(position, 0)} of the way up. No new high or low for the period.`;
+    }
+    case 'prevDay': {
+      const { high, low } = values;
+      if (high == null || low == null) return null;
+      if (close > high) return `The close of ${price(close)} is above yesterday's high of ${price(high)}. Buyers have taken out the previous day's range; day traders watch whether price holds above it or slips back.`;
+      if (close < low) return `The close of ${price(close)} is below yesterday's low of ${price(low)}. Sellers have taken out the previous day's range; day traders watch whether price stays below it or recovers.`;
+      return `The close of ${price(close)} is inside yesterday's range (${price(low)} to ${price(high)}). Those two prices are where many stop and breakout orders sit.`;
+    }
+    case 'openingRange': {
+      const { high, low } = values;
+      if (high == null || low == null) return null;
+      if (close > high) return `The close of ${price(close)} is above the opening range high of ${price(high)}. An opening-range breakout to the upside; the range low is the usual place for the stop.`;
+      if (close < low) return `The close of ${price(close)} is below the opening range low of ${price(low)}. An opening-range breakout to the downside; the range high is the usual place for the stop.`;
+      return `The close of ${price(close)} is inside the opening range (${price(low)} to ${price(high)}). No breakout yet.`;
+    }
   }
 }
 

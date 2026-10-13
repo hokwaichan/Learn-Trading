@@ -4,7 +4,7 @@ import { CANDLESTICK_PATTERNS, CHART_PATTERNS } from '@/content/patterns';
 import { OUTLOOK_SCENARIOS } from '@/content/strategies';
 import { useProgress } from '@/stores';
 import type { ReviewCard } from '@/types';
-import { accuracyText, PAYOFF_STRATEGIES } from '../questions';
+import { accuracyText, PAYOFF_STRATEGIES, STRUCTURE_ITEMS } from '../questions';
 
 interface Row {
   id: string;
@@ -31,6 +31,7 @@ export function AccuracyTable() {
     () => [
       ...CANDLESTICK_PATTERNS.map((p) => ({ id: `pattern:${p.id}`, name: p.name, group: 'Candlestick' })),
       ...CHART_PATTERNS.map((p) => ({ id: `pattern:${p.id}`, name: p.name, group: 'Chart pattern' })),
+      ...STRUCTURE_ITEMS.map((s) => ({ id: `concept:smc-${s.id}`, name: s.name, group: 'Smart money' })),
       { id: 'what-next:all', name: 'What happened next?', group: 'Prediction' },
       ...PAYOFF_STRATEGIES.map((s) => ({ id: `option-payoff:${s.id}`, name: s.name, group: 'Payoff diagram' })),
       ...OUTLOOK_SCENARIOS.map((s, i) => ({ id: `option-outlook:${s.id}`, name: `Outlook scenario ${i + 1}`, group: 'Strategy choice' })),
