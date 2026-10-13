@@ -24,7 +24,7 @@ npm run dev          # http://localhost:5173
 | `npm run lint` | ESLint, including the folder-boundary rules |
 | `npm run build` | Type-check and build to `dist/` |
 | `npm run screenshots` | Screenshot every route at desktop and phone width in both themes (dev server must be running; first run `npx playwright install chromium`) |
-| `npm run smoke` | Click through the app shell, chart workspace, indicators and every lesson and report pass/fail (dev server and internet needed) |
+| `npm run smoke` | Click through the app shell, chart workspace, indicators, every lesson and the trainer and report pass/fail (dev server and internet needed) |
 | `npm run fetch-data` | Re-download the bundled daily history in `public/data/` |
 
 ## Build status
@@ -37,8 +37,8 @@ The app is being built in twelve milestones.
 | 2 | Chart workspace | Done |
 | 3 | Indicators | Done |
 | 4 | Lessons and glossary | Done |
-| 5 | Pattern trainer | Next |
-| 6 | Spot paper trading | |
+| 5 | Pattern trainer | Done |
+| 6 | Spot paper trading | Next |
 | 7 | Replay | |
 | 8 | Backtester | |
 | 9 | Futures | |
@@ -220,6 +220,35 @@ description, [lessons])` and `content/quizzes/NN-<name>.ts` with
 Write the component in `src/features/lessons/components/widgets/`, add its name
 to `LessonWidget` in `src/types/content.ts`, and add a `case` for it in
 `LessonBlocks.tsx`. Keep its maths in `src/lib/` with a test.
+
+## Trainer
+
+The trainer asks one question at a time from five drills:
+
+| Drill | Source | Recorded against |
+| --- | --- | --- |
+| Candlestick pattern | Real bundled history, found by the detectors in `lib/patterns/detectors.ts` | One card per pattern |
+| Chart pattern | Constructed examples from `content/patterns.ts` | One card per pattern |
+| What happened next? | Real bundled history with the future hidden | One card for the drill |
+| Payoff diagram | Templates in `content/strategies.ts`, priced with Black-Scholes | One card per strategy |
+| Strategy for an outlook | Scenarios in `content/strategies.ts` | One card per scenario |
+
+Each answer updates a spaced-repetition card (SM-2, in `lib/srs/sm2.ts`).
+Weak, overdue and unseen items are picked more often; nothing is ever locked
+out.
+
+Chart patterns use constructed examples, labelled as such, because automatic
+detection of shapes like head and shoulders in real data finds too many
+doubtful cases to teach from.
+
+- **Add a candlestick pattern:** add a rule to `DETECTORS` in
+  `lib/patterns/detectors.ts` with a test, then a definition with the same
+  `detectorId` in `content/patterns.ts`.
+- **Add a chart pattern:** add its waypoints to `SHAPES` and a definition with
+  `build: shape(...)` in `content/patterns.ts`, and a mirror entry in
+  `features/trainer/questions.ts`.
+- **Add an option strategy or scenario:** append to `OPTION_STRATEGIES` or
+  `OUTLOOK_SCENARIOS` in `content/strategies.ts`.
 
 ### Adding a glossary term
 

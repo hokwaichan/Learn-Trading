@@ -103,8 +103,11 @@ export interface PatternDefinition {
   weaknesses: string;
   /** Candlestick patterns are found by a detector in lib/patterns. */
   detectorId?: string;
-  /** Chart patterns use hand-checked real examples. */
-  examples?: { symbol: string; timeframe: Timeframe; from: number; to: number }[];
+  /**
+   * Chart patterns draw a constructed example. Each seed gives a different
+   * variation; `from` and `to` are the candle positions the pattern spans.
+   */
+  build?: (seed: number) => { candles: Candle[]; from: number; to: number };
 }
 
 /** Plain-language description of an indicator, shown in Explain and in lessons. */

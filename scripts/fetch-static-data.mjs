@@ -15,10 +15,14 @@ const SYMBOLS = [
   { symbol: 'AAPL', yahoo: 'AAPL', decimals: 2 },
   { symbol: 'TSLA', yahoo: 'TSLA', decimals: 2 },
   { symbol: 'SPY', yahoo: 'SPY', decimals: 2 },
-  { symbol: 'EURUSD', yahoo: 'EURUSD=X', decimals: 5 },
+  // Yahoo's daily forex bars carry an "open" that is almost always equal to
+  // the close (it is one snapshot per day, not a real opening price). Forex
+  // trades around the clock, so each day really opens where the last one
+  // closed: the open is rebuilt from the previous close.
+  { symbol: 'EURUSD', yahoo: 'EURUSD=X', decimals: 5, openFromPreviousClose: true },
 ];
 
-async function fetchDaily({ symbol, yahoo, decimals }) {
+async function fetchDaily({ symbol, yahoo, decimals, openFromPreviousClose }) {
   const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(yahoo)}?range=${YEARS}y&interval=1d`;
   const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
   if (!res.ok) throw new Error(`${symbol}: HTTP ${res.status}`);
@@ -38,12 +42,19 @@ async function fetchDaily({ symbol, yahoo, decimals }) {
     byDay.set(day, [day, round(o), round(Math.max(o, h, l, c)), round(Math.min(o, h, l, c)), round(c), Math.round(quote.volume[i] ?? 0)]);
   });
 
-  const candles = [...byDay.values()].sort((a, b) => a[0] - b[0]);
+  let candles = [...byDay.values()].sort((a, b) => a[0] - b[0]);
+  if (openFromPreviousClose) {
+    candles = candles.slice(1).map(([day, , high, low, close, volume], i) => {
+      const open = candles[i][4];
+      return [day, open, round(Math.max(high, open)), round(Math.min(low, open)), close, volume];
+    });
+  }
   if (candles.length < 200) throw new Error(`${symbol}: only ${candles.length} bars`);
   return {
     symbol,
     timeframe: '1d',
     source: 'Yahoo Finance',
+    ...(openFromPreviousClose ? { note: 'Open is the previous close; the source has no real daily open for forex.' } : {}),
     fetchedAt: new Date().toISOString(),
     columns: ['time', 'open', 'high', 'low', 'close', 'volume'],
     candles,

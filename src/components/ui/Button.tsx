@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, ReactNode, Ref } from 'react';
 import { cn } from './cn';
 import { Tooltip } from './Tooltip';
 
@@ -31,6 +31,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   icon?: ReactNode;
   block?: boolean;
+  ref?: Ref<HTMLButtonElement>;
 }
 
 export function Button({

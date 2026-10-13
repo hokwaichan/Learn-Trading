@@ -2,15 +2,17 @@ import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { currentStreak, dayKey } from '@/lib/dates';
 import { createMigrate } from '@/lib/migrate';
-import type { ProgressState } from '@/types';
+import { newCard, reviewCard } from '@/lib/srs/sm2';
+import type { ProgressState, ReviewCard } from '@/types';
 
-export const PROGRESS_VERSION = 1;
+export const PROGRESS_VERSION = 2;
 
 const DEFAULT_PROGRESS: ProgressState = {
   lessons: {},
   lastLesson: undefined,
   activeDays: [],
   challengeDays: [],
+  cards: {},
 };
 
 interface ProgressStore extends ProgressState {
@@ -20,6 +22,8 @@ interface ProgressStore extends ProgressState {
   visitLesson: (moduleId: string, lessonId: string) => void;
   /** Records a finished quiz. `score` is the fraction answered correctly. */
   completeLesson: (key: string, score: number) => void;
+  /** Records one trainer answer and reschedules that item. */
+  recordReview: (kind: ReviewCard['kind'], refId: string, wasCorrect: boolean) => void;
   reset: () => void;
 }
 
@@ -52,13 +56,26 @@ export const useProgress = create<ProgressStore>()(
             activeDays: s.activeDays.includes(today) ? s.activeDays : [...s.activeDays, today],
           };
         }),
+      recordReview: (kind, refId, wasCorrect) =>
+        set((s) => {
+          const now = Date.now();
+          const today = dayKey();
+          const id = `${kind}:${refId}`;
+          return {
+            cards: { ...s.cards, [id]: reviewCard(s.cards[id] ?? newCard(kind, refId, now), wasCorrect, now) },
+            activeDays: s.activeDays.includes(today) ? s.activeDays : [...s.activeDays, today],
+          };
+        }),
       reset: () => set(DEFAULT_PROGRESS),
     }),
     {
       name: 'tradeschool.progress',
       version: PROGRESS_VERSION,
-      migrate: createMigrate<ProgressState>(PROGRESS_VERSION, DEFAULT_PROGRESS) as (p: unknown, v: number) => ProgressStore,
-      partialize: ({ markActiveToday: _m, visitLesson: _v, completeLesson: _c, reset: _r, ...data }) => data,
+      migrate: createMigrate<ProgressState>(PROGRESS_VERSION, DEFAULT_PROGRESS, {
+        // v1 -> v2: the trainer added spaced-repetition cards.
+        1: (old) => ({ ...old, cards: {} }),
+      }) as (p: unknown, v: number) => ProgressStore,
+      partialize: ({ markActiveToday: _m, visitLesson: _v, completeLesson: _c, recordReview: _rr, reset: _r, ...data }) => data,
     },
   ),
 );

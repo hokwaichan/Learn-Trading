@@ -1,4 +1,5 @@
 import type { IndicatorId } from './backtest';
+import type { ReviewCard } from './journal';
 import type { Timeframe } from './market';
 
 export type Theme = 'dark' | 'light';
@@ -63,4 +64,6 @@ export interface ProgressState {
   activeDays: string[];
   /** Local dates on which the daily challenge was finished. */
   challengeDays: string[];
+  /** Trainer history, one spaced-repetition card per pattern or drill item, keyed by card id. */
+  cards: Record<string, ReviewCard>;
 }
