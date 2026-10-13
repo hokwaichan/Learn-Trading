@@ -100,3 +100,16 @@ export interface PatternDefinition {
   /** Chart patterns use hand-checked real examples. */
   examples?: { symbol: string; timeframe: Timeframe; from: number; to: number }[];
 }
+
+/** Plain-language description of an indicator, shown in Explain and in lessons. */
+export interface IndicatorInfo {
+  id: IndicatorId;
+  /** One line for the Indicators dialog. */
+  summary: string;
+  measures: string;
+  calculation: string;
+  signals: string[];
+  weaknesses: string[];
+  /** Glossary ids to link under the explanation. */
+  related: string[];
+}

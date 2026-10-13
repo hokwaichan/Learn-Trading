@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Info, PanelRightOpen, SearchX, WifiOff } from 'lucide-react';
 import { Link, useParams } from 'react-router-dom';
-import { DrawingLayer, PriceChart } from '@/components/chart';
+import { DrawingLayer, IndicatorLayer, PriceChart } from '@/components/chart';
 import {
   BottomSheet,
   Button,
@@ -23,6 +23,7 @@ import type { DrawingPoint, DrawingTool, Instrument } from '@/types';
 import { usePersistentState } from '../hooks/usePersistentState';
 import { ChartToolbar } from './ChartToolbar';
 import { ExplainPanel } from './ExplainPanel';
+import { IndicatorsDialog } from './IndicatorsDialog';
 import {
   BOTTOM_TABS,
   BottomPanel,
@@ -99,6 +100,11 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
     return i >= 0 ? i : null;
   }, [candles, selectedTime]);
 
+  // What the Explain tab is about: the selected candle, or an indicator.
+  const [explainKey, setExplainKey] = useState<string | null>(null);
+  const [indicatorsOpen, setIndicatorsOpen] = useState(false);
+  const explainIndicator = layout.indicators.find((i) => i.key === explainKey && i.visible);
+
   const [explainMode, setExplainMode] = usePersistentState('explainMode', true);
   const [rightTab, setRightTab] = usePersistentState<RightTab>(`${mode}.rightTab`, 'explain');
   const [bottomTab, setBottomTab] = usePersistentState<BottomTab>(`${mode}.bottomTab`, 'positions');
@@ -116,20 +122,33 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
     setTool(null);
   }
 
+  const showExplain = useCallback(() => {
+    if (isPhone) setSheet('explain');
+    else {
+      setRightTab('explain');
+      setRightCollapsed(false);
+    }
+  }, [isPhone, setRightTab, setRightCollapsed]);
+
+  const onSelectIndicator = useCallback(
+    (key: string) => {
+      setExplainKey(key);
+      setSelectedDrawing(null);
+      showExplain();
+    },
+    [showExplain],
+  );
+
   const onSelectCandle = useCallback(
     (index: number) => {
       const candle = candles[index];
       if (!candle) return;
       setSelectedTime(candle.time);
       setSelectedDrawing(null);
-      if (!explainMode) return;
-      if (isPhone) setSheet('explain');
-      else {
-        setRightTab('explain');
-        setRightCollapsed(false);
-      }
+      setExplainKey(null);
+      if (explainMode) showExplain();
     },
-    [candles, explainMode, isPhone, setRightTab, setRightCollapsed],
+    [candles, explainMode, showExplain],
   );
 
   const onCreateDrawing = useCallback(
@@ -163,7 +182,13 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
   };
 
   const explain = (
-    <ExplainPanel instrument={instrument} timeframe={timeframe} candles={candles} selectedIndex={selectedIndex} />
+    <ExplainPanel
+      instrument={instrument}
+      timeframe={timeframe}
+      candles={candles}
+      selectedIndex={selectedIndex}
+      indicator={explainIndicator}
+    />
   );
   const order = <OrderPlaceholder mode={mode} />;
   const watchlist = <WatchlistPanel current={instrument} />;
@@ -195,6 +220,7 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
           onSelectCandle={onSelectCandle}
           onNeedOlder={needOlder}
         >
+          <IndicatorLayer indicators={layout.indicators} onSelect={onSelectIndicator} selectedKey={explainIndicator?.key} />
           <DrawingLayer
             drawings={drawings}
             activeTool={tool}
@@ -228,6 +254,8 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
         onTimeframe={(tf) => setLayout(mode, { timeframe: tf })}
         chartType={layout.chartType}
         onChartType={(chartType) => setLayout(mode, { chartType })}
+        indicatorCount={layout.indicators.length}
+        onOpenIndicators={() => setIndicatorsOpen(true)}
         tool={tool}
         onTool={(next) => {
           setTool(next);
@@ -363,6 +391,14 @@ function Workspace({ instrument, mode }: { instrument: Instrument; mode: Workspa
           </ResizablePanel>
         </div>
       )}
+
+      <IndicatorsDialog
+        open={indicatorsOpen}
+        onClose={() => setIndicatorsOpen(false)}
+        indicators={layout.indicators}
+        onChange={(indicators) => setLayout(mode, { indicators })}
+        onExplain={onSelectIndicator}
+      />
 
       <ConfirmDialog
         open={confirmClear}

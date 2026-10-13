@@ -24,7 +24,7 @@ npm run dev          # http://localhost:5173
 | `npm run lint` | ESLint, including the folder-boundary rules |
 | `npm run build` | Type-check and build to `dist/` |
 | `npm run screenshots` | Screenshot every route at desktop and phone width in both themes (dev server must be running; first run `npx playwright install chromium`) |
-| `npm run smoke` | Click through the app shell and chart workspace and report pass/fail (dev server and internet needed) |
+| `npm run smoke` | Click through the app shell, chart workspace and indicators and report pass/fail (dev server and internet needed) |
 | `npm run fetch-data` | Re-download the bundled daily history in `public/data/` |
 
 ## Build status
@@ -35,8 +35,8 @@ The app is being built in twelve milestones.
 | --- | --- | --- |
 | 1 | Project setup, theme, UI components, app shell | Done |
 | 2 | Chart workspace | Done |
-| 3 | Indicators | Next |
-| 4 | Lessons and glossary | |
+| 3 | Indicators | Done |
+| 4 | Lessons and glossary | Next |
 | 5 | Pattern trainer | |
 | 6 | Spot paper trading | |
 | 7 | Replay | |
@@ -114,5 +114,29 @@ Charts use TradingView's open-source
 [lightweight-charts](https://github.com/tradingview/lightweight-charts) library;
 its logo on each chart is the attribution its licence asks for.
 
-Guides for adding lessons and indicators will be added here as those parts are
-built.
+## Indicators
+
+Each indicator is a pure function in its own file in `src/lib/indicators/`,
+returning one value per candle (`null` while it is warming up). The registry in
+`src/lib/indicators/index.ts` describes each one: its parameters, its outputs,
+and whether it is drawn on the price, on the volume bars, or in a pane of its
+own. The chart, the Indicators dialog, the legends and the Explain tab all read
+from that registry, and the backtester will too.
+
+Conventions: SMA-seeded EMA, Wilder smoothing for RSI and ATR, population
+standard deviation for Bollinger Bands, and VWAP that restarts each UTC day on
+intraday charts and each calendar month on daily charts.
+
+### Adding an indicator
+
+1. Write the function in `src/lib/indicators/<name>.ts`. `series.ts` has
+   helpers for moving averages over values that start with `null`.
+2. Test it in `indicators.test.ts` against values you can trust: a published
+   worked example, or a small case computed by hand.
+3. Add its id to `IndicatorId` in `src/types/backtest.ts`.
+4. Add an entry to `INDICATORS` in `src/lib/indicators/index.ts`.
+5. Add its plain-language description to `src/content/indicators.ts`, and a
+   `case` to `reading()` in `src/lib/explain/indicator.ts` for the sentence
+   that interprets the current value. TypeScript reports both if you forget.
+
+A guide for adding lessons will be added here when lessons are built.

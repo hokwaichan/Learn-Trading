@@ -7,7 +7,7 @@ export interface Explanation {
   /** Label and value pairs shown as a small table. */
   facts: { label: string; value: string; tone?: 'up' | 'down' }[];
   /** Plain-language paragraphs: what it shows, then how traders read it. */
-  paragraphs: { heading: string; text: string }[];
+  paragraphs: { heading: string; text: string; /** Shown as a bulleted list under the text. */ items?: string[] }[];
   /** Glossary ids worth linking under the explanation. */
   related: string[];
 }
@@ -118,11 +118,12 @@ export function explainCandle(
     const gap = prev.close ? c.close / prev.close - 1 : 0;
     const size = formatPct(Math.abs(gap), 2);
     context.push(
-      gap > 0
-        ? `It closed ${size} higher than the previous candle's close.`
-        : gap < 0
-          ? `It closed ${size} lower than the previous candle's close.`
-          : `It closed at the same price as the previous candle.`,
+      // Below half a hundredth of a percent the figure would print as 0.00%.
+      Math.abs(gap) < 0.00005
+        ? `It closed at almost exactly the previous candle's close.`
+        : gap > 0
+          ? `It closed ${size} higher than the previous candle's close.`
+          : `It closed ${size} lower than the previous candle's close.`,
     );
   }
   const window = candles.slice(Math.max(0, index - 20), index);

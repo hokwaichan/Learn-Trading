@@ -15,6 +15,8 @@ export interface LegendProps {
   closeOnly?: boolean;
   /** Extra rows under the price readout (indicator values). */
   children?: ReactNode;
+  /** Receives the element that overlay indicators render their rows into. */
+  slotRef?: (el: HTMLDivElement | null) => void;
 }
 
 function Field({ label, value, className }: { label: string; value: string; className?: string }) {
@@ -26,7 +28,7 @@ function Field({ label, value, className }: { label: string; value: string; clas
 }
 
 /** Top-left readout of the candle under the crosshair (or the latest one). */
-export function Legend({ title, subtitle, candle, previousClose, tickSize, closeOnly, children }: LegendProps) {
+export function Legend({ title, subtitle, candle, previousClose, tickSize, closeOnly, children, slotRef }: LegendProps) {
   const base = previousClose ?? candle?.open;
   const change = candle && base ? candle.close / base - 1 : 0;
   const tone = change > 0 ? 'text-up-text' : change < 0 ? 'text-down-text' : 'text-fg';
@@ -52,6 +54,7 @@ export function Legend({ title, subtitle, candle, previousClose, tickSize, close
           </>
         )}
       </div>
+      <div ref={slotRef} className="flex flex-col items-start gap-0.5" />
       {children}
     </div>
   );

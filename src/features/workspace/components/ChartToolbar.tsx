@@ -1,4 +1,5 @@
 import {
+  ChartSpline,
   CircleHelp,
   Minus,
   MousePointer2,
@@ -11,7 +12,7 @@ import {
 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { DRAWING_TOOL_NAMES } from '@/components/chart';
-import { cn, IconButton, Select, Tooltip } from '@/components/ui';
+import { Button, cn, IconButton, Select, Tooltip } from '@/components/ui';
 import { displaySymbol, instrumentsOfKind, TIMEFRAME_NAMES, TIMEFRAMES } from '@/lib/data';
 import type { WorkspaceMode } from '@/stores';
 import type { ChartType, DrawingTool, Instrument, Timeframe } from '@/types';
@@ -42,6 +43,8 @@ export interface ChartToolbarProps {
   onTimeframe: (timeframe: Timeframe) => void;
   chartType: ChartType;
   onChartType: (type: ChartType) => void;
+  indicatorCount: number;
+  onOpenIndicators: () => void;
   tool: DrawingTool | null;
   onTool: (tool: DrawingTool | null) => void;
   drawingCount: number;
@@ -124,6 +127,15 @@ export function ChartToolbar(props: ChartToolbarProps) {
         onChange={props.onChartType}
         options={CHART_TYPES}
       />
+      <Button
+        variant="ghost"
+        className="shrink-0"
+        icon={<ChartSpline aria-hidden className="size-4" />}
+        onClick={props.onOpenIndicators}
+      >
+        Indicators
+        {props.indicatorCount > 0 && <span className="num text-xs text-accent-text">{props.indicatorCount}</span>}
+      </Button>
 
       <Divider />
 

@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
+import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState, type KeyboardEvent, type ReactNode } from 'react';
 import {
   AreaSeries,
   CandlestickSeries,
@@ -21,7 +21,7 @@ import { TIMEFRAME_NAMES, TIMEFRAME_SECONDS } from '@/lib/data/timeframes';
 import { decimalsFor, formatPrice } from '@/lib/format';
 import { heikinAshi } from '@/lib/indicators/heikinAshi';
 import type { Candle, ChartType, Timeframe } from '@/types';
-import { ChartContext, type ChartApi } from './ChartContext';
+import { ChartContext, ChartCursorContext, type ChartApi } from './ChartContext';
 import { Legend } from './Legend';
 import { useChartTheme, withAlpha, type ChartTheme } from './theme';
 
@@ -88,36 +88,33 @@ function chartOptions(theme: ChartTheme) {
   };
 }
 
-function addMainSeries(chart: IChartApi, type: ChartType, theme: ChartTheme): ISeriesApi<SeriesType> {
-  if (type === 'line') {
-    return chart.addSeries(LineSeries, { color: theme.accent, lineWidth: 2, priceLineColor: theme.accent }, 0);
-  }
+function mainSeriesOptions(type: ChartType, theme: ChartTheme) {
+  if (type === 'line') return { color: theme.accent, lineWidth: 2 as const, priceLineColor: theme.accent };
   if (type === 'area') {
-    return chart.addSeries(
-      AreaSeries,
-      {
-        lineColor: theme.accent,
-        lineWidth: 2,
-        // A flat tint, not a gradient.
-        topColor: withAlpha(theme.accent, 0.12),
-        bottomColor: withAlpha(theme.accent, 0.12),
-        priceLineColor: theme.accent,
-      },
-      0,
-    );
+    return {
+      lineColor: theme.accent,
+      lineWidth: 2 as const,
+      // A flat tint, not a gradient.
+      topColor: withAlpha(theme.accent, 0.12),
+      bottomColor: withAlpha(theme.accent, 0.12),
+      priceLineColor: theme.accent,
+    };
   }
-  return chart.addSeries(
-    CandlestickSeries,
-    {
-      upColor: theme.up,
-      downColor: theme.down,
-      borderUpColor: theme.up,
-      borderDownColor: theme.down,
-      wickUpColor: theme.up,
-      wickDownColor: theme.down,
-    },
-    0,
-  );
+  return {
+    upColor: theme.up,
+    downColor: theme.down,
+    borderUpColor: theme.up,
+    borderDownColor: theme.down,
+    wickUpColor: theme.up,
+    wickDownColor: theme.down,
+  };
+}
+
+function addMainSeries(chart: IChartApi, type: ChartType, theme: ChartTheme): ISeriesApi<SeriesType> {
+  const options = mainSeriesOptions(type, theme);
+  if (type === 'line') return chart.addSeries(LineSeries, options, 0);
+  if (type === 'area') return chart.addSeries(AreaSeries, options, 0);
+  return chart.addSeries(CandlestickSeries, options, 0);
 }
 
 /**
@@ -149,11 +146,12 @@ export function PriceChart({
   const series = main && main.type === chartType ? main.series : null;
   const [volume, setVolume] = useState<ISeriesApi<'Histogram'> | null>(null);
   const [hover, setHover] = useState<number | null>(null);
+  const [legendSlot, setLegendSlot] = useState<HTMLElement | null>(null);
 
   // Latest values for the chart's event handlers, which are subscribed once.
-  const live = useRef({ candles, onSelectCandle, onNeedOlder });
+  const live = useRef({ candles, onSelectCandle, onNeedOlder, base: [] as unknown[] });
   useEffect(() => {
-    live.current = { candles, onSelectCandle, onNeedOlder };
+    live.current = { candles, onSelectCandle, onNeedOlder, base: [main?.series, volume] };
   });
 
   const display = useMemo(() => (chartType === 'heikin-ashi' ? heikinAshi(candles) : candles), [candles, chartType]);
@@ -162,6 +160,16 @@ export function PriceChart({
   const readInitialTheme = useRef(theme);
   // On unmount the chart is destroyed first; later cleanups must not touch it.
   const disposed = useRef(false);
+  // Layout cleanups run before every effect cleanup in the tree, so this
+  // marks the chart as going away before any child tries to tidy up after
+  // itself. A child removing its series at that point would leave a redraw
+  // queued for a chart that no longer exists.
+  useLayoutEffect(
+    () => () => {
+      disposed.current = true;
+    },
+    [],
+  );
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -174,6 +182,8 @@ export function PriceChart({
       setHover(index >= 0 ? index : null);
     };
     const onClick = (param: MouseEventParams<Time>) => {
+      // A click on an indicator line belongs to the indicator, not the candle under it.
+      if (param.hoveredSeries && !live.current.base.includes(param.hoveredSeries)) return;
       const index = typeof param.time === 'number' ? findIndex(live.current.candles, param.time) : -1;
       if (index >= 0) live.current.onSelectCandle?.(index);
     };
@@ -186,6 +196,7 @@ export function PriceChart({
 
     return () => {
       disposed.current = true;
+      mainRef.current = null;
       instance.remove();
       setChart(null);
       setMain(null);
@@ -198,16 +209,25 @@ export function PriceChart({
     chart?.applyOptions(chartOptions(theme));
   }, [chart, theme]);
 
-  // The main series is rebuilt when the chart type or theme changes.
+  // The main series is swapped when the chart type changes. The new one is
+  // added before the old one is removed: a pane left empty, even for a
+  // moment, is deleted by the library and every pane below shifts up.
+  const mainRef = useRef<ISeriesApi<SeriesType> | null>(null);
+  const themeRef = useRef(theme);
   useEffect(() => {
     if (!chart) return;
-    const created = addMainSeries(chart, chartType, theme);
+    const old = mainRef.current;
+    const created = addMainSeries(chart, chartType, themeRef.current);
+    mainRef.current = created;
+    if (old) chart.removeSeries(old);
     setMain({ series: created, type: chartType });
-    return () => {
-      if (!disposed.current) chart.removeSeries(created);
-      setMain(null);
-    };
-  }, [chart, chartType, theme]);
+  }, [chart, chartType]);
+
+  // A theme change restyles the series in place.
+  useEffect(() => {
+    themeRef.current = theme;
+    main?.series.applyOptions(mainSeriesOptions(main.type, theme));
+  }, [main, theme]);
 
   useEffect(() => {
     if (!chart || !showVolume) return;
@@ -233,7 +253,14 @@ export function PriceChart({
   }, [chart, series, tickSize, timeframe]);
 
   // Push data. A new last candle uses update(); anything else replaces the set.
-  const shown = useRef<{ series: unknown; volume: unknown; viewKey: string; first: number; length: number } | null>(null);
+  const shown = useRef<{
+    series: unknown;
+    volume: unknown;
+    theme: unknown;
+    viewKey: string;
+    first: number;
+    length: number;
+  } | null>(null);
   useEffect(() => {
     if (!chart || !series) return;
     const prev = shown.current;
@@ -251,7 +278,9 @@ export function PriceChart({
     });
 
     const sameTarget = prev && prev.series === series && prev.volume === volume && prev.viewKey === viewKey;
-    const tail = sameTarget && n > 0 && prev.first === first && (n === prev.length || n === prev.length + 1);
+    // Volume bars carry their own colours, so a theme change redraws them all.
+    const tail =
+      sameTarget && prev.theme === theme && n > 0 && prev.first === first && (n === prev.length || n === prev.length + 1);
 
     if (tail) {
       series.update(point(display[n - 1]));
@@ -270,7 +299,7 @@ export function PriceChart({
         chart.timeScale().setVisibleLogicalRange(range);
       }
     }
-    shown.current = { series, volume, viewKey, first, length: n };
+    shown.current = { series, volume, theme, viewKey, first, length: n };
   }, [chart, series, volume, display, chartType, viewKey, theme]);
 
   // Mark the selected candle.
@@ -280,8 +309,13 @@ export function PriceChart({
     const plugin = createSeriesMarkers(series, []);
     markers.current = plugin;
     return () => {
-      if (!disposed.current) plugin.detach();
       markers.current = null;
+      if (disposed.current) return;
+      try {
+        plugin.detach();
+      } catch {
+        // The series it was attached to has already been swapped out.
+      }
     };
   }, [series]);
   const selectedTime = selectedIndex != null ? candles[selectedIndex]?.time : undefined;
@@ -296,9 +330,19 @@ export function PriceChart({
   const api = useMemo<ChartApi | null>(
     () =>
       chart && series
-        ? { chart, series, candles, stepSeconds: TIMEFRAME_SECONDS[timeframe], tickSize, theme }
+        ? {
+            chart,
+            series,
+            candles,
+            stepSeconds: TIMEFRAME_SECONDS[timeframe],
+            tickSize,
+            theme,
+            legendSlot,
+            isBaseSeries: (s: unknown) => s === series || s === volume,
+            isAlive: () => !disposed.current,
+          }
         : null,
-    [chart, series, candles, timeframe, tickSize, theme],
+    [chart, series, volume, candles, timeframe, tickSize, theme, legendSlot],
   );
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -365,10 +409,13 @@ export function PriceChart({
         previousClose={display[legendIndex - 1]?.close}
         tickSize={tickSize}
         closeOnly={chartType === 'line' || chartType === 'area'}
+        slotRef={setLegendSlot}
       >
         {legendExtra}
       </Legend>
-      <ChartContext.Provider value={api}>{children}</ChartContext.Provider>
+      <ChartContext.Provider value={api}>
+        <ChartCursorContext.Provider value={hover}>{children}</ChartCursorContext.Provider>
+      </ChartContext.Provider>
     </div>
   );
 }

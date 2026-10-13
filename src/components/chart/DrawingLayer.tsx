@@ -57,18 +57,22 @@ function useViewVersion(api: ChartApi | null): { width: number; height: number }
     let frame = 0;
     const tick = () => {
       frame = requestAnimationFrame(tick);
-      const size = api.chart.paneSize(0);
-      const ts = api.chart.timeScale();
-      const last = api.candles[api.candles.length - 1]?.close ?? 1;
-      const signature = [
-        size.width,
-        size.height,
-        ts.logicalToCoordinate(0 as Logical),
-        ts.logicalToCoordinate(100 as Logical),
-        api.series.priceToCoordinate(last),
-        api.series.priceToCoordinate(last * 1.01),
-      ].join('|');
-      setView((v) => (v.signature === signature ? v : { width: size.width, height: size.height, signature }));
+      try {
+        const size = api.chart.paneSize(0);
+        const ts = api.chart.timeScale();
+        const last = api.candles[api.candles.length - 1]?.close ?? 1;
+        const signature = [
+          size.width,
+          size.height,
+          ts.logicalToCoordinate(0 as Logical),
+          ts.logicalToCoordinate(100 as Logical),
+          api.series.priceToCoordinate(last),
+          api.series.priceToCoordinate(last * 1.01),
+        ].join('|');
+        setView((v) => (v.signature === signature ? v : { width: size.width, height: size.height, signature }));
+      } catch {
+        // The chart or its series was removed between frames.
+      }
     };
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
