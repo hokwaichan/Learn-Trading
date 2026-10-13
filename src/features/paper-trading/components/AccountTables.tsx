@@ -12,6 +12,8 @@ interface TableProps {
   accountId?: AccountId;
   /** Overrides live prices, for Replay. */
   prices?: Prices;
+  /** The time to stamp on closes, for Replay. Defaults to now. */
+  now?: number;
 }
 
 const tick = (symbol: string, kind: Position['kind']) => findInstrument(symbol, kind)?.tickSize ?? 0.01;
@@ -95,7 +97,7 @@ function EditStopsDialog({ position, price, accountId, onClose }: { position: Po
 // ── Positions ──────────────────────────────────────────────────────────
 
 /** Open positions with live profit or loss. */
-export function PositionsTable({ accountId = 'main', prices: override }: TableProps) {
+export function PositionsTable({ accountId = 'main', prices: override, now }: TableProps) {
   const positions = useAccount((s) => s.accounts[accountId].positions);
   const close = useAccount((s) => s.close);
   const live = useMarket((s) => s.lastPrices);
@@ -139,7 +141,7 @@ export function PositionsTable({ accountId = 'main', prices: override }: TablePr
             size="sm"
             aria-label={`Close ${nameOf(p.symbol, p.kind)} position`}
             onClick={() => {
-              const events = close(accountId, p.id, mark(p), prices);
+              const events = close(accountId, p.id, mark(p), prices, now);
               const closed = events.find((e) => e.type === 'trade_closed');
               if (closed?.type === 'trade_closed') toast.info('Position closed', `${nameOf(p.symbol, p.kind)}: ${formatSignedMoney(closed.trade.netPnl)}`);
             }}
@@ -181,11 +183,12 @@ interface OrderRow {
 }
 
 /** Waiting limit and stop orders, plus the stop-loss and take-profit attached to each open position. */
-export function OrdersTable({ accountId = 'main' }: TableProps) {
+export function OrdersTable({ accountId = 'main', prices: override }: TableProps) {
   const account = useAccount((s) => s.accounts[accountId]);
   const cancel = useAccount((s) => s.cancel);
   const setStops = useAccount((s) => s.setStops);
-  const prices = useMarket((s) => s.lastPrices);
+  const live = useMarket((s) => s.lastPrices);
+  const prices = override ?? live;
 
   const rows = useMemo<OrderRow[]>(() => {
     const waiting = account.orders

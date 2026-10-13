@@ -39,8 +39,8 @@ The app is being built in twelve milestones.
 | 4 | Lessons and glossary | Done |
 | 5 | Pattern trainer | Done |
 | 6 | Spot paper trading | Done |
-| 7 | Replay | Next |
-| 8 | Backtester | |
+| 7 | Replay | Done |
+| 8 | Backtester | Next |
 | 9 | Futures | |
 | 10 | Options | |
 | 11 | Journal and analytics | |
@@ -55,7 +55,7 @@ src/
   components/chart/ Chart wrapper around lightweight-charts
   features/         One folder per screen; each exposes only its index.ts
   lib/              Pure TypeScript, no React: indicators, pricing, trading,
-                    backtest, data, srs. Unit tests live next to the code.
+                    replay, backtest, data, srs. Unit tests live next to the code.
   content/          Lessons, quizzes, glossary, patterns, strategies (typed data)
   stores/           Zustand stores, persisted with a schema version
   types/            Shared TypeScript types
@@ -246,6 +246,34 @@ How the simulation behaves:
   is never stopped out by the same candle that opened it.
 - **Nothing runs while the app is closed.** Orders are checked against the
   price when the app is next open, not against what happened in between.
+
+## Replay
+
+Replay is the chart workspace on past data. You pick a symbol, a candle size
+and a start date; the chart stops just before that date and you reveal one
+candle at a time (or press Play), trading as you go.
+
+- **The future is hidden in one place.** The session keeps every loaded
+  candle plus a cursor. Everything on screen reads candles through
+  `visibleCandles(candles, cursor)` in `src/lib/replay/session.ts`, so the
+  chart, indicators, Explain panel and order ticket cannot see past the
+  cursor.
+- **Each revealed candle goes through the trading engine** (`advance()` in
+  the same file), which is how limit orders, stop-losses and take-profits
+  trigger. The same-bar rules under Paper trading apply.
+- **The replay clock** is the close of the newest candle shown. Orders and
+  trades are stamped with that time, not the real one.
+- **Separate account.** Replay trades use the `replay` account, never the
+  main paper account. It can be reset from the Replay set-up screen.
+- **Sessions survive a reload.** The symbol, candle size and cursor time are
+  saved by `src/stores/replay.ts`; the candles are fetched again.
+- **Ending a session** (or starting a new one) closes open replay positions
+  at the current replay price and cancels waiting orders, after asking.
+- **Jump to date** moves forward only. A date outside the loaded history
+  starts a new session from that date.
+- The bundled symbols (AAPL, TSLA, SPY, EUR/USD) replay on daily candles.
+  Crypto replays on any candle size, loading history as it goes.
+- Keyboard: Space plays and pauses, N reveals the next candle.
 
 ## Trainer
 

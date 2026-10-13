@@ -13,7 +13,7 @@ import {
 import { createMigrate } from '@/lib/migrate';
 import type { Candle, ChartLayout, Instrument, InstrumentKind, Quote, Timeframe } from '@/types';
 
-export const MARKET_VERSION = 1;
+export const MARKET_VERSION = 2;
 const PAGE = 1000;
 
 const marketData = createMarketData();
@@ -34,7 +34,7 @@ export interface SeriesState {
   noMoreHistory: boolean;
 }
 
-export type WorkspaceMode = 'spot' | 'futures';
+export type WorkspaceMode = 'spot' | 'futures' | 'replay';
 
 export interface WatchlistItem {
   symbol: string;
@@ -65,7 +65,7 @@ interface MarketStore extends MarketData {
 const DEFAULT_LAYOUT: ChartLayout = { timeframe: '1h', chartType: 'candles', indicators: [] };
 
 const DEFAULTS: MarketData = {
-  layouts: { spot: DEFAULT_LAYOUT, futures: DEFAULT_LAYOUT },
+  layouts: { spot: DEFAULT_LAYOUT, futures: DEFAULT_LAYOUT, replay: DEFAULT_LAYOUT },
   watchlist: [
     { symbol: 'BTCUSDT', kind: 'spot' },
     { symbol: 'ETHUSDT', kind: 'spot' },
@@ -218,7 +218,10 @@ export const useMarket = create<MarketStore>()(
     {
       name: 'tradeschool.market',
       version: MARKET_VERSION,
-      migrate: createMigrate<MarketData>(MARKET_VERSION, DEFAULTS) as (p: unknown, v: number) => MarketStore,
+      migrate: createMigrate<MarketData>(MARKET_VERSION, DEFAULTS, {
+        // v1 -> v2: Replay got its own saved chart layout.
+        1: (old) => ({ ...old, layouts: { ...(old.layouts as object), replay: DEFAULT_LAYOUT } }),
+      }) as (p: unknown, v: number) => MarketStore,
       partialize: ({ layouts, watchlist }) => ({ layouts, watchlist }),
     },
   ),
@@ -262,4 +265,9 @@ export function streamPrice(instrument: Instrument): () => void {
 
 export function useLastPrice(instrument: Instrument | undefined): number | undefined {
   return useMarket((s) => (instrument ? s.lastPrices[quoteKey(instrument)] : undefined));
+}
+
+/** Fetches a stretch of history without storing it, for Replay and the backtester. */
+export function fetchCandleRange(instrument: Instrument, timeframe: Timeframe, range: { from?: number; to?: number; limit?: number }): Promise<Candle[]> {
+  return marketData.fetchCandles(instrument, timeframe, range).then((result) => result.candles);
 }

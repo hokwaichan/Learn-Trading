@@ -67,6 +67,9 @@ describe('static provider', () => {
     expect(await provider.getCandles('AAPL', '1d')).toHaveLength(3);
     expect((await provider.getCandles('AAPL', '1d', { limit: 2 })).map((x) => x.time)).toEqual([200, 300]);
     expect((await provider.getCandles('AAPL', '1d', { to: 200_000 })).map((x) => x.time)).toEqual([100, 200]);
+    // From a start date the earliest candles come back, as the live API does.
+    expect((await provider.getCandles('AAPL', '1d', { from: 100_000, limit: 2 })).map((x) => x.time)).toEqual([100, 200]);
+    expect((await provider.getCandles('AAPL', '1d', { from: 200_000, limit: 5 })).map((x) => x.time)).toEqual([200, 300]);
     expect(fetchImpl).toHaveBeenCalledTimes(1);
     expect(fetchImpl).toHaveBeenCalledWith('/data/AAPL.json');
   });

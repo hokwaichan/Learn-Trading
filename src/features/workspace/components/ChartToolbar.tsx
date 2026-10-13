@@ -10,11 +10,9 @@ import {
   Trash2,
   Type,
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 import { DRAWING_TOOL_NAMES } from '@/components/chart';
 import { Button, cn, IconButton, Select, Tooltip } from '@/components/ui';
-import { displaySymbol, instrumentsOfKind, TIMEFRAME_NAMES, TIMEFRAMES } from '@/lib/data';
-import type { WorkspaceMode } from '@/stores';
+import { displaySymbol, TIMEFRAME_NAMES, TIMEFRAMES } from '@/lib/data';
 import type { ChartType, DrawingTool, Instrument, Timeframe } from '@/types';
 
 const CHART_TYPES: { value: ChartType; label: string }[] = [
@@ -37,8 +35,10 @@ function Divider() {
 }
 
 export interface ChartToolbarProps {
-  mode: WorkspaceMode;
   instrument: Instrument;
+  /** Choices in the symbol menu. */
+  symbols: Instrument[];
+  onSymbol: (symbol: string) => void;
   timeframe: Timeframe;
   onTimeframe: (timeframe: Timeframe) => void;
   chartType: ChartType;
@@ -54,15 +54,13 @@ export interface ChartToolbarProps {
   explainMode: boolean;
   onExplainMode: (on: boolean) => void;
   watched: boolean;
-  onToggleWatch: () => void;
+  /** Omit to hide the watchlist star. */
+  onToggleWatch?: () => void;
 }
 
 /** Symbol, timeframe, chart type and drawing tools. Scrolls sideways on phones. */
 export function ChartToolbar(props: ChartToolbarProps) {
-  const { mode, instrument, timeframe, chartType, tool } = props;
-  const navigate = useNavigate();
-  const kind = mode === 'futures' ? 'perpetual' : 'spot';
-  const base = mode === 'futures' ? '/futures' : '/charts';
+  const { instrument, timeframe, chartType, tool } = props;
 
   return (
     <div
@@ -75,15 +73,17 @@ export function ChartToolbar(props: ChartToolbarProps) {
         className="num w-36 font-medium"
         wrapperClassName="shrink-0"
         value={instrument.symbol}
-        onChange={(symbol) => navigate(`${base}/${symbol}`)}
-        options={instrumentsOfKind(kind).map((i) => ({ value: i.symbol, label: displaySymbol(i) }))}
+        onChange={props.onSymbol}
+        options={props.symbols.map((i) => ({ value: i.symbol, label: displaySymbol(i) }))}
       />
-      <IconButton
-        label={props.watched ? 'Remove from watchlist' : 'Add to watchlist'}
-        active={props.watched}
-        icon={<Star className="size-4" fill={props.watched ? 'currentColor' : 'none'} />}
-        onClick={props.onToggleWatch}
-      />
+      {props.onToggleWatch && (
+        <IconButton
+          label={props.watched ? 'Remove from watchlist' : 'Add to watchlist'}
+          active={props.watched}
+          icon={<Star className="size-4" fill={props.watched ? 'currentColor' : 'none'} />}
+          onClick={props.onToggleWatch}
+        />
+      )}
 
       <Divider />
 

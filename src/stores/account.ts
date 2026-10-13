@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { createMigrate } from '@/lib/migrate';
+import { advance, type AdvanceResult } from '@/lib/replay/session';
 import { createAccount, resetAccount } from '@/lib/trading/account';
 import {
   cancelOrder,
@@ -16,7 +17,7 @@ import {
   type Prices,
 } from '@/lib/trading/engine';
 import { accountSnapshot } from '@/lib/trading/snapshot';
-import type { Account, AccountId, AccountSnapshot, InstrumentKind } from '@/types';
+import type { Account, AccountId, AccountSnapshot, Candle, InstrumentKind } from '@/types';
 import { useMarket } from './market';
 import { useSettings } from './settings';
 
@@ -40,6 +41,10 @@ interface AccountStore extends AccountData {
   setStops: (id: AccountId, positionId: string, stops: { stopLoss?: number; takeProfit?: number }, marketPrice: number) => string | null;
   /** Feeds a price update to the engine: fills waiting orders and checks stops. */
   onBar: (id: AccountId, symbol: string, kind: InstrumentKind, bar: Bar, prices?: Prices) => TradeResult;
+  /** Closes every position at the given prices and cancels every waiting order. */
+  flatten: (id: AccountId, prices: Prices, now: number) => void;
+  /** Moves the replay account forward through newly revealed candles. */
+  replayAdvance: (candles: Candle[], cursor: number, target: number, market: { symbol: string; kind: InstrumentKind; stepSeconds: number }) => AdvanceResult;
 }
 
 function defaults(): AccountData {
@@ -77,6 +82,21 @@ export const useAccount = create<AccountStore>()(
         },
         onBar: (id, symbol, kind, bar, prices = livePrices()) =>
           apply(id, processBar(get().accounts[id], symbol, kind, bar, prices, context(bar.time))),
+        flatten: (id, prices, now) => {
+          let account = get().accounts[id];
+          for (const order of account.orders.filter((o) => o.status === 'open')) account = cancelOrder(account, order.id).account;
+          for (const position of account.positions) {
+            // With no price to hand (the session's data is gone), close at the entry price: no gain, no loss.
+            const price = prices[`${position.kind}:${position.symbol}`] ?? position.entryPrice;
+            account = closePosition(account, position.id, price, prices, context(now)).account;
+          }
+          apply(id, { account, events: [] });
+        },
+        replayAdvance: (candles, cursor, target, market) => {
+          const result = advance(get().accounts.replay, candles, cursor, target, market, context);
+          apply('replay', result);
+          return result;
+        },
       };
     },
     {

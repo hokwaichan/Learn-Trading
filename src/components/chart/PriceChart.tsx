@@ -386,6 +386,10 @@ export function PriceChart({
         // Older candles were added on the left: keep the same candles in view.
         const added = n - prev.length;
         chart.timeScale().setVisibleLogicalRange({ from: range.from + added, to: range.to + added });
+      } else if (sameTarget && range && n > prev.length && range.to >= prev.length - 1) {
+        // Several candles were added on the right while the newest was in view: follow them.
+        const added = n - prev.length;
+        chart.timeScale().setVisibleLogicalRange({ from: range.from + added, to: range.to + added });
       } else if (range) {
         chart.timeScale().setVisibleLogicalRange(range);
       }

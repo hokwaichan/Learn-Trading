@@ -79,7 +79,9 @@ export function createStaticProvider(options: StaticProviderOptions): MarketData
       let candles = await load(symbol);
       if (range.from != null) candles = candles.filter((c) => c.time * 1000 >= range.from!);
       if (range.to != null) candles = candles.filter((c) => c.time * 1000 <= range.to!);
-      return range.limit != null ? candles.slice(-range.limit) : candles;
+      if (range.limit == null) return candles;
+      // From a start date, the earliest candles; otherwise the most recent ones.
+      return range.from != null && range.to == null ? candles.slice(0, range.limit) : candles.slice(-range.limit);
     },
 
     async getLastPrice(symbol) {

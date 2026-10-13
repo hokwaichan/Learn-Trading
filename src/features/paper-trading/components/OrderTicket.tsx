@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Button, cn, ConfirmDialog, EmptyState, Input, Pnl, Slider, Tabs, toast } from '@/components/ui';
 import { displaySymbol } from '@/lib/data';
 import { floorToStep, formatMoney, formatPct, formatPrice, formatQty, roundToTick } from '@/lib/format';
-import { feeFor, findPosition, referencePrice, unrealizedPnl, validateStops, withSlippage, type OrderRequest } from '@/lib/trading/engine';
+import { feeFor, findPosition, referencePrice, unrealizedPnl, validateStops, withSlippage, type OrderRequest, type Prices } from '@/lib/trading/engine';
 import { positionSize, riskReward } from '@/lib/trading/sizing';
 import { useAccount, useAccountSnapshot, useLastPrice, useSettings } from '@/stores';
 import type { AccountId, Instrument, Side } from '@/types';
@@ -14,6 +14,10 @@ export interface OrderTicketProps {
   accountId?: AccountId;
   /** Overrides the live price, for Replay. */
   price?: number;
+  /** Overrides live prices when valuing the account, for Replay. */
+  prices?: Prices;
+  /** The time to stamp on orders, for Replay. Defaults to now. */
+  now?: number;
 }
 
 type OrderKind = 'market' | 'limit' | 'stop';
@@ -37,11 +41,11 @@ function Row({ label, children, strong }: { label: string; children: React.React
 }
 
 /** Buy or sell with a market, limit or stop order, an optional stop-loss and take-profit, and a size calculator. */
-export function OrderTicket({ instrument, accountId = 'main', price: priceOverride }: OrderTicketProps) {
+export function OrderTicket({ instrument, accountId = 'main', price: priceOverride, prices, now }: OrderTicketProps) {
   const account = useAccount((s) => s.accounts[accountId]);
   const place = useAccount((s) => s.place);
   const close = useAccount((s) => s.close);
-  const snapshot = useAccountSnapshot(accountId);
+  const snapshot = useAccountSnapshot(accountId, prices);
   const live = useLastPrice(instrument);
   const feeRate = useSettings((s) => s.feeRate);
   const slippagePct = useSettings((s) => s.slippagePct);
@@ -141,7 +145,7 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
       stopLoss: opens ? stopLoss : undefined,
       takeProfit: opens ? takeProfit : undefined,
     };
-    const events = place(accountId, order, market);
+    const events = place(accountId, order, market, prices, now);
     const rejected = events.find((e) => e.type === 'order_rejected');
     const filled = events.find((e) => e.type === 'order_filled');
     const closed = events.find((e) => e.type === 'trade_closed');
@@ -152,7 +156,9 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
         `${verb} ${formatQty(quantity, instrument.stepSize)} ${base}`,
         `Filled at ${fmtPrice(filled.price)}${closed?.type === 'trade_closed' ? `. Position closed.` : ''}`,
       );
-    } else toast.info(`${kind === 'limit' ? 'Limit' : 'Stop'} order placed`, `Waiting for ${displaySymbol(instrument)} to reach ${fmtPrice(trigger!)}.`);
+    } else if (events.some((e) => e.type === 'order_placed')) {
+      toast.info(`${kind === 'limit' ? 'Limit' : 'Stop'} order placed`, `Waiting for ${displaySymbol(instrument)} to reach ${fmtPrice(trigger!)}.`);
+    }
     if (!rejected) {
       setSubmitted(false);
       setQuantityText('');
@@ -203,7 +209,7 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
             block
             className="mt-2"
             onClick={() => {
-              const events = close(accountId, position.id, market);
+              const events = close(accountId, position.id, market, prices, now);
               const trade = events.find((e) => e.type === 'trade_closed');
               if (trade?.type === 'trade_closed') toast.info('Position closed', `Result: ${trade.trade.netPnl >= 0 ? '+' : '-'}${formatMoney(Math.abs(trade.trade.netPnl))}`);
             }}

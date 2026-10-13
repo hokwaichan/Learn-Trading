@@ -14,10 +14,12 @@ export interface ExplainPanelProps {
   selectedIndex: number | null;
   /** When set, the panel explains this indicator instead of the candle. */
   indicator?: IndicatorConfig;
+  /** False when every candle shown is finished (Replay). Defaults to the instrument having a live price. */
+  live?: boolean;
 }
 
 /** Explains whatever was last clicked on the chart, in plain language. */
-export function ExplainPanel({ instrument, timeframe, candles, selectedIndex, indicator }: ExplainPanelProps) {
+export function ExplainPanel({ instrument, timeframe, candles, selectedIndex, indicator, live = instrument.live }: ExplainPanelProps) {
   const explanation = useMemo(
     () =>
       indicator
@@ -30,9 +32,9 @@ export function ExplainPanel({ instrument, timeframe, candles, selectedIndex, in
           : explainCandle(candles, selectedIndex, {
             tickSize: instrument.tickSize,
             daily: timeframe === '1d',
-            forming: instrument.live && selectedIndex === candles.length - 1,
+            forming: live && selectedIndex === candles.length - 1,
           }),
-    [candles, selectedIndex, instrument.tickSize, instrument.live, timeframe, indicator],
+    [candles, selectedIndex, instrument.tickSize, live, timeframe, indicator],
   );
 
   if (!explanation) {

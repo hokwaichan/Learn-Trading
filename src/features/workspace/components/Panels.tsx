@@ -2,7 +2,9 @@ import type { ReactNode } from 'react';
 import { ClipboardList, History, Lightbulb, PanelBottomClose, PanelRightClose, ReceiptText, Star, Wallet } from 'lucide-react';
 import { EmptyState, IconButton, TabPanel, Tabs } from '@/components/ui';
 import { HistoryTable, OrdersTable, PositionsTable } from '@/features/paper-trading';
-import { useAccount, type WorkspaceMode } from '@/stores';
+import type { Prices } from '@/lib/trading/engine';
+import { useAccount } from '@/stores';
+import type { AccountId } from '@/types';
 
 export type RightTab = 'order' | 'explain' | 'watchlist';
 export type BottomTab = 'positions' | 'orders' | 'history';
@@ -19,87 +21,79 @@ export const BOTTOM_TABS: { id: BottomTab; label: string; icon: ReactNode }[] = 
   { id: 'history', label: 'History', icon: <History aria-hidden className="size-3.5" /> },
 ];
 
-/** Order ticket stand-in until paper trading is built. */
-export function OrderPlaceholder({ mode }: { mode: WorkspaceMode }) {
+/** Which account the tables show, and (in Replay) the prices and clock to use instead of the live ones. */
+export interface AccountView {
+  accountId: AccountId;
+  prices?: Prices;
+  now?: number;
+}
+
+/** Order ticket stand-in for futures until the futures simulator is built. */
+export function FuturesOrderPlaceholder() {
   return (
     <EmptyState
       icon={<ReceiptText />}
-      title={mode === 'futures' ? 'Futures order ticket' : 'Order ticket'}
-      description={
-        mode === 'futures'
-          ? 'Leverage, margin mode and the liquidation gauge arrive with the futures simulator in milestone 9. Spot paper trading is on the Charts page.'
-          : 'Not available.'
-      }
+      title="Futures order ticket"
+      description="Leverage, margin mode and the liquidation gauge arrive with the futures simulator in milestone 9. Spot paper trading is on the Charts page."
     />
   );
 }
 
-export function BottomTabContent({ tab }: { tab: BottomTab }) {
-  if (tab === 'positions') return <PositionsTable />;
-  if (tab === 'orders') return <OrdersTable />;
-  return <HistoryTable />;
+export function BottomTabContent({ tab, accountId, prices, now }: { tab: BottomTab } & AccountView) {
+  if (tab === 'positions') return <PositionsTable accountId={accountId} prices={prices} now={now} />;
+  if (tab === 'orders') return <OrdersTable accountId={accountId} prices={prices} />;
+  return <HistoryTable accountId={accountId} />;
 }
 
 /** Counts shown on the account tabs. */
-function useTabCounts(): Record<BottomTab, number | undefined> {
-  const positions = useAccount((s) => s.accounts.main.positions);
-  const waiting = useAccount((s) => s.accounts.main.orders.filter((o) => o.status === 'open').length);
+function useTabCounts(accountId: AccountId): Record<BottomTab, number | undefined> {
+  const positions = useAccount((s) => s.accounts[accountId].positions);
+  const waiting = useAccount((s) => s.accounts[accountId].orders.filter((o) => o.status === 'open').length);
   const attached = positions.reduce((n, p) => n + (p.stopLoss != null ? 1 : 0) + (p.takeProfit != null ? 1 : 0), 0);
   return { positions: positions.length, orders: waiting + attached, history: undefined };
 }
 
 export interface RightPanelProps {
+  /** The tabs to show; Replay leaves out the watchlist. */
+  tabs: typeof RIGHT_TABS;
   tab: RightTab;
   onTab: (tab: RightTab) => void;
   onCollapse: () => void;
-  order: ReactNode;
-  explain: ReactNode;
-  watchlist: ReactNode;
+  content: Record<RightTab, ReactNode>;
 }
 
-export function RightPanel({ tab, onTab, onCollapse, order, explain, watchlist }: RightPanelProps) {
+export function RightPanel({ tabs, tab, onTab, onCollapse, content }: RightPanelProps) {
   return (
     <div className="flex h-full flex-col">
       <Tabs
         label="Side panel"
         idBase="ws-right"
-        items={RIGHT_TABS}
+        items={tabs}
         value={tab}
         onChange={onTab}
         className="shrink-0"
-        trailing={
-          <IconButton
-            size="sm"
-            label="Collapse side panel"
-            icon={<PanelRightClose className="size-4" />}
-            onClick={onCollapse}
-          />
-        }
+        trailing={<IconButton size="sm" label="Collapse side panel" icon={<PanelRightClose className="size-4" />} onClick={onCollapse} />}
       />
       <div className="min-h-0 flex-1 overflow-y-auto">
-        <TabPanel idBase="ws-right" id="order" active={tab === 'order'}>
-          {order}
-        </TabPanel>
-        <TabPanel idBase="ws-right" id="explain" active={tab === 'explain'}>
-          {explain}
-        </TabPanel>
-        <TabPanel idBase="ws-right" id="watchlist" active={tab === 'watchlist'}>
-          {watchlist}
-        </TabPanel>
+        {tabs.map((t) => (
+          <TabPanel key={t.id} idBase="ws-right" id={t.id} active={tab === t.id}>
+            {content[t.id]}
+          </TabPanel>
+        ))}
       </div>
     </div>
   );
 }
 
-export interface BottomPanelProps {
+export interface BottomPanelProps extends AccountView {
   tab: BottomTab;
   onTab: (tab: BottomTab) => void;
   collapsed: boolean;
   onToggle: () => void;
 }
 
-export function BottomPanel({ tab, onTab, collapsed, onToggle }: BottomPanelProps) {
-  const counts = useTabCounts();
+export function BottomPanel({ tab, onTab, collapsed, onToggle, ...account }: BottomPanelProps) {
+  const counts = useTabCounts(account.accountId);
   return (
     <div className="flex h-full flex-col">
       <Tabs
@@ -126,7 +120,7 @@ export function BottomPanel({ tab, onTab, collapsed, onToggle }: BottomPanelProp
         <div className="min-h-0 flex-1 overflow-y-auto">
           {BOTTOM_TABS.map((t) => (
             <TabPanel key={t.id} idBase="ws-bottom" id={t.id} active={tab === t.id}>
-              <BottomTabContent tab={t.id} />
+              <BottomTabContent tab={t.id} {...account} />
             </TabPanel>
           ))}
         </div>

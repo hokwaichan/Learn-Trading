@@ -1,34 +1,9 @@
 import { useEffect } from 'react';
-import { toast } from '@/components/ui';
-import { displaySymbol, findInstrument } from '@/lib/data';
-import { formatPrice, formatQty, formatSignedMoney } from '@/lib/format';
-import { priceKey, tick, type EngineEvent } from '@/lib/trading/engine';
+import { announceTradeEvents } from '@/features/paper-trading';
+import { findInstrument } from '@/lib/data';
+import { priceKey, tick } from '@/lib/trading/engine';
 import { streamPrice, useAccount, useMarket } from '@/stores';
 import type { Account, Instrument } from '@/types';
-
-const EXIT_TITLE = { stop_loss: 'Stop-loss hit', take_profit: 'Take-profit hit', manual: 'Position closed' } as const;
-
-/** Tells the user about fills that happened without them pressing anything. */
-function announce(events: EngineEvent[]) {
-  for (const event of events) {
-    const instrument = 'order' in event ? findInstrument(event.order.symbol, event.order.kind) : undefined;
-    const name = instrument ? displaySymbol(instrument) : '';
-    if (event.type === 'trade_closed') {
-      const { trade } = event;
-      const title = EXIT_TITLE[trade.exitReason as keyof typeof EXIT_TITLE] ?? 'Position closed';
-      const text = `${displaySymbol(findInstrument(trade.symbol, trade.kind)!)} ${trade.direction} closed at ${formatPrice(trade.exitPrice, findInstrument(trade.symbol, trade.kind)?.tickSize)}: ${formatSignedMoney(trade.netPnl)}`;
-      if (trade.netPnl >= 0) toast.success(title, text);
-      else toast.warning(title, text);
-    } else if (event.type === 'order_filled' && !event.order.positionId && event.order.type !== 'market') {
-      toast.success(
-        `${event.order.type === 'limit' ? 'Limit' : 'Stop'} order filled`,
-        `${event.order.side === 'buy' ? 'Bought' : 'Sold'} ${formatQty(event.order.quantity, instrument?.stepSize)} ${name} at ${formatPrice(event.price, instrument?.tickSize)}`,
-      );
-    } else if (event.type === 'order_rejected') {
-      toast.error('Order rejected', `${name}: ${event.reason}`);
-    }
-  }
-}
 
 /** Instruments the main account has a stake in: open positions and waiting orders. */
 function instrumentsInPlay(account: Account): Instrument[] {
@@ -81,7 +56,7 @@ export function usePaperEngine() {
         const key = priceKey(instrument.kind, instrument.symbol);
         const price = state.lastPrices[key];
         if (price == null || price === previous.lastPrices[key]) continue;
-        announce(useAccount.getState().onBar('main', instrument.symbol, instrument.kind, tick(price, Date.now()), state.lastPrices));
+        announceTradeEvents(useAccount.getState().onBar('main', instrument.symbol, instrument.kind, tick(price, Date.now()), state.lastPrices));
       }
     });
   }, []);
