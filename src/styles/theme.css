@@ -1,0 +1,84 @@
+/*
+ * Theme tokens. Every colour in the app comes from a variable here;
+ * components use the Tailwind names from the @theme block in globals.css
+ * (bg-surface, text-muted, border-border, text-up-text, ...).
+ *
+ * The *-text variants exist because the brand up/down/accent colours do not
+ * reach WCAG AA (4.5:1) as small text on every surface. Fills (buttons, bars,
+ * candles) use the base colour; text uses the -text variant.
+ * src/styles/theme.test.ts checks every pairing.
+ */
+
+:root,
+[data-theme='dark'] {
+  color-scheme: dark;
+  --c-bg: #0b0e14;
+  --c-surface: #131722;
+  --c-raised: #1c2030;
+  --c-border: #2a2e39;
+  --c-fg: #e6e8ee;
+  --c-muted: #9096a5;
+  --c-accent: #3b82f6;
+  --c-accent-text: #60a5fa;
+  --c-up: #26a69a;
+  --c-up-text: #26a69a;
+  --c-down: #ef5350;
+  --c-down-text: #ef5350;
+  --c-warning: #f5a524;
+  --c-warning-text: #f5a524;
+  /* Text on any solid accent/up/down/warning fill. */
+  --c-on-solid: #0b0e14;
+  --c-grid: #1c2030;
+  --c-overlay: rgb(0 0 0 / 0.6);
+  --shadow-raised: 0 0 0 1px var(--c-border);
+
+  /* Fixed six-colour palette for indicator lines. */
+  --c-series-1: #5b9cf6;
+  --c-series-2: #f5a524;
+  --c-series-3: #c084fc;
+  --c-series-4: #4fd1c5;
+  --c-series-5: #f472b6;
+  --c-series-6: #a3e635;
+}
+
+[data-theme='light'] {
+  color-scheme: light;
+  --c-bg: #f7f8fa;
+  --c-surface: #ffffff;
+  --c-raised: #ffffff;
+  --c-border: #e1e4ea;
+  --c-fg: #131722;
+  --c-muted: #5d6472;
+  --c-accent: #3b82f6;
+  --c-accent-text: #1d4ed8;
+  --c-up: #26a69a;
+  --c-up-text: #0b7268;
+  --c-down: #ef5350;
+  --c-down-text: #c62828;
+  --c-warning: #f5a524;
+  --c-warning-text: #8a5300;
+  --c-on-solid: #0b0e14;
+  --c-grid: #eef0f4;
+  --c-overlay: rgb(19 23 34 / 0.45);
+  --shadow-raised: 0 0 0 1px var(--c-border), 0 8px 24px rgb(19 23 34 / 0.12);
+
+  --c-series-1: #1d5fd1;
+  --c-series-2: #9a5b00;
+  --c-series-3: #7e3fd0;
+  --c-series-4: #0b7c74;
+  --c-series-5: #c2337f;
+  --c-series-6: #4d7c0f;
+}
+
+/* Colour-blind mode: up/down become blue/orange. */
+[data-cb='true'] {
+  --c-up: #2f81f7;
+  --c-up-text: #58a6ff;
+  --c-down: #f0883e;
+  --c-down-text: #f0883e;
+}
+
+[data-theme='light'][data-cb='true'] {
+  --c-up-text: #0550ae;
+  --c-down-text: #953800;
+}
