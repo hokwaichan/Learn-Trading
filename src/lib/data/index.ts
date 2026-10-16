@@ -44,7 +44,8 @@ export function createProviders(): Providers {
       wsBase: 'wss://fstream.binance.com/ws',
       instruments: instrumentsOfKind('perpetual'),
     }),
-    bundled: createStaticProvider({ instruments: INSTRUMENTS.filter((i) => i.source === 'static') }),
+    // The data files sit under the site's base path, which is not the root on GitHub Pages.
+    bundled: createStaticProvider({ instruments: INSTRUMENTS.filter((i) => i.source === 'static'), basePath: `${import.meta.env.BASE_URL ?? '/'}data` }),
   };
 }
 

@@ -27,7 +27,7 @@ export function RouteError() {
       <div>
         <ErrorState title="This screen hit a problem" message={detail} onRetry={() => window.location.reload()} />
         <div className="text-center">
-          <Button variant="ghost" onClick={() => window.location.assign('/')}>
+          <Button variant="ghost" onClick={() => window.location.assign(import.meta.env.BASE_URL)}>
             Go to Home
           </Button>
         </div>

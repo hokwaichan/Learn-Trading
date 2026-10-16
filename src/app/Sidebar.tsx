@@ -7,7 +7,7 @@ import { isActive, NAV, type NavItem } from './nav';
 function Logo({ collapsed }: { collapsed: boolean }) {
   return (
     <Link to="/" className="flex h-12 shrink-0 items-center gap-2 border-b border-border px-3.5" aria-label="TradeSchool home">
-      <img src="/favicon.svg" alt="" className="size-6 shrink-0" />
+      <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="size-6 shrink-0" />
       {!collapsed && <span className="text-[15px] font-semibold tracking-tight text-fg">TradeSchool</span>}
     </Link>
   );

@@ -46,4 +46,4 @@ export const router = createBrowserRouter([
     hydrateFallbackElement: <LoadingState className="h-dvh" />,
     children: [{ errorElement: <RouteError />, children: routes }],
   },
-]);
+], { basename: import.meta.env.BASE_URL });

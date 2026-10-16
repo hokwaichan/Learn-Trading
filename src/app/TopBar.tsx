@@ -55,7 +55,7 @@ export function TopBar() {
   return (
     <header className="flex h-12 shrink-0 items-center gap-2 border-b border-border bg-surface px-3">
       <Link to="/" className="mr-1 md:hidden" aria-label="TradeSchool home">
-        <img src="/favicon.svg" alt="" className="size-6" />
+        <img src={`${import.meta.env.BASE_URL}favicon.svg`} alt="" className="size-6" />
       </Link>
       <SymbolSearch className="hidden w-64 sm:block" />
       <button

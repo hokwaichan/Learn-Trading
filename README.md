@@ -6,6 +6,10 @@ backend, no login, and no real money.
 
 > Educational only. Not financial advice. All trading here uses simulated money.
 
+**Try it: [hokwaichan.github.io/Learn-Trading](https://hokwaichan.github.io/Learn-Trading/)**
+
+Your progress, paper accounts and notes are saved in your own browser, not on a server.
+
 ## Setup
 
 Requires Node 20 or newer.
@@ -31,6 +35,26 @@ npm run dev          # http://localhost:5173
 The last four need the dev server running. `smoke`, `a11y` and
 `screenshots` use Playwright: run `npx playwright install chromium` once
 first. `smoke` also needs internet, for live crypto prices.
+
+## Deploying
+
+Every push to `main` builds the app and publishes it to GitHub Pages
+(`.github/workflows/deploy.yml`). The workflow runs the unit tests, builds with
+`BASE_PATH=/<repo name>/` because Pages serves the site from a sub-folder, and
+copies `index.html` to `404.html` so that deep links such as
+`/Learn-Trading/charts/BTCUSDT` load the app instead of a GitHub error page.
+
+To check a Pages build locally:
+
+```
+BASE_PATH=/Learn-Trading/ npm run build
+cp dist/index.html dist/404.html
+node scripts/check-pages.mjs
+```
+
+Paths in the code that point at the site itself (the bundled data files, the
+logo, the router) read `import.meta.env.BASE_URL`, so they work at the root and in
+a sub-folder.
 
 ## What is in it
 
