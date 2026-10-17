@@ -1,5 +1,6 @@
 import { CANDLESTICK_PATTERNS, CHART_PATTERNS, getPattern } from '@/content/patterns';
 import { getStrategyTemplate, OPTION_STRATEGIES, OUTLOOK_SCENARIOS } from '@/content/strategies';
+import { t } from '@/i18n';
 import { formatPct, formatSignedPct } from '@/lib/format';
 import { unambiguousPatterns, type CandlePatternId, type PatternMatch } from '@/lib/patterns/detectors';
 import { classifyOutcome, type Outcome } from '@/lib/patterns/outcome';
@@ -49,12 +50,12 @@ export interface TrainerQuestion {
 }
 
 export const DRILL_NAMES: Record<DrillKind, string> = {
-  candlestick: 'Candlestick pattern',
-  chart: 'Chart pattern',
-  structure: 'Smart money concept',
-  next: 'What happened next?',
-  payoff: 'Payoff diagram',
-  outlook: 'Strategy for an outlook',
+  candlestick: t('Candlestick pattern'),
+  chart: t('Chart pattern'),
+  structure: t('Smart money concept'),
+  next: t('What happened next?'),
+  payoff: t('Payoff diagram'),
+  outlook: t('Strategy for an outlook'),
 };
 
 const KINDS_BY_MODE: Record<DrillMode, DrillKind[]> = {
@@ -154,22 +155,23 @@ export function candlestickQuestion(id: CandlePatternId, index: PatternIndex, da
     kind: 'pattern',
     refId: id,
     topic: DRILL_NAMES.candlestick,
-    prompt: match.length === 1 ? 'What is the marked candle?' : `What pattern do the ${match.length} marked candles form?`,
-    chart: { title: `${data.title} · daily`, tickSize: data.tickSize, candles, reveal, mark: { from: candles.length - match.length, to: candles.length - 1 }, real: true },
+    prompt: match.length === 1 ? t('What is the marked candle?') : t('What pattern do the {n} marked candles form?', { n: match.length }),
+    chart: { title: t('{title} · daily', { title: data.title }), tickSize: data.tickSize, candles, reveal, mark: { from: candles.length - match.length, to: candles.length - 1 }, real: true },
     choices: choicesFor(id, MIRROR[id], CANDLESTICK_PATTERNS.map((p) => p.id), 4, seed, patternName),
     correctId: id,
     explanation: {
       heading: pattern.name,
       paragraphs: [
         pattern.description,
-        `How traders read it: ${pattern.howToRead}`,
-        `Weakness: ${pattern.weaknesses}`,
-        `What happened here: over the next ${reveal.length} candles price moved ${formatSignedPct(after)}. ` +
+        t('How traders read it: {text}', { text: pattern.howToRead }),
+        t('Weakness: {text}', { text: pattern.weaknesses }),
+        t('What happened here: over the next {n} candles price moved {change}.', { n: reveal.length, change: formatSignedPct(after) }) +
+          ' ' +
           (pattern.bias === 'neutral'
-            ? 'This pattern does not point either way by itself.'
+            ? t('This pattern does not point either way by itself.')
             : (pattern.bias === 'bullish') === after > 0
-              ? 'This time it went the way the pattern suggests.'
-              : 'This time it did not go the way the pattern suggests, which happens often.'),
+              ? t('This time it went the way the pattern suggests.')
+              : t('This time it did not go the way the pattern suggests, which happens often.')),
       ],
       lesson: id === 'doji' || id === 'hammer' || id === 'shooting-star' || id === 'marubozu' ? 'candlesticks/single-candle-patterns' : 'candlesticks/multi-candle-patterns',
     },
@@ -202,19 +204,19 @@ export function chartQuestion(id: string, rand: () => number): TrainerQuestion |
     kind: 'pattern',
     refId: id,
     topic: DRILL_NAMES.chart,
-    prompt: 'Which chart pattern is this?',
-    chart: { title: 'Constructed example', tickSize: 0.01, candles: built.candles, reveal: [], mark: { from: built.from, to: built.to }, real: false },
+    prompt: t('Which chart pattern is this?'),
+    chart: { title: t('Constructed example'), tickSize: 0.01, candles: built.candles, reveal: [], mark: { from: built.from, to: built.to }, real: false },
     choices: choicesFor(id, MIRROR[id], CHART_PATTERNS.map((p) => p.id), 4, seed, patternName),
     correctId: id,
     explanation: {
       heading: pattern.name,
-      paragraphs: [pattern.description, `How traders read it: ${pattern.howToRead}`, `Weakness: ${pattern.weaknesses}`],
+      paragraphs: [pattern.description, t('How traders read it: {text}', { text: pattern.howToRead }), t('Weakness: {text}', { text: pattern.weaknesses })],
       lesson: CHART_LESSON[id],
     },
   };
 }
 
-const OUTCOME_LABEL: Record<Outcome, string> = { up: 'Up', sideways: 'Sideways', down: 'Down' };
+const OUTCOME_LABEL: Record<Outcome, string> = { up: t('Up'), sideways: t('Sideways'), down: t('Down') };
 
 // ── Smart money concepts ───────────────────────────────────────────────
 
@@ -224,31 +226,31 @@ export type StructureItemId = 'fair-value-gap' | 'liquidity-sweep' | 'break-of-s
 export const STRUCTURE_ITEMS: { id: StructureItemId; name: string; lesson: string; rule: string; reading: string }[] = [
   {
     id: 'fair-value-gap',
-    name: 'Fair value gap',
+    name: t('Fair value gap'),
     lesson: 'smart-money/fair-value-gaps',
-    rule: 'Three candles where the first and the third do not overlap, so the prices between them were traded only by the large middle candle.',
-    reading: 'Traders watch for price to come back into the gap and treat it as a zone where the move may resume. Many gaps are simply filled.',
+    rule: t('Three candles where the first and the third do not overlap, so the prices between them were traded only by the large middle candle.'),
+    reading: t('Traders watch for price to come back into the gap and treat it as a zone where the move may resume. Many gaps are simply filled.'),
   },
   {
     id: 'liquidity-sweep',
-    name: 'Liquidity sweep',
+    name: t('Liquidity sweep'),
     lesson: 'smart-money/liquidity',
-    rule: 'The last candle trades beyond the earlier swing point at the start of the box, but closes back on the original side of it.',
-    reading: 'Stops resting beyond the level were triggered and price could not stay there. It often leads to a move the other way, but only the close made it a sweep and not a breakout.',
+    rule: t('The last candle trades beyond the earlier swing point at the start of the box, but closes back on the original side of it.'),
+    reading: t('Stops resting beyond the level were triggered and price could not stay there. It often leads to a move the other way, but only the close made it a sweep and not a breakout.'),
   },
   {
     id: 'break-of-structure',
-    name: 'Break of structure',
+    name: t('Break of structure'),
     lesson: 'smart-money/structure-bos-choch',
-    rule: 'The last candle closes beyond the earlier swing point at the start of the box, in the same direction as the trend before it.',
-    reading: 'The trend is continuing. Traders look for a pullback to join it.',
+    rule: t('The last candle closes beyond the earlier swing point at the start of the box, in the same direction as the trend before it.'),
+    reading: t('The trend is continuing. Traders look for a pullback to join it.'),
   },
   {
     id: 'change-of-character',
-    name: 'Change of character',
+    name: t('Change of character'),
     lesson: 'smart-money/structure-bos-choch',
-    rule: 'The last candle closes beyond the earlier swing point at the start of the box, against the trend before it: the first break in the new direction.',
-    reading: 'The trend may be turning. It is a reason to stop trading the old direction, not yet proof of a new one.',
+    rule: t('The last candle closes beyond the earlier swing point at the start of the box, against the trend before it: the first break in the new direction.'),
+    reading: t('The trend may be turning. It is a reason to stop trading the old direction, not yet proof of a new one.'),
   },
 ];
 
@@ -309,16 +311,29 @@ export function structureQuestion(id: StructureItemId, datasets: Dataset[], rand
     kind: 'concept',
     refId: `smc-${id}`,
     topic: DRILL_NAMES.structure,
-    prompt: gap ? 'What do the 3 marked candles show?' : `The box runs from an earlier swing ${side} to the last candle. What has just happened?`,
-    chart: { title: `${data.title} · daily`, tickSize: data.tickSize, candles, reveal, mark: { from: event.from - start, to: event.to - start }, real: true },
+    prompt: gap
+      ? t('What do the 3 marked candles show?')
+      : side === 'high'
+        ? t('The box runs from an earlier swing high to the last candle. What has just happened?')
+        : t('The box runs from an earlier swing low to the last candle. What has just happened?'),
+    chart: { title: t('{title} · daily', { title: data.title }), tickSize: data.tickSize, candles, reveal, mark: { from: event.from - start, to: event.to - start }, real: true },
     choices: shuffled(STRUCTURE_ITEMS.map((s) => ({ id: s.id, label: s.name })), int(rand, 1e9)),
     correctId: id,
     explanation: {
-      heading: `${item.name}${gap ? (event.direction === 'up' ? ' (bullish)' : ' (bearish)') : `, of a swing ${side}`}`,
+      heading: gap
+        ? event.direction === 'up'
+          ? t('{name} (bullish)', { name: item.name })
+          : t('{name} (bearish)', { name: item.name })
+        : side === 'high'
+          ? t('{name}, of a swing high', { name: item.name })
+          : t('{name}, of a swing low', { name: item.name }),
       paragraphs: [
-        `The rule: ${item.rule}`,
-        `How traders read it: ${item.reading}`,
-        `What happened here: over the next ${reveal.length} candles price moved ${formatSignedPct(after)}. These are descriptions of what price did, found by fixed rules. They are not predictions, and they fail often.`,
+        t('The rule: {text}', { text: item.rule }),
+        t('How traders read it: {text}', { text: item.reading }),
+        t(
+          'What happened here: over the next {n} candles price moved {change}. These are descriptions of what price did, found by fixed rules. They are not predictions, and they fail often.',
+          { n: reveal.length, change: formatSignedPct(after) },
+        ),
       ],
       lesson: item.lesson,
     },
@@ -338,10 +353,10 @@ export function nextQuestion(datasets: Dataset[], rand: () => number): TrainerQu
     kind: 'what-next',
     refId: 'all',
     topic: DRILL_NAMES.next,
-    prompt: `Where will price be ${NEXT_HORIZON} candles from now?`,
+    prompt: t('Where will price be {n} candles from now?', { n: NEXT_HORIZON }),
     // Only candles up to the cut are handed over; the future arrives in `reveal`.
     chart: {
-      title: `${data.title} · daily`,
+      title: t('{title} · daily', { title: data.title }),
       tickSize: data.tickSize,
       candles: data.candles.slice(cut - NEXT_VISIBLE + 1, cut + 1),
       reveal: data.candles.slice(cut + 1, cut + 1 + NEXT_HORIZON),
@@ -350,11 +365,20 @@ export function nextQuestion(datasets: Dataset[], rand: () => number): TrainerQu
     choices: (['up', 'sideways', 'down'] as Outcome[]).map((id) => ({ id, label: OUTCOME_LABEL[id] })),
     correctId: result.outcome,
     explanation: {
-      heading: `It went ${OUTCOME_LABEL[result.outcome].toLowerCase()}`,
+      heading: t('It went {outcome}', { outcome: OUTCOME_LABEL[result.outcome].toLowerCase() }),
       paragraphs: [
-        `Over the next ${NEXT_HORIZON} candles price moved ${formatSignedPct(result.change)}, which is ${Math.abs(result.changeInAtr).toFixed(1)} times the average candle range (ATR) at the time.`,
-        `A move of less than about ${result.thresholdAtr.toFixed(1)} ATR either way counts as sideways. The threshold is set so that random movement would land in each of the three answers about equally often.`,
-        'Nobody predicts this reliably, and a score near one in three is what guessing gives. The point of the drill is to practise reading trend, levels and momentum before committing, and to see for yourself how often an obvious-looking setup fails.',
+        t('Over the next {n} candles price moved {change}, which is {atr} times the average candle range (ATR) at the time.', {
+          n: NEXT_HORIZON,
+          change: formatSignedPct(result.change),
+          atr: Math.abs(result.changeInAtr).toFixed(1),
+        }),
+        t(
+          'A move of less than about {atr} ATR either way counts as sideways. The threshold is set so that random movement would land in each of the three answers about equally often.',
+          { atr: result.thresholdAtr.toFixed(1) },
+        ),
+        t(
+          'Nobody predicts this reliably, and a score near one in three is what guessing gives. The point of the drill is to practise reading trend, levels and momentum before committing, and to see for yourself how often an obvious-looking setup fails.',
+        ),
       ],
     },
   };
@@ -374,7 +398,7 @@ export function payoffQuestion(id: string, rand: () => number): TrainerQuestion 
     kind: 'option-payoff',
     refId: id,
     topic: DRILL_NAMES.payoff,
-    prompt: 'Which strategy has this payoff at expiry? The underlying is at 100 now.',
+    prompt: t('Which strategy has this payoff at expiry? The underlying is at 100 now.'),
     payoff: { legs, spot },
     choices: choicesFor(id, undefined, pool, 4, seed, strategyName),
     correctId: id,
@@ -382,9 +406,13 @@ export function payoffQuestion(id: string, rand: () => number): TrainerQuestion 
       heading: template.name,
       paragraphs: [
         `${template.summary} ${template.when}`,
-        `Maximum profit: ${template.maxProfit}. Maximum loss: ${template.maxLoss}. Break-even: ${template.breakEven}.`,
+        t('Maximum profit: {profit}. Maximum loss: {loss}. Break-even: {breakEven}.', {
+          profit: template.maxProfit,
+          loss: template.maxLoss,
+          breakEven: template.breakEven,
+        }),
         ...(twins.length
-          ? [`${strategyName(twins.find((t) => t !== id)!)} has the same shape at expiry, so it was not offered as a choice.`]
+          ? [t('{strategy} has the same shape at expiry, so it was not offered as a choice.', { strategy: strategyName(twins.find((twin) => twin !== id)!) })]
           : []),
       ],
       lesson: template.lesson,

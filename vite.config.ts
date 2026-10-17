@@ -13,6 +13,10 @@ export default defineConfig({
     alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
   },
   server: { port: 5173, strictPort: false },
+  // The Traditional Chinese dictionary (every lesson, quiz and glossary entry) is one ~540 kB
+  // chunk. It is only fetched when that language is selected, so the default limit is raised
+  // just above it.
+  build: { chunkSizeWarningLimit: 600 },
   test: {
     environment: 'node',
     include: ['src/**/*.test.ts'],

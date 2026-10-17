@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { t } from '@/i18n';
 import { describeDataError, findInstrument, mergeCandles, TIMEFRAME_SECONDS } from '@/lib/data';
 import { createMigrate } from '@/lib/migrate';
 import { closeTimeMs, CONTEXT_CANDLES, finishedCandles, indexAtOrAfter, indexAtOrBefore, replayPrices } from '@/lib/replay/session';
@@ -112,13 +113,13 @@ export const useReplay = create<ReplayStore>()(
 
       const open = async (session: Session, fromSeconds: number, place: (candles: Candle[]) => number) => {
         const instrument = findInstrument(session.symbol);
-        if (!instrument) return set({ status: 'error', error: `Unknown symbol ${session.symbol}.` });
+        if (!instrument) return set({ status: 'error', error: t('Unknown symbol {symbol}.', { symbol: session.symbol }) });
         set({ status: 'loading', error: undefined, playing: false, candles: [], cursor: -1, atEnd: false });
         try {
           const { candles, more } = await loadAround(instrument, session.timeframe, fromSeconds);
           const cursor = place(candles);
           if (candles.length === 0 || cursor < 0) {
-            return set({ status: 'error', error: 'There is no price history at that date. Try a later one.', session: null });
+            return set({ status: 'error', error: t('There is no price history at that date. Try a later one.'), session: null });
           }
           set({ status: 'ready', runId: get().runId + 1, candles, cursor, atEnd: !more && cursor >= candles.length - 1, session: { ...session, cursorTime: candles[cursor].time } });
         } catch (error) {

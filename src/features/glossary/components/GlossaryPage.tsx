@@ -4,13 +4,20 @@ import { Link, useLocation } from 'react-router-dom';
 import { cn, EmptyState, Input, Page, PageHeader } from '@/components/ui';
 import { getGlossaryEntry, GLOSSARY } from '@/content/glossary';
 import { getLesson } from '@/content/lessons';
+import { t } from '@/i18n';
 import type { GlossaryEntry } from '@/types';
 
-const SORTED = [...GLOSSARY].sort((a, b) => a.term.localeCompare(b.term, 'en', { sensitivity: 'base' }));
+/**
+ * Sorted by the English term in every language, so the A to Z index works
+ * and the glossary doubles as a dictionary of the English jargon a learner
+ * meets on real trading platforms.
+ */
+const englishTerm = (entry: GlossaryEntry) => entry.english ?? entry.term;
+const SORTED = [...GLOSSARY].sort((a, b) => englishTerm(a).localeCompare(englishTerm(b), 'en', { sensitivity: 'base' }));
 
 function matches(entry: GlossaryEntry, query: string): boolean {
   if (!query) return true;
-  const haystack = `${entry.term} ${entry.aliases.join(' ')} ${entry.definition}`.toLowerCase();
+  const haystack = `${entry.term} ${entry.english ?? ''} ${entry.aliases.join(' ')} ${entry.definition}`.toLowerCase();
   return query.split(/\s+/).every((word) => haystack.includes(word));
 }
 
@@ -43,7 +50,7 @@ export function GlossaryPage() {
   const letters = useMemo(() => {
     const first = new Map<string, string>();
     for (const entry of results) {
-      const letter = entry.term[0].toUpperCase();
+      const letter = englishTerm(entry)[0].toUpperCase();
       if (!first.has(letter)) first.set(letter, entry.id);
     }
     return first;
@@ -51,18 +58,18 @@ export function GlossaryPage() {
 
   return (
     <Page className="max-w-3xl">
-      <PageHeader title="Glossary" description={`${GLOSSARY.length} trading terms in plain words. Terms are also linked wherever they first appear in a lesson.`} />
+      <PageHeader title={t('Glossary')} description={t('{n} trading terms in plain words. Terms are also linked wherever they first appear in a lesson.', { n: GLOSSARY.length })} />
 
       <div className="sticky top-0 z-10 -mx-4 flex flex-col gap-2 bg-bg px-4 py-2 md:-mx-6 md:px-6">
         <Input
           type="search"
-          aria-label="Search the glossary"
-          placeholder="Search terms and definitions"
+          aria-label={t('Search the glossary')}
+          placeholder={t('Search terms and definitions')}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
         {!query && (
-          <nav aria-label="Jump to letter" className="flex flex-wrap gap-0.5">
+          <nav aria-label={t('Jump to letter')} className="flex flex-wrap gap-0.5">
             {[...letters].map(([letter, id]) => (
               <a key={letter} href={`#${id}`} className="num grid size-7 place-items-center rounded-control text-xs text-muted hover:bg-raised hover:text-fg">
                 {letter}
@@ -71,15 +78,15 @@ export function GlossaryPage() {
           </nav>
         )}
         <p role="status" className="sr-only">
-          {results.length} {results.length === 1 ? 'term' : 'terms'} shown
+          {results.length === 1 ? t('1 term shown') : t('{n} terms shown', { n: results.length })}
         </p>
       </div>
 
       {results.length === 0 ? (
         <EmptyState
           icon={<SearchX />}
-          title={`No term matches "${query}"`}
-          description="Try a shorter word, or a related one such as margin, option or trend."
+          title={t('No term matches "{query}"', { query })}
+          description={t('Try a shorter word, or a related one such as margin, option or trend.')}
         />
       ) : (
         <dl className="flex flex-col">
@@ -95,17 +102,24 @@ export function GlossaryPage() {
                   entry.id === target && 'rounded-control bg-accent/10',
                 )}
               >
-                <dt className="text-base font-semibold text-fg">{entry.term}</dt>
+                <dt className="text-base font-semibold text-fg">
+                  {entry.term}
+                  {entry.english && entry.english !== entry.term && (
+                    <span lang="en" className="ml-2 text-sm font-normal text-muted">
+                      {entry.english}
+                    </span>
+                  )}
+                </dt>
                 <dd className="mt-1 text-[15px] leading-relaxed text-fg">{entry.definition}</dd>
                 {entry.details && <dd className="mt-1 text-sm leading-relaxed text-muted">{entry.details}</dd>}
                 {(entry.seeAlso.length > 0 || lesson) && (
                   <dd className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
                     {entry.seeAlso.length > 0 && (
                       <span className="text-muted">
-                        See also:{' '}
+                        {t('See also:')}{' '}
                         {entry.seeAlso.map((id, i) => (
                           <span key={id}>
-                            {i > 0 && ', '}
+                            {i > 0 && t(', ')}
                             <a href={`#${id}`} className="text-accent-text underline underline-offset-4">
                               {getGlossaryEntry(id)?.term ?? id}
                             </a>
@@ -119,7 +133,7 @@ export function GlossaryPage() {
                         className="inline-flex items-center gap-1.5 text-accent-text underline underline-offset-4"
                       >
                         <GraduationCap aria-hidden className="size-4" />
-                        Lesson: {lesson.title}
+                        {t('Lesson: {title}', { title: lesson.title })}
                       </Link>
                     )}
                   </dd>

@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Download, Trash2, Upload } from 'lucide-react';
 import { Button, Card, ConfirmDialog, toast } from '@/components/ui';
+import { intlLocale, t } from '@/i18n';
 import { BACKUP_KEYS, clearAll, createBackup, parseBackup, restoreBackup, STORE_NAMES, type BackupFile } from '@/lib/backup';
 
 function download(filename: string, text: string) {
@@ -24,7 +25,7 @@ export function DataCard() {
     const backup = createBackup(localStorage);
     const count = Object.keys(backup.data).length;
     download(`tradeschool-backup-${new Date().toISOString().slice(0, 10)}.json`, JSON.stringify(backup, null, 2));
-    toast.success('Backup saved', count ? 'Keep the file somewhere safe. It can be imported on any device.' : 'There was nothing saved yet, so the file is empty.');
+    toast.success(t('Backup saved'), count ? t('Keep the file somewhere safe. It can be imported on any device.') : t('There was nothing saved yet, so the file is empty.'));
   };
 
   const choose = async (file: File | undefined) => {
@@ -32,34 +33,33 @@ export function DataCard() {
     try {
       const result = parseBackup(await file.text());
       if (result.ok) setPending({ backup: result.backup, stores: result.stores, name: file.name });
-      else toast.error('Could not import', result.error);
+      else toast.error(t('Could not import'), result.error);
     } catch {
-      toast.error('Could not import', 'The file could not be read.');
+      toast.error(t('Could not import'), t('The file could not be read.'));
     }
     // Allow choosing the same file again.
     if (fileInput.current) fileInput.current.value = '';
   };
 
   return (
-    <Card title="Your data">
+    <Card title={t('Your data')}>
       <p className="text-sm text-muted">
-        Everything is stored in this browser only: nothing is sent to a server, and there is no account. Clearing your browser data erases it, so export a backup if it matters to you.
+        {t('Everything is stored in this browser only: nothing is sent to a server, and there is no account. Clearing your browser data erases it, so export a backup if it matters to you.')}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <Button icon={<Download aria-hidden className="size-4" />} onClick={exportAll}>
-          Export all data
+          {t('Export all data')}
         </Button>
         <Button icon={<Upload aria-hidden className="size-4" />} onClick={() => fileInput.current?.click()}>
-          Import a backup
+          {t('Import a backup')}
         </Button>
-        <input ref={fileInput} type="file" accept="application/json,.json" className="sr-only" tabIndex={-1} aria-label="Backup file to import" onChange={(e) => void choose(e.target.files?.[0])} />
+        <input ref={fileInput} type="file" accept="application/json,.json" className="sr-only" tabIndex={-1} aria-label={t('Backup file to import')} onChange={(e) => void choose(e.target.files?.[0])} />
         <Button variant="danger" icon={<Trash2 aria-hidden className="size-4" />} onClick={() => setErasing(true)}>
-          Erase everything
+          {t('Erase everything')}
         </Button>
       </div>
       <p className="mt-3 text-xs text-muted">
-        A backup holds your settings, paper and replay accounts, lesson and trainer progress, journal notes, chart layouts and drawings, and saved strategies. Chart pictures in the Journal are
-        rebuilt from price history when needed.
+        {t('A backup holds your settings, paper and replay accounts, lesson and trainer progress, journal notes, chart layouts and drawings, and saved strategies. Chart pictures in the Journal are rebuilt from price history when needed.')}
       </p>
 
       <ConfirmDialog
@@ -70,19 +70,22 @@ export function DataCard() {
           restoreBackup(localStorage, pending.backup);
           window.location.reload();
         }}
-        title="Replace everything with this backup?"
-        confirmLabel="Import and replace"
+        title={t('Replace everything with this backup?')}
+        confirmLabel={t('Import and replace')}
       >
         <p>
           <span className="num">{pending?.name}</span>
-          {pending?.backup.exportedAt ? ` was exported on ${new Date(pending.backup.exportedAt).toLocaleString()}.` : '.'} It contains:
+          {pending?.backup.exportedAt
+            ? ` ${t('was exported on {date}.', { date: new Date(pending.backup.exportedAt).toLocaleString(intlLocale()) })}`
+            : '.'}{' '}
+          {t('It contains:')}
         </p>
         <ul className="mt-2 list-disc space-y-0.5 pl-5">
           {pending?.stores.map((key) => (
             <li key={key}>{STORE_NAMES[key as (typeof BACKUP_KEYS)[number]] ?? key}</li>
           ))}
         </ul>
-        <p className="mt-3 text-muted">Everything currently in this browser is replaced, including anything the backup does not contain. This cannot be undone. The page reloads afterwards.</p>
+        <p className="mt-3 text-muted">{t('Everything currently in this browser is replaced, including anything the backup does not contain. This cannot be undone. The page reloads afterwards.')}</p>
       </ConfirmDialog>
 
       <ConfirmDialog
@@ -92,11 +95,11 @@ export function DataCard() {
           clearAll(localStorage);
           window.location.reload();
         }}
-        title="Erase everything?"
-        confirmLabel="Erase everything"
+        title={t('Erase everything?')}
+        confirmLabel={t('Erase everything')}
       >
-        <p>This removes your lesson progress, trainer history, paper and replay accounts, journal notes, drawings, saved strategies and settings from this browser.</p>
-        <p className="mt-2 text-muted">It cannot be undone. Export a backup first if you might want any of it back. The page reloads afterwards.</p>
+        <p>{t('This removes your lesson progress, trainer history, paper and replay accounts, journal notes, drawings, saved strategies and settings from this browser.')}</p>
+        <p className="mt-2 text-muted">{t('It cannot be undone. Export a backup first if you might want any of it back. The page reloads afterwards.')}</p>
       </ConfirmDialog>
     </Card>
   );

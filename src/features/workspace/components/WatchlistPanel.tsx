@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Star, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge, cn, EmptyState, Pnl, Skeleton } from '@/components/ui';
+import { t } from '@/i18n';
 import { displaySymbol, findInstrument } from '@/lib/data';
 import { formatPrice } from '@/lib/format';
 import { quoteKey, useMarket } from '@/stores';
@@ -30,14 +31,14 @@ export function WatchlistPanel({ current }: { current: Instrument }) {
     return (
       <EmptyState
         icon={<Star />}
-        title="Your watchlist is empty"
-        description="Use the star next to the symbol in the toolbar to add the chart you are looking at."
+        title={t('Your watchlist is empty')}
+        description={t('Use the star next to the symbol in the toolbar to add the chart you are looking at.')}
       />
     );
   }
 
   return (
-    <ul aria-label="Watchlist" className="flex flex-col">
+    <ul aria-label={t('Watchlist')} className="flex flex-col">
       {watchlist.map((item) => {
         const instrument = findInstrument(item.symbol, item.kind);
         if (!instrument) return null;
@@ -53,8 +54,8 @@ export function WatchlistPanel({ current }: { current: Instrument }) {
               <span className="min-w-0 flex-1">
                 <span className="flex items-center gap-1.5">
                   <span className="num text-sm font-medium text-fg">{displaySymbol(instrument)}</span>
-                  {instrument.kind === 'perpetual' && <Badge>Perp</Badge>}
-                  {!instrument.live && <Badge>Daily</Badge>}
+                  {instrument.kind === 'perpetual' && <Badge>{t('Perp')}</Badge>}
+                  {!instrument.live && <Badge>{t('Daily')}</Badge>}
                 </span>
                 <span className="block truncate text-xs text-muted">{instrument.name}</span>
               </span>
@@ -64,7 +65,7 @@ export function WatchlistPanel({ current }: { current: Instrument }) {
                   <Pnl value={quote.changePct} format="pct" className="text-xs" />
                 </span>
               ) : (
-                <span className="flex flex-col items-end gap-1" aria-label="Loading price">
+                <span className="flex flex-col items-end gap-1" aria-label={t('Loading price')}>
                   <Skeleton className="h-3.5 w-16" />
                   <Skeleton className="h-3 w-10" />
                 </span>
@@ -72,7 +73,7 @@ export function WatchlistPanel({ current }: { current: Instrument }) {
             </Link>
             <button
               type="button"
-              aria-label={`Remove ${displaySymbol(instrument)} from watchlist`}
+              aria-label={t('Remove {symbol} from watchlist', { symbol: displaySymbol(instrument) })}
               onClick={() => toggleWatch(item)}
               className="mr-1 rounded-sm p-1 text-muted opacity-0 group-hover:opacity-100 hover:text-fg focus-visible:opacity-100"
             >

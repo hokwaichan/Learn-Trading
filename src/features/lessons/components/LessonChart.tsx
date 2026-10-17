@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import { AnnotationLayer, IndicatorLayer, PriceChart } from '@/components/chart';
 import { ErrorState, LoadingState } from '@/components/ui';
+import { t } from '@/i18n';
 import { displaySymbol, findInstrument } from '@/lib/data';
 import { useCandleSeries, useMarket } from '@/stores';
 import type { Candle, ChartExample, IndicatorConfig } from '@/types';
@@ -56,14 +57,14 @@ function RealFigure({ example, id }: { example: ChartExample & { source: { symbo
   const { from, to } = example.source;
   const candles = useMemo(() => series.candles.filter((c) => c.time >= from && c.time <= to), [series.candles, from, to]);
 
-  if (!instrument) return <ErrorState message={`Unknown symbol ${example.source.symbol}.`} />;
-  if (series.status === 'loading') return <LoadingState className="h-80 rounded-card border border-border" label="Loading chart" />;
+  if (!instrument) return <ErrorState message={t('Unknown symbol {symbol}.', { symbol: example.source.symbol })} />;
+  if (series.status === 'loading') return <LoadingState className="h-80 rounded-card border border-border" label={t('Loading chart')} />;
   if (series.status === 'error' || candles.length === 0) {
     return (
       <ErrorState
         className="h-80 rounded-card border border-border"
-        title="Could not load this chart"
-        message={series.error ?? 'No price data for these dates.'}
+        title={t('Could not load this chart')}
+        message={series.error ?? t('No price data for these dates.')}
         onRetry={() => void load(instrument, '1d')}
       />
     );
@@ -76,7 +77,7 @@ export function LessonChart({ example, id }: { example: ChartExample; id: string
   return (
     <figure className="not-prose my-5">
       {'candles' in example.source ? (
-        <Figure example={example} candles={example.source.candles} title="Example" tickSize={0.01} id={id} />
+        <Figure example={example} candles={example.source.candles} title={t('Example')} tickSize={0.01} id={id} />
       ) : (
         <RealFigure example={example as ChartExample & { source: { symbol: string; from: number; to: number } }} id={id} />
       )}

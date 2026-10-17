@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Badge, BottomSheet, Button, cn } from '@/components/ui';
 import { lessonKey, neighbours } from '@/content/lessons';
 import { getQuiz } from '@/content/quizzes';
+import { t } from '@/i18n';
 import { useProgress } from '@/stores';
 import type { Lesson, Module } from '@/types';
 import { LessonBlocks } from './LessonBlocks';
@@ -39,10 +40,10 @@ export function LessonView({ module, lesson }: { module: Module; lesson: Lesson 
         <article className="prose-lesson mx-auto px-4 py-6 md:px-8 md:py-10">
           <div className="not-prose mb-5 flex flex-wrap items-center gap-2 text-sm">
             <Button size="sm" className="lg:hidden" icon={<List aria-hidden className="size-4" />} onClick={() => setOutlineOpen(true)}>
-              Contents
+              {t('Contents')}
             </Button>
             <Link to="/learn" className="text-muted underline-offset-4 hover:text-fg hover:underline">
-              Lessons
+              {t('Lessons')}
             </Link>
             <span aria-hidden className="text-muted">
               /
@@ -58,16 +59,14 @@ export function LessonView({ module, lesson }: { module: Module; lesson: Lesson 
             <div className="mt-3 flex flex-wrap items-center gap-2 text-sm text-muted">
               <span className="inline-flex items-center gap-1.5">
                 <Clock aria-hidden className="size-4" />
-                About {lesson.minutes} minutes
+                {t('About {n} minutes', { n: lesson.minutes })}
               </span>
               <span aria-hidden>·</span>
-              <span>
-                Lesson {lesson.order} of {module.lessons.length}
-              </span>
+              <span>{t('Lesson {n} of {total}', { n: lesson.order, total: module.lessons.length })}</span>
               {record?.completedAt && (
                 <Badge tone="up">
                   <CheckCircle2 aria-hidden className="size-3" />
-                  Completed
+                  {t('Completed')}
                 </Badge>
               )}
             </div>
@@ -77,12 +76,12 @@ export function LessonView({ module, lesson }: { module: Module; lesson: Lesson 
 
           {quiz && <QuizView key={quiz.id} quiz={quiz} bestScore={record?.bestScore} onFinish={(score) => completeLesson(key, score)} />}
 
-          <nav aria-label="Lesson navigation" className="not-prose mt-10 flex flex-col gap-3 sm:flex-row">
+          <nav aria-label={t('Lesson navigation')} className="not-prose mt-10 flex flex-col gap-3 sm:flex-row">
             {previous ? (
               <Link to={`/learn/${previous.moduleId}/${previous.id}`} className={NAV_LINK}>
                 <span className="flex items-center gap-1 text-xs text-muted">
                   <ArrowLeft aria-hidden className="size-3.5" />
-                  Previous
+                  {t('Previous')}
                 </span>
                 <span className="truncate font-medium text-fg">{previous.title}</span>
               </Link>
@@ -92,22 +91,22 @@ export function LessonView({ module, lesson }: { module: Module; lesson: Lesson 
             {next ? (
               <Link to={`/learn/${next.moduleId}/${next.id}`} className={cn(NAV_LINK, 'sm:items-end sm:text-right')}>
                 <span className="flex items-center gap-1 text-xs text-muted">
-                  Next
+                  {t('Next')}
                   <ArrowRight aria-hidden className="size-3.5" />
                 </span>
                 <span className="truncate font-medium text-fg">{next.title}</span>
               </Link>
             ) : (
               <Link to="/learn" className={cn(NAV_LINK, 'sm:items-end sm:text-right')}>
-                <span className="text-xs text-muted">End of the curriculum</span>
-                <span className="font-medium text-fg">Back to all lessons</span>
+                <span className="text-xs text-muted">{t('End of the curriculum')}</span>
+                <span className="font-medium text-fg">{t('Back to all lessons')}</span>
               </Link>
             )}
           </nav>
         </article>
       </div>
 
-      <BottomSheet open={outlineOpen} onClose={() => setOutlineOpen(false)} title="Contents" tall>
+      <BottomSheet open={outlineOpen} onClose={() => setOutlineOpen(false)} title={t('Contents')} tall>
         <LessonOutline currentModuleId={module.id} currentLessonId={lesson.id} onNavigate={() => setOutlineOpen(false)} />
       </BottomSheet>
     </div>

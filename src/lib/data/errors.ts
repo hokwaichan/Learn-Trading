@@ -1,3 +1,4 @@
+import { t } from '@/i18n';
 export type DataErrorKind =
   /** Could not reach the server at all (offline, DNS, CORS). */
   | 'network'
@@ -30,19 +31,19 @@ export function isUnreachable(error: unknown): boolean {
 
 /** A plain-language message for the screen. */
 export function describeDataError(error: unknown): string {
-  if (!(error instanceof DataError)) return 'Something unexpected went wrong while loading prices.';
+  if (!(error instanceof DataError)) return t('Something unexpected went wrong while loading prices.');
   switch (error.kind) {
     case 'network':
-      return 'Could not reach the price server. Check your internet connection.';
+      return t('Could not reach the price server. Check your internet connection.');
     case 'rate-limit': {
       const seconds = error.retryAfterMs ? Math.ceil(error.retryAfterMs / 1000) : 60;
-      return `The price server asked us to slow down. Try again in about ${seconds} seconds.`;
+      return t('The price server asked us to slow down. Try again in about {seconds} seconds.', { seconds });
     }
     case 'blocked':
-      return 'This price source is not available in your region.';
+      return t('This price source is not available in your region.');
     case 'not-found':
-      return 'There is no price data for this symbol.';
+      return t('There is no price data for this symbol.');
     case 'bad-data':
-      return 'The price server sent data we could not read.';
+      return t('The price server sent data we could not read.');
   }
 }

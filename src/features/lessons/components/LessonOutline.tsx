@@ -2,6 +2,7 @@ import { Check, Circle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { cn } from '@/components/ui';
 import { lessonKey, MODULES } from '@/content/lessons';
+import { t } from '@/i18n';
 import { useProgress } from '@/stores';
 
 export interface LessonOutlineProps {
@@ -15,7 +16,7 @@ export function LessonOutline({ currentModuleId, currentLessonId, onNavigate }: 
   const progress = useProgress((s) => s.lessons);
 
   return (
-    <nav aria-label="Curriculum" className="flex flex-col gap-1 p-3">
+    <nav aria-label={t('Curriculum')} className="flex flex-col gap-1 p-3">
       {MODULES.map((module) => {
         const done = module.lessons.filter((l) => progress[lessonKey(l)]?.completedAt).length;
         return (
@@ -43,9 +44,9 @@ export function LessonOutline({ currentModuleId, currentLessonId, onNavigate }: 
                       )}
                     >
                       {complete ? (
-                        <Check aria-label="Completed" className="mt-0.5 size-3.5 shrink-0 text-up-text" />
+                        <Check aria-label={t('Completed')} className="mt-0.5 size-3.5 shrink-0 text-up-text" />
                       ) : (
-                        <Circle aria-label="Not completed" className="mt-0.5 size-3.5 shrink-0 opacity-50" />
+                        <Circle aria-label={t('Not completed')} className="mt-0.5 size-3.5 shrink-0 opacity-50" />
                       )}
                       {lesson.title}
                     </Link>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { cn, GlossaryTerm } from '@/components/ui';
+import { cn, GlossaryTerm, Trans } from '@/components/ui';
+import { t } from '@/i18n';
 import { formatMoney, formatPrice, formatSignedMoney } from '@/lib/format';
 import { liquidationPriceOf, type Prices } from '@/lib/trading/engine';
 import { DEFAULT_FUNDING_RATE, FUNDING_INTERVAL_MS, fundingPayment } from '@/lib/trading/futures';
@@ -25,7 +26,7 @@ export function liquidationState(account: Account, position: Position, mark: num
   return { price: raw, distance: Math.abs(mark - raw) / mark, used, level: used >= 0.8 ? 'danger' : used >= 0.5 ? 'caution' : 'safe' };
 }
 
-const LEVEL_TEXT = { safe: 'Comfortable', caution: 'Getting close', danger: 'Near liquidation' } as const;
+const LEVEL_TEXT = { safe: t('Comfortable'), caution: t('Getting close'), danger: t('Near liquidation') };
 const LEVEL_BAR = { safe: 'bg-accent', caution: 'bg-warning', danger: 'bg-down' } as const;
 const LEVEL_TONE = { safe: 'text-muted', caution: 'text-warning-text', danger: 'text-down-text' } as const;
 
@@ -40,7 +41,7 @@ function useNow(intervalMs: number): number {
 
 function countdown(ms: number): string {
   const minutes = Math.max(0, Math.ceil(ms / 60_000));
-  return `${Math.floor(minutes / 60)}h ${String(minutes % 60).padStart(2, '0')}m`;
+  return t('{h}h {m}m', { h: Math.floor(minutes / 60), m: String(minutes % 60).padStart(2, '0') });
 }
 
 /** Margin, liquidation distance and funding for an open futures position. */
@@ -57,56 +58,71 @@ export function FuturesPositionCard({ account, position, instrument, mark, price
   return (
     <div className="mt-2 border-t border-border pt-2">
       <dl className="grid grid-cols-2 gap-x-3 gap-y-1 text-xs">
-        <dt className="text-muted">Leverage</dt>
+        <dt className="text-muted">{t('Leverage')}</dt>
         <dd className="num text-right text-fg">
-          {futures.leverage}x {futures.marginMode}
+          {futures.leverage}x {futures.marginMode === 'isolated' ? t('isolated') : t('cross')}
         </dd>
-        <dt className="text-muted">Margin in this trade</dt>
+        <dt className="text-muted">{t('Margin in this trade')}</dt>
         <dd className="num text-right text-fg">{formatMoney(futures.margin)}</dd>
         <dt className="text-muted">
-          <GlossaryTerm id="liquidation">Liquidation</GlossaryTerm> price
+          <Trans text="{liquidation} price" values={{ liquidation: <GlossaryTerm id="liquidation">{t('Liquidation')}</GlossaryTerm> }} />
         </dt>
-        <dd className="num text-right font-medium text-fg">{state.price != null ? fmt(state.price) : 'None'}</dd>
+        <dd className="num text-right font-medium text-fg">{state.price != null ? fmt(state.price) : t('None')}</dd>
       </dl>
 
       {state.price != null && state.distance != null ? (
         <div className="mt-2">
           <div
             role="meter"
-            aria-label="Distance to liquidation"
+            aria-label={t('Distance to liquidation')}
             aria-valuemin={0}
             aria-valuemax={100}
             aria-valuenow={Math.round(state.used * 100)}
-            aria-valuetext={`${LEVEL_TEXT[state.level]}: price is ${(state.distance * 100).toFixed(1)}% from liquidation`}
+            aria-valuetext={t('{level}: price is {pct}% from liquidation', { level: LEVEL_TEXT[state.level], pct: (state.distance * 100).toFixed(1) })}
             className="h-2 overflow-hidden rounded-full bg-border"
           >
             <div className={cn('h-full rounded-full transition-[width] duration-150 motion-reduce:transition-none', LEVEL_BAR[state.level])} style={{ width: `${Math.max(2, state.used * 100)}%` }} />
           </div>
           <div className="mt-1 flex items-baseline justify-between gap-2 text-[11px]">
-            <span className="text-muted">Entry</span>
+            <span className="text-muted">{t('Entry')}</span>
             <span className={cn('font-medium', LEVEL_TONE[state.level])}>{LEVEL_TEXT[state.level]}</span>
-            <span className="text-muted">Liquidation</span>
+            <span className="text-muted">{t('Liquidation')}</span>
           </div>
           <p className="mt-1 text-xs text-fg">
-            Price must {long ? 'fall' : 'rise'} <span className="num font-medium">{(state.distance * 100).toFixed(2)}%</span> to liquidate this position.
-            {futures.marginMode === 'isolated' ? (
-              <>
-                {' '}
-                That would lose its <span className="num">{formatMoney(futures.margin)}</span> margin and nothing more.
-              </>
+            {long ? (
+              <Trans text="Price must fall {pct} to liquidate this position." values={{ pct: <span className="num font-medium">{(state.distance * 100).toFixed(2)}%</span> }} />
             ) : (
-              ' In cross mode that would take most of the account with it.'
+              <Trans text="Price must rise {pct} to liquidate this position." values={{ pct: <span className="num font-medium">{(state.distance * 100).toFixed(2)}%</span> }} />
+            )}{' '}
+            {futures.marginMode === 'isolated' ? (
+              <Trans text="That would lose its {margin} margin and nothing more." values={{ margin: <span className="num">{formatMoney(futures.margin)}</span> }} />
+            ) : (
+              t('In cross mode that would take most of the account with it.')
             )}
           </p>
         </div>
       ) : (
-        <p className="mt-2 text-xs text-muted">The account holds enough to cover this whole position, so it cannot be liquidated.</p>
+        <p className="mt-2 text-xs text-muted">{t('The account holds enough to cover this whole position, so it cannot be liquidated.')}</p>
       )}
 
       <p className="mt-2 text-xs text-muted">
-        <GlossaryTerm id="funding-rate">Funding</GlossaryTerm> so far:{' '}
-        <span className="num text-fg">{futures.fundingPaid === 0 ? '$0.00' : `${futures.fundingPaid > 0 ? 'paid' : 'received'} ${formatMoney(Math.abs(futures.fundingPaid))}`}</span>. Next in{' '}
-        <span className="num text-fg">{countdown(nextFunding - now)}</span>: about <span className="num text-fg">{formatSignedMoney(-nextPayment)}</span>.
+        <Trans
+          text="{funding} so far: {amount}. Next in {countdown}: about {next}."
+          values={{
+            funding: <GlossaryTerm id="funding-rate">{t('Funding')}</GlossaryTerm>,
+            amount: (
+              <span className="num text-fg">
+                {futures.fundingPaid === 0
+                  ? '$0.00'
+                  : futures.fundingPaid > 0
+                    ? t('paid {amount}', { amount: formatMoney(futures.fundingPaid) })
+                    : t('received {amount}', { amount: formatMoney(-futures.fundingPaid) })}
+              </span>
+            ),
+            countdown: <span className="num text-fg">{countdown(nextFunding - now)}</span>,
+            next: <span className="num text-fg">{formatSignedMoney(-nextPayment)}</span>,
+          }}
+        />
       </p>
     </div>
   );

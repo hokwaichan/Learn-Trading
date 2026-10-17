@@ -1,3 +1,4 @@
+import { t } from '@/i18n';
 import type { Candle, DrawingPoint } from '@/types';
 
 /**
@@ -73,5 +74,5 @@ export function distanceToSegment(
 export const POINTS_NEEDED = { trendline: 2, hline: 1, rect: 2, fib: 2, text: 1 } as const;
 
 export function describePoint(point: DrawingPoint, format: (price: number) => string): string {
-  return `${new Date(point.time * 1000).toISOString().slice(0, 10)} at ${format(point.price)}`;
+  return t('{date} at {price}', { date: new Date(point.time * 1000).toISOString().slice(0, 10), price: format(point.price) });
 }

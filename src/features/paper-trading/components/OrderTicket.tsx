@@ -1,7 +1,8 @@
 import { useMemo, useState } from 'react';
 import { AlertTriangle, Info } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button, cn, ConfirmDialog, EmptyState, Input, Pnl, Slider, Tabs, toast } from '@/components/ui';
+import { Button, cn, ConfirmDialog, EmptyState, Input, Pnl, Slider, Tabs, toast, Trans } from '@/components/ui';
+import { t } from '@/i18n';
 import { displaySymbol } from '@/lib/data';
 import { floorToStep, formatMoney, formatPct, formatPrice, formatQty, roundToTick } from '@/lib/format';
 import { feeFor, findPosition, liquidationPriceOf, marginOf, referencePrice, unrealizedPnl, validateStops, withSlippage, type OrderRequest, type Prices } from '@/lib/trading/engine';
@@ -130,57 +131,71 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
   const opens = !reducing || (quantity ?? 0) > position.quantity;
 
   const errors: Record<string, string | undefined> = {};
-  if (kind !== 'market' && trigger == null) errors.price = `Enter the ${kind} price.`;
+  if (kind !== 'market' && trigger == null) errors.price = kind === 'limit' ? t('Enter the limit price.') : t('Enter the stop price.');
   if (kind === 'stop' && trigger != null && market != null && (side === 'buy' ? trigger <= market : trigger >= market)) {
-    errors.price = side === 'buy' ? 'A buy stop must be above the current price.' : 'A sell stop must be below the current price.';
+    errors.price = side === 'buy' ? t('A buy stop must be above the current price.') : t('A sell stop must be below the current price.');
   }
-  if (sizeMode === 'quantity' && quantity == null) errors.quantity = 'Enter a quantity.';
-  if (sizeMode === 'risk' && stopLoss == null) errors.stop = 'The calculator needs a stop-loss price.';
-  if (quantity != null && quantity < instrument.minQty) errors.quantity = `The smallest order is ${formatQty(instrument.minQty, instrument.stepSize)} ${base}.`;
+  if (sizeMode === 'quantity' && quantity == null) errors.quantity = t('Enter a quantity.');
+  if (sizeMode === 'risk' && stopLoss == null) errors.stop = t('The calculator needs a stop-loss price.');
+  if (quantity != null && quantity < instrument.minQty) {
+    errors.quantity = t('The smallest order is {qty} {asset}.', { qty: formatQty(instrument.minQty, instrument.stepSize), asset: base });
+  }
   if (reference != null && opens) {
-    const problem = validateStops(direction, reference, stopLoss, takeProfit);
-    if (problem) errors[problem.includes('stop-loss') ? 'stop' : 'target'] = problem;
+    // Checked one at a time so each message lands under its own field.
+    errors.stop ??= validateStops(direction, reference, stopLoss) ?? undefined;
+    errors.target = validateStops(direction, reference, undefined, takeProfit) ?? undefined;
   }
   const needed = opens && value != null ? (reducing ? (value / quantity!) * (quantity! - position!.quantity) : value) / leverage + (fee ?? 0) : 0;
   const freeAfterClose = snapshot.freeMargin + (reducing && market != null ? marginOf(position!, market) : 0);
   if (!errors.quantity && needed > freeAfterClose * (1 + 1e-9)) {
-    errors.quantity = `Not enough free funds. This needs ${formatMoney(needed)} and ${formatMoney(Math.max(0, freeAfterClose))} is available.`;
+    errors.quantity = t('Not enough free funds. This needs {needed} and {free} is available.', {
+      needed: formatMoney(needed),
+      free: formatMoney(Math.max(0, freeAfterClose)),
+    });
   }
   const hasErrors = Object.values(errors).some(Boolean);
 
   const warnings: string[] = [];
   if (opens && stopLoss == null) {
-    warnings.push(isFutures && leverage > 1 ? 'No stop-loss. The only thing limiting the loss on this trade is liquidation.' : 'No stop-loss. Nothing limits the loss on this trade.');
+    warnings.push(
+      isFutures && leverage > 1 ? t('No stop-loss. The only thing limiting the loss on this trade is liquidation.') : t('No stop-loss. Nothing limits the loss on this trade.'),
+    );
   }
   if (opens && isFutures && leverage > LEVERAGE_WARNING) {
     warnings.push(
-      liquidationMove != null
-        ? `${leverage}x leverage. A move of only ${formatPct(liquidationMove, 1)} against you liquidates this position${marginMode === 'isolated' && margin != null ? ` and loses its ${formatMoney(margin)} margin` : ''}.`
-        : `${leverage}x leverage. Small moves against you become large losses.`,
+      liquidationMove == null
+        ? t('{n}x leverage. Small moves against you become large losses.', { n: leverage })
+        : marginMode === 'isolated' && margin != null
+          ? t('{n}x leverage. A move of only {move} against you liquidates this position and loses its {margin} margin.', {
+              n: leverage,
+              move: formatPct(liquidationMove, 1),
+              margin: formatMoney(margin),
+            })
+          : t('{n}x leverage. A move of only {move} against you liquidates this position.', { n: leverage, move: formatPct(liquidationMove, 1) }),
     );
   }
   if (opens && isFutures && stopLoss != null && liquidation != null && liquidation > 0 && (direction === 'long' ? stopLoss <= liquidation : stopLoss >= liquidation)) {
-    warnings.push('Your stop-loss is beyond the liquidation price, so the position would be liquidated before the stop is reached.');
+    warnings.push(t('Your stop-loss is beyond the liquidation price, so the position would be liquidated before the stop is reached.'));
   }
   if (opens && riskShare != null && riskShare > RISK_WARNING) {
-    warnings.push(`This risks ${formatPct(riskShare, 1)} of your account (${formatMoney(riskAmount!)}), above the 2% guideline.`);
+    warnings.push(t('This risks {share} of your account ({amount}), above the 2% guideline.', { share: formatPct(riskShare, 1), amount: formatMoney(riskAmount!) }));
   }
 
   if (!instrument.live && priceOverride == null) {
     return (
       <EmptyState
         icon={<Info />}
-        title={`${displaySymbol(instrument)} has no live price`}
-        description="It comes from bundled daily history, so there is nothing to trade against right now."
+        title={t('{symbol} has no live price', { symbol: displaySymbol(instrument) })}
+        description={t('It comes from bundled daily history, so there is nothing to trade against right now.')}
         action={
           <Link to="/replay" className="text-sm text-accent-text underline underline-offset-4">
-            Practise it in Replay
+            {t('Practise it in Replay')}
           </Link>
         }
       />
     );
   }
-  if (market == null) return <EmptyState title="Waiting for a price" description="The order ticket appears as soon as a price arrives." />;
+  if (market == null) return <EmptyState title={t('Waiting for a price')} description={t('The order ticket appears as soon as a price arrives.')} />;
 
   const send = () => {
     if (quantity == null) return;
@@ -201,15 +216,20 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
     const rejected = events.find((e) => e.type === 'order_rejected');
     const filled = events.find((e) => e.type === 'order_filled');
     const closed = events.find((e) => e.type === 'trade_closed');
-    const verb = side === 'buy' ? 'Bought' : 'Sold';
-    if (rejected?.type === 'order_rejected') toast.error('Order rejected', rejected.reason);
+    const amount = { qty: formatQty(quantity, instrument.stepSize), asset: base };
+    if (rejected?.type === 'order_rejected') toast.error(t('Order rejected'), rejected.reason);
     else if (filled?.type === 'order_filled') {
       toast.success(
-        `${verb} ${formatQty(quantity, instrument.stepSize)} ${base}`,
-        `Filled at ${fmtPrice(filled.price)}${closed?.type === 'trade_closed' ? `. Position closed.` : ''}`,
+        side === 'buy' ? t('Bought {qty} {asset}', amount) : t('Sold {qty} {asset}', amount),
+        closed?.type === 'trade_closed'
+          ? t('Filled at {price}. Position closed.', { price: fmtPrice(filled.price) })
+          : t('Filled at {price}', { price: fmtPrice(filled.price) }),
       );
     } else if (events.some((e) => e.type === 'order_placed')) {
-      toast.info(`${kind === 'limit' ? 'Limit' : 'Stop'} order placed`, `Waiting for ${displaySymbol(instrument)} to reach ${fmtPrice(trigger!)}.`);
+      toast.info(
+        kind === 'limit' ? t('Limit order placed') : t('Stop order placed'),
+        t('Waiting for {symbol} to reach {price}.', { symbol: displaySymbol(instrument), price: fmtPrice(trigger!) }),
+      );
     }
     if (!rejected) {
       setSubmitted(false);
@@ -231,7 +251,9 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
     const budget = (Math.max(0, snapshot.freeMargin) * share) / (1 + feeRate * leverage);
     setQuantityText(formatQty(floorToStep((budget * leverage) / entry, instrument.stepSize), instrument.stepSize).replace(/,/g, ''));
   };
-  const actionLabel = `${side === 'buy' ? 'Buy' : 'Sell'}${reducing ? '' : side === 'buy' ? ' / Long' : ' / Short'}${quantity != null ? ` ${formatQty(quantity, instrument.stepSize)} ${base}` : ''}`;
+  const actionLabel = `${side === 'buy' ? (reducing ? t('Buy') : t('Buy / Long')) : reducing ? t('Sell') : t('Sell / Short')}${
+    quantity != null ? ` ${formatQty(quantity, instrument.stepSize)} ${base}` : ''
+  }`;
 
   return (
     <form
@@ -243,7 +265,7 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
       noValidate
     >
       <div className="flex items-baseline justify-between">
-        <span className="text-xs text-muted">{displaySymbol(instrument)} price</span>
+        <span className="text-xs text-muted">{t('{symbol} price', { symbol: displaySymbol(instrument) })}</span>
         <span className="num text-base font-medium text-fg">{fmtPrice(market)}</span>
       </div>
 
@@ -251,8 +273,14 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
         <div className="rounded-control border border-border bg-bg px-3 py-2">
           <div className="flex items-center justify-between gap-2">
             <span className="text-xs text-fg">
-              Open: <span className={position.direction === 'long' ? 'text-up-text' : 'text-down-text'}>{position.direction === 'long' ? 'Long' : 'Short'}</span>{' '}
-              <span className="num">{formatQty(position.quantity, instrument.stepSize)}</span> at <span className="num">{fmtPrice(position.entryPrice)}</span>
+              <Trans
+                text="Open: {side} {qty} at {price}"
+                values={{
+                  side: <span className={position.direction === 'long' ? 'text-up-text' : 'text-down-text'}>{position.direction === 'long' ? t('Long') : t('Short')}</span>,
+                  qty: <span className="num">{formatQty(position.quantity, instrument.stepSize)}</span>,
+                  price: <span className="num">{fmtPrice(position.entryPrice)}</span>,
+                }}
+              />
             </span>
             <Pnl value={unrealizedPnl(position, market)} className="text-xs" />
           </div>
@@ -263,79 +291,81 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
             onClick={() => {
               const events = close(accountId, position.id, market, prices, now);
               const trade = events.find((e) => e.type === 'trade_closed');
-              if (trade?.type === 'trade_closed') toast.info('Position closed', `Result: ${trade.trade.netPnl >= 0 ? '+' : '-'}${formatMoney(Math.abs(trade.trade.netPnl))}`);
+              if (trade?.type === 'trade_closed') {
+                toast.info(t('Position closed'), t('Result: {pnl}', { pnl: `${trade.trade.netPnl >= 0 ? '+' : '-'}${formatMoney(Math.abs(trade.trade.netPnl))}` }));
+              }
             }}
           >
-            Close position at market
+            {t('Close position at market')}
           </Button>
           <FuturesPositionCard account={account} position={position} instrument={instrument} mark={market} prices={allPrices} />
         </div>
       )}
 
-      <div role="group" aria-label="Direction" className="grid grid-cols-2 gap-2">
+      <div role="group" aria-label={t('Direction')} className="grid grid-cols-2 gap-2">
         <Button variant={side === 'buy' ? 'buy' : 'secondary'} aria-pressed={side === 'buy'} onClick={() => setSide('buy')}>
-          Buy / Long
+          {t('Buy / Long')}
         </Button>
         <Button variant={side === 'sell' ? 'sell' : 'secondary'} aria-pressed={side === 'sell'} onClick={() => setSide('sell')}>
-          Sell / Short
+          {t('Sell / Short')}
         </Button>
       </div>
 
       {isFutures && (
         <div className="rounded-control border border-border bg-bg p-3">
-          <Slider label="Leverage" min={1} max={MAX_LEVERAGE} step={1} value={leverageChoice} onChange={setLeverage} format={(v) => `${v}x`} />
+          <Slider label={t('Leverage')} min={1} max={MAX_LEVERAGE} step={1} value={leverageChoice} onChange={setLeverage} format={(v) => `${v}x`} />
           <p className="mt-1.5 text-xs text-muted">
             {leverage === 1
-              ? 'No leverage: the position is worth what you put in.'
-              : `Every $1 of your money controls ${`$${leverage}`} of ${base}. Gains and losses are ${leverage} times larger.`}
+              ? t('No leverage: the position is worth what you put in.')
+              : t('Every $1 of your money controls ${n} of {asset}. Gains and losses are {n} times larger.', { n: leverage, asset: base })}
           </p>
           <Tabs<MarginMode>
             variant="pill"
-            label="Margin mode"
+            label={t('Margin mode')}
             idBase="ticket-margin"
             choice
             className="mt-2 rounded-control border border-border p-0.5"
             value={marginChoice}
             onChange={setMarginMode}
             items={[
-              { id: 'isolated', label: 'Isolated' },
-              { id: 'cross', label: 'Cross' },
+              { id: 'isolated', label: t('Isolated') },
+              { id: 'cross', label: t('Cross') },
             ]}
           />
           <p className="mt-1.5 text-xs text-muted">
             {marginMode === 'isolated'
-              ? 'Isolated: this trade can lose only the margin put into it. It is liquidated sooner, but the rest of the account is safe.'
-              : 'Cross: the whole account backs this trade. It is liquidated later, but a liquidation can empty the account.'}
+              ? t('Isolated: this trade can lose only the margin put into it. It is liquidated sooner, but the rest of the account is safe.')
+              : t('Cross: the whole account backs this trade. It is liquidated later, but a liquidation can empty the account.')}
           </p>
           {position && position.direction === direction && position.futures && (position.futures.leverage !== leverage || position.futures.marginMode !== marginMode) && (
-            <p className="mt-1.5 text-xs text-warning-text">Adding to the open position applies these settings to all of it.</p>
+            <p className="mt-1.5 text-xs text-warning-text">{t('Adding to the open position applies these settings to all of it.')}</p>
           )}
         </div>
       )}
 
       <Tabs<OrderKind>
         variant="pill"
-        label="Order type"
+        label={t('Order type')}
         idBase="ticket-type"
             choice
         className="rounded-control border border-border p-0.5"
         value={kind}
         onChange={setKind}
         items={[
-          { id: 'market', label: 'Market' },
-          { id: 'limit', label: 'Limit' },
-          { id: 'stop', label: 'Stop' },
+          { id: 'market', label: t('Market') },
+          { id: 'limit', label: t('Limit') },
+          { id: 'stop', label: t('order::Stop') },
         ]}
       />
       <p className="-mt-1 text-xs text-muted">
-        {kind === 'market' && 'Fills now at the current price, plus a little slippage.'}
-        {kind === 'limit' && (side === 'buy' ? 'Waits to buy at your price or lower.' : 'Waits to sell at your price or higher.')}
-        {kind === 'stop' && (side === 'buy' ? 'Buys if price rises to your trigger.' : 'Sells if price falls to your trigger.')}
+        {kind === 'market' && t('Fills now at the current price, plus a little slippage.')}
+        {kind === 'limit' && (side === 'buy' ? t('Waits to buy at your price or lower.') : t('Waits to sell at your price or higher.'))}
+        {kind === 'stop' && (side === 'buy' ? t('Buys if price rises to your trigger.') : t('Sells if price falls to your trigger.'))}
       </p>
 
       {kind !== 'market' && (
         <Input
-          label={kind === 'limit' ? 'Limit price' : 'Trigger price'}
+          label={kind === 'limit' ? t('Limit price') : t('Trigger price')}
           numeric
           suffix={instrument.quote}
           value={priceText}
@@ -347,29 +377,29 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
 
       <Tabs<SizeMode>
         variant="pill"
-        label="How to size the trade"
+        label={t('How to size the trade')}
         idBase="ticket-size"
             choice
         className="rounded-control border border-border p-0.5"
         value={sizeMode}
         onChange={setSizeMode}
         items={[
-          { id: 'quantity', label: 'Set quantity' },
-          { id: 'risk', label: 'Size from risk' },
+          { id: 'quantity', label: t('Set quantity') },
+          { id: 'risk', label: t('Size from risk') },
         ]}
       />
 
       {sizeMode === 'quantity' ? (
         <div>
           <Input
-            label="Quantity"
+            label={t('Quantity')}
             numeric
             suffix={base}
             value={quantityText}
             onChange={(e) => setQuantityText(e.target.value)}
             error={show('quantity')}
           />
-          <div className="mt-1.5 grid grid-cols-4 gap-1" role="group" aria-label="Share of free funds">
+          <div className="mt-1.5 grid grid-cols-4 gap-1" role="group" aria-label={t('Share of free funds')}>
             {[0.1, 0.25, 0.5, 1].map((share) => (
               <Button key={share} size="sm" variant="ghost" className="border border-border" onClick={() => setShare(share)}>
                 {share * 100}%
@@ -379,19 +409,23 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
         </div>
       ) : (
         <div className="rounded-control border border-border bg-bg p-3">
-          <Slider label="Risk on this trade" min={0.25} max={5} step={0.25} value={riskPct} onChange={setRiskPct} format={(v) => `${v}% of account`} />
+          <Slider label={t('Risk on this trade')} min={0.25} max={5} step={0.25} value={riskPct} onChange={setRiskPct} format={(v) => t('{pct}% of account', { pct: v })} />
           <p className="mt-2 text-xs text-muted" aria-live="polite">
             {sized && quantity != null ? (
-              <>
-                Risking <span className="num text-fg">{formatMoney(sized.riskAmount)}</span> with a stop{' '}
-                <span className="num text-fg">{formatPct(sized.stopFraction, 2)}</span> away gives a size of{' '}
-                <span className="num font-medium text-fg">
-                  {formatQty(quantity, instrument.stepSize)} {base}
-                </span>
-                .
-              </>
+              <Trans
+                text="Risking {amount} with a stop {distance} away gives a size of {size}."
+                values={{
+                  amount: <span className="num text-fg">{formatMoney(sized.riskAmount)}</span>,
+                  distance: <span className="num text-fg">{formatPct(sized.stopFraction, 2)}</span>,
+                  size: (
+                    <span className="num font-medium text-fg">
+                      {formatQty(quantity, instrument.stepSize)} {base}
+                    </span>
+                  ),
+                }}
+              />
             ) : (
-              'Enter a stop-loss price below. The size is worked out so that hitting it loses this share of your account.'
+              t('Enter a stop-loss price below. The size is worked out so that hitting it loses this share of your account.')
             )}
           </p>
           {submitted && errors.quantity && (
@@ -404,39 +438,43 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
 
       <div className="grid grid-cols-2 gap-2">
         <Input
-          label="Stop-loss"
+          label={t('Stop-loss')}
           numeric
           value={stopText}
           onChange={(e) => setStopText(e.target.value)}
           error={show('stop')}
-          hint={direction === 'long' ? 'Below entry' : 'Above entry'}
+          hint={direction === 'long' ? t('Below entry') : t('Above entry')}
         />
         <Input
-          label="Take-profit"
+          label={t('Take-profit')}
           numeric
           value={targetText}
           onChange={(e) => setTargetText(e.target.value)}
           error={show('target')}
-          hint={direction === 'long' ? 'Above entry' : 'Below entry'}
+          hint={direction === 'long' ? t('Above entry') : t('Below entry')}
         />
       </div>
 
       <dl className="rounded-control border border-border px-3 py-1.5">
-        <Row label="Estimated entry">{entry != null ? fmtPrice(entry) : '–'}</Row>
-        <Row label="Position value">{value != null ? formatMoney(value) : '–'}</Row>
-        {isFutures && <Row label={`Margin needed (${leverage}x)`}>{margin != null ? formatMoney(margin) : '–'}</Row>}
+        <Row label={t('Estimated entry')}>{entry != null ? fmtPrice(entry) : '–'}</Row>
+        <Row label={t('Position value')}>{value != null ? formatMoney(value) : '–'}</Row>
+        {isFutures && <Row label={t('Margin needed ({n}x)', { n: leverage })}>{margin != null ? formatMoney(margin) : '–'}</Row>}
         {isFutures && (
-          <Row label="Liquidation price (est.)">
-            {!opens || liquidation == null ? '–' : liquidation > 0 ? `${fmtPrice(liquidation)} (${formatPct(liquidationMove ?? 0, 1)} away)` : 'None'}
+          <Row label={t('Liquidation price (est.)')}>
+            {!opens || liquidation == null
+              ? '–'
+              : liquidation > 0
+                ? t('{price} ({move} away)', { price: fmtPrice(liquidation), move: formatPct(liquidationMove ?? 0, 1) })
+                : t('None')}
           </Row>
         )}
-        <Row label={`Fee (${formatPct(feeRate, 2)})`}>{fee != null ? formatMoney(fee) : '–'}</Row>
-        <Row label="Risk if stopped out" strong>
-          {riskAmount != null ? `${formatMoney(riskAmount)} (${formatPct(riskShare ?? 0, 2)})` : stopLoss != null ? '–' : 'No stop-loss'}
+        <Row label={t('Fee ({rate})', { rate: formatPct(feeRate, 2) })}>{fee != null ? formatMoney(fee) : '–'}</Row>
+        <Row label={t('Risk if stopped out')} strong>
+          {riskAmount != null ? `${formatMoney(riskAmount)} (${formatPct(riskShare ?? 0, 2)})` : stopLoss != null ? '–' : t('No stop-loss')}
         </Row>
-        <Row label="Reward to risk">{ratio != null ? `${ratio.toFixed(2)} : 1` : '–'}</Row>
-        {isFutures && <Row label="Margin in use">{formatMoney(snapshot.marginUsed)}</Row>}
-        <Row label={isFutures ? 'Free margin' : 'Free funds'}>{formatMoney(snapshot.freeMargin)}</Row>
+        <Row label={t('Reward to risk')}>{ratio != null ? `${ratio.toFixed(2)} : 1` : '–'}</Row>
+        {isFutures && <Row label={t('Margin in use')}>{formatMoney(snapshot.marginUsed)}</Row>}
+        <Row label={isFutures ? t('Free margin') : t('Free funds')}>{formatMoney(snapshot.freeMargin)}</Row>
       </dl>
 
       {warnings.length > 0 && (
@@ -453,15 +491,15 @@ export function OrderTicket({ instrument, accountId = 'main', price: priceOverri
       <Button type="submit" size="lg" variant={side === 'buy' ? 'buy' : 'sell'} block>
         {actionLabel}
       </Button>
-      <p className="text-center text-[11px] text-muted">Simulated money. No real order is sent anywhere.</p>
+      <p className="text-center text-[11px] text-muted">{t('Simulated money. No real order is sent anywhere.')}</p>
 
-      <ConfirmDialog open={confirming} onClose={() => setConfirming(false)} onConfirm={send} title="Place this trade anyway?" confirmLabel={actionLabel}>
+      <ConfirmDialog open={confirming} onClose={() => setConfirming(false)} onConfirm={send} title={t('Place this trade anyway?')} confirmLabel={actionLabel}>
         <ul className="list-disc space-y-1.5 pl-4">
           {warnings.map((warning) => (
             <li key={warning}>{warning}</li>
           ))}
         </ul>
-        <p className="mt-3 text-muted">You can go back and add a stop-loss or reduce the size.</p>
+        <p className="mt-3 text-muted">{t('You can go back and add a stop-loss or reduce the size.')}</p>
       </ConfirmDialog>
     </form>
   );

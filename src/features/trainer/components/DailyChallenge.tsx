@@ -1,7 +1,8 @@
 import { useMemo, useRef, useState } from 'react';
 import { ArrowRight, Check, CircleCheck, Target, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Button, Card, cn, LoadingState, Modal } from '@/components/ui';
+import { Button, Card, cn, LoadingState, Modal, Trans } from '@/components/ui';
+import { t } from '@/i18n';
 import { currentStreak, dayKey } from '@/lib/dates';
 import { useProgress } from '@/stores';
 import { conceptQuestion, patternQuestion } from '../challenge';
@@ -17,7 +18,7 @@ function Step({ question, picked, onPick }: { question: TrainerQuestion; picked:
     <div className="flex flex-col gap-3">
       <QuestionVisual question={question} revealed={picked != null} answerLabel={correctLabel} />
       <p className="text-base font-medium text-fg">{question.prompt}</p>
-      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Answers">
+      <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label={t('Answers')}>
         {question.choices.map((choice) => {
           const chosen = picked === choice.id;
           const correct = choice.id === question.correctId;
@@ -40,13 +41,13 @@ function Step({ question, picked, onPick }: { question: TrainerQuestion; picked:
               {picked && correct && (
                 <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-up-text">
                   <Check aria-hidden className="size-4" />
-                  Correct answer
+                  {t('Correct answer')}
                 </span>
               )}
               {picked && chosen && !correct && (
                 <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-down-text">
                   <X aria-hidden className="size-4" />
-                  Your answer
+                  {t('Your answer')}
                 </span>
               )}
             </button>
@@ -56,7 +57,7 @@ function Step({ question, picked, onPick }: { question: TrainerQuestion; picked:
       {picked && (
         <div role="status" className="rounded-card border border-border bg-bg p-3">
           <p className="text-sm font-semibold">
-            <span className={right ? 'text-up-text' : 'text-down-text'}>{right ? 'Right. ' : 'Not quite. '}</span>
+            <span className={right ? 'text-up-text' : 'text-down-text'}>{right ? t('Right.') : t('Not quite.')} </span>
             <span className="text-fg">{question.explanation.heading}</span>
           </p>
           {question.explanation.paragraphs.map((text) => (
@@ -88,7 +89,7 @@ function Runner({ day, onClose }: { day: string; onClose: () => void }) {
   const [step, setStep] = useState(0);
   const [answers, setAnswers] = useState<(string | null)[]>([]);
 
-  if (!questions) return <LoadingState className="py-12" label="Preparing today's challenge" />;
+  if (!questions) return <LoadingState className="py-12" label={t('Preparing today\'s challenge')} />;
 
   const finished = step >= questions.length;
   const score = questions.filter((q, i) => answers[i] === q.correctId).length;
@@ -96,18 +97,18 @@ function Runner({ day, onClose }: { day: string; onClose: () => void }) {
     return (
       <div className="flex flex-col items-center gap-3 py-6 text-center">
         <CircleCheck aria-hidden className="size-10 text-up-text" />
-        <p className="text-lg font-semibold text-fg">
-          {score} of {questions.length} right
-        </p>
+        <p className="text-lg font-semibold text-fg">{t('{score} of {total} right', { score, total: questions.length })}</p>
         <p className="max-w-sm text-sm text-muted">
-          {score === questions.length ? "Today's challenge is done. A new one arrives tomorrow." : "Today's challenge is done. What you missed will come up again in the Trainer."}
+          {score === questions.length
+            ? t("Today's challenge is done. A new one arrives tomorrow.")
+            : t("Today's challenge is done. What you missed will come up again in the Trainer.")}
         </p>
         <div className="mt-2 flex flex-wrap justify-center gap-2">
           <Link to="/trainer" onClick={onClose} className="inline-flex h-8 items-center rounded-control border border-border px-3 text-sm text-fg hover:bg-raised">
-            Practise more in the Trainer
+            {t('Practise more in the Trainer')}
           </Link>
           <Button variant="primary" onClick={onClose}>
-            Done
+            {t('Done')}
           </Button>
         </div>
       </div>
@@ -130,7 +131,11 @@ function Runner({ day, onClose }: { day: string; onClose: () => void }) {
   return (
     <div className="flex flex-col gap-3">
       <p className="text-xs text-muted">
-        Question <span className="num">{step + 1}</span> of <span className="num">{questions.length}</span> · {question.topic}
+        <Trans
+          text="Question {n} of {total}"
+          values={{ n: <span className="num">{step + 1}</span>, total: <span className="num">{questions.length}</span> }}
+        />{' '}
+        · {question.topic}
       </p>
       <Step key={question.key} question={question} picked={picked} onPick={pick} />
       <div className="flex justify-end">
@@ -142,7 +147,7 @@ function Runner({ day, onClose }: { day: string; onClose: () => void }) {
             setStep(step + 1);
           }}
         >
-          {last ? 'Finish' : 'Next question'}
+          {last ? t('Finish') : t('Next question')}
           <ArrowRight aria-hidden className="size-4" />
         </Button>
       </div>
@@ -159,18 +164,18 @@ export function DailyChallengeCard() {
   const run = currentStreak(challengeDays, today);
 
   return (
-    <Card title="Daily challenge" className="flex flex-col">
+    <Card title={t('Daily challenge')} className="flex flex-col">
       <div className="flex flex-1 flex-col gap-3">
         <div className="flex items-start gap-3">
           {done ? <CircleCheck aria-hidden className="mt-0.5 size-5 shrink-0 text-up-text" /> : <Target aria-hidden className="mt-0.5 size-5 shrink-0 text-accent-text" />}
           <div>
-            <p className="text-sm font-medium text-fg">{done ? 'Done for today' : 'One pattern to spot, one concept question'}</p>
+            <p className="text-sm font-medium text-fg">{done ? t('Done for today') : t('One pattern to spot, one concept question')}</p>
             <p className="mt-0.5 text-sm text-muted">
-              {done ? 'A new challenge arrives tomorrow.' : 'About a minute. It is the same all day, so there is no rush.'}
+              {done ? t('A new challenge arrives tomorrow.') : t('About a minute. It is the same all day, so there is no rush.')}
               {run > 1 && (
                 <>
                   {' '}
-                  <span className="num text-fg">{run}</span> days in a row.
+                  <Trans text="{n} days in a row." values={{ n: <span className="num text-fg">{run}</span> }} />
                 </>
               )}
             </p>
@@ -178,11 +183,11 @@ export function DailyChallengeCard() {
         </div>
         <div className="mt-auto">
           <Button variant={done ? 'secondary' : 'primary'} onClick={() => setOpen(true)}>
-            {done ? 'Do it again' : "Start today's challenge"}
+            {done ? t('Do it again') : t("Start today's challenge")}
           </Button>
         </div>
       </div>
-      <Modal open={open} onClose={() => setOpen(false)} title="Daily challenge" size="lg">
+      <Modal open={open} onClose={() => setOpen(false)} title={t('Daily challenge')} size="lg">
         {open && <Runner day={today} onClose={() => setOpen(false)} />}
       </Modal>
     </Card>

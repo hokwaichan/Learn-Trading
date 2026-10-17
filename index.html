@@ -11,6 +11,7 @@
       try {
         var s = JSON.parse(localStorage.getItem('tradeschool.settings') || '{}').state || {};
         if (s.theme) document.documentElement.dataset.theme = s.theme;
+        if (s.locale === 'zh-Hant') document.documentElement.lang = 'zh-Hant-HK';
         if (s.colorBlind) document.documentElement.dataset.cb = 'true';
       } catch (e) {}
     </script>

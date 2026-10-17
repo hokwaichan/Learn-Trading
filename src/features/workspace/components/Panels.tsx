@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { ClipboardList, History, Lightbulb, PanelBottomClose, PanelRightClose, ReceiptText, Star, Wallet } from 'lucide-react';
 import { IconButton, TabPanel, Tabs } from '@/components/ui';
 import { HistoryTable, OrdersTable, PositionsTable } from '@/features/paper-trading';
+import { t } from '@/i18n';
 import type { Prices } from '@/lib/trading/engine';
 import { useAccount } from '@/stores';
 import type { AccountId } from '@/types';
@@ -10,15 +11,15 @@ export type RightTab = 'order' | 'explain' | 'watchlist';
 export type BottomTab = 'positions' | 'orders' | 'history';
 
 export const RIGHT_TABS: { id: RightTab; label: string; icon: ReactNode }[] = [
-  { id: 'order', label: 'Order', icon: <ReceiptText aria-hidden className="size-3.5" /> },
-  { id: 'explain', label: 'Explain', icon: <Lightbulb aria-hidden className="size-3.5" /> },
-  { id: 'watchlist', label: 'Watchlist', icon: <Star aria-hidden className="size-3.5" /> },
+  { id: 'order', label: t('Order'), icon: <ReceiptText aria-hidden className="size-3.5" /> },
+  { id: 'explain', label: t('Explain'), icon: <Lightbulb aria-hidden className="size-3.5" /> },
+  { id: 'watchlist', label: t('Watchlist'), icon: <Star aria-hidden className="size-3.5" /> },
 ];
 
 export const BOTTOM_TABS: { id: BottomTab; label: string; icon: ReactNode }[] = [
-  { id: 'positions', label: 'Positions', icon: <Wallet aria-hidden className="size-3.5" /> },
-  { id: 'orders', label: 'Orders', icon: <ClipboardList aria-hidden className="size-3.5" /> },
-  { id: 'history', label: 'History', icon: <History aria-hidden className="size-3.5" /> },
+  { id: 'positions', label: t('Positions'), icon: <Wallet aria-hidden className="size-3.5" /> },
+  { id: 'orders', label: t('Orders'), icon: <ClipboardList aria-hidden className="size-3.5" /> },
+  { id: 'history', label: t('History'), icon: <History aria-hidden className="size-3.5" /> },
 ];
 
 /** Which account the tables show, and (in Replay) the prices and clock to use instead of the live ones. */
@@ -56,18 +57,18 @@ export function RightPanel({ tabs, tab, onTab, onCollapse, content }: RightPanel
   return (
     <div className="flex h-full flex-col">
       <Tabs
-        label="Side panel"
+        label={t('Side panel')}
         idBase="ws-right"
         items={tabs}
         value={tab}
         onChange={onTab}
         className="shrink-0"
-        trailing={<IconButton size="sm" label="Collapse side panel" icon={<PanelRightClose className="size-4" />} onClick={onCollapse} />}
+        trailing={<IconButton size="sm" label={t('Collapse side panel')} icon={<PanelRightClose className="size-4" />} onClick={onCollapse} />}
       />
       <div className="min-h-0 flex-1 overflow-y-auto">
-        {tabs.map((t) => (
-          <TabPanel key={t.id} idBase="ws-right" id={t.id} active={tab === t.id}>
-            {content[t.id]}
+        {tabs.map((item) => (
+          <TabPanel key={item.id} idBase="ws-right" id={item.id} active={tab === item.id}>
+            {content[item.id]}
           </TabPanel>
         ))}
       </div>
@@ -87,9 +88,9 @@ export function BottomPanel({ tab, onTab, collapsed, onToggle, ...account }: Bot
   return (
     <div className="flex h-full flex-col">
       <Tabs
-        label="Account"
+        label={t('Account')}
         idBase="ws-bottom"
-        items={BOTTOM_TABS.map((t) => ({ ...t, badge: counts[t.id] || undefined }))}
+        items={BOTTOM_TABS.map((item) => ({ ...item, badge: counts[item.id] || undefined }))}
         value={tab}
         onChange={(next) => {
           onTab(next);
@@ -99,7 +100,7 @@ export function BottomPanel({ tab, onTab, collapsed, onToggle, ...account }: Bot
         trailing={
           <IconButton
             size="sm"
-            label={collapsed ? 'Expand account panel' : 'Collapse account panel'}
+            label={collapsed ? t('Expand account panel') : t('Collapse account panel')}
             aria-expanded={!collapsed}
             icon={<PanelBottomClose className={collapsed ? 'size-4 rotate-180' : 'size-4'} />}
             onClick={onToggle}

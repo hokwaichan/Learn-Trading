@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import { AnnotationLayer, LineDiagram, PriceChart } from '@/components/chart';
+import { t } from '@/i18n';
 import { payoffCurve } from '@/lib/pricing/payoff';
 import type { ChartAnnotation } from '@/types';
 import type { TrainerQuestion } from '../questions';
@@ -30,11 +31,11 @@ function QuestionChart({ question, revealed, answerLabel }: QuestionVisualProps)
       const single = chart.mark.from === chart.mark.to;
       const from = single ? Math.max(0, chart.mark.from - 1) : chart.mark.from;
       const to = single && !revealed ? chart.mark.to : Math.min(candles.length - 1, single ? chart.mark.to + 1 : chart.mark.to);
-      const zone = box(chart.mark.from, chart.mark.to, revealed ? answerLabel : 'Which pattern?');
+      const zone = box(chart.mark.from, chart.mark.to, revealed ? answerLabel : t('Which pattern?'));
       out.push({ ...zone, time: candles[from].time, toTime: candles[to].time });
     }
     if (question.drill === 'next' && revealed && chart.reveal.length) {
-      out.push(box(0, chart.reveal.length - 1, 'What happened next', chart.reveal));
+      out.push(box(0, chart.reveal.length - 1, t('What happened next'), chart.reveal));
     }
     return out;
   }, [chart, candles, question.drill, revealed, answerLabel]);
@@ -66,12 +67,12 @@ function QuestionPayoff({ question }: { question: TrainerQuestion }) {
   return (
     <div className="rounded-card border border-border bg-surface p-3 sm:p-5">
       <LineDiagram
-        ariaLabel="Payoff at expiry of an unnamed option strategy. Identify it from its shape."
+        ariaLabel={t('Payoff at expiry of an unnamed option strategy. Identify it from its shape.')}
         series={[{ points: curve.map((p) => ({ x: p.price, y: p.pnl })) }]}
         shadeProfit
-        guidesX={[{ x: spot, label: 'Now' }, ...strikes.filter((s) => s !== spot).map((x) => ({ x }))]}
-        xLabel="Price of the underlying at expiry"
-        yLabel="Profit or loss"
+        guidesX={[{ x: spot, label: t('Now') }, ...strikes.filter((s) => s !== spot).map((x) => ({ x }))]}
+        xLabel={t('Price of the underlying at expiry')}
+        yLabel={t('Profit or loss')}
         height={280}
       />
     </div>

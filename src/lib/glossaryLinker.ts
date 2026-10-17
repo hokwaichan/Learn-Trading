@@ -32,9 +32,19 @@ export function buildMatcher(entries: GlossaryEntry[]): GlossaryMatcher {
   phrases.sort((a, b) => b.phrase.length - a.phrase.length);
   const idOf = new Map<string, string>();
   for (const p of phrases) if (!idOf.has(p.phrase)) idOf.set(p.phrase, p.id);
-  const body = [...idOf.keys()].map(escapeRegExp).join('|');
-  // Not preceded or followed by a letter, digit or hyphen, so "short" does not match inside "shortly".
-  const pattern = new RegExp(`(?<![\\p{L}\\p{N}-])(${body || '(?!)'})(?![\\p{L}\\p{N}-])`, 'giu');
+  // A phrase that starts or ends with a Latin letter or digit must not touch
+  // another one there, so "short" does not match inside "shortly". Chinese
+  // has no spaces between words, so a phrase edge in Chinese needs no boundary,
+  // and "RSI" still matches in "當RSI升穿70".
+  const edge = /[\p{Script=Latin}\p{N}]/u;
+  const body = [...idOf.keys()]
+    .map((phrase) => {
+      const before = edge.test(phrase[0]) ? '(?<![\\p{Script=Latin}\\p{N}-])' : '';
+      const after = edge.test(phrase[phrase.length - 1]) ? '(?![\\p{Script=Latin}\\p{N}-])' : '';
+      return before + escapeRegExp(phrase) + after;
+    })
+    .join('|');
+  const pattern = new RegExp(`(?:${body || '(?!)'})`, 'giu');
   return { pattern, idOf };
 }
 

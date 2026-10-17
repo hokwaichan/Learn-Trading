@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { cn } from '@/components/ui';
+import { t } from '@/i18n';
 import { formatCompact, formatPrice, formatSignedPct } from '@/lib/format';
 import type { Candle } from '@/types';
 
@@ -50,7 +51,7 @@ export function Legend({ title, subtitle, candle, previousClose, tickSize, close
             )}
             <Field label="C" value={price(candle.close)} className={tone} />
             <span className={cn('num whitespace-nowrap', tone)}>{formatSignedPct(change)}</span>
-            {candle.volume > 0 && <Field label="Vol" value={formatCompact(candle.volume)} className="text-fg" />}
+            {candle.volume > 0 && <Field label={t('Vol')} value={formatCompact(candle.volume)} className="text-fg" />}
           </>
         )}
       </div>

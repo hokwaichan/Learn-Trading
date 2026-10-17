@@ -3,6 +3,7 @@ import { History } from 'lucide-react';
 import { ConfirmDialog, toast } from '@/components/ui';
 import { announceTradeEvents, OrderTicket } from '@/features/paper-trading';
 import { WorkspaceNotice, WorkspaceView } from '@/features/workspace';
+import { t } from '@/i18n';
 import { displaySymbol, findInstrument, instrumentsOfKind, TIMEFRAME_SECONDS } from '@/lib/data';
 import { closeTimeMs, replayPrices, visibleCandles } from '@/lib/replay/session';
 import { useAccount, useAccountSnapshot, useReplay } from '@/stores';
@@ -84,8 +85,8 @@ export function ReplayPage() {
   const jump = (date: string) => {
     if (replay.jumpTo(date)) return;
     ending({
-      title: `Start again from ${date}?`,
-      confirmLabel: 'Start new session',
+      title: t('Start again from {date}?', { date }),
+      confirmLabel: t('Start new session'),
       run: () => {
         replay.configure({ startDate: date });
         void replay.start();
@@ -107,8 +108,8 @@ export function ReplayPage() {
         symbols={instrumentsOfKind('spot')}
         onSymbol={(symbol) =>
           ending({
-            title: `Switch to ${displaySymbol(findInstrument(symbol) ?? instrument)}?`,
-            confirmLabel: 'End session and switch',
+            title: t('Switch to {symbol}?', { symbol: displaySymbol(findInstrument(symbol) ?? instrument) }),
+            confirmLabel: t('End session and switch'),
             run: () => {
               replay.end();
               replay.configure({ symbol });
@@ -118,7 +119,7 @@ export function ReplayPage() {
         timeframe={instrument.timeframes.includes(timeframe) ? timeframe : '1d'}
         onTimeframe={(tf) => {
           if (!active) replay.configure({ timeframe: tf });
-          else toast.info('The candle size is fixed for a session', 'End the session to start one with a different candle size.');
+          else toast.info(t('The candle size is fixed for a session'), t('End the session to start one with a different candle size.'));
         }}
         candles={visible}
         status={status === 'error' ? 'error' : status === 'ready' ? 'ready' : 'loading'}
@@ -131,7 +132,7 @@ export function ReplayPage() {
           ready && current ? (
             <OrderTicket instrument={instrument} accountId="replay" price={current.close} prices={prices} now={now} />
           ) : (
-            <p className="p-4 text-sm text-muted">Start a session to trade.</p>
+            <p className="p-4 text-sm text-muted">{t('Start a session to trade.')}</p>
           )
         }
         account={view}
@@ -139,7 +140,7 @@ export function ReplayPage() {
         notices={
           ready && (
             <WorkspaceNotice icon={<History aria-hidden className="size-3.5" />}>
-              Replaying past prices. Candles after the replay time are hidden. Trades here use the replay account, not your main paper account.
+              {t('Replaying past prices. Candles after the replay time are hidden. Trades here use the replay account, not your main paper account.')}
             </WorkspaceNotice>
           )
         }
@@ -157,7 +158,7 @@ export function ReplayPage() {
               onStep={advance}
               onSpeed={(next) => replay.configure({ speed: next })}
               onJump={jump}
-              onEnd={() => ending({ title: 'End this session?', confirmLabel: 'End session', run: replay.end })}
+              onEnd={() => ending({ title: t('End this session?'), confirmLabel: t('End session'), run: replay.end })}
             />
           )
         }
@@ -170,8 +171,9 @@ export function ReplayPage() {
         title={pending?.title ?? ''}
         confirmLabel={pending?.confirmLabel ?? ''}
       >
-        This ends the current session. Your open replay {account.positions.length === 1 ? 'position' : 'positions'} will be closed at the current replay price
-        and any waiting orders cancelled.
+        {account.positions.length === 1
+          ? t('This ends the current session. Your open replay position will be closed at the current replay price and any waiting orders cancelled.')
+          : t('This ends the current session. Your open replay positions will be closed at the current replay price and any waiting orders cancelled.')}
       </ConfirmDialog>
     </>
   );

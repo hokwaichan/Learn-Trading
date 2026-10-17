@@ -2,6 +2,7 @@ import { useId, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { Search } from 'lucide-react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Badge, cn } from '@/components/ui';
+import { t } from '@/i18n';
 import { displaySymbol, instrumentsOfKind, searchInstruments } from '@/lib/data/instruments';
 import type { Instrument } from '@/types';
 
@@ -13,8 +14,8 @@ export function symbolPath(instrument: Instrument, pathname: string): string {
 }
 
 export function instrumentTag(instrument: Instrument): string {
-  if (instrument.kind === 'perpetual') return 'Perp';
-  return { crypto: 'Crypto', stock: 'Stock', etf: 'ETF', forex: 'Forex' }[instrument.assetClass];
+  if (instrument.kind === 'perpetual') return t('Perp');
+  return { crypto: t('Crypto'), stock: t('Stock'), etf: t('ETF'), forex: t('Forex') }[instrument.assetClass];
 }
 
 /** Top-bar symbol search: a combobox over every instrument. */
@@ -65,14 +66,14 @@ export function SymbolSearch({ className }: { className?: string }) {
       <input
         ref={inputRef}
         role="combobox"
-        aria-label="Search symbols"
+        aria-label={t('Search symbols')}
         aria-expanded={open}
         aria-controls={listId}
         aria-autocomplete="list"
         aria-activedescendant={open && results[active] ? `${listId}-${active}` : undefined}
         autoComplete="off"
         spellCheck={false}
-        placeholder="Search symbols"
+        placeholder={t('Search symbols')}
         value={query}
         onChange={(e) => {
           setQuery(e.target.value);
@@ -88,10 +89,10 @@ export function SymbolSearch({ className }: { className?: string }) {
         <ul
           id={listId}
           role="listbox"
-          aria-label="Symbols"
+          aria-label={t('Symbols')}
           className="absolute top-full left-0 z-40 mt-1 w-full min-w-64 overflow-hidden rounded-card bg-raised py-1 shadow-raised animate-fade-in"
         >
-          {results.length === 0 && <li className="px-3 py-2 text-sm text-muted">No symbol matches "{query}".</li>}
+          {results.length === 0 && <li className="px-3 py-2 text-sm text-muted">{t('No symbol matches "{query}".', { query })}</li>}
           {results.map((instrument, i) => (
             <li
               key={`${instrument.kind}-${instrument.symbol}`}

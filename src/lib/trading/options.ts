@@ -1,3 +1,4 @@
+import { t } from '@/i18n';
 import { bsPrice, DAYS_PER_YEAR } from '@/lib/pricing/blackScholes';
 import { simulatedSpread } from '@/lib/pricing/chain';
 import { payoffExtremes } from '@/lib/pricing/payoff';
@@ -33,11 +34,11 @@ function turnover(strategy: Strategy, optionPrice: (leg: Strategy['legs'][number
 }
 
 export function validateStrategy(strategy: Strategy, now: number): string | null {
-  if (strategy.legs.length === 0) return 'Add at least one option leg.';
-  if (strategy.legs.length > MAX_LEGS) return `A strategy can have at most ${MAX_LEGS} option legs.`;
-  if (strategy.legs.some((l) => !(l.quantity > 0)) || (strategy.stock && !(strategy.stock.quantity > 0))) return 'Every leg needs a quantity above zero.';
-  if (strategy.legs.some((l) => l.contract.expiry <= now)) return 'One of the legs has already expired.';
-  if (strategy.legs.some((l) => !(l.entryPrice >= 0))) return 'One of the legs has no price.';
+  if (strategy.legs.length === 0) return t('Add at least one option leg.');
+  if (strategy.legs.length > MAX_LEGS) return t('A strategy can have at most {n} option legs.', { n: MAX_LEGS });
+  if (strategy.legs.some((l) => !(l.quantity > 0)) || (strategy.stock && !(strategy.stock.quantity > 0))) return t('Every leg needs a quantity above zero.');
+  if (strategy.legs.some((l) => l.contract.expiry <= now)) return t('One of the legs has already expired.');
+  if (strategy.legs.some((l) => !(l.entryPrice >= 0))) return t('One of the legs has no price.');
   return null;
 }
 
@@ -65,12 +66,12 @@ export function openOptionPosition(account: Account, strategy: Strategy, spot: n
 
   const problem = validateStrategy(strategy, ctx.now);
   if (problem) return fail(problem);
-  if (!(spot > 0)) return fail('There is no current price for this symbol.');
+  if (!(spot > 0)) return fail(t('There is no current price for this symbol.'));
 
   const margin = marginRequirement(strategy, spot);
   const fee = turnover(strategy, (leg) => leg.entryPrice, strategy.stock?.entryPrice ?? spot) * ctx.feeRate;
   const free = equityOf(account, prices) - marginUsed(account, prices);
-  if (margin + fee > free * (1 + 1e-9)) return fail('Not enough free funds for this strategy.');
+  if (margin + fee > free * (1 + 1e-9)) return fail(t('Not enough free funds for this strategy.'));
 
   const { maxLoss } = payoffExtremes(toPayoffLegs(strategy));
   const filled: Order = { ...order, status: 'filled', filledAt: ctx.now, avgFillPrice: cost, fee };

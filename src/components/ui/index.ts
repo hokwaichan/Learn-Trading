@@ -17,4 +17,6 @@ export { EmptyState, ErrorState, LoadingState, Page, PageHeader, Skeleton, Spinn
 export { ResizablePanel } from './ResizablePanel';
 export type { ResizablePanelProps } from './ResizablePanel';
 export { GlossaryTerm } from './GlossaryTerm';
-export { useMediaQuery, useIsPhone } from './useMediaQuery';
+export { Trans } from './Trans';
+export type { TransProps } from './Trans';
+export { useMediaQuery, useIsCompact, useIsPhone, useIsTouch } from './useMediaQuery';

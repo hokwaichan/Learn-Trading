@@ -1,5 +1,6 @@
 import { useMemo } from 'react';
 import type { PriceLine } from '@/components/chart';
+import { t } from '@/i18n';
 import { formatQty } from '@/lib/format';
 import { liquidationPriceOf, type Prices } from '@/lib/trading/engine';
 import { useAccount, useMarket } from '@/stores';
@@ -19,15 +20,15 @@ export function useTradeLines(instrument: Instrument, accountId: AccountId = 'ma
     const qty = (n: number) => formatQty(n, instrument.stepSize);
 
     for (const p of account.positions.filter(mine)) {
-      lines.push({ price: p.entryPrice, title: `${p.direction === 'long' ? 'Long' : 'Short'} ${qty(p.quantity)}`, tone: 'accent' });
-      if (p.stopLoss != null) lines.push({ price: p.stopLoss, title: 'Stop-loss', tone: 'down', dashed: true });
-      if (p.takeProfit != null) lines.push({ price: p.takeProfit, title: 'Take-profit', tone: 'up', dashed: true });
+      lines.push({ price: p.entryPrice, title: `${p.direction === 'long' ? t('Long') : t('Short')} ${qty(p.quantity)}`, tone: 'accent' });
+      if (p.stopLoss != null) lines.push({ price: p.stopLoss, title: t('Stop-loss'), tone: 'down', dashed: true });
+      if (p.takeProfit != null) lines.push({ price: p.takeProfit, title: t('Take-profit'), tone: 'up', dashed: true });
       const liquidation = liquidationPriceOf(account, p, prices);
-      if (liquidation != null && liquidation > 0) lines.push({ price: liquidation, title: 'Liquidation', tone: 'warning' });
+      if (liquidation != null && liquidation > 0) lines.push({ price: liquidation, title: t('Liquidation'), tone: 'warning' });
     }
     for (const o of account.orders.filter((o) => o.status === 'open' && mine(o))) {
       const price = o.type === 'limit' ? o.limitPrice : o.stopPrice;
-      if (price != null) lines.push({ price, title: `${o.side === 'buy' ? 'Buy' : 'Sell'} ${o.type} ${qty(o.quantity)}`, tone: 'muted', dashed: true });
+      if (price != null) lines.push({ price, title: `${o.side === 'buy' ? t('Buy') : t('Sell')} ${o.type === 'limit' ? t('limit') : t('stop')} ${qty(o.quantity)}`, tone: 'muted', dashed: true });
     }
     return lines;
   }, [account, instrument, prices]);

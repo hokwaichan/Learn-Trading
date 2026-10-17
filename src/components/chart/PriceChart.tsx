@@ -17,6 +17,7 @@ import {
   type Time,
   type UTCTimestamp,
 } from 'lightweight-charts';
+import { t } from '@/i18n';
 import { TIMEFRAME_NAMES, TIMEFRAME_SECONDS } from '@/lib/data/timeframes';
 import { decimalsFor, formatPrice } from '@/lib/format';
 import { heikinAshi } from '@/lib/indicators/heikinAshi';
@@ -67,10 +68,10 @@ export interface PriceChartProps {
 }
 
 const CHART_TYPE_NAMES: Record<ChartType, string> = {
-  candles: 'Candlestick',
-  'heikin-ashi': 'Heikin-Ashi',
-  line: 'Line',
-  area: 'Area',
+  candles: t('Candlestick'),
+  'heikin-ashi': t('Heikin-Ashi'),
+  line: t('Line'),
+  area: t('Area'),
 };
 
 const INITIAL_BARS = 140;
@@ -480,7 +481,11 @@ export function PriceChart({
         ref={containerRef}
         tabIndex={0}
         role="group"
-        aria-label={`${title} ${CHART_TYPE_NAMES[chartType].toLowerCase()} chart, ${TIMEFRAME_NAMES[timeframe]} per candle`}
+        aria-label={t('{title} {type} chart, {timeframe} per candle', {
+          title,
+          type: CHART_TYPE_NAMES[chartType].toLowerCase(),
+          timeframe: TIMEFRAME_NAMES[timeframe],
+        })}
         aria-describedby={helpId}
         onKeyDown={onKeyDown}
         className="peer absolute inset-0 focus-visible:outline-0"
@@ -488,14 +493,17 @@ export function PriceChart({
       {/* The canvas covers an outline on the container, so the focus ring is drawn on top. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 z-[5] hidden border-2 border-accent peer-focus-visible:block" />
       <p id={helpId} className="sr-only">
-        Use the left and right arrow keys to select a candle, Shift with the arrows to move ten at a time, Home and End
-        for the first and last candle, and plus and minus to zoom.
+        {t('Use the left and right arrow keys to select a candle, Shift with the arrows to move ten at a time, Home and End for the first and last candle, and plus and minus to zoom.')}
       </p>
       <p className="sr-only" aria-live="polite">
         {selected &&
-          `Selected candle ${new Date(selected.time * 1000).toISOString().slice(0, timeframe === '1d' ? 10 : 16).replace('T', ' ')}. ` +
-            `Open ${formatPrice(selected.open, tickSize)}, high ${formatPrice(selected.high, tickSize)}, ` +
-            `low ${formatPrice(selected.low, tickSize)}, close ${formatPrice(selected.close, tickSize)}.`}
+          t('Selected candle {time}. Open {open}, high {high}, low {low}, close {close}.', {
+            time: new Date(selected.time * 1000).toISOString().slice(0, timeframe === '1d' ? 10 : 16).replace('T', ' '),
+            open: formatPrice(selected.open, tickSize),
+            high: formatPrice(selected.high, tickSize),
+            low: formatPrice(selected.low, tickSize),
+            close: formatPrice(selected.close, tickSize),
+          })}
       </p>
       <Legend
         title={title}

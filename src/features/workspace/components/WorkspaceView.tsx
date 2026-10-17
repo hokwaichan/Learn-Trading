@@ -14,9 +14,11 @@ import {
   ResizablePanel,
   Spinner,
   toast,
-  useIsPhone,
+  useIsCompact,
+  useIsTouch,
 } from '@/components/ui';
 import { useTradeLines } from '@/features/paper-trading';
+import { t } from '@/i18n';
 import { displaySymbol, TIMEFRAME_SECONDS } from '@/lib/data';
 import { quoteKey, useDrawings, useMarket, useSymbolDrawings, type WorkspaceMode } from '@/stores';
 import type { Candle, DrawingPoint, DrawingTool, Instrument, Timeframe } from '@/types';
@@ -64,12 +66,14 @@ export interface WorkspaceViewProps {
 /**
  * The chart workspace: toolbar, chart with drawings and indicators, a side
  * panel (Order, Explain, Watchlist) and an account panel (Positions, Orders,
- * History). On phones the panels become bottom sheets. Used by Charts,
+ * History). On phones and upright tablets the panels become bottom sheets. Used by Charts,
  * Futures and Replay, which differ only in where candles and prices come from.
  */
 export function WorkspaceView(props: WorkspaceViewProps) {
   const { mode, instrument, timeframe, candles, account, showWatchlist = true } = props;
-  const isPhone = useIsPhone();
+  // Phones and upright tablets: panels open as bottom sheets so the chart keeps the full width.
+  const compact = useIsCompact();
+  const touch = useIsTouch();
   const layout = useMarket((s) => s.layouts[mode]);
   const setLayout = useMarket((s) => s.setLayout);
   const toggleWatch = useMarket((s) => s.toggleWatch);
@@ -124,12 +128,12 @@ export function WorkspaceView(props: WorkspaceViewProps) {
   }
 
   const showExplain = useCallback(() => {
-    if (isPhone) setSheet('explain');
+    if (compact) setSheet('explain');
     else {
       setRightTab('explain');
       setRightCollapsed(false);
     }
-  }, [isPhone, setRightTab, setRightCollapsed]);
+  }, [compact, setRightTab, setRightCollapsed]);
 
   const onSelectIndicator = useCallback(
     (key: string) => {
@@ -200,10 +204,10 @@ export function WorkspaceView(props: WorkspaceViewProps) {
     <div className="relative min-h-0 flex-1">
       {props.placeholder ?? (
         <>
-          {props.status === 'loading' && <LoadingState className="h-full" label={`Loading ${displaySymbol(instrument)} prices`} />}
-          {props.status === 'error' && <ErrorState className="h-full" title="Could not load prices" message={props.error} onRetry={props.onRetry} />}
+          {props.status === 'loading' && <LoadingState className="h-full" label={t('Loading {symbol} prices', { symbol: displaySymbol(instrument) })} />}
+          {props.status === 'error' && <ErrorState className="h-full" title={t('Could not load prices')} message={props.error} onRetry={props.onRetry} />}
           {props.status === 'ready' && candles.length === 0 && (
-            <EmptyState className="h-full" title="No candles for this timeframe" description="Try a longer timeframe." />
+            <EmptyState className="h-full" title={t('No candles for this timeframe')} description={t('Try a longer timeframe.')} />
           )}
           {props.status === 'ready' && candles.length > 0 && (
             <PriceChart
@@ -233,12 +237,12 @@ export function WorkspaceView(props: WorkspaceViewProps) {
           )}
           {props.loadingOlder && (
             <div className="pointer-events-none absolute bottom-8 left-2 z-[4] rounded-control bg-raised px-2 py-1 shadow-raised">
-              <Spinner label="Loading older candles" className="text-xs" />
+              <Spinner label={t('Loading older candles')} className="text-xs" />
             </div>
           )}
           {tool && (
             <div className="pointer-events-none absolute top-8 left-1/2 z-[4] -translate-x-1/2 rounded-control bg-raised px-2.5 py-1 text-xs text-fg shadow-raised">
-              Click on the chart to place a point. Press Esc to cancel.
+              {touch ? t('Tap the chart to place a point. Tap the tool again to cancel.') : t('Click on the chart to place a point. Press Esc to cancel.')}
             </div>
           )}
         </>
@@ -279,11 +283,11 @@ export function WorkspaceView(props: WorkspaceViewProps) {
 
       {props.notices}
 
-      {isPhone ? (
+      {compact ? (
         <>
           {chartArea}
           {props.belowChart}
-          <div role="group" aria-label="Panels" className="flex shrink-0 gap-1 overflow-x-auto border-t border-border bg-surface p-1.5">
+          <div role="group" aria-label={t('Panels')} className="flex shrink-0 gap-1 overflow-x-auto border-t border-border bg-surface p-1.5">
             {sheetTabs.map((t) => (
               <Button key={t.id} size="sm" variant="ghost" icon={t.icon} className="shrink-0" onClick={() => setSheet(t.id)}>
                 {t.label}
@@ -307,7 +311,7 @@ export function WorkspaceView(props: WorkspaceViewProps) {
             {props.belowChart}
             <ResizablePanel
               dock="bottom"
-              label="Account panel"
+              label={t('Account panel')}
               storageKey="ws-bottom"
               defaultSize={200}
               minSize={120}
@@ -321,7 +325,7 @@ export function WorkspaceView(props: WorkspaceViewProps) {
           </div>
           <ResizablePanel
             dock="right"
-            label="Side panel"
+            label={t('Side panel')}
             storageKey="ws-right"
             defaultSize={320}
             minSize={260}
@@ -331,7 +335,7 @@ export function WorkspaceView(props: WorkspaceViewProps) {
             collapsedContent={
               <div className="flex h-full flex-col items-center gap-1 p-1">
                 <IconButton
-                  label="Expand side panel"
+                  label={t('Expand side panel')}
                   aria-expanded={false}
                   tooltipSide="left"
                   icon={<PanelRightOpen className="size-4" />}
@@ -372,24 +376,26 @@ export function WorkspaceView(props: WorkspaceViewProps) {
         onConfirm={() => {
           clearDrawings(instrument.symbol);
           setSelectedDrawing(null);
-          toast.info('Drawings cleared');
+          toast.info(t('Drawings cleared'));
         }}
-        title="Clear all drawings?"
-        confirmLabel="Clear drawings"
+        title={t('Clear all drawings?')}
+        confirmLabel={t('Clear drawings')}
       >
-        This removes all {drawings.length} {drawings.length === 1 ? 'drawing' : 'drawings'} on {displaySymbol(instrument)}. This cannot be undone.
+        {drawings.length === 1
+          ? t('This removes the 1 drawing on {symbol}. This cannot be undone.', { symbol: displaySymbol(instrument) })
+          : t('This removes all {n} drawings on {symbol}. This cannot be undone.', { n: drawings.length, symbol: displaySymbol(instrument) })}
       </ConfirmDialog>
 
       <Modal
         open={note != null}
         onClose={() => setNote(null)}
-        title="Add a note"
+        title={t('Add a note')}
         size="sm"
         footer={
           <>
-            <Button onClick={() => setNote(null)}>Cancel</Button>
+            <Button onClick={() => setNote(null)}>{t('Cancel')}</Button>
             <Button variant="primary" disabled={!note?.text.trim()} onClick={saveNote}>
-              Add note
+              {t('Add note')}
             </Button>
           </>
         }
@@ -401,12 +407,12 @@ export function WorkspaceView(props: WorkspaceViewProps) {
           }}
         >
           <Input
-            label="Note text"
+            label={t('Note text')}
             data-autofocus
             maxLength={80}
             value={note?.text ?? ''}
             onChange={(e) => setNote((n) => (n ? { ...n, text: e.target.value } : n))}
-            hint="Shown on the chart at the point you clicked."
+            hint={t('Shown on the chart at the point you clicked.')}
           />
         </form>
       </Modal>

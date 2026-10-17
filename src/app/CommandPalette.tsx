@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { cn } from '@/components/ui';
 import { GLOSSARY } from '@/content/glossary';
 import { MODULES } from '@/content/lessons';
+import { t } from '@/i18n';
 import { displaySymbol, INSTRUMENTS } from '@/lib/data/instruments';
 import { useCommandPalette } from './commandPaletteStore';
 import { NAV_ITEMS } from './nav';
@@ -21,6 +22,7 @@ interface Command {
 }
 
 const GROUP_ORDER: Command['group'][] = ['Pages', 'Symbols', 'Lessons', 'Glossary'];
+const GROUP_LABELS: Record<Command['group'], string> = { Pages: t('Pages'), Symbols: t('Symbols'), Lessons: t('Lessons'), Glossary: t('Glossary') };
 const MAX_PER_GROUP = 6;
 
 function buildCommands(pathname: string): Command[] {
@@ -29,8 +31,9 @@ function buildCommands(pathname: string): Command[] {
     return {
       id: `page-${item.id}`,
       group: 'Pages',
-      title: item.label,
-      haystack: `${item.label} ${item.keywords ?? ''}`.toLowerCase(),
+      title: t(item.label),
+      // English words still find a page when the app is in another language.
+      haystack: `${t(item.label)} ${item.label} ${item.keywords ?? ''}`.toLowerCase(),
       icon: <Icon aria-hidden className="size-4" />,
       to: item.to,
     };
@@ -60,7 +63,7 @@ function buildCommands(pathname: string): Command[] {
     group: 'Glossary',
     title: g.term,
     subtitle: g.definition,
-    haystack: `${g.term} ${g.aliases.join(' ')}`.toLowerCase(),
+    haystack: `${g.term} ${g.english ?? ''} ${g.aliases.join(' ')}`.toLowerCase(),
     icon: <BookA aria-hidden className="size-4" />,
     to: `/glossary#${g.id}`,
   }));
@@ -145,7 +148,7 @@ export function CommandPalette() {
   return (
     <dialog
       ref={dialogRef}
-      aria-label="Command palette"
+      aria-label={t('Command palette')}
       onClose={() => setOpen(false)}
       onMouseDown={(e) => e.target === e.currentTarget && setOpen(false)}
       className="fixed inset-0 m-0 flex size-full max-h-none max-w-none items-start justify-center border-0 bg-transparent p-3 pt-[10dvh]"
@@ -156,13 +159,13 @@ export function CommandPalette() {
           <input
             autoFocus
             role="combobox"
-            aria-label="Search symbols, lessons, glossary terms and pages"
+            aria-label={t('Search symbols, lessons, glossary terms and pages')}
             aria-expanded
             aria-controls="command-palette-list"
             aria-activedescendant={results[active] ? `cmd-${results[active].id}` : undefined}
             autoComplete="off"
             spellCheck={false}
-            placeholder="Search symbols, lessons, terms, pages"
+            placeholder={t('Search symbols, lessons, terms, pages')}
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -171,13 +174,13 @@ export function CommandPalette() {
             onKeyDown={onKeyDown}
             className="h-11 min-w-0 flex-1 bg-transparent text-sm text-fg placeholder:text-muted focus-visible:outline-0"
           />
-          <kbd className="num rounded-sm border border-border px-1 text-[11px] text-muted">Esc</kbd>
+          <kbd className="num rounded-sm border border-border px-1 text-[11px] text-muted">{t('Esc')}</kbd>
         </div>
 
-        <div ref={listRef} id="command-palette-list" role="listbox" aria-label="Results" className="overflow-y-auto py-1">
+        <div ref={listRef} id="command-palette-list" role="listbox" aria-label={t('Results')} className="overflow-y-auto py-1">
           {results.length === 0 && (
             <p className="px-4 py-8 text-center text-sm text-muted">
-              Nothing matches "{query}". Try a symbol like BTC, or a term like leverage.
+              {t('Nothing matches "{query}". Try a symbol like BTC, or a term like leverage.', { query })}
             </p>
           )}
           {results.map((command, i) => {
@@ -186,7 +189,7 @@ export function CommandPalette() {
               <div key={command.id}>
                 {firstOfGroup && (
                   <div aria-hidden className="px-3 pt-2 pb-1 text-[11px] font-semibold tracking-wider text-muted uppercase">
-                    {command.group}
+                    {GROUP_LABELS[command.group]}
                   </div>
                 )}
                 <div

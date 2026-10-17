@@ -1,3 +1,4 @@
+import { msg, t } from '@/i18n';
 import type { Account, Direction, ExitReason, FuturesPositionState, InstrumentKind, LedgerEntry, MarginMode, Order, Position, Side, Trade } from '@/types';
 import { DEFAULT_MAINTENANCE_MARGIN_RATE, fundingPayment, fundingPeriods, liquidationPrice, MAX_LEVERAGE } from './futures';
 
@@ -184,15 +185,15 @@ export function findPosition(account: Account, symbol: string, kind: InstrumentK
 export function validateStops(direction: Direction, reference: number, stopLoss?: number, takeProfit?: number): string | null {
   const long = direction === 'long';
   if (stopLoss != null) {
-    if (!(stopLoss > 0)) return 'The stop-loss must be a price above zero.';
+    if (!(stopLoss > 0)) return t('The stop-loss must be a price above zero.');
     if (long ? stopLoss >= reference : stopLoss <= reference) {
-      return long ? 'For a long, the stop-loss must be below the entry price.' : 'For a short, the stop-loss must be above the entry price.';
+      return long ? t('For a long, the stop-loss must be below the entry price.') : t('For a short, the stop-loss must be above the entry price.');
     }
   }
   if (takeProfit != null) {
-    if (!(takeProfit > 0)) return 'The take-profit must be a price above zero.';
+    if (!(takeProfit > 0)) return t('The take-profit must be a price above zero.');
     if (long ? takeProfit <= reference : takeProfit >= reference) {
-      return long ? 'For a long, the take-profit must be above the entry price.' : 'For a short, the take-profit must be below the entry price.';
+      return long ? t('For a long, the take-profit must be above the entry price.') : t('For a short, the take-profit must be below the entry price.');
     }
   }
   return null;
@@ -225,7 +226,7 @@ function affordable(account: Account, request: OrderRequest, price: number, pric
   const freed = position && position.direction !== directionOf(request.side) ? marginOf(position, markOf(position, prices)) : 0;
   const free = equityOf(account, prices) - marginUsed(account, prices) + freed;
   // A hair of tolerance so "use everything" sizes are not rejected by rounding.
-  return needed > free * (1 + 1e-9) ? 'Not enough free funds for this order.' : null;
+  return needed > free * (1 + 1e-9) ? t('Not enough free funds for this order.') : null;
 }
 
 function ledger(account: Account, entry: Omit<LedgerEntry, 'id'>, ctx: EngineContext): Account {
@@ -259,7 +260,7 @@ function applyFill(account: Account, order: Order, price: number, prices: Prices
   const filled: Order = { ...order, status: 'filled', filledAt: ctx.now, avgFillPrice: price, fee };
   let next: Account = { ...account, cash: account.cash - fee };
   next = ledger(next, { time: ctx.now, type: 'fee', amount: -tradingFee, refId: order.id }, ctx);
-  if (liquidationFee > 0) next = ledger(next, { time: ctx.now, type: 'liquidation', amount: -liquidationFee, refId: order.positionId, note: 'Remaining margin taken on liquidation' }, ctx);
+  if (liquidationFee > 0) next = ledger(next, { time: ctx.now, type: 'liquidation', amount: -liquidationFee, refId: order.positionId, note: msg('Remaining margin taken on liquidation') }, ctx);
   const leverage = order.kind === 'perpetual' ? (order.leverage ?? 1) : 1;
   const marginMode: MarginMode = order.marginMode ?? 'isolated';
   const mmr = mmrOf(ctx);
@@ -407,24 +408,24 @@ export function placeOrder(account: Account, input: OrderRequest, marketPrice: n
   };
   const fail = (reason: string): EngineResult => ({ account: reject(account, order, reason, events), events });
 
-  if (!(marketPrice > 0)) return fail('There is no current price for this symbol.');
-  if (!(request.quantity > 0)) return fail('Enter a quantity above zero.');
-  if (request.type === 'limit' && !(request.limitPrice! > 0)) return fail('Enter a limit price.');
-  if (request.type === 'stop' && !(request.stopPrice! > 0)) return fail('Enter a stop price.');
-  if (request.leverage != null && !(request.leverage >= 1 && request.leverage <= MAX_LEVERAGE)) return fail(`Leverage must be between 1x and ${MAX_LEVERAGE}x.`);
+  if (!(marketPrice > 0)) return fail(t('There is no current price for this symbol.'));
+  if (!(request.quantity > 0)) return fail(t('Enter a quantity above zero.'));
+  if (request.type === 'limit' && !(request.limitPrice! > 0)) return fail(t('Enter a limit price.'));
+  if (request.type === 'stop' && !(request.stopPrice! > 0)) return fail(t('Enter a stop price.'));
+  if (request.leverage != null && !(request.leverage >= 1 && request.leverage <= MAX_LEVERAGE)) return fail(t('Leverage must be between 1x and {max}x.', { max: MAX_LEVERAGE }));
 
   const buy = request.side === 'buy';
   if (request.type === 'stop' && (buy ? request.stopPrice! <= marketPrice : request.stopPrice! >= marketPrice)) {
     return fail(
       buy
-        ? 'A buy stop must be above the current price. To buy now, use a market order.'
-        : 'A sell stop must be below the current price. To sell now, use a market order.',
+        ? t('A buy stop must be above the current price. To buy now, use a market order.')
+        : t('A sell stop must be below the current price. To sell now, use a market order.'),
     );
   }
 
   const position = findPosition(account, request.symbol, request.kind);
   if (request.reduceOnly && (!position || position.direction === directionOf(request.side))) {
-    return fail('There is no position for this order to reduce.');
+    return fail(t('There is no position for this order to reduce.'));
   }
 
   const reference = referencePrice(request, marketPrice);
@@ -490,7 +491,7 @@ export function setStops(
   marketPrice: number,
 ): { account: Account; error: string | null } {
   const position = account.positions.find((p) => p.id === positionId);
-  if (!position) return { account, error: 'That position is no longer open.' };
+  if (!position) return { account, error: t('That position is no longer open.') };
   const problem = validateStops(position.direction, marketPrice, stops.stopLoss, stops.takeProfit);
   if (problem) return { account, error: problem.replace('entry price', 'current price') };
   const updated: Position = {
@@ -549,7 +550,7 @@ export function processBar(account: Account, symbol: string, kind: InstrumentKin
 
     const position = findPosition(next, symbol, kind);
     if (order.reduceOnly && (!position || position.direction === directionOf(order.side))) {
-      next = reject(next, order, 'There was no position left for this order to reduce.', events);
+      next = reject(next, order, t('There was no position left for this order to reduce.'), events);
       continue;
     }
     const short = affordable(next, { ...order, type: order.type as 'limit' | 'stop' }, price, here, ctx);

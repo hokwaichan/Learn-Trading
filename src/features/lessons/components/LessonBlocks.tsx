@@ -2,6 +2,7 @@ import { useMemo, type ReactNode } from 'react';
 import { AlertTriangle, Info, OctagonAlert } from 'lucide-react';
 import { cn, GlossaryTerm } from '@/components/ui';
 import { GLOSSARY } from '@/content/glossary';
+import { t } from '@/i18n';
 import { buildMatcher, linkLessonBlocks, type TextSegment } from '@/lib/glossaryLinker';
 import type { PayoffLeg } from '@/lib/pricing/payoff';
 import type { Lesson, LessonBlock } from '@/types';
@@ -52,7 +53,7 @@ function Widget({ block }: { block: Extract<LessonBlock, { type: 'widget' }> }):
     case 'expectancy-sim':
       return <ExpectancySim />;
     case 'payoff':
-      return <PayoffWidget title={String(props.title ?? 'Payoff at expiry')} legs={props.legs as PayoffLeg[]} spot={props.spot as number | undefined} />;
+      return <PayoffWidget title={String(props.title ?? t('Payoff at expiry'))} legs={props.legs as PayoffLeg[]} spot={props.spot as number | undefined} />;
     case 'greek-slider':
       return <GreekSlider focus={(props.focus as GreekFocus) ?? 'delta'} type={(props.type as 'call' | 'put') ?? 'call'} />;
   }
@@ -116,7 +117,7 @@ export function LessonBlocks({ lesson }: { lesson: Lesson }) {
             return (
               <div key={i} className="my-5 rounded-card border border-border bg-surface px-4 py-3">
                 <p className="text-sm font-semibold text-fg">
-                  <span className="text-muted">Worked example: </span>
+                  <span className="text-muted">{t('Worked example:')} </span>
                   {block.title}
                 </p>
                 <ol className="mt-2 list-decimal space-y-1.5 pl-5 text-[15px] leading-relaxed text-fg">

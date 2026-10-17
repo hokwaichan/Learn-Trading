@@ -10,6 +10,9 @@ backend, no login, and no real money.
 
 Your progress, paper accounts and notes are saved in your own browser, not on a server.
 
+Available in English and Traditional Chinese (繁體中文), and usable on a phone,
+a tablet or a desktop.
+
 ## Setup
 
 Requires Node 20 or newer.
@@ -29,12 +32,17 @@ npm run dev          # http://localhost:5173
 | `npm run build` | Type-check and build to `dist/` |
 | `npm run smoke` | Drive every screen in a real browser and report pass or fail |
 | `npm run a11y` | Accessibility audit of every screen in both themes |
-| `npm run screenshots` | Screenshot every route at desktop and phone width in both themes |
+| `npm run screenshots` | Screenshot every route on desktop, tablet and phone in both themes |
 | `npm run fetch-data` | Re-download the bundled daily history in `public/data/` |
 
 The last four need the dev server running. `smoke`, `a11y` and
 `screenshots` use Playwright: run `npx playwright install chromium` once
 first. `smoke` also needs internet, for live crypto prices.
+
+`screenshots` takes routes as arguments and three environment variables:
+`SIZES=phone,tablet` (also `desktop`, `tablet-landscape`), `THEMES=dark` and
+`LOCALE=zh-Hant`. In Git Bash on Windows, put `MSYS_NO_PATHCONV=1` in front so
+routes such as `/settings` are not turned into Windows paths.
 
 ## Deploying
 
@@ -72,7 +80,7 @@ a sub-folder.
 | Journal | `/journal` | Every paper trade, logged automatically, with your notes |
 | Analytics | `/analytics` | What your trades add up to, and where results come from |
 | Calculators | `/tools` | Position size, risk/reward, compounding and more |
-| Settings | `/settings` | Theme, fees, account reset, export and import |
+| Settings | `/settings` | Language, theme, fees, account reset, export and import |
 
 Ctrl+K (Cmd+K on a Mac) opens a command palette that searches screens,
 symbols, lessons and glossary terms.
@@ -112,6 +120,66 @@ Every colour is a CSS variable in `src/styles/theme.css`, exposed to Tailwind in
 `src/styles/globals.css` (`bg-surface`, `text-muted`, `text-up-text`, ...).
 `src/styles/theme.test.ts` checks that every text and surface pairing meets
 WCAG AA in dark, light and colour-blind modes.
+
+## Language
+
+The app is in English and Traditional Chinese, using Hong Kong terms (期權,
+認購/認沽, 止蝕/止賺, 保證金, 陰陽燭). It opens in Chinese when the browser
+asks for zh-HK, zh-TW, zh-MO or zh-Hant, and in English otherwise. The 中/EN
+button in the top bar and the Language setting switch between them; the page
+reloads to apply the change.
+
+How it works (`src/i18n/`):
+
+- `t('English text', { n: 3 })` returns the translation, or the English when
+  there is none. `{name}` placeholders are filled in either language.
+- Every translation is keyed by `textKey(english)`, a short hash of the
+  English. Change the English and the old translation stops matching, so text
+  never shows a translation of an older sentence.
+- The same English word can need different Chinese. A prefix picks the
+  meaning and is dropped in English: `t('position::Close')` is 平倉,
+  `t('Close')` is 收市.
+- `msg('Text')` marks a label stored in data (such as the sidebar list) that is
+  translated where it is shown. `<Trans text="Read {link} first" values={{ link: <a/> }} />`
+  translates a sentence with elements inside it.
+- Lessons, quizzes, the glossary and the rest of `src/content/` are not wrapped
+  in `t()`. `contentStrings.ts` walks the content objects and finds every piece
+  of text; when Chinese is chosen, `localizeContent()` replaces it before the
+  app renders. The glossary keeps the English term beside the Chinese one, and
+  lessons link a term in either language.
+- The Chinese dictionary is loaded only when Chinese is chosen.
+
+| File | Holds |
+| --- | --- |
+| `src/i18n/zh-Hant/ui.ts` | Screen text, keyed by the English |
+| `src/i18n/zh-Hant/content/NN-<module>.ts` | One lesson module and its quizzes |
+| `src/i18n/zh-Hant/content/glossary.ts`, `patterns.ts`, `strategies.ts`, `indicators.ts` | The other content lists |
+
+### Translating new text
+
+`npm test` fails when any text has no Chinese, and prints the entries to add:
+
+- For screen text it prints lines for `ui.ts`, e.g. `"New button": '',`.
+- For content it prints the file, the English as a comment, and the key:
+  `'1jhwybre3zi': '',`. Paste them in and fill in the Chinese.
+- It also fails when a translation's English no longer exists, listing the
+  keys to delete, and when a translation drops or renames a `{placeholder}`.
+
+Keep `**bold**` markers and numbers the same as the English. The component
+gallery at `/dev/components` is a developer page and stays in English.
+
+## Phones and tablets
+
+- Below 1280px wide the sidebar becomes a strip of icons that expands over
+  the page. Below 768px it is replaced by a tab bar at the bottom.
+- Below 1024px the chart workspace moves the order ticket, positions and the
+  Explain panel into bottom sheets, so the chart keeps the full width.
+- On touch screens glossary terms open in a bottom sheet instead of on hover,
+  form fields use 16px text so the browser does not zoom in, slider thumbs are
+  larger, and hints say "tap" and "drag" instead of "click" and "hover".
+
+`npm run screenshots` covers phone (390px), tablet portrait (820px), tablet
+landscape (1180px) and desktop, and reports any page that scrolls sideways.
 
 ## Market data
 

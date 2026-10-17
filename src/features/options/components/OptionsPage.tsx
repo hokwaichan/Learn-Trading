@@ -2,8 +2,9 @@ import { useCallback, useState } from 'react';
 import { FlaskConical, SearchX } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { PriceChart } from '@/components/chart';
-import { EmptyState, ErrorState, GlossaryTerm, LoadingState, Select, TabPanel, Tabs, useMediaQuery } from '@/components/ui';
+import { EmptyState, ErrorState, GlossaryTerm, LoadingState, Select, TabPanel, Tabs, Trans, useMediaQuery } from '@/components/ui';
 import { OPTION_STRATEGIES } from '@/content/strategies';
+import { t } from '@/i18n';
 import { displaySymbol, findInstrument, instrumentsOfKind } from '@/lib/data';
 import { formatPrice } from '@/lib/format';
 import { templateToDrafts } from '@/lib/pricing/draft';
@@ -27,19 +28,26 @@ function SimulatedNotice({ volatility, measured }: { volatility: number; measure
     <p role="note" className="flex shrink-0 items-start gap-2 border-b border-border bg-warning/10 px-3 py-1.5 text-xs text-fg">
       <FlaskConical aria-hidden className="mt-0.5 size-3.5 shrink-0 text-warning-text" />
       <span>
-        <span className="font-semibold text-warning-text">Simulated prices, not market quotes.</span> Every price here comes from the{' '}
-        <GlossaryTerm id="black-scholes">Black-Scholes</GlossaryTerm> model, using{' '}
+        <span className="font-semibold text-warning-text">{t('Simulated prices, not market quotes.')}</span>{' '}
         {measured ? (
-          <>
-            the last {VOLATILITY_LOOKBACK} days&apos; <GlossaryTerm id="historical-volatility">historical volatility</GlossaryTerm> of{' '}
-            <span className="num font-medium">{(volatility * 100).toFixed(1)}%</span>
-          </>
+          <Trans
+            text="Every price here comes from the {model} model, using the last {days} days' {volatility} of {value}. Real option prices differ."
+            values={{
+              model: <GlossaryTerm id="black-scholes">Black-Scholes</GlossaryTerm>,
+              days: VOLATILITY_LOOKBACK,
+              volatility: <GlossaryTerm id="historical-volatility">{t('historical volatility')}</GlossaryTerm>,
+              value: <span className="num font-medium">{(volatility * 100).toFixed(1)}%</span>,
+            }}
+          />
         ) : (
-          <>
-            a stand-in volatility of <span className="num font-medium">{(volatility * 100).toFixed(0)}%</span> until enough history has loaded
-          </>
+          <Trans
+            text="Every price here comes from the {model} model, using a stand-in volatility of {value} until enough history has loaded. Real option prices differ."
+            values={{
+              model: <GlossaryTerm id="black-scholes">Black-Scholes</GlossaryTerm>,
+              value: <span className="num font-medium">{(volatility * 100).toFixed(0)}%</span>,
+            }}
+          />
         )}
-        . Real option prices differ.
       </span>
     </p>
   );
@@ -60,7 +68,7 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
   const change = useCallback((patch: Partial<BuilderState>) => setBuilder((b) => ({ ...b, ...patch })), []);
 
   const applyTemplate = (id: string) => {
-    const template = OPTION_STRATEGIES.find((t) => t.id === id);
+    const template = OPTION_STRATEGIES.find((s) => s.id === id);
     if (!template || spot == null) return;
     const drafts = templateToDrafts(template.legs, chain, expiryIndex, spot, multiplier, newLegId);
     setBuilder({ legs: drafts.legs, stock: drafts.stock, templateId: id, name: template.name });
@@ -83,19 +91,19 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
   const header = (
     <div className="flex shrink-0 flex-wrap items-center gap-x-4 gap-y-1 border-b border-border bg-surface px-3 py-1.5">
       <Select
-        aria-label="Underlying"
+        aria-label={t('Underlying')}
         className="num w-36 font-medium"
         value={instrument.symbol}
         onChange={(symbol) => navigate(`/options/${symbol}`)}
         options={instrumentsOfKind('spot').map((i) => ({ value: i.symbol, label: displaySymbol(i) }))}
       />
       <span className="flex items-baseline gap-1.5 text-xs text-muted">
-        Price <span className="num text-base font-medium text-fg">{spot != null ? formatPrice(spot, instrument.tickSize) : '–'}</span>
+        {t('Price')} <span className="num text-base font-medium text-fg">{spot != null ? formatPrice(spot, instrument.tickSize) : '–'}</span>
       </span>
       <span className="flex items-baseline gap-1.5 text-xs text-muted">
-        <GlossaryTerm id="historical-volatility">30-day volatility</GlossaryTerm> <span className="num text-sm text-fg">{(market.volatility * 100).toFixed(1)}%</span>
+        <GlossaryTerm id="historical-volatility">{t('30-day volatility')}</GlossaryTerm> <span className="num text-sm text-fg">{(market.volatility * 100).toFixed(1)}%</span>
       </span>
-      {!instrument.live && <span className="text-xs text-muted">Bundled daily history: last close, no live price.</span>}
+      {!instrument.live && <span className="text-xs text-muted">{t('Bundled daily history: last close, no live price.')}</span>}
     </div>
   );
 
@@ -103,7 +111,7 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
     return (
       <div className="flex h-full flex-col">
         {header}
-        <ErrorState className="flex-1" title="Could not load prices" message={series.error} onRetry={() => void load(instrument, '1d')} />
+        <ErrorState className="flex-1" title={t('Could not load prices')} message={series.error} onRetry={() => void load(instrument, '1d')} />
       </div>
     );
   }
@@ -111,7 +119,7 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
     return (
       <div className="flex h-full flex-col">
         {header}
-        <LoadingState className="flex-1" label={`Loading ${displaySymbol(instrument)} prices`} />
+        <LoadingState className="flex-1" label={t('Loading {symbol} prices', { symbol: displaySymbol(instrument) })} />
       </div>
     );
   }
@@ -120,7 +128,11 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
   const chainView = <OptionChain chain={chain} expiryIndex={expiryIndex} onExpiry={setExpiryIndex} onPick={pick} legs={builder.legs} tickSize={instrument.tickSize} compact={!wide} />;
   const builderView = <BuilderPanel instrument={instrument} market={market} state={builder} onChange={change} onTemplate={applyTemplate} expiryIndex={expiryIndex} />;
   const notice = <SimulatedNotice volatility={market.volatility} measured={market.measured} />;
-  const hint = <p className="shrink-0 border-t border-border px-3 py-1.5 text-xs text-muted">Click an Ask to buy that option or a Bid to sell it. It is added to the builder as a leg; click it again to remove it.</p>;
+  const hint = (
+    <p className="shrink-0 border-t border-border px-3 py-1.5 text-xs text-muted">
+      {t('Click an Ask to buy that option or a Bid to sell it. It is added to the builder as a leg; click it again to remove it.')}
+    </p>
+  );
 
   if (!wide) {
     return (
@@ -128,16 +140,16 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
         {header}
         {notice}
         <Tabs<PhoneTab>
-          label="Options sections"
+          label={t('Options sections')}
           idBase="options"
           className="shrink-0"
           value={phoneTab}
           onChange={setPhoneTab}
           items={[
-            { id: 'chain', label: 'Chain' },
-            { id: 'builder', label: 'Builder', badge: builder.legs.length || undefined },
-            { id: 'chart', label: 'Chart' },
-            { id: 'positions', label: 'Positions', badge: openCount || undefined },
+            { id: 'chain', label: t('Chain') },
+            { id: 'builder', label: t('Builder'), badge: builder.legs.length || undefined },
+            { id: 'chart', label: t('Chart') },
+            { id: 'positions', label: t('Positions'), badge: openCount || undefined },
           ]}
         />
         <TabPanel idBase="options" id="chain" active={phoneTab === 'chain'} className="flex min-h-0 flex-1 flex-col">
@@ -165,14 +177,14 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
         <div className="flex min-h-0 flex-col border-r border-border">
           <div className="h-[38%] min-h-40 shrink-0 border-b border-border">{chart}</div>
           <Tabs<LowerTab>
-            label="Chain and positions"
+            label={t('Chain and positions')}
             idBase="options-lower"
             className="shrink-0"
             value={lower}
             onChange={setLower}
             items={[
-              { id: 'chain', label: 'Option chain' },
-              { id: 'positions', label: 'Open positions', badge: openCount || undefined },
+              { id: 'chain', label: t('Option chain') },
+              { id: 'positions', label: t('Open positions'), badge: openCount || undefined },
             ]}
           />
           <TabPanel idBase="options-lower" id="chain" active={lower === 'chain'} className="flex min-h-0 flex-1 flex-col">
@@ -183,7 +195,7 @@ function OptionsWorkspace({ instrument }: { instrument: Instrument }) {
             <OptionPositions />
           </TabPanel>
         </div>
-        <aside aria-label="Strategy builder" className="min-h-0 overflow-y-auto">
+        <aside aria-label={t('Strategy builder')} className="min-h-0 overflow-y-auto">
           {builderView}
         </aside>
       </div>
@@ -199,8 +211,8 @@ export function OptionsPage() {
       <EmptyState
         className="h-full"
         icon={<SearchX />}
-        title={`No options for "${symbol}"`}
-        description="Pick one of the available symbols:"
+        title={t('No options for "{symbol}"', { symbol })}
+        description={t('Pick one of the available symbols:')}
         action={
           <div className="flex max-w-md flex-wrap justify-center gap-2">
             {instrumentsOfKind('spot').map((i) => (

@@ -89,6 +89,8 @@ export interface GlossaryEntry {
   /** One plain sentence, shown on hover. */
   definition: string;
   details?: string;
+  /** The English term, kept when the app runs in another language. */
+  english?: string;
   seeAlso: string[];
   lesson?: { moduleId: string; lessonId: string };
 }

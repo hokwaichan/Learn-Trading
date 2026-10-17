@@ -256,6 +256,19 @@ describe('glossary auto-linking', () => {
     ]);
   });
 
+  it('links terms in Chinese text, which has no spaces between words', () => {
+    const zh = buildMatcher([
+      { id: 'stop-loss', term: '止蝕', aliases: ['Stop-loss'], definition: '', seeAlso: [] },
+      { id: 'rsi', term: '相對強弱指數', aliases: ['RSI'], definition: '', seeAlso: [] },
+    ]);
+    expect(linkGlossary('先設好止蝕，再看RSI是否升穿70。', zh).filter((s) => s.type === 'term')).toEqual([
+      { type: 'term', text: '止蝕', id: 'stop-loss' },
+      { type: 'term', text: 'RSI', id: 'rsi' },
+    ]);
+    // An English phrase still needs a boundary on its English side.
+    expect(linkGlossary('RSIX 指標', zh).some((s) => s.type === 'term')).toBe(false);
+  });
+
   it('handles an empty glossary', () => {
     expect(linkGlossary('nothing to link', buildMatcher([]))).toEqual([{ type: 'text', text: 'nothing to link' }]);
   });

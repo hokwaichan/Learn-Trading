@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type KeyboardEvent, type MouseEvent, type ReactNode } from 'react';
 import type { Logical } from 'lightweight-charts';
+import { t } from '@/i18n';
 import { fibLevels, logicalToTime, POINTS_NEEDED, timeToLogical } from '@/lib/drawing/geometry';
 import { formatPrice } from '@/lib/format';
 import type { Drawing, DrawingPoint, DrawingTool } from '@/types';
@@ -24,12 +25,15 @@ interface XY {
 }
 
 const TOOL_NAMES: Record<DrawingTool, string> = {
-  trendline: 'Trend line',
-  hline: 'Horizontal line',
-  rect: 'Rectangle',
-  fib: 'Fibonacci retracement',
-  text: 'Note',
+  trendline: t('Trend line'),
+  hline: t('Horizontal line'),
+  rect: t('Rectangle'),
+  fib: t('Fibonacci retracement'),
+  text: t('Note'),
 };
+
+/** Rough width of label text at 12px: Chinese characters are about twice as wide as Latin ones. */
+const labelWidth = (text: string) => [...text].reduce((w, ch) => w + (/[\u2e80-\u9fff\uff00-\uffef]/.test(ch) ? 12 : 6.6), 0);
 
 /** Chart (time, price) -> pixel position inside the price pane. */
 export function project(api: ChartApi, point: DrawingPoint): XY | null {
@@ -115,8 +119,8 @@ function Shape({ api, tool, points, text, width, selected, preview }: ShapeProps
 
   if (tool === 'text') {
     if (!a) return null;
-    const label = text || 'Note';
-    const w = Math.min(240, label.length * 6.6 + 14);
+    const label = text || t('Note');
+    const w = Math.min(240, labelWidth(label) + 14);
     return (
       <>
         <circle cx={a.x} cy={a.y} r={3} fill={stroke} />
@@ -215,15 +219,15 @@ function HitArea({ api, drawing, width }: { api: ChartApi; drawing: Drawing; wid
 
 function describe(drawing: Drawing, api: ChartApi): string {
   const price = (v: number) => formatPrice(v, api.tickSize);
-  const day = (t: number) => new Date(t * 1000).toISOString().slice(0, 10);
+  const day = (time: number) => new Date(time * 1000).toISOString().slice(0, 10);
   const [p, q] = drawing.points;
   const body =
     drawing.tool === 'hline'
-      ? `at ${price(p.price)}`
+      ? t('at {price}', { price: price(p.price) })
       : drawing.tool === 'text'
-        ? `"${drawing.text ?? ''}" on ${day(p.time)}`
-        : `from ${day(p.time)} at ${price(p.price)} to ${day(q.time)} at ${price(q.price)}`;
-  return `${TOOL_NAMES[drawing.tool]} ${body}. Press Delete to remove.`;
+        ? t('"{text}" on {day}', { text: drawing.text ?? '', day: day(p.time) })
+        : t('from {day} at {price} to {day2} at {price2}', { day: day(p.time), price: price(p.price), day2: day(q.time), price2: price(q.price) });
+  return t('{tool} {details}. Press Delete to remove.', { tool: TOOL_NAMES[drawing.tool], details: body });
 }
 
 /**

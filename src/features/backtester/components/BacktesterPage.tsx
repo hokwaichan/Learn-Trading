@@ -1,28 +1,29 @@
 import { useEffect, useRef, useState } from 'react';
 import { FlaskConical } from 'lucide-react';
 import { Button, Card, DataTable, EmptyState, ErrorState, LoadingState, Pnl, Tabs, useMediaQuery, type Column } from '@/components/ui';
+import { intlLocale, t } from '@/i18n';
 import { displaySymbol, findInstrument } from '@/lib/data';
 import { useBacktest, type BacktestRunSummary } from '@/stores';
 import { Results } from './Results';
 import { StrategyBuilder } from './StrategyBuilder';
 
 const HISTORY_COLUMNS: Column<BacktestRunSummary>[] = [
-  { id: 'when', header: 'Run', cell: (r) => new Date(r.ranAt).toLocaleString(undefined, { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }), sortValue: (r) => r.ranAt, hideOnPhone: true },
-  { id: 'strategy', header: 'Strategy', cell: (r) => r.strategyName, sortValue: (r) => r.strategyName },
+  { id: 'when', header: t('Run'), cell: (r) => new Date(r.ranAt).toLocaleString(intlLocale(), { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }), sortValue: (r) => r.ranAt, hideOnPhone: true },
+  { id: 'strategy', header: t('Strategy'), cell: (r) => r.strategyName, sortValue: (r) => r.strategyName },
   {
     id: 'market',
-    header: 'Tested on',
+    header: t('Tested on'),
     cell: (r) => {
       const instrument = findInstrument(r.symbol);
       return `${instrument ? displaySymbol(instrument) : r.symbol} ${r.timeframe}${r.leverage > 1 ? ` ${r.leverage}x` : ''}`;
     },
     numeric: true,
   },
-  { id: 'period', header: 'Period', cell: (r) => `${r.from} to ${r.to}`, numeric: true, hideOnPhone: true },
-  { id: 'return', header: 'Return', cell: (r) => <Pnl value={r.totalReturnPct / 100} format="pct" />, sortValue: (r) => r.totalReturnPct, align: 'right', numeric: true },
-  { id: 'hold', header: 'Buy and hold', cell: (r) => <Pnl value={r.buyHoldReturnPct / 100} format="pct" />, sortValue: (r) => r.buyHoldReturnPct, align: 'right', numeric: true },
-  { id: 'dd', header: 'Max drawdown', cell: (r) => `-${r.maxDrawdownPct.toFixed(1)}%`, sortValue: (r) => r.maxDrawdownPct, align: 'right', numeric: true, hideOnPhone: true },
-  { id: 'trades', header: 'Trades', cell: (r) => r.tradeCount, sortValue: (r) => r.tradeCount, align: 'right', numeric: true },
+  { id: 'period', header: t('test::Period'), cell: (r) => t('{from} to {to}', { from: r.from, to: r.to }), numeric: true, hideOnPhone: true },
+  { id: 'return', header: t('Return'), cell: (r) => <Pnl value={r.totalReturnPct / 100} format="pct" />, sortValue: (r) => r.totalReturnPct, align: 'right', numeric: true },
+  { id: 'hold', header: t('Buy and hold'), cell: (r) => <Pnl value={r.buyHoldReturnPct / 100} format="pct" />, sortValue: (r) => r.buyHoldReturnPct, align: 'right', numeric: true },
+  { id: 'dd', header: t('Max drawdown'), cell: (r) => `-${r.maxDrawdownPct.toFixed(1)}%`, sortValue: (r) => r.maxDrawdownPct, align: 'right', numeric: true, hideOnPhone: true },
+  { id: 'trades', header: t('Trades'), cell: (r) => r.tradeCount, sortValue: (r) => r.tradeCount, align: 'right', numeric: true },
 ];
 
 /** Past runs side by side, to see how much a result moves when the symbol, period or a number changes. */
@@ -32,17 +33,17 @@ function RunHistory() {
   if (history.length === 0) return null;
   return (
     <Card
-      title="Your recent runs"
+      title={t('Your recent runs')}
       flush
       actions={
         <Button size="sm" variant="ghost" onClick={clearHistory}>
-          Clear
+          {t('Clear')}
         </Button>
       }
     >
-      <DataTable label="Recent backtest runs" dense columns={HISTORY_COLUMNS} rows={history} rowKey={(r) => r.id} initialSort={{ id: 'when', dir: 'desc' }} />
+      <DataTable label={t('Recent backtest runs')} dense columns={HISTORY_COLUMNS} rows={history} rowKey={(r) => r.id} initialSort={{ id: 'when', dir: 'desc' }} />
       <p className="border-t border-border px-4 py-2 text-xs text-muted">
-        Compare runs of the same rule on different symbols and periods. A rule that only works in one row is probably fitted to that row.
+        {t('Compare runs of the same rule on different symbols and periods. A rule that only works in one row is probably fitted to that row.')}
       </p>
     </Card>
   );
@@ -52,15 +53,15 @@ function ResultsPane() {
   const { status, error, result, candles, progress, run } = useBacktest();
   return (
     <div className="flex flex-col gap-4">
-      {status === 'running' && <LoadingState className="rounded-card border border-border" label={`Loading price history ${Math.round(progress * 100)}%`} />}
-      {status === 'error' && <ErrorState className="rounded-card border border-border" title="The backtest could not run" message={error} onRetry={() => void run()} />}
+      {status === 'running' && <LoadingState className="rounded-card border border-border" label={t('Loading price history {pct}%', { pct: Math.round(progress * 100) })} />}
+      {status === 'error' && <ErrorState className="rounded-card border border-border" title={t('The backtest could not run')} message={error} onRetry={() => void run()} />}
       {status !== 'running' && status !== 'error' && result && <Results result={result} candles={candles} />}
       {status === 'idle' && !result && (
         <EmptyState
           className="rounded-card border border-border py-16"
           icon={<FlaskConical aria-hidden />}
-          title="No results yet"
-          description="Pick a preset or build your own rules, choose what to test them on, then press Run backtest. The results appear here: return, win rate, drawdown, an account curve against buy and hold, and every trade marked on the chart."
+          title={t('No results yet')}
+          description={t('Pick a preset or build your own rules, choose what to test them on, then press Run backtest. The results appear here: return, win rate, drawdown, an account curve against buy and hold, and every trade marked on the chart.')}
         />
       )}
       <RunHistory />
@@ -91,19 +92,19 @@ export function BacktesterPage() {
 
   const intro = (
     <header>
-      <h1 className="text-xl font-semibold text-fg">Backtester</h1>
-      <p className="mt-1 text-sm text-muted">Test a trading rule on past prices, with no code. See what it would have done, and how fragile that result is.</p>
+      <h1 className="text-xl font-semibold text-fg">{t('Backtester')}</h1>
+      <p className="mt-1 text-sm text-muted">{t('Test a trading rule on past prices, with no code. See what it would have done, and how fragile that result is.')}</p>
     </header>
   );
 
   if (wide) {
     return (
       <div className="grid h-full grid-cols-[25rem_minmax(0,1fr)]">
-        <aside aria-label="Strategy builder" className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto border-r border-border p-4 pb-0">
+        <aside aria-label={t('Strategy builder')} className="flex h-full min-h-0 flex-col gap-3 overflow-y-auto border-r border-border p-4 pb-0">
           {intro}
           <StrategyBuilder />
         </aside>
-        <section aria-label="Results" className="h-full min-h-0 overflow-y-auto p-4 md:p-6">
+        <section aria-label={t('Results')} className="h-full min-h-0 overflow-y-auto p-4 md:p-6">
           <ResultsPane />
         </section>
       </div>
@@ -116,13 +117,13 @@ export function BacktesterPage() {
         {intro}
         <Tabs<Pane>
           className="mt-2"
-          label="Backtester sections"
+          label={t('Backtester sections')}
           idBase="backtester"
           value={pane}
           onChange={setPane}
           items={[
-            { id: 'strategy', label: 'Strategy' },
-            { id: 'results', label: 'Results' },
+            { id: 'strategy', label: t('Strategy') },
+            { id: 'results', label: t('Results') },
           ]}
         />
       </div>

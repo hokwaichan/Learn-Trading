@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 import { Info, SearchX, WifiOff } from 'lucide-react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Button, EmptyState } from '@/components/ui';
+import { Button, EmptyState, Trans } from '@/components/ui';
 import { OrderTicket } from '@/features/paper-trading';
+import { t } from '@/i18n';
 import { displaySymbol, findInstrument, instrumentsOfKind } from '@/lib/data';
 import { useCandleSeries, useMarket } from '@/stores';
 import type { Instrument } from '@/types';
@@ -19,8 +20,8 @@ function UnknownSymbol({ symbol, mode }: { symbol: string; mode: LiveMode }) {
     <EmptyState
       className="h-full"
       icon={<SearchX />}
-      title={`No ${mode === 'futures' ? 'futures contract' : 'chart'} for "${symbol}"`}
-      description="Pick one of the available symbols:"
+      title={mode === 'futures' ? t('No futures contract for "{symbol}"', { symbol }) : t('No chart for "{symbol}"', { symbol })}
+      description={t('Pick one of the available symbols:')}
       action={
         <div className="flex max-w-md flex-wrap justify-center gap-2">
           {instrumentsOfKind(kind).map((i) => (
@@ -72,7 +73,7 @@ function LiveWorkspace({ instrument, mode }: { instrument: Instrument; mode: Liv
         <>
           {series.fallback && (
             <WorkspaceNotice icon={<Info aria-hidden className="size-3.5" />}>
-              Futures data is not available from your region, so this shows the spot price, which stays very close. Funding is a fixed 0.01% every 8 hours.
+              {t('Futures data is not available from your region, so this shows the spot price, which stays very close. Funding is a fixed 0.01% every 8 hours.')}
             </WorkspaceNotice>
           )}
           {series.stale && (
@@ -80,20 +81,26 @@ function LiveWorkspace({ instrument, mode }: { instrument: Instrument; mode: Liv
               icon={<WifiOff aria-hidden className="size-3.5" />}
               action={
                 <Button size="sm" variant="ghost" onClick={() => void load(instrument, timeframe)}>
-                  Retry
+                  {t('Retry')}
                 </Button>
               }
             >
-              Showing saved prices. {series.error}
+              {t('Showing saved prices.')} {series.error}
             </WorkspaceNotice>
           )}
           {!instrument.live && series.status === 'ready' && (
             <WorkspaceNotice icon={<Info aria-hidden className="size-3.5" />}>
-              Bundled daily history up to <span className="num">{lastDay}</span>, with no live price. You can practise trading this symbol in{' '}
-              <Link to="/replay" className="text-accent-text underline underline-offset-2">
-                Replay
-              </Link>
-              .
+              <Trans
+                text="Bundled daily history up to {day}, with no live price. You can practise trading this symbol in {replay}."
+                values={{
+                  day: <span className="num">{lastDay}</span>,
+                  replay: (
+                    <Link to="/replay" className="text-accent-text underline underline-offset-2">
+                      {t('Replay')}
+                    </Link>
+                  ),
+                }}
+              />
             </WorkspaceNotice>
           )}
         </>

@@ -1,3 +1,4 @@
+import { t } from '@/i18n';
 import type { Candle, IndicatorConfig, IndicatorId } from '@/types';
 import { atr } from './atr';
 import { bollinger } from './bollinger';
@@ -52,7 +53,7 @@ export interface IndicatorDefinition {
   compute: (candles: Candle[], params: Record<string, number>, context: { stepSeconds: number }) => Record<string, Series>;
 }
 
-const period = (def: number, label = 'Period'): IndicatorParam => ({
+const period = (def: number, label = t('Period')): IndicatorParam => ({
   key: 'period',
   label,
   default: def,
@@ -74,7 +75,7 @@ const period = (def: number, label = 'Period'): IndicatorParam => ({
 export const INDICATORS: IndicatorDefinition[] = [
   {
     id: 'sma',
-    name: 'Simple Moving Average',
+    name: t('Simple Moving Average'),
     short: 'SMA',
     placement: 'overlay',
     params: [period(20)],
@@ -83,7 +84,7 @@ export const INDICATORS: IndicatorDefinition[] = [
   },
   {
     id: 'ema',
-    name: 'Exponential Moving Average',
+    name: t('Exponential Moving Average'),
     short: 'EMA',
     placement: 'overlay',
     params: [period(20)],
@@ -92,20 +93,20 @@ export const INDICATORS: IndicatorDefinition[] = [
   },
   {
     id: 'bollinger',
-    name: 'Bollinger Bands',
+    name: t('Bollinger Bands'),
     short: 'BB',
     placement: 'overlay',
-    params: [period(20), { key: 'multiplier', label: 'Std. deviations', default: 2, min: 0.5, max: 5, step: 0.1 }],
+    params: [period(20), { key: 'multiplier', label: t('Std. deviations'), default: 2, min: 0.5, max: 5, step: 0.1 }],
     outputs: [
-      { key: 'upper', label: 'Upper', style: 'line' },
-      { key: 'middle', label: 'Middle', style: 'dashed' },
-      { key: 'lower', label: 'Lower', style: 'line' },
+      { key: 'upper', label: t('Upper'), style: 'line' },
+      { key: 'middle', label: t('Middle'), style: 'dashed' },
+      { key: 'lower', label: t('Lower'), style: 'line' },
     ],
     compute: (c, p) => ({ ...bollinger(c, p.period, p.multiplier) }),
   },
   {
     id: 'vwap',
-    name: 'Volume-Weighted Average Price',
+    name: t('Volume-Weighted Average Price'),
     short: 'VWAP',
     placement: 'overlay',
     params: [],
@@ -114,17 +115,17 @@ export const INDICATORS: IndicatorDefinition[] = [
   },
   {
     id: 'volumeMa',
-    name: 'Volume Moving Average',
-    short: 'Vol MA',
+    name: t('Volume Moving Average'),
+    short: t('Vol MA'),
     placement: 'volume',
     params: [period(20)],
-    outputs: [{ key: 'value', label: 'Vol MA', style: 'line' }],
+    outputs: [{ key: 'value', label: t('Vol MA'), style: 'line' }],
     decimals: 0,
     compute: (c, p) => ({ value: volumeMa(c, p.period) }),
   },
   {
     id: 'rsi',
-    name: 'Relative Strength Index',
+    name: t('Relative Strength Index'),
     short: 'RSI',
     placement: 'pane',
     params: [period(14)],
@@ -136,31 +137,31 @@ export const INDICATORS: IndicatorDefinition[] = [
   },
   {
     id: 'macd',
-    name: 'MACD',
+    name: t('MACD'),
     short: 'MACD',
     placement: 'pane',
     params: [
-      { key: 'fast', label: 'Fast EMA', default: 12, min: 2, max: 200, step: 1 },
-      { key: 'slow', label: 'Slow EMA', default: 26, min: 3, max: 400, step: 1 },
-      { key: 'signal', label: 'Signal EMA', default: 9, min: 2, max: 100, step: 1 },
+      { key: 'fast', label: t('Fast EMA'), default: 12, min: 2, max: 200, step: 1 },
+      { key: 'slow', label: t('Slow EMA'), default: 26, min: 3, max: 400, step: 1 },
+      { key: 'signal', label: t('Signal EMA'), default: 9, min: 2, max: 100, step: 1 },
     ],
     outputs: [
-      { key: 'histogram', label: 'Histogram', style: 'histogram' },
+      { key: 'histogram', label: t('Histogram'), style: 'histogram' },
       { key: 'macd', label: 'MACD', style: 'line' },
-      { key: 'signal', label: 'Signal', style: 'line' },
+      { key: 'signal', label: t('Signal'), style: 'line' },
     ],
     guides: [0],
     compute: (c, p) => ({ ...macd(c, p.fast, p.slow, p.signal) }),
   },
   {
     id: 'stochastic',
-    name: 'Stochastic Oscillator',
+    name: t('Stochastic Oscillator'),
     short: 'Stoch',
     placement: 'pane',
     params: [
-      period(14, '%K period'),
-      { key: 'smooth', label: '%K smoothing', default: 3, min: 1, max: 20, step: 1 },
-      { key: 'd', label: '%D period', default: 3, min: 1, max: 20, step: 1 },
+      period(14, t('%K period')),
+      { key: 'smooth', label: t('%K smoothing'), default: 3, min: 1, max: 20, step: 1 },
+      { key: 'd', label: t('%D period'), default: 3, min: 1, max: 20, step: 1 },
     ],
     outputs: [
       { key: 'k', label: '%K', style: 'line' },
@@ -173,7 +174,7 @@ export const INDICATORS: IndicatorDefinition[] = [
   },
   {
     id: 'atr',
-    name: 'Average True Range',
+    name: t('Average True Range'),
     short: 'ATR',
     placement: 'pane',
     params: [period(14)],
@@ -182,42 +183,42 @@ export const INDICATORS: IndicatorDefinition[] = [
   },
   {
     id: 'donchian',
-    name: 'Donchian Channel',
+    name: t('Donchian Channel'),
     short: 'DC',
     placement: 'overlay',
     params: [period(20)],
     outputs: [
-      { key: 'upper', label: 'Upper', style: 'line' },
-      { key: 'middle', label: 'Middle', style: 'dashed' },
-      { key: 'lower', label: 'Lower', style: 'line' },
+      { key: 'upper', label: t('Upper'), style: 'line' },
+      { key: 'middle', label: t('Middle'), style: 'dashed' },
+      { key: 'lower', label: t('Lower'), style: 'line' },
     ],
     compute: (c, p) => ({ ...donchian(c, p.period) }),
   },
   {
     id: 'prevDay',
-    name: 'Previous Day Levels',
-    short: 'Prev day',
+    name: t('Previous Day Levels'),
+    short: t('Prev day'),
     placement: 'overlay',
     params: [],
     outputs: [
-      { key: 'high', label: 'High', style: 'line' },
-      { key: 'close', label: 'Close', style: 'dashed' },
-      { key: 'low', label: 'Low', style: 'line' },
+      { key: 'high', label: t('High'), style: 'line' },
+      { key: 'close', label: t('Close'), style: 'dashed' },
+      { key: 'low', label: t('Low'), style: 'line' },
     ],
     compute: (c) => ({ ...previousDayLevels(c) }),
   },
   {
     id: 'openingRange',
-    name: 'Opening Range',
+    name: t('Opening Range'),
     short: 'OR',
     placement: 'overlay',
     params: [
-      { key: 'minutes', label: 'Minutes', default: 60, min: 5, max: 240, step: 5 },
-      { key: 'startHour', label: 'Start hour (UTC)', default: 0, min: 0, max: 23, step: 1 },
+      { key: 'minutes', label: t('Minutes'), default: 60, min: 5, max: 240, step: 5 },
+      { key: 'startHour', label: t('Start hour (UTC)'), default: 0, min: 0, max: 23, step: 1 },
     ],
     outputs: [
-      { key: 'high', label: 'High', style: 'line' },
-      { key: 'low', label: 'Low', style: 'line' },
+      { key: 'high', label: t('High'), style: 'line' },
+      { key: 'low', label: t('Low'), style: 'line' },
     ],
     compute: (c, p, ctx) => ({ ...openingRange(c, ctx.stepSeconds, p.minutes, p.startHour) }),
   },

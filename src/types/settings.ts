@@ -1,3 +1,4 @@
+import type { Locale } from '@/i18n';
 import type { IndicatorId } from './backtest';
 import type { ReviewCard } from './journal';
 import type { Timeframe } from './market';
@@ -5,6 +6,8 @@ import type { Timeframe } from './market';
 export type Theme = 'dark' | 'light';
 
 export interface Settings {
+  /** Language of the whole app, lessons included. */
+  locale: Locale;
   theme: Theme;
   colorBlind: boolean;
   /** Taker fee as a fraction, e.g. 0.001 = 0.1%. */

@@ -1,3 +1,4 @@
+import { t } from '@/i18n';
 /**
  * Export and import of everything the app keeps in this browser, as one
  * JSON file. Each store persists itself under a `tradeschool.` key with its
@@ -59,14 +60,14 @@ export function parseBackup(text: string): ParsedBackup {
   try {
     value = JSON.parse(text);
   } catch {
-    return { ok: false, error: 'That file is not valid JSON. Choose a file exported from TradeSchool.' };
+    return { ok: false, error: t('That file is not valid JSON. Choose a file exported from TradeSchool.') };
   }
   const file = value as Partial<BackupFile> | null;
   if (!file || typeof file !== 'object' || file.app !== BACKUP_APP || typeof file.data !== 'object' || file.data == null) {
-    return { ok: false, error: 'That file is not a TradeSchool backup.' };
+    return { ok: false, error: t('That file is not a TradeSchool backup.') };
   }
   if (typeof file.format !== 'number' || file.format > BACKUP_FORMAT) {
-    return { ok: false, error: 'That backup was made by a newer version of TradeSchool and cannot be read by this one.' };
+    return { ok: false, error: t('That backup was made by a newer version of TradeSchool and cannot be read by this one.') };
   }
   const data: BackupFile['data'] = {};
   for (const key of BACKUP_KEYS) {
@@ -76,7 +77,7 @@ export function parseBackup(text: string): ParsedBackup {
     }
   }
   const stores = Object.keys(data);
-  if (stores.length === 0) return { ok: false, error: 'That backup is empty.' };
+  if (stores.length === 0) return { ok: false, error: t('That backup is empty.') };
   return { ok: true, backup: { app: BACKUP_APP, format: file.format, exportedAt: typeof file.exportedAt === 'string' ? file.exportedAt : '', data }, stores };
 }
 
@@ -100,12 +101,12 @@ export function clearAll(storage: KeyValue): void {
 
 /** Plain names for the stores, for the import confirmation. */
 export const STORE_NAMES: Record<(typeof BACKUP_KEYS)[number], string> = {
-  'tradeschool.settings': 'Settings',
-  'tradeschool.account': 'Paper and replay accounts',
-  'tradeschool.progress': 'Lesson and trainer progress',
-  'tradeschool.journal': 'Journal notes',
-  'tradeschool.market': 'Chart layouts and watchlist',
-  'tradeschool.drawings': 'Chart drawings',
-  'tradeschool.replay': 'Replay set-up',
-  'tradeschool.backtest': 'Backtester strategies',
+  'tradeschool.settings': t('Settings'),
+  'tradeschool.account': t('Paper and replay accounts'),
+  'tradeschool.progress': t('Lesson and trainer progress'),
+  'tradeschool.journal': t('Journal notes'),
+  'tradeschool.market': t('Chart layouts and watchlist'),
+  'tradeschool.drawings': t('Chart drawings'),
+  'tradeschool.replay': t('Replay set-up'),
+  'tradeschool.backtest': t('Backtester strategies'),
 };

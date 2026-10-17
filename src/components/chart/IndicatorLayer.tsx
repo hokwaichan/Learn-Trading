@@ -12,6 +12,7 @@ import {
   type UTCTimestamp,
 } from 'lightweight-charts';
 import { cn } from '@/components/ui';
+import { t } from '@/i18n';
 import { formatCompact, formatPrice } from '@/lib/format';
 import {
   computeIndicator,
@@ -123,7 +124,7 @@ function LegendEntry({
       type="button"
       onClick={() => onSelect?.(config.key)}
       aria-pressed={selected}
-      aria-label={`Explain ${indicatorLabel(config)}`}
+      aria-label={t('Explain {indicator}', { indicator: indicatorLabel(config) })}
       className={cn(
         'pointer-events-auto flex items-baseline gap-x-2 rounded-sm px-1 -mx-1 text-xs hover:bg-raised',
         selected && 'bg-raised',

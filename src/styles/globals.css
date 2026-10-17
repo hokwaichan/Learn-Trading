@@ -24,7 +24,9 @@
   --color-grid: var(--c-grid);
   --color-overlay: var(--c-overlay);
 
-  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  /* Inter has no Chinese glyphs; the CJK fonts after it cover Traditional Chinese on each platform. */
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', 'PingFang TC', 'Noto Sans TC',
+    'Microsoft JhengHei', sans-serif;
   --font-mono: 'JetBrains Mono Variable', ui-monospace, 'Cascadia Mono', Consolas, monospace;
 
   --radius-card: 8px;
@@ -158,5 +160,32 @@
     font-size: 16px;
     line-height: 1.7;
     max-width: 70ch;
+  }
+  /* Chinese glyphs are taller and denser; give lines a little more room. */
+  :lang(zh) .prose-lesson {
+    line-height: 1.85;
+  }
+}
+
+/* Touch screens: phones and tablets. */
+@media (hover: none) {
+  /* iOS Safari zooms the page into any field smaller than 16px when it is focused. */
+  input,
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+  /* A finger needs a bigger slider thumb than a mouse. */
+  .ts-slider::-webkit-slider-thumb {
+    width: 22px;
+    height: 22px;
+    margin-top: -9px;
+  }
+  .ts-slider::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+  }
+  * {
+    -webkit-tap-highlight-color: transparent;
   }
 }

@@ -16,3 +16,17 @@ export function useMediaQuery(query: string): boolean {
 export function useIsPhone(): boolean {
   return useMediaQuery('(max-width: 767px)');
 }
+
+/**
+ * True below Tailwind's lg breakpoint: phones and tablets held upright. The
+ * chart workspace moves its panels into bottom sheets here, because a side
+ * panel would leave the chart too narrow to read.
+ */
+export function useIsCompact(): boolean {
+  return useMediaQuery('(max-width: 1023px)');
+}
+
+/** True when the main pointer cannot hover (a finger), so hover-only hints need a tap instead. */
+export function useIsTouch(): boolean {
+  return useMediaQuery('(hover: none)');
+}

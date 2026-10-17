@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { cn, Tabs } from '@/components/ui';
+import { intlLocale, t } from '@/i18n';
 import { formatPrice } from '@/lib/format';
 import type { ChainExpiry } from '@/lib/pricing/chain';
 import type { DraftLeg } from '@/lib/pricing/draft';
@@ -18,15 +19,15 @@ export interface OptionChainProps {
   compact?: boolean;
 }
 
-const dateLabel = (ms: number) => new Date(ms).toLocaleDateString(undefined, { day: 'numeric', month: 'short', timeZone: 'UTC' });
-const daysLabel = (days: number) => (days < 1 ? '<1d' : `${Math.round(days)}d`);
+const dateLabel = (ms: number) => new Date(ms).toLocaleDateString(intlLocale(), { day: 'numeric', month: 'short', timeZone: 'UTC' });
+const daysLabel = (days: number) => (days < 1 ? t('<1d') : t('{n}d', { n: Math.round(days) }));
 
 function PriceCell({ quote, side, picked, tickSize, compact, onPick }: { quote: OptionQuote; side: Side; picked: boolean; tickSize: number; compact?: boolean; onPick: OptionChainProps['onPick'] }) {
   const price = side === 'buy' ? quote.ask : quote.bid;
   // On a narrow screen large premiums drop their cents so all four prices fit.
   const shown = compact && price >= 1000 ? formatPrice(price, 1) : formatPrice(price, tickSize);
   const { contract } = quote;
-  const name = `${contract.strike} ${contract.type}`;
+  const name = `${contract.strike} ${contract.type === 'call' ? t('call') : t('put')}`;
   // Nothing can be sold for a bid of zero.
   const disabled = side === 'sell' && price <= 0;
   return (
@@ -35,7 +36,11 @@ function PriceCell({ quote, side, picked, tickSize, compact, onPick }: { quote: 
         type="button"
         disabled={disabled}
         aria-pressed={picked}
-        aria-label={`${side === 'buy' ? 'Buy' : 'Sell'} the ${name} at ${formatPrice(price, tickSize)}`}
+        aria-label={
+          side === 'buy'
+            ? t('Buy the {name} at {price}', { name, price: formatPrice(price, tickSize) })
+            : t('Sell the {name} at {price}', { name, price: formatPrice(price, tickSize) })
+        }
         onClick={() => onPick(quote, side)}
         className={cn(
           'num w-full rounded-control py-1 text-right text-xs transition-colors duration-150 disabled:opacity-40',
@@ -72,7 +77,7 @@ export function OptionChain({ chain, expiryIndex, onExpiry, onPick, legs, tickSi
   return (
     <div className="flex h-full min-h-0 flex-col">
       <Tabs
-        label="Expiry date"
+        label={t('Expiry date')}
         idBase="chain-expiry"
         className="shrink-0"
         value={String(expiryIndex)}
@@ -80,27 +85,27 @@ export function OptionChain({ chain, expiryIndex, onExpiry, onPick, legs, tickSi
         items={chain.map((e, i) => ({ id: String(i), label: dateLabel(e.expiry), badge: daysLabel(e.days) }))}
       />
       <div ref={scroller} className="min-h-0 flex-1 overflow-auto" role="tabpanel" id={`chain-expiry-panel-${expiryIndex}`} aria-labelledby={`chain-expiry-tab-${expiryIndex}`}>
-        <table className="w-full border-collapse" aria-label={`Simulated option chain expiring ${dateLabel(expiry.expiry)}`}>
+        <table className="w-full border-collapse" aria-label={t('Simulated option chain expiring {date}', { date: dateLabel(expiry.expiry) })}>
           <thead className="sticky top-0 z-10 bg-surface">
             <tr>
               <th scope="colgroup" colSpan={compact ? 2 : 4} className="border-b border-border px-2 py-1 text-left text-xs font-semibold text-up-text">
-                Calls <span className="font-normal text-muted">(right to buy)</span>
+                {t('Calls')} <span className="font-normal text-muted">{t('(right to buy)')}</span>
               </th>
               <th className="border-b border-border" />
               <th scope="colgroup" colSpan={compact ? 2 : 4} className="border-b border-border px-2 py-1 text-right text-xs font-semibold text-down-text">
-                Puts <span className="font-normal text-muted">(right to sell)</span>
+                {t('Puts')} <span className="font-normal text-muted">{t('(right to sell)')}</span>
               </th>
             </tr>
             <tr className="border-b border-border">
-              {!compact && <th scope="col" className={head}>Delta</th>}
-              {!compact && <th scope="col" className={head}>IV</th>}
-              <th scope="col" className={head}>Bid</th>
-              <th scope="col" className={head}>Ask</th>
-              <th scope="col" className="px-2 py-1 text-center text-[11px] font-medium text-fg">Strike</th>
-              <th scope="col" className={head}>Bid</th>
-              <th scope="col" className={head}>Ask</th>
-              {!compact && <th scope="col" className={head}>IV</th>}
-              {!compact && <th scope="col" className={head}>Delta</th>}
+              {!compact && <th scope="col" className={head}>{t('Delta')}</th>}
+              {!compact && <th scope="col" className={head}>{t('IV')}</th>}
+              <th scope="col" className={head}>{t('Bid')}</th>
+              <th scope="col" className={head}>{t('Ask')}</th>
+              <th scope="col" className="px-2 py-1 text-center text-[11px] font-medium text-fg">{t('Strike')}</th>
+              <th scope="col" className={head}>{t('Bid')}</th>
+              <th scope="col" className={head}>{t('Ask')}</th>
+              {!compact && <th scope="col" className={head}>{t('IV')}</th>}
+              {!compact && <th scope="col" className={head}>{t('Delta')}</th>}
             </tr>
           </thead>
           <tbody>
@@ -116,7 +121,7 @@ export function OptionChain({ chain, expiryIndex, onExpiry, onPick, legs, tickSi
                   <PriceCell quote={row.call} side="buy" picked={picked(row.call, 'buy')} tickSize={tickSize} compact={compact} onPick={onPick} />
                   <th scope="row" className={cn('num px-2 py-1 text-center text-xs font-medium', row.atm ? 'bg-accent/15 text-fg' : 'bg-bg text-fg')}>
                     {formatPrice(row.strike, tickSize).replace(/\.0+$/, '')}
-                    {row.atm && <span className="ml-1 rounded-sm bg-accent px-1 text-[10px] font-semibold text-on-solid">ATM</span>}
+                    {row.atm && <span className="ml-1 rounded-sm bg-accent px-1 text-[10px] font-semibold text-on-solid">{t('ATM')}</span>}
                   </th>
                   <PriceCell quote={row.put} side="sell" picked={picked(row.put, 'sell')} tickSize={tickSize} compact={compact} onPick={onPick} />
                   <PriceCell quote={row.put} side="buy" picked={picked(row.put, 'buy')} tickSize={tickSize} compact={compact} onPick={onPick} />

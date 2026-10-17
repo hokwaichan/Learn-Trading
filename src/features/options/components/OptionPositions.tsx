@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Layers } from 'lucide-react';
 import { Button, DataTable, EmptyState, Pnl, toast, type Column } from '@/components/ui';
+import { t } from '@/i18n';
 import { displaySymbol, findInstrument } from '@/lib/data';
 import { formatMoney, formatSignedMoney } from '@/lib/format';
 import { nearestExpiry } from '@/lib/pricing/strategy';
@@ -28,7 +29,7 @@ export function OptionPositions() {
   const columns: Column<Position>[] = [
     {
       id: 'name',
-      header: 'Strategy',
+      header: t('Strategy'),
       cell: (p) => {
         const { strategy } = p.option!;
         const instrument = findInstrument(strategy.underlying, 'spot');
@@ -43,21 +44,27 @@ export function OptionPositions() {
       },
       sortValue: (p) => p.option!.strategy.name,
     },
-    { id: 'legs', header: 'Legs', cell: (p) => <span className="num text-xs text-muted">{legsSummary(p.option!.strategy)}</span>, hideOnPhone: true },
+    { id: 'legs', header: t('Legs'), cell: (p) => <span className="num text-xs text-muted">{legsSummary(p.option!.strategy)}</span>, hideOnPhone: true },
     {
       id: 'expiry',
-      header: 'Expires',
+      header: t('Expires'),
       numeric: true,
       cell: (p) => {
         const expiry = nearestExpiry(p.option!.strategy);
         if (expiry == null) return '–';
         const days = (expiry - now) / DAY_MS;
-        return days <= 0 ? <span className="text-warning-text">Settling</span> : days < 1 ? 'Today' : `${Math.ceil(days)}d`;
+        return days <= 0 ? <span className="text-warning-text">{t('Settling')}</span> : days < 1 ? t('Today') : t('{n}d', { n: Math.ceil(days) });
       },
       sortValue: (p) => nearestExpiry(p.option!.strategy) ?? 0,
     },
-    { id: 'cost', header: 'Cost', numeric: true, hideOnPhone: true, cell: (p) => (p.entryPrice >= 0 ? formatMoney(p.entryPrice) : `${formatMoney(-p.entryPrice)} credit`) },
-    { id: 'pnl', header: 'P&L', numeric: true, cell: (p) => <Pnl value={p.option!.markValue - p.entryPrice} />, sortValue: (p) => p.option!.markValue - p.entryPrice },
+    {
+      id: 'cost',
+      header: t('Cost'),
+      numeric: true,
+      hideOnPhone: true,
+      cell: (p) => (p.entryPrice >= 0 ? formatMoney(p.entryPrice) : t('{amount} credit', { amount: formatMoney(-p.entryPrice) })),
+    },
+    { id: 'pnl', header: t('P&L'), numeric: true, cell: (p) => <Pnl value={p.option!.markValue - p.entryPrice} />, sortValue: (p) => p.option!.markValue - p.entryPrice },
     {
       id: 'actions',
       header: '',
@@ -69,14 +76,14 @@ export function OptionPositions() {
           <Button
             size="sm"
             disabled={spot == null}
-            aria-label={`Close ${strategy.name}`}
+            aria-label={t('Close {name}', { name: strategy.name })}
             onClick={() => {
               const events = closeStrategy('main', p.id, spot!, findInstrument(strategy.underlying, 'spot')?.tickSize);
               const closed = events.find((e) => e.type === 'trade_closed');
-              if (closed?.type === 'trade_closed') toast.info('Strategy closed', `${strategy.name}: ${formatSignedMoney(closed.trade.netPnl)}`);
+              if (closed?.type === 'trade_closed') toast.info(t('Strategy closed'), `${strategy.name}: ${formatSignedMoney(closed.trade.netPnl)}`);
             }}
           >
-            Close
+            {t('position::Close')}
           </Button>
         );
       },
@@ -85,7 +92,7 @@ export function OptionPositions() {
 
   return (
     <DataTable
-      label="Open option positions"
+      label={t('Open option positions')}
       dense
       columns={columns}
       rows={positions}
@@ -94,8 +101,8 @@ export function OptionPositions() {
         <EmptyState
           className="py-6"
           icon={<Layers />}
-          title="No open option positions"
-          description="Build a strategy and press Open paper position. It is then valued by the model as price and time move, and settled in cash at expiry."
+          title={t('No open option positions')}
+          description={t('Build a strategy and press Open paper position. It is then valued by the model as price and time move, and settled in cash at expiry.')}
         />
       }
     />

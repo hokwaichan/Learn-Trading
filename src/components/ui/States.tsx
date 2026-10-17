@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { AlertTriangle, Loader2 } from 'lucide-react';
 import { Button } from './Button';
 import { cn } from './cn';
+import { t } from '@/i18n';
 
 export interface EmptyStateProps {
   icon?: ReactNode;
@@ -30,7 +31,7 @@ export interface ErrorStateProps {
   className?: string;
 }
 
-export function ErrorState({ title = 'Something went wrong', message, onRetry, className }: ErrorStateProps) {
+export function ErrorState({ title = t('Something went wrong'), message, onRetry, className }: ErrorStateProps) {
   return (
     <div role="alert" className={cn('flex flex-col items-center justify-center gap-2 px-6 py-10 text-center', className)}>
       <AlertTriangle aria-hidden className="size-8 text-warning-text" />
@@ -38,14 +39,14 @@ export function ErrorState({ title = 'Something went wrong', message, onRetry, c
       <p className="max-w-sm text-sm text-muted">{message}</p>
       {onRetry && (
         <Button className="mt-2" onClick={onRetry}>
-          Try again
+          {t('Try again')}
         </Button>
       )}
     </div>
   );
 }
 
-export function Spinner({ label = 'Loading', className }: { label?: string; className?: string }) {
+export function Spinner({ label = t('Loading'), className }: { label?: string; className?: string }) {
   return (
     <span role="status" className={cn('inline-flex items-center gap-2 text-sm text-muted', className)}>
       <Loader2 aria-hidden className="size-4 animate-spin" />
@@ -54,7 +55,7 @@ export function Spinner({ label = 'Loading', className }: { label?: string; clas
   );
 }
 
-export function LoadingState({ label = 'Loading', className }: { label?: string; className?: string }) {
+export function LoadingState({ label = t('Loading'), className }: { label?: string; className?: string }) {
   return (
     <div className={cn('flex items-center justify-center px-6 py-10', className)}>
       <Spinner label={label} />

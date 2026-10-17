@@ -1,3 +1,4 @@
+import { t } from '@/i18n';
 import type { Timeframe } from '@/types';
 
 export const TIMEFRAMES: Timeframe[] = ['1m', '5m', '15m', '1h', '4h', '1d'];
@@ -12,12 +13,12 @@ export const TIMEFRAME_SECONDS: Record<Timeframe, number> = {
 };
 
 export const TIMEFRAME_NAMES: Record<Timeframe, string> = {
-  '1m': '1 minute',
-  '5m': '5 minutes',
-  '15m': '15 minutes',
-  '1h': '1 hour',
-  '4h': '4 hours',
-  '1d': '1 day',
+  '1m': t('1 minute'),
+  '5m': t('5 minutes'),
+  '15m': t('15 minutes'),
+  '1h': t('1 hour'),
+  '4h': t('4 hours'),
+  '1d': t('1 day'),
 };
 
 export function isTimeframe(value: string): value is Timeframe {

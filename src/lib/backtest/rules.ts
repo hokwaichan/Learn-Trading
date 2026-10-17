@@ -1,17 +1,18 @@
+import { t } from '@/i18n';
 import { computeIndicator, getIndicator, indicatorLabel, normalizeParams } from '@/lib/indicators';
 import type { Series } from '@/lib/indicators';
 import type { BacktestRule, BacktestStrategy, Candle, Comparator, Condition, IndicatorId, Operand } from '@/types';
 
 export const COMPARATORS: { id: Comparator; label: string }[] = [
-  { id: 'crosses_above', label: 'crosses above' },
-  { id: 'crosses_below', label: 'crosses below' },
-  { id: 'gt', label: 'is above' },
-  { id: 'lt', label: 'is below' },
-  { id: 'gte', label: 'is at or above' },
-  { id: 'lte', label: 'is at or below' },
+  { id: 'crosses_above', label: t('crosses above') },
+  { id: 'crosses_below', label: t('crosses below') },
+  { id: 'gt', label: t('is above') },
+  { id: 'lt', label: t('is below') },
+  { id: 'gte', label: t('is at or above') },
+  { id: 'lte', label: t('is at or below') },
 ];
 
-const PRICE_LABELS: Record<string, string> = { open: 'Open', high: 'High', low: 'Low', close: 'Close', volume: 'Volume' };
+const PRICE_LABELS: Record<string, string> = { open: t('Open'), high: t('High'), low: t('Low'), close: t('Close'), volume: t('Volume') };
 
 /** 'Close', 'EMA 20', 'BB 20, 2 upper', '30' */
 export function operandLabel(operand: Operand): string {
@@ -32,8 +33,8 @@ export function conditionLabel(condition: Condition): string {
 
 /** 'RSI 14 is below 30 and Close is above EMA 200' */
 export function ruleLabel(rule: BacktestRule): string {
-  if (rule.conditions.length === 0) return 'never';
-  return rule.conditions.map(conditionLabel).join(rule.combine === 'all' ? ' and ' : ' or ');
+  if (rule.conditions.length === 0) return t('never');
+  return rule.conditions.map(conditionLabel).join(rule.combine === 'all' ? t(' and ') : t(' or '));
 }
 
 function operandKey(operand: Operand): string {
@@ -146,17 +147,17 @@ export function strategyIndicators(strategy: Pick<BacktestStrategy, 'entry' | 'e
 /** Problems that stop a strategy from running, in plain words. Empty when it is fine. */
 export function validateStrategy(strategy: BacktestStrategy): string[] {
   const problems: string[] = [];
-  if (strategy.entry.conditions.length === 0) problems.push('Add at least one entry condition.');
+  if (strategy.entry.conditions.length === 0) problems.push(t('Add at least one entry condition.'));
   const hasExit = strategy.exit.conditions.length > 0 || strategy.stopLossPct != null || strategy.takeProfitPct != null;
-  if (!hasExit) problems.push('Add an exit condition, a stop-loss or a take-profit, or the first trade never closes.');
-  if (strategy.stopLossPct != null && !(strategy.stopLossPct > 0 && strategy.stopLossPct < 100)) problems.push('Stop-loss must be between 0% and 100%.');
-  if (strategy.takeProfitPct != null && !(strategy.takeProfitPct > 0)) problems.push('Take-profit must be above 0%.');
-  if (!(strategy.positionSizePct > 0 && strategy.positionSizePct <= 100)) problems.push('Position size must be between 0% and 100% of the account.');
+  if (!hasExit) problems.push(t('Add an exit condition, a stop-loss or a take-profit, or the first trade never closes.'));
+  if (strategy.stopLossPct != null && !(strategy.stopLossPct > 0 && strategy.stopLossPct < 100)) problems.push(t('Stop-loss must be between 0% and 100%.'));
+  if (strategy.takeProfitPct != null && !(strategy.takeProfitPct > 0)) problems.push(t('Take-profit must be above 0%.'));
+  if (!(strategy.positionSizePct > 0 && strategy.positionSizePct <= 100)) problems.push(t('Position size must be between 0% and 100% of the account.'));
   for (const rule of [strategy.entry, strategy.exit]) {
     for (const c of rule.conditions) {
-      if ([c.left, c.right].some((o) => o.kind === 'constant' && !Number.isFinite(o.value))) problems.push('A condition is missing its number.');
-      else if (c.left.kind === 'constant' && c.right.kind === 'constant') problems.push(`"${conditionLabel(c)}" compares two fixed numbers.`);
-      else if (operandLabel(c.left) === operandLabel(c.right)) problems.push(`"${conditionLabel(c)}" compares a value with itself.`);
+      if ([c.left, c.right].some((o) => o.kind === 'constant' && !Number.isFinite(o.value))) problems.push(t('A condition is missing its number.'));
+      else if (c.left.kind === 'constant' && c.right.kind === 'constant') problems.push(t('"{condition}" compares two fixed numbers.', { condition: conditionLabel(c) }));
+      else if (operandLabel(c.left) === operandLabel(c.right)) problems.push(t('"{condition}" compares a value with itself.', { condition: conditionLabel(c) }));
     }
   }
   return problems;

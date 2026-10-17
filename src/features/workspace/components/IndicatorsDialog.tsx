@@ -2,12 +2,13 @@ import { useState } from 'react';
 import { Eye, EyeOff, Plus, Trash2 } from 'lucide-react';
 import { Badge, Button, EmptyState, IconButton, Input, Modal } from '@/components/ui';
 import { INDICATOR_INFO } from '@/content/indicators';
+import { t } from '@/i18n';
 import { defaultParams, getIndicator, indicatorLabel, INDICATORS, normalizeParams } from '@/lib/indicators';
 import type { IndicatorConfig, IndicatorId } from '@/types';
 
 export const MAX_INDICATORS = 8;
 
-const PLACEMENT_LABEL = { overlay: 'On price', volume: 'On volume', pane: 'Own pane' } as const;
+const PLACEMENT_LABEL = { overlay: t('On price'), volume: t('On volume'), pane: t('Own pane') };
 
 /** A numeric parameter that commits a valid value on blur or Enter. */
 function ParamField({
@@ -41,7 +42,7 @@ function ParamField({
       inputMode={step >= 1 ? 'numeric' : 'decimal'}
       wrapperClassName="w-28"
       value={text}
-      error={invalid ? `${min} to ${max}` : undefined}
+      error={invalid ? t('{min} to {max}', { min, max }) : undefined}
       onChange={(e) => setText(e.target.value)}
       onBlur={commit}
       onKeyDown={(e) => e.key === 'Enter' && commit()}
@@ -71,16 +72,16 @@ export function IndicatorsDialog({ open, onClose, indicators, onChange, onExplai
   const remove = (key: string) => onChange(indicators.filter((i) => i.key !== key));
 
   return (
-    <Modal open={open} onClose={onClose} title="Indicators" size="lg" footer={<Button variant="primary" onClick={onClose}>Done</Button>}>
+    <Modal open={open} onClose={onClose} title={t('Indicators')} size="lg" footer={<Button variant="primary" onClick={onClose}>{t('Done')}</Button>}>
       <section aria-labelledby="ind-active">
         <h3 id="ind-active" className="mb-2 text-xs font-semibold tracking-wide text-muted uppercase">
-          On this chart ({indicators.length} of {MAX_INDICATORS})
+          {t('On this chart ({n} of {max})', { n: indicators.length, max: MAX_INDICATORS })}
         </h3>
         {indicators.length === 0 ? (
           <EmptyState
             className="rounded-control border border-border py-6"
-            title="No indicators yet"
-            description="An indicator is a line calculated from price or volume that makes something easier to see, such as the trend. Add one from the list below."
+            title={t('No indicators yet')}
+            description={t('An indicator is a line calculated from price or volume that makes something easier to see, such as the trend. Add one from the list below.')}
           />
         ) : (
           <ul className="flex flex-col gap-2">
@@ -101,17 +102,17 @@ export function IndicatorsDialog({ open, onClose, indicators, onChange, onExplai
                         onClose();
                       }}
                     >
-                      Explain
+                      {t('Explain')}
                     </Button>
                     <IconButton
                       size="sm"
-                      label={config.visible ? `Hide ${def.short}` : `Show ${def.short}`}
+                      label={config.visible ? t('Hide {name}', { name: def.short }) : t('Show {name}', { name: def.short })}
                       icon={config.visible ? <Eye className="size-4" /> : <EyeOff className="size-4" />}
                       onClick={() => patch(config.key, { visible: !config.visible })}
                     />
                     <IconButton
                       size="sm"
-                      label={`Remove ${def.short}`}
+                      label={t('Remove {name}', { name: def.short })}
                       icon={<Trash2 className="size-4" />}
                       onClick={() => remove(config.key)}
                     />
@@ -142,11 +143,11 @@ export function IndicatorsDialog({ open, onClose, indicators, onChange, onExplai
 
       <section aria-labelledby="ind-add" className="mt-5">
         <h3 id="ind-add" className="mb-2 text-xs font-semibold tracking-wide text-muted uppercase">
-          Add an indicator
+          {t('Add an indicator')}
         </h3>
         {full && (
           <p role="status" className="mb-2 text-xs text-warning-text">
-            The chart holds up to {MAX_INDICATORS} indicators. Remove one to add another.
+            {t('The chart holds up to {max} indicators. Remove one to add another.', { max: MAX_INDICATORS })}
           </p>
         )}
         <ul className="flex flex-col">
@@ -163,10 +164,10 @@ export function IndicatorsDialog({ open, onClose, indicators, onChange, onExplai
                 size="sm"
                 disabled={full}
                 icon={<Plus aria-hidden className="size-3.5" />}
-                aria-label={`Add ${def.name}`}
+                aria-label={t('Add {name}', { name: def.name })}
                 onClick={() => add(def.id)}
               >
-                Add
+                {t('Add')}
               </Button>
             </li>
           ))}

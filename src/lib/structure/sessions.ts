@@ -1,3 +1,4 @@
+import { t } from '@/i18n';
 import type { Candle } from '@/types';
 
 /**
@@ -20,9 +21,9 @@ const hm = (hours: number, minutes = 0) => hours * 60 + minutes;
 
 /** The three main sessions of the trading day. They overlap on purpose. */
 export const SESSIONS: SessionDefinition[] = [
-  { id: 'asia', name: 'Asia', start: hm(19), end: hm(4) },
-  { id: 'london', name: 'London', start: hm(3), end: hm(12) },
-  { id: 'new-york', name: 'New York', start: hm(8), end: hm(17) },
+  { id: 'asia', name: t('Asia'), start: hm(19), end: hm(4) },
+  { id: 'london', name: t('London'), start: hm(3), end: hm(12) },
+  { id: 'new-york', name: t('New York'), start: hm(8), end: hm(17) },
 ];
 
 /**
@@ -31,10 +32,10 @@ export const SESSIONS: SessionDefinition[] = [
  * differ by half an hour either way.
  */
 export const KILL_ZONES: SessionDefinition[] = [
-  { id: 'asia-kz', name: 'Asian kill zone', start: hm(20), end: hm(0) },
-  { id: 'london-kz', name: 'London kill zone', start: hm(2), end: hm(5) },
-  { id: 'ny-kz', name: 'New York kill zone', start: hm(7), end: hm(10) },
-  { id: 'london-close-kz', name: 'London close', start: hm(10), end: hm(12) },
+  { id: 'asia-kz', name: t('Asian kill zone'), start: hm(20), end: hm(0) },
+  { id: 'london-kz', name: t('London kill zone'), start: hm(2), end: hm(5) },
+  { id: 'ny-kz', name: t('New York kill zone'), start: hm(7), end: hm(10) },
+  { id: 'london-close-kz', name: t('London close'), start: hm(10), end: hm(12) },
 ];
 
 const formatter = new Intl.DateTimeFormat('en-US', { timeZone: 'America/New_York', hour12: false, hour: '2-digit', minute: '2-digit', year: 'numeric', month: '2-digit', day: '2-digit' });

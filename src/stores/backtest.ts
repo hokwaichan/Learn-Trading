@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { BACKTEST_PRESETS } from '@/content/strategies';
+import { t } from '@/i18n';
 import { runBacktest, validateStrategy, warmupBars } from '@/lib/backtest';
 import { describeDataError, findInstrument, mergeCandles, TIMEFRAME_SECONDS } from '@/lib/data';
 import { createMigrate } from '@/lib/migrate';
@@ -148,25 +149,30 @@ export const useBacktest = create<BacktestStore>()(
         };
 
         const instrument = findInstrument(setup.symbol);
-        if (!instrument) return fail(`Unknown symbol ${setup.symbol}.`);
+        if (!instrument) return fail(t('Unknown symbol {symbol}.', { symbol: setup.symbol }));
         const timeframe = instrument.timeframes.includes(setup.timeframe) ? setup.timeframe : instrument.timeframes[instrument.timeframes.length - 1];
         const problems = validateStrategy(strategy);
         if (problems.length) return fail(problems[0]);
         const from = startOf(setup.from);
         const to = Math.min(endOf(setup.to), Date.now());
-        if (!Number.isFinite(from) || !Number.isFinite(to) || from >= to) return fail('The start date must be before the end date.');
-        if (!(setup.initialCapital > 0)) return fail('Starting capital must be above zero.');
+        if (!Number.isFinite(from) || !Number.isFinite(to) || from >= to) return fail(t('The start date must be before the end date.'));
+        if (!(setup.initialCapital > 0)) return fail(t('Starting capital must be above zero.'));
         const step = TIMEFRAME_SECONDS[timeframe];
         const expected = Math.ceil((to - from) / 1000 / step);
         if (expected > MAX_BACKTEST_CANDLES) {
-          return fail(`That period is about ${expected.toLocaleString('en-US')} candles. Choose a larger candle size or a shorter period (the limit is ${MAX_BACKTEST_CANDLES.toLocaleString('en-US')}).`);
+          return fail(
+            t('That period is about {n} candles. Choose a larger candle size or a shorter period (the limit is {max}).', {
+              n: expected.toLocaleString('en-US'),
+              max: MAX_BACKTEST_CANDLES.toLocaleString('en-US'),
+            }),
+          );
         }
 
         set({ status: 'running', error: undefined, progress: 0 });
         try {
           const all = await loadCandles(instrument, timeframe, from, to, warmupBars(strategy), (progress) => set({ progress }));
           const inPeriod = all.filter((c) => c.time * 1000 >= from && c.time * 1000 <= to);
-          if (inPeriod.length < 2) return fail(`There is no ${instrument.symbol} price history in that period. Try later dates.`);
+          if (inPeriod.length < 2) return fail(t('There is no {symbol} price history in that period. Try later dates.', { symbol: instrument.symbol }));
 
           const settings = useSettings.getState();
           const futures = setup.futures && instrument.assetClass === 'crypto';
@@ -185,7 +191,7 @@ export const useBacktest = create<BacktestStore>()(
           const summary: BacktestRunSummary = {
             id: result.id,
             ranAt: result.ranAt,
-            strategyName: strategy.name.trim() || 'Untitled strategy',
+            strategyName: strategy.name.trim() || t('Untitled strategy'),
             symbol: instrument.symbol,
             timeframe,
             from: setup.from,

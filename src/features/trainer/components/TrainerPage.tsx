@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { ArrowRight, Check, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge, Button, cn, ErrorState, LoadingState, Tabs } from '@/components/ui';
+import { t } from '@/i18n';
 import { useProgress } from '@/stores';
 import { useTrainerData } from '../hooks/useTrainerData';
 import { accuracyText, availableKinds, buildQuestion, type DrillMode, type TrainerQuestion } from '../questions';
@@ -9,12 +10,12 @@ import { AccuracyTable } from './AccuracyTable';
 import { QuestionVisual } from './QuestionVisual';
 
 const MODES: { id: DrillMode; label: string }[] = [
-  { id: 'mixed', label: 'Mixed' },
-  { id: 'candlestick', label: 'Candlesticks' },
-  { id: 'chart', label: 'Chart patterns' },
-  { id: 'structure', label: 'Smart money' },
-  { id: 'next', label: 'What next?' },
-  { id: 'options', label: 'Options' },
+  { id: 'mixed', label: t('Mixed') },
+  { id: 'candlestick', label: t('Candlesticks') },
+  { id: 'chart', label: t('Chart patterns') },
+  { id: 'structure', label: t('Smart money') },
+  { id: 'next', label: t('What next?') },
+  { id: 'options', label: t('Options') },
 ];
 
 const MODE_KEY = 'tradeschool.ui.trainerMode';
@@ -141,12 +142,12 @@ export function TrainerPage() {
       <div className="mx-auto flex w-full max-w-3xl flex-col gap-4 p-4 md:p-6">
         <header className="flex flex-col gap-3">
           <div>
-            <h1 className="text-xl font-semibold text-fg">Trainer</h1>
-            <p className="mt-1 text-sm text-muted">Short drills on real charts. Items you get wrong come back more often.</p>
+            <h1 className="text-xl font-semibold text-fg">{t('Trainer')}</h1>
+            <p className="mt-1 text-sm text-muted">{t('Short drills on real charts. Items you get wrong come back more often.')}</p>
           </div>
           <Tabs
             variant="pill"
-            label="Drill"
+            label={t('Drill')}
             idBase="trainer-mode"
             choice
             className="rounded-control border border-border p-0.5"
@@ -154,20 +155,20 @@ export function TrainerPage() {
             value={mode}
             onChange={changeMode}
           />
-          <div aria-label="This session" role="group" className="flex items-center justify-center divide-x divide-border rounded-card border border-border bg-surface py-2">
-            <Stat label="Answered" value={String(session.answered)} />
-            <Stat label="Right" value={session.answered ? `${session.correct} of ${session.answered}` : '–'} />
-            <Stat label="Accuracy" value={session.answered ? `${Math.round((session.correct / session.answered) * 100)}%` : '–'} />
-            <Stat label="In a row" value={String(session.run)} />
+          <div aria-label={t('This session')} role="group" className="flex items-center justify-center divide-x divide-border rounded-card border border-border bg-surface py-2">
+            <Stat label={t('Answered')} value={String(session.answered)} />
+            <Stat label={t('Right')} value={session.answered ? t('{correct} of {total}', { correct: session.correct, total: session.answered }) : '–'} />
+            <Stat label={t('Accuracy')} value={session.answered ? `${Math.round((session.correct / session.answered) * 100)}%` : '–'} />
+            <Stat label={t('In a row')} value={String(session.run)} />
           </div>
         </header>
 
-        {!question && data.status === 'loading' && <LoadingState className="h-80 rounded-card border border-border" label="Loading price history" />}
+        {!question && data.status === 'loading' && <LoadingState className="h-80 rounded-card border border-border" label={t('Loading price history')} />}
         {!question && data.status === 'error' && (
           <ErrorState
             className="h-80 rounded-card border border-border"
-            title="Could not load price history"
-            message={`${data.error ?? ''} This drill needs it. The chart pattern and options drills work without it.`}
+            title={t('Could not load price history')}
+            message={`${data.error ?? ''} ${t('This drill needs it. The chart pattern and options drills work without it.')}`}
             onRetry={data.retry}
           />
         )}
@@ -178,11 +179,13 @@ export function TrainerPage() {
               <span className="flex flex-wrap items-center gap-2">
                 <Badge tone="accent">{question.topic}</Badge>
                 {question.chart && (
-                  <Badge tone={question.chart.real ? 'neutral' : 'warning'}>{question.chart.real ? 'Real history' : 'Constructed example'}</Badge>
+                  <Badge tone={question.chart.real ? 'neutral' : 'warning'}>{question.chart.real ? t('Real history') : t('Constructed example')}</Badge>
                 )}
               </span>
               <span className="text-xs text-muted">
-                {itemCard?.attempts ? `You have got this one right ${accuracyText(itemCard)} of the time (${itemCard.attempts} answered)` : 'First time you have seen this one'}
+                {itemCard?.attempts
+                  ? t('You have got this one right {pct} of the time ({n} answered)', { pct: accuracyText(itemCard), n: itemCard.attempts })
+                  : t('First time you have seen this one')}
               </span>
             </div>
 
@@ -192,7 +195,7 @@ export function TrainerPage() {
               {question.prompt}
             </h2>
 
-            <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label="Answers">
+            <div className="grid gap-2 sm:grid-cols-2" role="group" aria-label={t('Answers')}>
               {question.choices.map((choice, i) => {
                 const chosen = picked === choice.id;
                 const correct = choice.id === question.correctId;
@@ -218,13 +221,13 @@ export function TrainerPage() {
                     {picked && correct && (
                       <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-up-text">
                         <Check aria-hidden className="size-4" />
-                        Correct answer
+                        {t('Correct answer')}
                       </span>
                     )}
                     {picked && chosen && !correct && (
                       <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-down-text">
                         <X aria-hidden className="size-4" />
-                        Your answer
+                        {t('Your answer')}
                       </span>
                     )}
                   </button>
@@ -235,7 +238,7 @@ export function TrainerPage() {
             {picked && (
               <div role="status" className="rounded-card border border-border bg-surface p-4">
                 <p className="text-base font-semibold">
-                  <span className={right ? 'text-up-text' : 'text-down-text'}>{right ? 'Right. ' : 'Not quite. '}</span>
+                  <span className={right ? 'text-up-text' : 'text-down-text'}>{right ? t('Right.') : t('Not quite.')} </span>
                   <span className="text-fg">{question.explanation.heading}</span>
                 </p>
                 {question.explanation.paragraphs.map((text) => (
@@ -246,13 +249,13 @@ export function TrainerPage() {
                 <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
                   {question.explanation.lesson ? (
                     <Link to={`/learn/${question.explanation.lesson}`} className="text-sm text-accent-text underline underline-offset-4">
-                      Read the lesson
+                      {t('Read the lesson')}
                     </Link>
                   ) : (
                     <span />
                   )}
                   <Button ref={nextRef} variant="primary" size="lg" onClick={() => ask(mode)}>
-                    Next question
+                    {t('Next question')}
                     <ArrowRight aria-hidden className="size-4" />
                   </Button>
                 </div>

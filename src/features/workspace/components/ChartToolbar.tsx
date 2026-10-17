@@ -13,22 +13,23 @@ import {
 } from 'lucide-react';
 import { DRAWING_TOOL_NAMES } from '@/components/chart';
 import { Button, cn, IconButton, Select, Tooltip } from '@/components/ui';
+import { t } from '@/i18n';
 import { displaySymbol, TIMEFRAME_NAMES, TIMEFRAMES } from '@/lib/data';
 import type { ChartType, DrawingTool, Instrument, Timeframe } from '@/types';
 
 const CHART_TYPES: { value: ChartType; label: string }[] = [
-  { value: 'candles', label: 'Candles' },
-  { value: 'heikin-ashi', label: 'Heikin-Ashi' },
-  { value: 'line', label: 'Line' },
-  { value: 'area', label: 'Area' },
+  { value: 'candles', label: t('Candles') },
+  { value: 'heikin-ashi', label: t('Heikin-Ashi') },
+  { value: 'line', label: t('Line') },
+  { value: 'area', label: t('Area') },
 ];
 
 const TOOLS: { tool: DrawingTool; icon: React.ReactNode; hint: string }[] = [
-  { tool: 'trendline', icon: <Slash className="size-4" />, hint: 'click two points' },
-  { tool: 'hline', icon: <Minus className="size-4" />, hint: 'click a price' },
-  { tool: 'rect', icon: <Square className="size-4" />, hint: 'click two corners' },
-  { tool: 'fib', icon: <Rows3 className="size-4" />, hint: 'click the start and end of a move' },
-  { tool: 'text', icon: <Type className="size-4" />, hint: 'click where the note goes' },
+  { tool: 'trendline', icon: <Slash className="size-4" />, hint: t('pick two points') },
+  { tool: 'hline', icon: <Minus className="size-4" />, hint: t('pick a price') },
+  { tool: 'rect', icon: <Square className="size-4" />, hint: t('pick two corners') },
+  { tool: 'fib', icon: <Rows3 className="size-4" />, hint: t('pick the start and end of a move') },
+  { tool: 'text', icon: <Type className="size-4" />, hint: t('pick where the note goes') },
 ];
 
 function Divider() {
@@ -68,11 +69,11 @@ export function ChartToolbar(props: ChartToolbarProps) {
   return (
     <div
       role="toolbar"
-      aria-label="Chart"
+      aria-label={t('Chart')}
       className="flex h-11 shrink-0 items-center gap-1 overflow-x-auto border-b border-border bg-surface px-2"
     >
       <Select
-        aria-label="Symbol"
+        aria-label={t('Symbol')}
         className="num w-36 font-medium"
         wrapperClassName="shrink-0"
         value={instrument.symbol}
@@ -81,7 +82,7 @@ export function ChartToolbar(props: ChartToolbarProps) {
       />
       {props.onToggleWatch && (
         <IconButton
-          label={props.watched ? 'Remove from watchlist' : 'Add to watchlist'}
+          label={props.watched ? t('Remove from watchlist') : t('Add to watchlist')}
           active={props.watched}
           icon={<Star className="size-4" fill={props.watched ? 'currentColor' : 'none'} />}
           onClick={props.onToggleWatch}
@@ -90,7 +91,7 @@ export function ChartToolbar(props: ChartToolbarProps) {
 
       <Divider />
 
-      <div role="group" aria-label="Timeframe" className="flex shrink-0 items-center gap-0.5">
+      <div role="group" aria-label={t('Timeframe')} className="flex shrink-0 items-center gap-0.5">
         {TIMEFRAMES.map((tf) => {
           const available = instrument.timeframes.includes(tf);
           const button = (
@@ -113,7 +114,7 @@ export function ChartToolbar(props: ChartToolbarProps) {
           return available ? (
             button
           ) : (
-            <Tooltip key={tf} content={`${displaySymbol(instrument)} has daily data only`}>
+            <Tooltip key={tf} content={t('{symbol} has daily data only', { symbol: displaySymbol(instrument) })}>
               {button}
             </Tooltip>
           );
@@ -123,7 +124,7 @@ export function ChartToolbar(props: ChartToolbarProps) {
       <Divider />
 
       <Select
-        aria-label="Chart type"
+        aria-label={t('Chart type')}
         className="w-32"
         wrapperClassName="shrink-0"
         value={chartType}
@@ -136,34 +137,34 @@ export function ChartToolbar(props: ChartToolbarProps) {
         icon={<ChartSpline aria-hidden className="size-4" />}
         onClick={props.onOpenIndicators}
       >
-        Indicators
+        {t('Indicators')}
         {props.indicatorCount > 0 && <span className="num text-xs text-accent-text">{props.indicatorCount}</span>}
       </Button>
       <Button variant="ghost" className="shrink-0" icon={<Layers aria-hidden className="size-4" />} onClick={props.onOpenOverlays}>
-        Overlays
+        {t('Overlays')}
         {props.overlayCount > 0 && <span className="num text-xs text-accent-text">{props.overlayCount}</span>}
       </Button>
 
       <Divider />
 
-      <div role="group" aria-label="Drawing tools" className="flex shrink-0 items-center gap-0.5">
+      <div role="group" aria-label={t('Drawing tools')} className="flex shrink-0 items-center gap-0.5">
         <IconButton
-          label="Pointer (stop drawing)"
+          label={t('Pointer (stop drawing)')}
           active={tool === null}
           icon={<MousePointer2 className="size-4" />}
           onClick={() => props.onTool(null)}
         />
-        {TOOLS.map((t) => (
+        {TOOLS.map((item) => (
           <IconButton
-            key={t.tool}
-            label={`${DRAWING_TOOL_NAMES[t.tool]}: ${t.hint}`}
-            active={tool === t.tool}
-            icon={t.icon}
-            onClick={() => props.onTool(tool === t.tool ? null : t.tool)}
+            key={item.tool}
+            label={t('{tool}: {hint}', { tool: DRAWING_TOOL_NAMES[item.tool], hint: item.hint })}
+            active={tool === item.tool}
+            icon={item.icon}
+            onClick={() => props.onTool(tool === item.tool ? null : item.tool)}
           />
         ))}
         <IconButton
-          label={props.hasSelection ? 'Delete selected drawing' : 'Clear all drawings on this symbol'}
+          label={props.hasSelection ? t('Delete selected drawing') : t('Clear all drawings on this symbol')}
           icon={<Trash2 className="size-4" />}
           disabled={!props.hasSelection && props.drawingCount === 0}
           onClick={props.hasSelection ? props.onDeleteSelected : props.onClearDrawings}
@@ -175,8 +176,8 @@ export function ChartToolbar(props: ChartToolbarProps) {
       <IconButton
         label={
           props.explainMode
-            ? 'Explain mode is on: clicking a candle opens its explanation'
-            : 'Explain mode is off: turn on to explain a candle when you click it'
+            ? t('Explain mode is on: clicking a candle opens its explanation')
+            : t('Explain mode is off: turn on to explain a candle when you click it')
         }
         active={props.explainMode}
         icon={<CircleHelp className="size-4" />}

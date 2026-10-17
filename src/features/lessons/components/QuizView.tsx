@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { Check, RotateCcw, X } from 'lucide-react';
-import { Badge, Button, cn, ProgressBar } from '@/components/ui';
+import { Badge, Button, cn, ProgressBar, Trans } from '@/components/ui';
+import { t } from '@/i18n';
 import { hashString, shuffled } from '@/lib/random';
 import type { Quiz } from '@/types';
 import { LessonChart } from './LessonChart';
@@ -44,14 +45,14 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
     <section aria-labelledby="quiz-title" className="not-prose mt-10 border-t border-border pt-6">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="quiz-title" className="text-xl font-semibold text-fg">
-          Check your understanding
+          {t('Check your understanding')}
         </h2>
-        {bestScore != null && <Badge tone="accent">Best score {Math.round(bestScore * 100)}%</Badge>}
+        {bestScore != null && <Badge tone="accent">{t('Best score {pct}%', { pct: Math.round(bestScore * 100) })}</Badge>}
       </div>
       <p className="mt-1 text-sm text-muted">
-        {questions.length} questions. You get the explanation as soon as you answer, right or wrong.
+        {t('{n} questions. You get the explanation as soon as you answer, right or wrong.', { n: questions.length })}
       </p>
-      <ProgressBar className="mt-3" label="Questions answered" value={answered / questions.length} />
+      <ProgressBar className="mt-3" label={t('Questions answered')} value={answered / questions.length} />
 
       <ol className="mt-5 flex flex-col gap-6">
         {questions.map((question, index) => {
@@ -88,13 +89,13 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
                         {picked && right && (
                           <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-up-text">
                             <Check aria-hidden className="size-4" />
-                            Correct answer
+                            {t('Correct answer')}
                           </span>
                         )}
                         {picked && chosen && !right && (
                           <span className="flex shrink-0 items-center gap-1 text-xs font-medium text-down-text">
                             <X aria-hidden className="size-4" />
-                            Your answer
+                            {t('Your answer')}
                           </span>
                         )}
                       </button>
@@ -104,7 +105,7 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
               </fieldset>
               {picked && (
                 <p role="status" className="mt-3 rounded-control border border-border bg-surface px-3 py-2.5 text-[15px] leading-relaxed text-fg">
-                  <strong className={isRight ? 'text-up-text' : 'text-down-text'}>{isRight ? 'Right. ' : 'Not quite. '}</strong>
+                  <strong className={isRight ? 'text-up-text' : 'text-down-text'}>{isRight ? t('Right.') : t('Not quite.')} </strong>
                   {question.explanation}
                 </p>
               )}
@@ -117,12 +118,15 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
         <div role="status" className="mt-6 flex flex-wrap items-center justify-between gap-3 rounded-card border border-border bg-surface px-4 py-3">
           <div>
             <p className="text-base font-semibold text-fg">
-              You got <span className="num">{correct}</span> of <span className="num">{questions.length}</span>.
+              <Trans
+                text="You got {correct} of {total}."
+                values={{ correct: <span className="num">{correct}</span>, total: <span className="num">{questions.length}</span> }}
+              />
             </p>
             <p className="text-sm text-muted">
               {correct === questions.length
-                ? 'Lesson complete. On to the next one.'
-                : 'Lesson complete. Read the explanations above, or try again with the answers in a new order.'}
+                ? t('Lesson complete. On to the next one.')
+                : t('Lesson complete. Read the explanations above, or try again with the answers in a new order.')}
             </p>
           </div>
           <Button
@@ -132,7 +136,7 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
               setAttempt((a) => a + 1);
             }}
           >
-            Try again
+            {t('Try again')}
           </Button>
         </div>
       )}

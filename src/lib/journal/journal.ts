@@ -1,29 +1,30 @@
+import { t } from '@/i18n';
 import { tradeStats, type TradeStats } from '@/lib/trading/snapshot';
 import type { Account, AccountId, EmotionTag, InstrumentKind, JournalEvent, JournalNote, Position, Timeframe, Trade } from '@/types';
 
 export const EMOTIONS: { id: EmotionTag; label: string; hint: string }[] = [
-  { id: 'calm', label: 'Calm', hint: 'Following the plan, no rush.' },
-  { id: 'confident', label: 'Confident', hint: 'Sure of the setup.' },
-  { id: 'fomo', label: 'FOMO', hint: 'Afraid of missing the move.' },
-  { id: 'fearful', label: 'Fearful', hint: 'Worried about losing.' },
-  { id: 'revenge', label: 'Revenge', hint: 'Trying to win back a loss.' },
-  { id: 'bored', label: 'Bored', hint: 'Trading for something to do.' },
-  { id: 'greedy', label: 'Greedy', hint: 'Wanting more than the plan.' },
+  { id: 'calm', label: t('Calm'), hint: t('Following the plan, no rush.') },
+  { id: 'confident', label: t('Confident'), hint: t('Sure of the setup.') },
+  { id: 'fomo', label: t('FOMO'), hint: t('Afraid of missing the move.') },
+  { id: 'fearful', label: t('Fearful'), hint: t('Worried about losing.') },
+  { id: 'revenge', label: t('Revenge'), hint: t('Trying to win back a loss.') },
+  { id: 'bored', label: t('Bored'), hint: t('Trading for something to do.') },
+  { id: 'greedy', label: t('Greedy'), hint: t('Wanting more than the plan.') },
 ];
 
-/** Suggested setup names. Any text is allowed. */
-export const SETUP_SUGGESTIONS = ['Trend following', 'Pullback', 'Breakout', 'Range', 'Reversal', 'News', 'No setup'];
+/** Suggested setup names, in the app's language. Any text is allowed, and is kept as typed. */
+export const SETUP_SUGGESTIONS = [t('Trend following'), t('Pullback'), t('Breakout'), t('Range'), t('Reversal'), t('News'), t('No setup')];
 
-export const KIND_LABELS: Record<InstrumentKind, string> = { spot: 'Spot', perpetual: 'Futures', option: 'Options' };
+export const KIND_LABELS: Record<InstrumentKind, string> = { spot: t('Spot'), perpetual: t('Futures'), option: t('Options') };
 
 export const EXIT_LABELS: Record<Trade['exitReason'], string> = {
-  manual: 'Closed by you',
-  stop_loss: 'Stop-loss',
-  take_profit: 'Take-profit',
-  liquidation: 'Liquidated',
-  expiry: 'Expired',
-  assignment: 'Assigned at expiry',
-  account_reset: 'Account reset',
+  manual: t('Closed by you'),
+  stop_loss: t('Stop-loss'),
+  take_profit: t('Take-profit'),
+  liquidation: t('Liquidated'),
+  expiry: t('Expired'),
+  assignment: t('Assigned at expiry'),
+  account_reset: t('Account reset'),
 };
 
 /** One line of the journal: a closed trade, or a position that is still open. */
@@ -125,19 +126,25 @@ export function setupOptions(notes: Record<string, JournalNote>): string[] {
   return [...used, ...SETUP_SUGGESTIONS.filter((s) => !counts.has(s))];
 }
 
+/** Ledger notes are saved in English; this shows them in the app's language. */
+function ledgerNote(note: string): string {
+  const payments = /^(\d+) funding payments$/.exec(note);
+  return payments ? t('{n} funding payments', { n: payments[1] }) : t(note);
+}
+
 /** Funding payments and the liquidation fee recorded against a trade, oldest first. */
 export function tradeEvents(account: Account, positionId: string, trade?: Trade): JournalEvent[] {
   const events: JournalEvent[] = [];
   for (const entry of account.ledger) {
     if (entry.refId !== positionId) continue;
     if (entry.type === 'funding') {
-      events.push({ time: entry.time, type: 'funding', amount: entry.amount, note: entry.note ?? (entry.amount <= 0 ? 'Funding paid' : 'Funding received') });
+      events.push({ time: entry.time, type: 'funding', amount: entry.amount, note: entry.note ? ledgerNote(entry.note) : entry.amount <= 0 ? t('Funding paid') : t('Funding received') });
     } else if (entry.type === 'liquidation') {
-      events.push({ time: entry.time, type: 'liquidation', amount: entry.amount, note: 'Liquidated: the rest of the margin was taken as a fee' });
+      events.push({ time: entry.time, type: 'liquidation', amount: entry.amount, note: t('Liquidated: the rest of the margin was taken as a fee') });
     }
   }
-  if (trade?.exitReason === 'expiry') events.push({ time: trade.closedAt, type: 'expiry', amount: trade.exitPrice, note: 'Expired and settled in cash at its exercise value' });
-  if (trade?.exitReason === 'assignment') events.push({ time: trade.closedAt, type: 'assignment', amount: trade.exitPrice, note: 'Expired with a sold option in the money: assigned and settled in cash' });
+  if (trade?.exitReason === 'expiry') events.push({ time: trade.closedAt, type: 'expiry', amount: trade.exitPrice, note: t('Expired and settled in cash at its exercise value') });
+  if (trade?.exitReason === 'assignment') events.push({ time: trade.closedAt, type: 'assignment', amount: trade.exitPrice, note: t('Expired with a sold option in the money: assigned and settled in cash') });
   return events.sort((a, b) => a.time - b.time);
 }
 
@@ -155,36 +162,38 @@ export function csvCell(value: string | number | undefined | null): string {
 const iso = (time?: number) => (time != null ? new Date(time).toISOString() : '');
 const round = (value: number | undefined, digits: number) => (value != null && Number.isFinite(value) ? Number(value.toFixed(digits)) : undefined);
 
+/** Column headings, in the app's language. */
 export const CSV_COLUMNS = [
-  'Account', 'Status', 'Opened (UTC)', 'Closed (UTC)', 'Symbol', 'Type', 'Strategy', 'Side', 'Quantity', 'Leverage', 'Entry price', 'Exit price',
-  'Gross P&L', 'Fees', 'Funding', 'Net P&L', 'Return %', 'R multiple', 'Exit reason', 'Setup', 'Emotion', 'Rating', 'Reasoning', 'Review',
-] as const;
+  t('Account'), t('Status'), t('Opened (UTC)'), t('Closed (UTC)'), t('Symbol'), t('Type'), t('Strategy'), t('Side'), t('Quantity'), t('Leverage'),
+  t('Entry price'), t('Exit price'), t('Gross P&L'), t('Fees'), t('Funding'), t('Net P&L'), t('Return %'), t('R multiple'), t('Exit reason'),
+  t('Setup'), t('Emotion'), t('Rating'), t('Reasoning'), t('Review'),
+];
 
 /** The journal as CSV text, one row per trade, with a header row. */
 export function toCsv(rows: JournalRow[]): string {
   const lines = [CSV_COLUMNS.join(',')];
   for (const row of rows) {
-    const t = row.trade;
+    const trade = row.trade;
     const cells = [
-      row.accountId === 'main' ? 'Paper' : 'Replay',
-      row.status === 'open' ? 'Open' : 'Closed',
+      row.accountId === 'main' ? t('Paper') : t('Replay'),
+      row.status === 'open' ? t('status::Open') : t('Closed'),
       iso(row.openedAt),
       iso(row.closedAt),
       row.symbol,
       KIND_LABELS[row.kind],
       row.label,
-      row.kind === 'option' ? undefined : row.direction === 'long' ? 'Long' : 'Short',
+      row.kind === 'option' ? undefined : row.direction === 'long' ? t('Long') : t('Short'),
       row.kind === 'option' ? undefined : row.quantity,
-      t?.leverage ?? row.position?.futures?.leverage,
+      trade?.leverage ?? row.position?.futures?.leverage,
       row.entryPrice,
       row.exitPrice,
-      round(t?.grossPnl, 2),
-      round(t?.fees, 2),
-      round(t?.funding, 2),
-      round(t?.netPnl, 2),
-      round(t ? t.returnPct * 100 : undefined, 2),
-      round(t?.rMultiple, 2),
-      t ? EXIT_LABELS[t.exitReason] : undefined,
+      round(trade?.grossPnl, 2),
+      round(trade?.fees, 2),
+      round(trade?.funding, 2),
+      round(trade?.netPnl, 2),
+      round(trade ? trade.returnPct * 100 : undefined, 2),
+      round(trade?.rMultiple, 2),
+      trade ? EXIT_LABELS[trade.exitReason] : undefined,
       row.note?.setup,
       row.note?.emotion ? EMOTIONS.find((e) => e.id === row.note!.emotion)?.label : undefined,
       row.note?.rating,
@@ -247,7 +256,7 @@ export function breakdown(trades: Trade[], keyOf: (trade: Trade) => string, labe
     .map(([key, list]) => ({ key, label: labelOf(key), stats: tradeStats(list) }));
 }
 
-export const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+export const WEEKDAYS = [t('Monday'), t('Tuesday'), t('Wednesday'), t('Thursday'), t('Friday'), t('Saturday'), t('Sunday')];
 
 /** Day of the week a trade was opened, in local time, Monday first. */
 export function weekdayOf(time: number): string {

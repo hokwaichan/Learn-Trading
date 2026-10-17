@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { Card, DataTable, EmptyState, ProgressBar, type Column } from '@/components/ui';
 import { CANDLESTICK_PATTERNS, CHART_PATTERNS } from '@/content/patterns';
 import { OUTLOOK_SCENARIOS } from '@/content/strategies';
+import { t } from '@/i18n';
 import { useProgress } from '@/stores';
 import type { ReviewCard } from '@/types';
 import { accuracyText, PAYOFF_STRATEGIES, STRUCTURE_ITEMS } from '../questions';
@@ -16,9 +17,9 @@ interface Row {
 const DAY_MS = 86_400_000;
 
 function dueText(card: ReviewCard | undefined, now: number): string {
-  if (!card || card.attempts === 0) return 'Not seen yet';
+  if (!card || card.attempts === 0) return t('Not seen yet');
   const days = Math.ceil((card.dueAt - now) / DAY_MS);
-  return days <= 0 ? 'Due now' : days === 1 ? 'Tomorrow' : `In ${days} days`;
+  return days <= 0 ? t('Due now') : days === 1 ? t('Tomorrow') : t('In {n} days', { n: days });
 }
 
 /** Every trainer item with how often you get it right, weakest first. */
@@ -29,30 +30,30 @@ export function AccuracyTable() {
 
   const rows = useMemo<Row[]>(
     () => [
-      ...CANDLESTICK_PATTERNS.map((p) => ({ id: `pattern:${p.id}`, name: p.name, group: 'Candlestick' })),
-      ...CHART_PATTERNS.map((p) => ({ id: `pattern:${p.id}`, name: p.name, group: 'Chart pattern' })),
-      ...STRUCTURE_ITEMS.map((s) => ({ id: `concept:smc-${s.id}`, name: s.name, group: 'Smart money' })),
-      { id: 'what-next:all', name: 'What happened next?', group: 'Prediction' },
-      ...PAYOFF_STRATEGIES.map((s) => ({ id: `option-payoff:${s.id}`, name: s.name, group: 'Payoff diagram' })),
-      ...OUTLOOK_SCENARIOS.map((s, i) => ({ id: `option-outlook:${s.id}`, name: `Outlook scenario ${i + 1}`, group: 'Strategy choice' })),
+      ...CANDLESTICK_PATTERNS.map((p) => ({ id: `pattern:${p.id}`, name: p.name, group: t('Candlestick') })),
+      ...CHART_PATTERNS.map((p) => ({ id: `pattern:${p.id}`, name: p.name, group: t('Chart pattern') })),
+      ...STRUCTURE_ITEMS.map((s) => ({ id: `concept:smc-${s.id}`, name: s.name, group: t('Smart money') })),
+      { id: 'what-next:all', name: t('What happened next?'), group: t('Prediction') },
+      ...PAYOFF_STRATEGIES.map((s) => ({ id: `option-payoff:${s.id}`, name: s.name, group: t('Payoff diagram') })),
+      ...OUTLOOK_SCENARIOS.map((s, i) => ({ id: `option-outlook:${s.id}`, name: t('Outlook scenario {n}', { n: i + 1 }), group: t('Strategy choice') })),
     ].map((row) => ({ ...row, card: cards[row.id] })),
     [cards],
   );
   const seen = rows.filter((r) => r.card && r.card.attempts > 0);
 
   const columns: Column<Row>[] = [
-    { id: 'name', header: 'Item', cell: (r) => r.name, sortValue: (r) => r.name },
-    { id: 'group', header: 'Drill', cell: (r) => <span className="text-muted">{r.group}</span>, sortValue: (r) => r.group, hideOnPhone: true },
-    { id: 'attempts', header: 'Answered', numeric: true, cell: (r) => r.card?.attempts ?? 0, sortValue: (r) => r.card?.attempts ?? 0 },
+    { id: 'name', header: t('Item'), cell: (r) => r.name, sortValue: (r) => r.name },
+    { id: 'group', header: t('Drill'), cell: (r) => <span className="text-muted">{r.group}</span>, sortValue: (r) => r.group, hideOnPhone: true },
+    { id: 'attempts', header: t('Answered'), numeric: true, cell: (r) => r.card?.attempts ?? 0, sortValue: (r) => r.card?.attempts ?? 0 },
     {
       id: 'accuracy',
-      header: 'Right',
+      header: t('Right'),
       numeric: true,
       cell: (r) => (
         <span className="inline-flex items-center justify-end gap-2">
           <ProgressBar
             className="hidden w-16 sm:flex"
-            label={`${r.name} accuracy`}
+            label={t('{item} accuracy', { item: r.name })}
             value={r.card && r.card.attempts ? r.card.correct / r.card.attempts : 0}
             tone={r.card && r.card.correct / r.card.attempts < 0.5 ? 'warning' : 'up'}
           />
@@ -62,24 +63,24 @@ export function AccuracyTable() {
       // Unseen items sort after everything that has been answered.
       sortValue: (r) => (r.card && r.card.attempts ? r.card.correct / r.card.attempts : 2),
     },
-    { id: 'due', header: 'Next review', cell: (r) => <span className="text-muted">{dueText(r.card, now)}</span>, sortValue: (r) => r.card?.dueAt ?? Infinity, hideOnPhone: true },
+    { id: 'due', header: t('Next review'), cell: (r) => <span className="text-muted">{dueText(r.card, now)}</span>, sortValue: (r) => r.card?.dueAt ?? Infinity, hideOnPhone: true },
   ];
 
   return (
-    <Card title="Your accuracy" flush>
+    <Card title={t('Your accuracy')} flush>
       {seen.length === 0 ? (
         <EmptyState
           className="py-8"
-          title="Nothing answered yet"
-          description="Answer a few questions and this table will show which patterns you know and which need work. Weak ones are asked more often."
+          title={t('Nothing answered yet')}
+          description={t('Answer a few questions and this table will show which patterns you know and which need work. Weak ones are asked more often.')}
         />
       ) : (
         <>
           <p className="border-b border-border px-4 py-2.5 text-sm text-muted">
-            Weakest first. Items you get wrong come back sooner and more often; ones you know are spaced further apart.
+            {t('Weakest first. Items you get wrong come back sooner and more often; ones you know are spaced further apart.')}
           </p>
           <DataTable
-            label="Accuracy by item"
+            label={t('Accuracy by item')}
             dense
             className="max-h-80"
             columns={columns}

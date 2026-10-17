@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
 import { cn } from './cn';
+import { t } from '@/i18n';
 
 export interface ResizablePanelProps {
   /** Which edge of the layout the panel is docked to. The drag handle sits on the opposite edge. */
@@ -92,7 +93,7 @@ export function ResizablePanel({
     <div
       role="separator"
       tabIndex={0}
-      aria-label={`Resize ${label}`}
+      aria-label={t('Resize {panel}', { panel: label })}
       aria-orientation={horizontal ? 'vertical' : 'horizontal'}
       aria-valuemin={minSize}
       aria-valuemax={maxSize}

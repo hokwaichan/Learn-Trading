@@ -2,6 +2,7 @@ import { useEffect, useId, useRef, type ReactNode } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
 import { Button, IconButton } from './Button';
 import { cn } from './cn';
+import { t } from '@/i18n';
 
 interface DialogShellProps {
   open: boolean;
@@ -83,7 +84,7 @@ export function Modal({ open, onClose, title, tone = 'default', size = 'md', foo
           <h2 id={titleId} className="flex-1 text-sm font-semibold text-fg">
             {title}
           </h2>
-          <IconButton label="Close" size="sm" icon={<X className="size-4" />} onClick={onClose} />
+          <IconButton label={t('dialog::Close')} size="sm" icon={<X className="size-4" />} onClick={onClose} />
         </header>
         <div className="overflow-y-auto px-4 py-4 text-sm text-fg">{children}</div>
         {footer && <footer className="flex justify-end gap-2 border-t border-border px-4 py-3">{footer}</footer>}
@@ -110,7 +111,7 @@ export function ConfirmDialog({
   title,
   children,
   confirmLabel,
-  cancelLabel = 'Cancel',
+  cancelLabel = t('Cancel'),
 }: ConfirmDialogProps) {
   return (
     <Modal
@@ -150,7 +151,7 @@ export interface BottomSheetProps {
   tall?: boolean;
 }
 
-/** Phone replacement for side and bottom panels. */
+/** Phone and tablet replacement for side and bottom panels. */
 export function BottomSheet({ open, onClose, title, children, tall }: BottomSheetProps) {
   const titleId = useId();
   return (
@@ -162,7 +163,8 @@ export function BottomSheet({ open, onClose, title, children, tall }: BottomShee
     >
       <div
         className={cn(
-          'flex w-full flex-col rounded-t-card bg-raised shadow-raised animate-slide-up',
+          // On a tablet a full-width sheet is too wide to read; centre it instead.
+          'flex w-full flex-col rounded-t-card bg-raised shadow-raised animate-slide-up md:max-w-2xl md:self-center',
           'pb-[env(safe-area-inset-bottom)]',
           tall ? 'h-[85dvh]' : 'max-h-[85dvh]',
         )}
@@ -172,7 +174,7 @@ export function BottomSheet({ open, onClose, title, children, tall }: BottomShee
           <h2 id={titleId} className="flex-1 text-sm font-semibold text-fg">
             {title}
           </h2>
-          <IconButton label="Close" size="sm" icon={<X className="size-4" />} onClick={onClose} />
+          <IconButton label={t('dialog::Close')} size="sm" icon={<X className="size-4" />} onClick={onClose} />
         </header>
         <div className="min-h-0 flex-1 overflow-y-auto">{children}</div>
       </div>

@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { MousePointerClick } from 'lucide-react';
 import { cn, EmptyState, GlossaryTerm } from '@/components/ui';
 import { INDICATOR_INFO } from '@/content/indicators';
+import { t } from '@/i18n';
 import { TIMEFRAME_SECONDS } from '@/lib/data';
 import { explainCandle } from '@/lib/explain/candle';
 import { explainIndicator } from '@/lib/explain/indicator';
@@ -41,8 +42,8 @@ export function ExplainPanel({ instrument, timeframe, candles, selectedIndex, in
     return (
       <EmptyState
         icon={<MousePointerClick />}
-        title="Click any candle or indicator"
-        description="You will get a plain-language explanation of what it shows and how traders read it. With the keyboard, focus the chart and use the arrow keys, or Tab to an indicator name in the legend."
+        title={t('Click any candle or indicator')}
+        description={t('You will get a plain-language explanation of what it shows and how traders read it. With the keyboard, focus the chart and use the arrow keys, or Tab to an indicator name in the legend.')}
       />
     );
   }
@@ -82,10 +83,10 @@ export function ExplainPanel({ instrument, timeframe, candles, selectedIndex, in
       ))}
 
       <p className="text-xs text-muted">
-        Related terms:{' '}
+        {t('Related terms:')}{' '}
         {explanation.related.map((id, i) => (
           <span key={id}>
-            {i > 0 && ', '}
+            {i > 0 && t(', ')}
             <GlossaryTerm id={id} />
           </span>
         ))}

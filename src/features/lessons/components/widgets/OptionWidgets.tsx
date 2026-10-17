@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { LineDiagram } from '@/components/chart';
-import { cn, Pnl, Slider } from '@/components/ui';
+import { cn, Pnl, Slider, Trans } from '@/components/ui';
+import { t } from '@/i18n';
 import { formatPrice } from '@/lib/format';
 import { bsGreeks, bsPrice, intrinsicValue, type BsInput, type OptionType } from '@/lib/pricing/blackScholes';
 import { breakEvens, payoffCurve, payoffExtremes, strategyPnlAtExpiry, type PayoffLeg } from '@/lib/pricing/payoff';
@@ -15,7 +16,7 @@ export interface PayoffWidgetProps {
   spot?: number;
 }
 
-const money = (v: number | 'unlimited') => (v === 'unlimited' ? 'Unlimited' : formatPrice(v));
+const money = (v: number | 'unlimited') => (v === 'unlimited' ? t('Unlimited') : formatPrice(v));
 
 export function PayoffWidget({ title, legs, spot = 100 }: PayoffWidgetProps) {
   const strikes = legs.filter((l) => l.strike != null).map((l) => l.strike!);
@@ -31,33 +32,38 @@ export function PayoffWidget({ title, legs, spot = 100 }: PayoffWidgetProps) {
   return (
     <WidgetFrame title={title}>
       <LineDiagram
-        ariaLabel={`Payoff at expiry for ${title}. Maximum profit ${money(extremes.maxProfit)}, maximum loss ${money(extremes.maxLoss)}, break-even at ${evens.map((b) => formatPrice(b)).join(' and ') || 'none in range'}.`}
+        ariaLabel={t('Payoff at expiry for {title}. Maximum profit {profit}, maximum loss {loss}, break-even at {breakEven}.', {
+          title,
+          profit: money(extremes.maxProfit),
+          loss: money(extremes.maxLoss),
+          breakEven: evens.map((b) => formatPrice(b)).join(t(' and ')) || t('none in range'),
+        })}
         series={[{ points: curve.map((p) => ({ x: p.price, y: p.pnl })) }]}
         shadeProfit
         markerX={price}
         guidesX={[...new Set(strikes)].map((x) => ({ x, label: String(x) }))}
-        xLabel="Price of the underlying at expiry"
-        yLabel="Profit or loss"
+        xLabel={t('Price of the underlying at expiry')}
+        yLabel={t('Profit or loss')}
       />
       <div className="mt-3 grid gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-end">
-        <Slider label="Price at expiry" min={from} max={to} step={0.5} value={price} onChange={setPrice} format={(v) => formatPrice(v)} />
+        <Slider label={t('Price at expiry')} min={from} max={to} step={0.5} value={price} onChange={setPrice} format={(v) => formatPrice(v)} />
         <p className="text-sm" aria-live="polite">
-          <span className="text-muted">Profit or loss per share: </span>
+          <span className="text-muted">{t('Profit or loss per share:')} </span>
           <Pnl value={pnl} className="text-base font-medium" />
         </p>
       </div>
       <dl className="mt-3 grid grid-cols-3 gap-3 border-t border-border pt-3 text-center">
         <div>
-          <dt className="text-xs text-muted">Max profit</dt>
+          <dt className="text-xs text-muted">{t('Max profit')}</dt>
           <dd className="num text-sm text-up-text">{money(extremes.maxProfit)}</dd>
         </div>
         <div>
-          <dt className="text-xs text-muted">Max loss</dt>
+          <dt className="text-xs text-muted">{t('Max loss')}</dt>
           <dd className="num text-sm text-down-text">{money(extremes.maxLoss)}</dd>
         </div>
         <div>
-          <dt className="text-xs text-muted">Break-even</dt>
-          <dd className="num text-sm text-fg">{evens.length ? evens.map((b) => formatPrice(b)).join(' / ') : 'None'}</dd>
+          <dt className="text-xs text-muted">{t('Break-even')}</dt>
+          <dd className="num text-sm text-fg">{evens.length ? evens.map((b) => formatPrice(b)).join(' / ') : t('None')}</dd>
         </div>
       </dl>
     </WidgetFrame>
@@ -76,21 +82,21 @@ export interface GreekSliderProps {
 const STRIKE = 100;
 
 const TITLES: Record<GreekFocus, string> = {
-  value: 'Intrinsic value and time value',
-  delta: 'Delta: sensitivity to the price',
-  gamma: 'Gamma: how fast delta changes',
-  theta: 'Theta: time decay',
-  vega: 'Vega: sensitivity to volatility',
-  rho: 'Rho: sensitivity to interest rates',
+  value: t('Intrinsic value and time value'),
+  delta: t('Delta: sensitivity to the price'),
+  gamma: t('Gamma: how fast delta changes'),
+  theta: t('Theta: time decay'),
+  vega: t('Vega: sensitivity to volatility'),
+  rho: t('Rho: sensitivity to interest rates'),
 };
 
 const HINTS: Record<GreekFocus, string> = {
-  value: 'Lower the days to expiry and watch time value shrink until only intrinsic value is left.',
-  delta: 'Delta is the slope of the solid curve. Move the price: it is near 0 far below the strike, about 0.5 at the strike and near 1 far above.',
-  gamma: 'Gamma is how sharply the curve bends. Set the price at the strike and reduce the days to expiry to see it grow.',
-  theta: 'The curve shows the option value as expiry approaches, with the price held still. It falls slowly at first, then steeply.',
-  vega: 'The curve shows the option value at each level of volatility. More volatility always means a higher price.',
-  rho: 'The curve shows the option value at each interest rate. It barely moves, which is why rho is watched least.',
+  value: t('Lower the days to expiry and watch time value shrink until only intrinsic value is left.'),
+  delta: t('Delta is the slope of the solid curve. Move the price: it is near 0 far below the strike, about 0.5 at the strike and near 1 far above.'),
+  gamma: t('Gamma is how sharply the curve bends. Set the price at the strike and reduce the days to expiry to see it grow.'),
+  theta: t('The curve shows the option value as expiry approaches, with the price held still. It falls slowly at first, then steeply.'),
+  vega: t('The curve shows the option value at each level of volatility. More volatility always means a higher price.'),
+  rho: t('The curve shows the option value at each interest rate. It barely moves, which is why rho is watched least.'),
 };
 
 export function GreekSlider({ focus, type = 'call' }: GreekSliderProps) {
@@ -113,51 +119,63 @@ export function GreekSlider({ focus, type = 'call' }: GreekSliderProps) {
         return { x, y: bsPrice(make(x)) };
       });
     if (focus === 'theta') {
-      return { x: days, xLabel: 'Days to expiry', series: [{ points: sweep(120, 0, 80, (d) => ({ ...base, years: d / 365 })).reverse(), label: 'Option value' }] };
+      return { x: days, xLabel: t('Days to expiry'), series: [{ points: sweep(120, 0, 80, (d) => ({ ...base, years: d / 365 })).reverse(), label: t('Option value') }] };
     }
     if (focus === 'vega') {
-      return { x: iv, xLabel: 'Implied volatility (%)', series: [{ points: sweep(5, 120, 60, (v) => ({ ...base, volatility: v / 100 })), label: 'Option value' }] };
+      return { x: iv, xLabel: t('Implied volatility (%)'), series: [{ points: sweep(5, 120, 60, (v) => ({ ...base, volatility: v / 100 })), label: t('Option value') }] };
     }
     if (focus === 'rho') {
-      return { x: rate, xLabel: 'Interest rate (%)', series: [{ points: sweep(0, 10, 40, (r) => ({ ...base, rate: r / 100 })), label: 'Option value' }] };
+      return { x: rate, xLabel: t('Interest rate (%)'), series: [{ points: sweep(0, 10, 40, (r) => ({ ...base, rate: r / 100 })), label: t('Option value') }] };
     }
     return {
       x: spot,
-      xLabel: 'Price of the underlying',
+      xLabel: t('Price of the underlying'),
       series: [
-        { points: sweep(60, 140, 80, (s) => ({ ...base, spot: s })), label: 'Value now' },
-        { points: sweep(60, 140, 80, (s) => ({ ...base, spot: s, years: 0 })), label: 'Value at expiry (intrinsic)', dashed: true, color: 'var(--c-muted)' },
+        { points: sweep(60, 140, 80, (s) => ({ ...base, spot: s })), label: t('Value now') },
+        { points: sweep(60, 140, 80, (s) => ({ ...base, spot: s, years: 0 })), label: t('Value at expiry (intrinsic)'), dashed: true, color: 'var(--c-muted)' },
       ],
     };
   }, [focus, type, spot, days, iv, rate]);
 
   const cells: { key: GreekFocus | 'price'; label: string; value: string }[] = [
-    { key: 'price', label: 'Option price', value: formatPrice(price) },
+    { key: 'price', label: t('Option price'), value: formatPrice(price) },
     { key: 'delta', label: 'Delta', value: greeks.delta.toFixed(3) },
     { key: 'gamma', label: 'Gamma', value: greeks.gamma.toFixed(4) },
-    { key: 'theta', label: 'Theta / day', value: greeks.theta.toFixed(3) },
+    { key: 'theta', label: t('Theta / day'), value: greeks.theta.toFixed(3) },
     { key: 'vega', label: 'Vega / 1%', value: greeks.vega.toFixed(3) },
     { key: 'rho', label: 'Rho / 1%', value: greeks.rho.toFixed(3) },
   ];
 
   return (
-    <WidgetFrame title={`${TITLES[focus]} (${type}, strike ${STRIKE})`}>
+    <WidgetFrame
+      title={
+        type === 'call'
+          ? t('{title} (call, strike {strike})', { title: TITLES[focus], strike: STRIKE })
+          : t('{title} (put, strike {strike})', { title: TITLES[focus], strike: STRIKE })
+      }
+    >
       <div className="grid gap-5 sm:grid-cols-[230px_minmax(0,1fr)]">
         <div className="flex flex-col gap-3">
-          <Slider label="Price of the underlying" min={60} max={140} step={0.5} value={spot} onChange={setSpot} format={(v) => formatPrice(v)} />
-          <Slider label="Days to expiry" min={0} max={120} value={days} onChange={setDays} format={(v) => `${v} days`} />
-          <Slider label="Implied volatility" min={5} max={120} value={iv} onChange={setIv} format={(v) => `${v}%`} />
-          {focus === 'rho' && <Slider label="Interest rate" min={0} max={10} step={0.25} value={rate} onChange={setRate} format={(v) => `${v}%`} />}
+          <Slider label={t('Price of the underlying')} min={60} max={140} step={0.5} value={spot} onChange={setSpot} format={(v) => formatPrice(v)} />
+          <Slider label={t('Days to expiry')} min={0} max={120} value={days} onChange={setDays} format={(v) => t('{n} days', { n: v })} />
+          <Slider label={t('Implied volatility')} min={5} max={120} value={iv} onChange={setIv} format={(v) => `${v}%`} />
+          {focus === 'rho' && <Slider label={t('Interest rate')} min={0} max={10} step={0.25} value={rate} onChange={setRate} format={(v) => `${v}%`} />}
           <p className="text-xs leading-relaxed text-muted">{HINTS[focus]}</p>
         </div>
         <div>
           <LineDiagram
-            ariaLabel={`${TITLES[focus]}. Option price ${formatPrice(price)}, delta ${greeks.delta.toFixed(2)}, theta ${greeks.theta.toFixed(3)} per day, vega ${greeks.vega.toFixed(3)}.`}
+            ariaLabel={t('{title}. Option price {price}, delta {delta}, theta {theta} per day, vega {vega}.', {
+              title: TITLES[focus],
+              price: formatPrice(price),
+              delta: greeks.delta.toFixed(2),
+              theta: greeks.theta.toFixed(3),
+              vega: greeks.vega.toFixed(3),
+            })}
             series={diagram.series}
             markerX={diagram.x}
-            guidesX={focus === 'theta' || focus === 'vega' || focus === 'rho' ? [] : [{ x: STRIKE, label: 'Strike' }]}
+            guidesX={focus === 'theta' || focus === 'vega' || focus === 'rho' ? [] : [{ x: STRIKE, label: t('Strike') }]}
             xLabel={diagram.xLabel}
-            yLabel="Option value"
+            yLabel={t('Option value')}
             height={200}
           />
           {focus === 'value' && (
@@ -167,12 +185,17 @@ export function GreekSlider({ focus, type = 'call' }: GreekSliderProps) {
                 <div className="bg-warning" style={{ width: `${price > 0 ? (timeValue / price) * 100 : 0}%` }} />
               </div>
               <p className="mt-1.5 text-sm">
-                Premium <span className="num font-medium">{formatPrice(price)}</span> = intrinsic{' '}
-                <span className="num text-accent-text">{formatPrice(intrinsic)}</span> + time value{' '}
-                <span className="num text-warning-text">{formatPrice(timeValue)}</span>
+                <Trans
+                  text="Premium {premium} = intrinsic {intrinsic} + time value {time}"
+                  values={{
+                    premium: <span className="num font-medium">{formatPrice(price)}</span>,
+                    intrinsic: <span className="num text-accent-text">{formatPrice(intrinsic)}</span>,
+                    time: <span className="num text-warning-text">{formatPrice(timeValue)}</span>,
+                  }}
+                />
                 <span className="text-muted">
                   {' '}
-                  · {intrinsic > 0 ? 'in the money' : Math.abs(spot - STRIKE) < 0.5 ? 'at the money' : 'out of the money'}
+                  · {intrinsic > 0 ? t('in the money') : Math.abs(spot - STRIKE) < 0.5 ? t('at the money') : t('out of the money')}
                 </span>
               </p>
             </div>

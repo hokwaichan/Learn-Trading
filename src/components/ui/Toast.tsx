@@ -1,5 +1,6 @@
 import { AlertTriangle, CheckCircle2, Info, X, XCircle } from 'lucide-react';
 import { create } from 'zustand';
+import { t } from '@/i18n';
 import { cn } from './cn';
 
 export type ToastTone = 'info' | 'success' | 'warning' | 'error';
@@ -26,7 +27,7 @@ const useToastStore = create<ToastStore>((set, get) => ({
     set((s) => ({ items: [...s.items.slice(-3), { ...item, id }] }));
     if (durationMs > 0) window.setTimeout(() => get().dismiss(id), durationMs);
   },
-  dismiss: (id) => set((s) => ({ items: s.items.filter((t) => t.id !== id) })),
+  dismiss: (id) => set((s) => ({ items: s.items.filter((item) => item.id !== id) })),
 }));
 
 /** Show a toast from anywhere: toast.success('Order filled', 'Bought 0.01 BTC'). */
@@ -56,23 +57,23 @@ export function Toaster() {
       aria-live="polite"
       className="pointer-events-none fixed inset-x-0 bottom-20 z-[60] flex flex-col items-center gap-2 px-4 md:inset-x-auto md:top-14 md:right-4 md:bottom-auto md:items-end"
     >
-      {items.map((t) => (
+      {items.map((item) => (
         <div
-          key={t.id}
-          role={t.tone === 'error' || t.tone === 'warning' ? 'alert' : 'status'}
+          key={item.id}
+          role={item.tone === 'error' || item.tone === 'warning' ? 'alert' : 'status'}
           className={cn(
             'pointer-events-auto flex w-full max-w-sm items-start gap-2 rounded-card bg-raised px-3 py-2.5 shadow-raised animate-slide-up',
           )}
         >
-          <span className="mt-0.5 shrink-0">{ICONS[t.tone]}</span>
+          <span className="mt-0.5 shrink-0">{ICONS[item.tone]}</span>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-medium text-fg">{t.title}</p>
-            {t.description && <p className="mt-0.5 text-xs text-muted">{t.description}</p>}
+            <p className="text-sm font-medium text-fg">{item.title}</p>
+            {item.description && <p className="mt-0.5 text-xs text-muted">{item.description}</p>}
           </div>
           <button
             type="button"
-            aria-label="Dismiss"
-            onClick={() => dismiss(t.id)}
+            aria-label={t('Dismiss')}
+            onClick={() => dismiss(item.id)}
             className="shrink-0 rounded-sm p-0.5 text-muted hover:text-fg"
           >
             <X aria-hidden className="size-3.5" />

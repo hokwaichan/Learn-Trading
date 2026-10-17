@@ -1,5 +1,6 @@
 import { MODULES } from '@/content/lessons';
 import { QUIZZES } from '@/content/quizzes';
+import { t } from '@/i18n';
 import { hashString, seededRandom, shuffled } from '@/lib/random';
 import { buildQuestion, type Dataset, type PatternIndex, type TrainerQuestion } from './questions';
 
@@ -27,7 +28,7 @@ export function conceptQuestion(day: string, completedLessons: string[]): Traine
     drill: 'outlook',
     kind: 'concept',
     refId: q.id,
-    topic: 'Concept',
+    topic: t('Concept'),
     prompt: q.prompt,
     choices: shuffled(q.choices, seed).map((c) => ({ id: c.id, label: c.text })),
     correctId: q.correctChoiceId,
