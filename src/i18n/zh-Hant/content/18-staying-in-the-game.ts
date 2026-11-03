@@ -10,90 +10,82 @@ export default {
   'mtksyevqia': '誠實地測試策略',
   // A backtest can prove almost anything if you let it. The habits that separate a real edge from a pattern fitted to the past.
   '84cxdveipd': '如果你容許，回測幾乎可以證明任何東西。區分真正優勢和遷就過去的形態的習慣。',
-  // A backtest runs a set of rules over past prices to see what would have happened. It is the only way to find out whether an idea has ever worked without paying to find out. It is also the easiest tool in trading to fool yourself with.
-  '1km5p64hm5e': '回測把一套規則套用在過去的價格上，看看會發生甚麼。這是不用付錢就能知道一個想法是否曾經有效的唯一方法。它也是交易中最容易令自己受騙的工具。',
-  // How backtests lie
-  '17kyv7989zy': '回測怎樣說謊',
-  // **Overfitting.** Try enough settings and one will look brilliant by chance. A moving-average crossover tested with 400 combinations of periods will have a winner. That winner fitted the noise of that period, and the noise will not repeat.
-  '192af7ici86': '**過度擬合。**試夠多的設定，總有一個會碰巧看起來很出色。以 400 種週期組合測試移動平均線交叉，必定有一個贏家。那個贏家擬合的是那段時期的雜訊，而雜訊不會重演。',
-  // **Look-ahead.** Using information that was not available at the time: entering at the low of the candle that gave the signal, or using today’s close to decide a trade placed this morning.
-  '2c2vpco0amh': '**前視偏差。**使用當時還未有的資訊：在發出訊號那支陰陽燭的低點入場，或用今天的收市價決定今天早上下的交易。',
-  // **Ignoring costs.** Fees, spread and slippage, which turn many high-turnover systems from profit to loss.
-  '1z261nihf5k': '**忽略成本。**手續費、差價和滑價，它們令很多高周轉率的系統由盈利變虧損。',
-  // **Too few trades.** Twelve trades with nine winners proves nothing. The same system could easily have had four.
-  '4n1q63o3xg': '**交易太少。**十二宗交易九宗贏，甚麼都證明不了。同一個系統也很容易只有四宗贏。',
-  // **One market, one period.** A long-only strategy tested on a bull market measures the bull market.
-  '1eme6pos1q4': '**一個市場，一段時期。**在牛市測試的只做多策略，量度的是牛市。',
-  // **Survivorship bias.** Testing only on coins or shares that still exist today leaves out all the ones that went to zero.
-  'tvyg9u3050': '**倖存者偏差。**只用今天仍然存在的幣或股票測試，就漏掉了所有跌至零的。',
-  // Three years of SPY with 20 and 50-day exponential averages. A crossover strategy looks good here because the market trended. The honest question is what the same rules do on a market that went sideways, and on the years before this chart begins.
-  '1ri3clny4pd': 'SPY 三年的走勢，加上 20 日和 50 日指數移動平均線。交叉策略在這裡看起來不錯，因為市場有趨勢。誠實的問題是：同樣的規則在橫行的市場，以及這張圖表開始之前的年份，表現如何。',
-  // In-sample and out-of-sample
-  '1239il4kgk8': '樣本內和樣本外',
-  // The standard defence is to split your history in two. Develop and adjust the rules on the first part, the **in-sample** data. Then run them once, unchanged, on the second part, the **out-of-sample** data, which the rules have never seen. If performance collapses, the rules were fitted to the first part.
-  '231s3mfjz0p': '標準的防範方法是把歷史分成兩部分。在第一部分，即**樣本內**數據上發展和調整規則。然後在第二部分，即規則從未見過的**樣本外**數據上，原封不動地執行一次。如果表現崩潰，規則就是擬合了第一部分。',
-  // **Walk-forward testing** repeats this: tune on years one to three, test on year four; tune on years two to four, test on year five; and so on. It mimics how you would really use a strategy, re-tuning as time passes.
-  '1sfmhw2w157': '**前進式測試**重複這個過程：用第一至三年調整，在第四年測試；用第二至四年調整，在第五年測試；如此類推。它模擬你實際使用策略的方式，隨時間重新調整。',
-  // A testing routine
-  'frbbdg1mmk': '測試程序',
-  // Write the rules down completely before testing. If a rule needs judgement, it cannot be backtested.
-  '3ybu5s8i7e': '測試前把規則完整寫下。如果某條規則需要判斷，就無法回測。',
-  // Test on the first two thirds of your data. Adjust if you must, but change as few numbers as possible.
-  'xaw5jbbi0t': '在數據的首三分之二上測試。必要時調整，但盡量少改數字。',
-  // Run it once on the last third. That result is your estimate. Do not go back and adjust.
-  '6pxcjr4wnx': '在最後三分之一上執行一次。那個結果就是你的估計。不要回頭調整。',
-  // Run the same rules on two other symbols. A real edge usually shows up, weaker, in related markets.
-  '1a0md66gn9k': '在另外兩個代號上執行同樣的規則。真正的優勢通常在相關市場中也會出現，只是較弱。',
-  // Change each setting a little. If 20 works and 18 and 22 fail, you have found noise.
-  '1vvshjh72s8': '把每個設定稍作改變。如果 20 有效而 18 和 22 失敗，你找到的是雜訊。',
-  // Include realistic costs, then double them and see whether it survives.
-  '1zkj74n7yiy': '計入實際成本，然後把它加倍，看看策略能否存活。',
-  // Look for at least 30 trades, preferably 100, before believing any number.
-  'l6bjggfwor': '相信任何數字之前，至少要有 30 宗交易，最好是 100 宗。',
+  // A backtest runs rules over past prices to see what would have happened. It is also the easiest tool in trading to fool yourself with.
+  '19sednqbeae': '回測是把規則套用在過去的價格上，看看會發生甚麼。它也是交易中最容易自欺的工具。',
+  // Red and blue dots separated by a smooth black curve and by a green line that twists around individual dots
+  '1hl1t4ynpyl': '紅點和藍點被一條平滑的黑色曲線分開，另一條綠線則繞着個別的點扭來扭去',
+  // Overfitting. The green line separates every past point perfectly, but only the simple black curve will work on new data.
+  'hx9yv73xbf': '過度擬合。綠線完美分開每一個過去的點，但只有簡單的黑色曲線能用在新數據上。',
+  // **Overfitting**: test 400 settings and one looks brilliant by chance. It fitted the noise.
+  '1ybk1nu7ec4': '**過度擬合**：測試 400 組設定，總有一組碰巧看似出色。它擬合的是雜訊。',
+  // **Look-ahead**: using information not available at the time.
+  'yijxkjvamq': '**前視偏差**：用了當時還未有的資訊。',
+  // **Ignoring costs**, which turn many busy systems from profit to loss.
+  '29q0q414b57': '**忽略成本**，令很多交易頻繁的系統由賺變蝕。',
+  // **Too few trades**: twelve trades prove nothing.
+  '5zhhl9n8e7': '**交易太少**：十二宗交易證明不了甚麼。',
+  // **One market, one period**: a long strategy in a bull market measures the bull market.
+  'qrgsurwvt3': '**單一市場、單一時期**：在牛市測試只做多的策略，量度的是牛市本身。',
+  // One
+  '281h3ebu7y4': '一個',
+  // **Survivorship bias**: testing only on coins and shares that still exist.
+  '1qxw12bvm2a': '**倖存者偏差**：只用至今仍存在的幣和股票測試。',
+  // Survivorship bias
+  '2epa0q42dyo': '倖存者偏差',
+  // Three years of SPY with 20 and 50-day averages. A crossover looks good here because the market trended. The honest question is how it does sideways, and before this chart begins.
+  'ybvtg0u2wx': 'SPY 三年走勢，加上 20 日和 50 日平均線。交叉策略在這裏看似不錯，因為市場有趨勢。誠實的問題是：在橫行市，以及這圖表之前的年份，它表現如何？',
+  // Develop on the first part of your history (**in-sample**), then run the rules once, unchanged, on data they have never seen (**out-of-sample**). **Walk-forward testing** repeats this year by year.
+  '6ty6tom2v': '用歷史的前半部分開發規則（**樣本內**），然後把規則原封不動地在它從未見過的數據上跑一次（**樣本外**）。**前進測試**逐年重複這個做法。',
+  // Write the rules completely before testing.
+  '1flinhqs6lb': '測試前把規則完整寫下。',
+  // Develop on two thirds of the data, changing as few numbers as possible.
+  '22tp0wvnp1a': '用三分之二的數據開發，盡量少改數字。',
+  // Run once on the last third, and do not go back.
+  '21fkktzpjr1': '在最後三分之一跑一次，不要回頭再改。',
+  // Try two other symbols, and nudge each setting: if 20 works but 18 and 22 fail, it is noise.
+  '19t4ehbvyzc': '試兩個其他產品，並微調每個設定：如果 20 有效但 18 和 22 失敗，那只是雜訊。',
+  // Double the costs and see if it survives.
+  '2g22c6j1kch': '把成本加倍，看它是否仍然賺錢。',
+  // Want at least 30 trades, ideally 100.
+  '20ts0m70xei': '最少要有 30 宗交易，最好 100 宗。',
   // Reading a result
   '2393fitputk': '解讀結果',
-  // A strategy shows +80% over two years with a 35% maximum drawdown and 14 trades.
-  '1kg9fhnunc1': '一個策略兩年內顯示 +80%，最大回撤 35%，共 14 宗交易。',
-  // Fourteen trades: far too few. One or two large winners probably account for most of the profit.
-  '2a40slapm4s': '十四宗交易：太少了。大部分利潤可能來自一兩宗大贏的交易。',
-  // A 35% drawdown: could you sit through losing a third of the account and keep following the rules? Most people cannot.
-  '11rmvbqyscl': '35% 的回撤：你能捱過損失戶口三分之一，並繼續遵守規則嗎？大部分人不能。',
-  // Compare with buy and hold over the same period. If simply holding made +90%, the strategy added risk and work for less return.
-  '257yo3ekxmk': '與同期買入並持有比較。如果單是持有已賺 +90%，這個策略增加了風險和工作，回報卻更少。',
+  // +80% over two years, 35% maximum drawdown, 14 trades.
+  'p9rnrlin0b': '兩年 +80%，最大回撤 35%，14 宗交易。',
+  // Fourteen trades: one or two winners probably made it all.
+  '1t0ahu7t592': '十四宗交易：利潤很可能全來自一兩宗贏單。',
+  // Could you sit through losing a third of the account?
+  '1ks8mfr7nt3': '你能忍受戶口蝕掉三分之一嗎？',
+  // If buy and hold made +90%, the strategy added risk for less.
+  'pn2qbsb9e9': '如果買入持有賺 +90%，這策略是冒更大風險換更少回報。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
-  // The Backtester fills signals at the next candle’s open, so it cannot look ahead, and it charges the fees and slippage from Settings. Use the date range to make your own in-sample and out-of-sample periods, and the Recent runs table to compare symbols.
-  '2fp615ir2j9': '回測器在下一支陰陽燭的開市價成交訊號，所以不會前視，並收取「設定」中的手續費和滑價。用日期範圍自行劃分樣本內和樣本外時期，並用「最近執行」表比較不同代號。',
+  // The Backtester fills at the next candle’s open, so it cannot look ahead, and charges your fees and slippage. Use the date range for in-sample and out-of-sample periods.
+  '1y50nmmuysn': '回測器以下一支陰陽燭的開市價成交，所以不能偷看未來，並收取你設定的手續費和滑價。用日期範圍劃分樣本內和樣本外時期。',
   // A good backtest is the start, not the proof
   'anfao8r959': '好的回測是開始，不是證明',
-  // Even an honest backtest describes the past. Markets change, and an edge that many people find stops working. After the backtest comes forward testing: trading the rules on paper, in real time, for weeks.
-  'a77pmtvuh5': '即使誠實的回測也只描述過去。市場會改變，很多人都發現的優勢會失效。回測之後是前向測試：以模擬交易實時按規則交易幾個星期。',
+  // Next comes forward testing: trading the rules on paper, in real time, for weeks.
+  'igmxebhzha': '下一步是前進測試：在模擬盤上即時按規則交易幾個星期。',
   // Building a playbook
   '17yqzo40073': '建立交易手冊',
   // Pick two or three setups, write each one down as a checklist, and trade nothing else. Fewer setups, traded well, beat knowing everything.
   'dywlohq6h6': '選兩三個交易形態，把每一個寫成檢查清單，其他一概不做。較少的形態、做得好，勝過甚麼都懂。',
-  // By now you have met dozens of patterns, indicators and concepts. Trying to use them all is a common reason beginners lose: there is always some signal somewhere saying "trade". A **playbook** is a short written list of the specific setups you trade, each defined precisely enough that you could hand it to someone else.
-  '1m1j1oegfqt': '到現在你已經接觸過幾十個形態、指標和概念。嘗試全部使用，是初學者虧錢的常見原因：總有某處某個訊號在說「交易」。**交易手冊**是一份簡短的書面清單，列出你交易的特定形態，每一個都定義得足夠精確，可以交給別人執行。',
-  // One page per setup
-  'xwh5xmc3ej': '每個形態一頁',
-  // **Name.** Short and specific: "Pullback to the 20 EMA in a daily uptrend".
-  '1g834ptqwwb': '**名稱。**簡短而具體：「日線上升趨勢中回調到 20 EMA」。',
-  // **Market conditions.** When it applies and when it does not. Trend or range? Which timeframe? Which hours?
-  'al5uv6pmz': '**市場狀況。**甚麼時候適用，甚麼時候不適用。趨勢還是區間？哪個時間週期？哪些時間？',
-  // **Entry trigger.** The exact event: a candle closing above the previous candle’s high after touching the average.
-  'g34c5qq7ln': '**入場觸發。**確切的事件：觸及平均線後，一支陰陽燭收市高於前一支陰陽燭的高點。',
-  // **Stop-loss.** Where, and why there.
-  '9m0nz4x2f1': '**止蝕。**放在哪裡，以及為甚麼放在那裡。',
-  // **Target or exit.** A fixed target, a trailing method, or both.
-  '7fuxr0ac3q': '**目標或離場。**固定目標、追蹤方法，或兩者兼用。',
-  // **Position size.** The percentage of the account at risk.
-  '163pfohomjr': '**持倉規模。**戶口承受風險的百分比。',
-  // **What cancels it.** News due within the hour, an earlier loss limit reached, the level already tested three times.
-  '6b9wc3bcs5': '**甚麼會取消它。**一小時內有消息公佈、已到達較早前的虧損上限、價位已被測試三次。',
-  // **An example chart.** A marked-up picture of the setup done well.
-  'an3umeajky': '**範例圖表。**一張標記好、做得好的形態圖片。',
-  // A playbook example: an uptrend, a pullback to the rising 20-period average, a candle that closes back above the previous high, the stop under the pullback low and the target at twice the risk.
-  'zd6q2d9yw7': '交易手冊範例：上升趨勢、回調到上升中的 20 週期平均線、一支收市回到前一個高點之上的陰陽燭、止蝕在回調低點之下，目標是風險的兩倍。',
+  // With dozens of patterns, there is always a signal somewhere saying "trade". A **playbook** is a short written list of the setups you trade, precise enough to hand to someone else.
+  '1dznroppslc': '形態有幾十種，總有某個訊號在說「交易」。**交易手冊**是一份簡短的書面清單，列出你交易的形態，精確到可以交給別人照做。',
+  // **Name**: "Pullback to the 20 EMA in a daily uptrend".
+  '1v4ttl7t0ys': '**名稱**：「日線上升趨勢中回調到 20 EMA」。',
+  // **Conditions**: trend or range, timeframe, hours.
+  '1hu3yedin5r': '**條件**：趨勢或區間、時間框架、時段。',
+  // **Trigger**: the exact event that gets you in.
+  'q1pea7bxt6': '**觸發**：令你入場的確切事件。',
+  // **Stop, target and size.**
+  '1knr07taxt3': '**止蝕、目標和注碼。**',
+  // **What cancels it**: news due, loss limit hit, level tested three times.
+  'tr7tp24ktf': '**甚麼情況取消**：即將有消息、已達虧損上限、價位已被測試三次。',
+  // **An example chart**, like the one below.
+  '7otquqlzgl': '**一張示例圖**，就像下面這張。',
+  // An uptrend, a pullback to the rising 20-period average, a close above the previous high, the stop under the pullback low and the target at 2R.
+  '41b305rl8t': '上升趨勢，回調到上升中的 20 期平均線，收市升穿前一支的高位，止蝕在回調低位下方，目標為 2R。',
   // Touches the average
   '2g50xsq09fv': '觸及平均線',
   // Trigger: closes above the prior high
@@ -102,222 +94,176 @@ export default {
   '21vu2cufzsh': '止蝕：回調低點之下',
   // Target: 2R
   '1tzfhc1xzdg': '目標：2R',
-  // Choosing your setups
-  'h6a7fzf8kt': '選擇你的形態',
-  // **Start with one.** A trend-pullback setup is a good first choice: it trades with the trend and has a natural stop.
-  '1fiy05w64pl': '**先從一個開始。**趨勢回調形態是不錯的首選：它順勢交易，並有自然的止蝕位。',
-  // **Make it fit your life.** If you can look at charts for twenty minutes a day, a daily-chart swing setup fits. A 5-minute scalp does not.
-  '2840ifkmhfv': '**配合你的生活。**如果你每天可以看圖二十分鐘，日線波段形態合適。5 分鐘炒短線就不合適。',
-  // **Add a second only after 50 logged trades of the first.** Ideally one that works in different conditions, such as a range setup to go with a trend setup.
-  '4dsonbl32d': '**第一個形態記錄了 50 宗交易後才加入第二個。**最好是在不同狀況下有效的，例如配合趨勢形態的區間形態。',
-  // **Three is plenty.** Many professional traders make a living from one.
-  'kiocwr6i2j': '**三個已經很多。**很多專業交易者靠一個形態維生。',
-  // Grading setups
-  '1ncdspi6zxi': '為形態評級',
-  // Not every instance is equally good. Many traders grade each one before entering: A when every condition is present and the higher timeframe agrees, B when one is missing, C when it is marginal. Then they take only A setups, or trade B at half size. Grading in advance, and logging the grade, shows you later whether your judgement of quality is worth anything.
-  'kx9wkryz7p': '不是每次出現都同樣好。很多交易者在入場前為每次評級：所有條件齊備且較高時間週期同意時是 A，缺一個時是 B，勉強時是 C。然後只做 A 級形態，或以一半規模做 B 級。事先評級並記錄級別，日後就能看出你對質素的判斷有沒有價值。',
-  // Keeping it alive
-  '9bvdwpkxqq': '保持它有生命力',
-  // The playbook changes with evidence. Every month, look at the Analytics page by setup. A setup with a negative expectancy over 40 trades gets rewritten or removed. A setup with a strong record earns a little more risk. Ideas you have not tested stay out of it.
-  'vhaxwsnjky': '交易手冊隨證據改變。每個月按形態查看績效分析頁。40 宗交易中期望值為負的形態要重寫或刪除。紀錄強勁的形態可以多承受一點風險。未經測試的想法不能放進去。',
-  // Tag every trade in the Journal with the setup’s name, exactly as written in your playbook. The Analytics page then reports win rate and result for each setup, which is the feedback the playbook needs.
-  '2etf8hjt8w8': '在交易日誌中為每宗交易標記形態名稱，與交易手冊中寫的完全一樣。績效分析頁就會報告每個形態的勝率和成績，這正是交易手冊需要的回饋。',
+  // **Start with one**, such as a trend pullback.
+  '1dropndhujw': '**先從一個開始**，例如趨勢回調。',
+  // **Fit your life**: twenty minutes a day suits a daily-chart swing setup, not a 5-minute scalp.
+  '2eqyxvp7hwc': '**配合你的生活**：每日二十分鐘適合日線波段形態，不適合 5 分鐘剝頭皮。',
+  // **Add a second after 50 logged trades**, ideally for different conditions. Three is plenty.
+  'ff15zyas98': '**記錄 50 宗交易後才加第二個**，最好適用於不同市況。三個已足夠。',
+  // **Grade each one** A, B or C before entering; take A, or B at half size.
+  'z302wuuzcq': '**入場前為每一宗評級** A、B 或 C；只做 A，或以半注做 B。',
+  // Each month, check Analytics by setup. Negative over 40 trades: rewrite or remove it.
+  '1q3az0qevpa': '每月按形態查看分析頁。40 宗交易後仍是負數：改寫或刪除。',
+  // Tag every Journal trade with the setup name exactly as written. Analytics then reports each setup separately.
+  '1pi69qb49oe': '在交易日誌中，每宗交易都標上與手冊完全相同的形態名稱。分析頁便會分開報告每個形態。',
   // If it is not in the playbook, it is not a trade
   '1p9097vhz1f': '不在交易手冊中，就不是交易',
-  // The moment you take a trade "because it looks good", you are no longer testing anything, and your results stop telling you what works.
-  '1tqnin67fx3': '當你「因為看起來不錯」而做一宗交易的那一刻，你就不再測試任何東西，你的成績也不再告訴你甚麼有效。',
+  // A trade taken "because it looks good" stops your results telling you anything.
+  '1lun17wvub8': '「因為看起來不錯」而做的交易，會令你的結果再也說明不了甚麼。',
   // Reviewing your trades
   '5z7w7fkt7s': '檢討你的交易',
   // A journal is only useful if you read it. A weekly review turns a list of trades into two or three things to change.
   'ymfs4t25lr': '交易日誌只有在你閱讀時才有用。每週檢討把一連串交易變成兩三件要改變的事。',
-  // Most traders who keep a journal write in it and never look back. The value is in the review: a regular, short session where you treat your past trades as data about one particular trader, yourself.
-  '11rqtfmequi': '大部分寫交易日誌的交易者只寫不看。價值在於檢討：定期、簡短地把過去的交易當作一位特定交易者（你自己）的數據。',
-  // Two kinds of mistake
-  'l3zp8s4kqk': '兩種錯誤',
-  // **A bad outcome**: you followed the plan and the trade lost. This is the cost of doing business. Nothing to fix.
-  '1r5nkthg38u': '**壞結果**：你遵守了計劃，交易虧損了。這是做生意的成本。沒有要修正的。',
-  // **A bad decision**: you broke the plan, whether the trade won or lost. This is what a review is for.
-  'vkol21w1kc': '**壞決定**：你破壞了計劃，不論交易輸贏。這才是檢討要處理的。',
-  // A win from a broken rule is the dangerous one, because it rewards the behaviour. Mark it as a mistake anyway.
-  '7wdm62qj5r': '破壞規則而贏錢最危險，因為它獎勵了那種行為。無論如何都要把它標記為錯誤。',
-  // The weekly review
-  '28hycv4idz0': '每週檢討',
-  // **Sort by setup.** Which setups made money and which lost? Is any one responsible for most of the loss?
-  '2aqo8gr2upp': '**按形態排序。**哪些形態賺錢，哪些虧錢？有沒有一個造成大部分虧損？',
-  // **Sort by feeling.** Compare trades tagged calm with trades tagged FOMO or revenge. The difference is usually large and usually surprising.
-  'qk6bausath': '**按感受排序。**比較標記為冷靜的交易和標記為害怕錯過或報復的交易。差別通常很大，也通常令人意外。',
-  // **Look at the losers.** For each: was the stop in a sensible place? Was the entry early? Was it in the playbook at all?
-  'e6k5kruup3': '**看虧損的交易。**每一宗：止蝕放在合理的位置嗎？入場太早嗎？它到底在不在交易手冊中？',
-  // **Look at the winners.** Did you exit early? How much further did price go? Was the size smaller than planned?
-  '1gfzz8yxwdl': '**看贏錢的交易。**你有沒有太早離場？價格之後再走了多遠？規模比計劃小嗎？',
-  // **Count rule breaks.** How many trades followed the plan completely? That percentage is your real score for the week.
-  '1z0kxwi19fc': '**數算破壞規則的次數。**有多少宗交易完全遵守計劃？這個百分比就是你這星期真正的分數。',
-  // **Write one change.** One, not five. Carry it into next week and check it at the next review.
-  '1we6g0v0sdh': '**寫下一個改變。**一個，不是五個。帶到下星期，在下次檢討時檢查。',
-  // Sample size
-  '1ejjow9ujtx': '樣本大小',
-  // Ten trades tell you almost nothing about a setup. With a true win rate of 50%, getting three wins in ten, or seven, is ordinary luck. Run the simulation several times and compare the first ten trades of each run with where it ends.
-  '1ope3zzftpn': '十宗交易對一個形態幾乎說明不了甚麼。真正勝率 50% 時，十宗中贏三宗或七宗都只是普通的運氣。多執行幾次模擬，比較每次首十宗交易與最終結果。',
-  // So review behaviour every week, because rule-breaking shows up at once. Judge a setup’s numbers only over 30 to 50 trades.
-  '2gnmufrg3op': '所以每週檢討行為，因為破壞規則會立即顯現。只在 30 至 50 宗交易後才評判一個形態的數字。',
-  // Numbers worth tracking
-  '24cnsx77q0m': '值得追蹤的數字',
-  // **Expectancy per trade**, in R. The one number that says whether you have an edge.
-  '1ko88xen3kx': '**每宗交易期望值**，以 R 計。說明你有沒有優勢的那一個數字。',
-  // **Win rate and average win against average loss.** Together they explain the expectancy.
-  'qxz2e0hylb': '**勝率，以及平均盈利對平均虧損。**兩者一起解釋期望值。',
-  // **Maximum drawdown and longest losing run.** What you must be able to sit through.
-  '96kq7o4cfa': '**最大回撤和最長連輸。**你必須能捱過的情況。',
-  // **Plan-following rate.** The share of trades taken exactly as written.
-  '17eh0e5wq0h': '**遵守計劃比率。**完全按書面計劃進行的交易所佔比例。',
-  // **Results by setup, by day and by feeling.** Where the edge is, and where it leaks.
-  '59kgh4a9hc': '**按形態、日子和感受劃分的成績。**優勢在哪裡，又在哪裡流失。',
-  // The Journal has fields for the setup, how you felt, a review, and a 1 to 5 score for following the plan. The Analytics page breaks results down by each of those, and its "What stands out" box names the largest gap.
-  '1s97wyh51xd': '交易日誌有交易形態、感受、檢討，以及 1 至 5 分的遵守計劃評分欄位。績效分析頁按每一項分拆成績，「值得注意」方塊會指出最大的差距。',
+  // The value of a journal is the review: treating your past trades as data about one trader, yourself.
+  '20u1ivya4dr': '交易日誌的價值在於檢討：把過去的交易當作關於一個交易者，即你自己的數據。',
+  // **A bad outcome**: you followed the plan and lost. Nothing to fix.
+  '22mw8wbxrgp': '**壞結果**：你按計劃做但輸了。沒有要改的。',
+  // **A bad decision**: you broke the plan, win or lose. This is what a review is for. A win from a broken rule is the dangerous one.
+  '2cu6ff5r18e': '**壞決定**：你違反了計劃，無論輸贏。檢討就是為此而設。違規而贏的那一宗最危險。',
+  // **By setup**: which made and which lost money?
+  '2zvyy5d6jt': '**按形態**：哪些賺、哪些蝕？',
+  // **By feeling**: calm against FOMO or revenge. The gap is usually large.
+  'glnvi8qnmf': '**按情緒**：冷靜對比 FOMO 或報復。差距通常很大。',
+  // **Losers**: sensible stop? Early entry? In the playbook at all?
+  '2e1udqyezpt': '**輸單**：止蝕位合理嗎？入場太早？根本在手冊內嗎？',
+  // **Winners**: exited early? Size smaller than planned?
+  'u81uy9kya2': '**贏單**：太早離場？注碼比計劃小？',
+  // **Count rule breaks**: that percentage is your real score.
+  '1dgbi7tawd3': '**數違規次數**：這個百分比才是你真正的分數。',
+  // **Write one change**, and check it next week.
+  '1pctpmqd8ku': '**寫下一個改變**，下星期檢查。',
+  // Ten
+  '2b7p5c87dcx': '十個',
+  // Ten trades say almost nothing: with a 50% win rate, three or seven wins in ten is ordinary luck. Compare the first ten trades of each run with where it ends:
+  'gubcb0jr7l': '十宗交易幾乎說明不了甚麼：勝率 50% 時，十宗贏三宗或七宗都只是普通運氣。比較每次模擬頭十宗交易與最終結果：',
+  // Review behaviour weekly; judge a setup’s numbers only over 30 to 50 trades. Track expectancy in R, win rate against average win and loss, maximum drawdown, and how often you followed the plan.
+  '20jzzaid61y': '每星期檢討行為；形態的數字要 30 至 50 宗交易後才評價。追蹤以 R 計的期望值、勝率與平均贏輸、最大回撤，以及遵守計劃的比率。',
+  // 30 to 50
+  '1uw212alj7w': '30 至 50',
+  // The Journal records setup, feeling, a review and a plan-following score. Analytics breaks results down by each, and "What stands out" names the largest gap.
+  'xrqmw2mq81': '交易日誌記錄形態、情緒、檢討和遵守計劃的評分。分析頁按每項分類結果，「突出之處」一欄指出最大的差距。',
   // Do not review during a session
   'g3dnd3v0f2': '不要在時段進行中檢討',
-  // Reviewing a loss minutes after it happened is not analysis, it is searching for a way to win it back. Review at a fixed time, away from live prices.
-  'fhk3m47beh': '虧損後幾分鐘就檢討不是分析，而是在找方法贏回來。在固定時間、遠離實時價格時檢討。',
+  // Minutes after a loss you are looking for a way to win it back. Review at a fixed time, away from live prices.
+  'rgn42tmuyj': '輸錢後幾分鐘，你只是在找方法追回。在固定時間、遠離即時價格時檢討。',
   // Scams, signal groups and prop firms
   '1jvahjf258x': '騙局、訊號群組和自營交易公司',
   // New traders are a target market. How to recognise the common schemes, and how to read the small print of a funded-account challenge.
   '208j4fbj80z': '新手交易者是目標市場。如何辨認常見的計倆，以及如何細閱資助戶口挑戰的細則。',
-  // Trading attracts people hoping to make money quickly, and an industry exists to sell to them. Much of it is legal and merely poor value. Some of it is theft. Recognising the patterns is a skill as practical as reading a chart.
-  '14i70ih14wk': '交易吸引希望快速賺錢的人，也有一個行業專門向他們推銷。大部分是合法的，只是不划算。有些則是盜竊。辨認這些模式是一項與看圖同樣實用的技能。',
-  // Red flags
-  'n1kfguszy': '警號',
-  // **Guaranteed or unusually steady returns.** Real trading has losing months. "2% a week, every week" is the signature of a fraud.
-  'rdtn9zn0ms': '**保證或異常穩定的回報。**真實的交易有虧損的月份。「每週 2%，週週如是」是欺詐的標誌。',
-  // **Screenshots of profits.** Trivially faked, and even real ones show selected winners.
-  '12snu5tgaq1': '**利潤截圖。**輕易就能偽造，即使是真的也只顯示挑選過的贏錢交易。',
-  // **Urgency.** "Only ten places left", "the price doubles at midnight". Pressure exists to stop you thinking.
-  'k2w4bf3xbp': '**緊迫感。**「只剩十個名額」、「午夜價格加倍」。壓力的存在是為了阻止你思考。',
-  // **Lifestyle marketing.** Cars and beaches are advertising, usually paid for by selling courses, not by trading.
-  '3b6xnlggdf': '**生活方式營銷。**名車和海灘是廣告，通常靠賣課程而不是靠交易支付。',
-  // **Someone who wants to trade your money or log into your account.** No.
-  '20vyvod5ffv': '**有人想替你交易你的錢或登入你的戶口。**不行。',
-  // **An unregulated broker you have never heard of**, especially one recommended by a stranger.
-  'uk4ezybmv8': '**一個你從未聽過、不受監管的經紀**，尤其是陌生人推薦的。',
+  // An industry sells to people hoping to get rich quickly. Much of it is poor value; some is theft.
+  '1xdhn7z35jf': '有一整個行業專門賣東西給想快速致富的人。大部分只是不值錢；有些是盜竊。',
+  // Charles Ponzi
+  '807g55zr3j': '查爾斯·龐氏',
+  // A pyramid needs ever more recruits
+  '25zfs4d507h': '金字塔需要越來越多新人',
+  // In 1920 Ponzi paid early investors with later investors’ money. If each person must recruit six, level 13 needs more people than live on Earth: every such scheme collapses.
+  '5pldn1xt22': '1920 年，龐氏用後來投資者的錢支付早期投資者。如果每人要招募六人，第 13 層需要的人比地球人口還多：每個這類騙局都必然崩潰。',
+  // **Guaranteed or steady returns**: "2% a week, every week" is the signature of fraud.
+  '1qnj80wk0b6': '**保證或穩定回報**：「每星期 2%，週週如是」正是騙局的標誌。',
+  // **Profit screenshots**: easily faked, and always selected.
+  '1bbztukails': '**利潤截圖**：容易偽造，而且必定經過挑選。',
+  // **Urgency**: "ten places left" is there to stop you thinking.
+  'abarvikc0c': '**製造緊迫感**：「只剩十個名額」是為了不讓你思考。',
+  // **Lifestyle marketing**: usually paid for by selling courses.
+  'n5bpuq0yeq': '**炫富宣傳**：通常是靠賣課程賺來的。',
+  // **Anyone who wants to trade your money or log into your account.** No.
+  'd3h2iy1wwi': '**任何想替你交易或登入你戶口的人。**不可以。',
+  // **An unregulated broker** recommended by a stranger.
+  'n9y70e8z87': '陌生人推薦的**無牌經紀**。',
   // Pump and dump
   '27zfcqrtpvj': '拉高出貨',
-  // In a **pump and dump**, organisers quietly buy a thinly traded coin or share, then promote it loudly to a group. Followers rush in, the price spikes, and the organisers sell into that buying. The price collapses within minutes or hours, leaving the followers holding it.
-  '2a9f9fxq9z3': '在**拉高出貨**中，組織者悄悄買入一隻交投稀疏的幣或股票，然後向一個群組大肆推廣。追隨者蜂擁而入，價格急升，組織者趁買盤賣出。價格在幾分鐘或幾小時內崩潰，追隨者被困。',
-  // Quiet trading, then a spike of 50% in two candles on enormous volume, a long upper wick where the organisers sold, and a fall to below the starting price. Anyone who bought after the announcement bought from the people who planned it.
-  '2gch96r1eni': '平靜的交投，然後兩支陰陽燭以巨大成交量急升 50%，留下組織者賣出的長上影線，再跌到起始價之下。任何在宣佈後買入的人，都是從策劃者手上買入。',
-  // Organisers buy quietly
-  '2cezdtijoac': '組織者悄悄買入',
-  // Promotion: followers buy
-  '1nt6rbouq9f': '推廣：追隨者買入',
-  // Organisers sell into it
-  '17l49havhdn': '組織者趁勢賣出',
+  // A one-minute crypto chart that climbs steadily for forty minutes and then collapses to almost zero in a single red candle
+  '6riaxhka3p': '一張加密貨幣 1 分鐘圖，穩步上升四十分鐘，然後一支紅色陰陽燭跌到接近零',
+  // A real pump and dump on a small token: forty minutes of buying, then the organisers sold everything in one candle.
+  '1juiyi8sepl': '一個小型代幣的真實拉高出貨：四十分鐘的買盤，然後主謀在一支陰陽燭內全部沽出。',
+  // Organisers buy a thin coin quietly, promote it to a group, and sell into the rush. Followers are left holding it.
+  '1sjrcto50wy': '主謀悄悄買入冷門幣，在群組中推廣，再趁人潮湧入時沽出。跟隨者被困在高位。',
   // Followers are left holding
-  'quhkihn5c2': '追隨者被困',
-  // Signal groups and copy trading
-  '3aml7kcoew': '訊號群組和跟單交易',
-  // A **signal group** sells trade alerts. Consider the incentives: someone with a reliably profitable method gains nothing by selling it for a monthly fee, and following alerts teaches you nothing. Many groups are also paid by a broker for each customer they refer, and are paid more when those customers trade more, win or lose.
-  'rd9a3sf7f': '**訊號群組**出售交易提示。想想背後的誘因：擁有可靠盈利方法的人，以月費出售它毫無得益，而跟隨提示也學不到任何東西。很多群組也會因每位轉介的客戶獲經紀付款，客戶交易越多，不論輸贏，他們收得越多。',
-  // Prop firms and funded accounts
-  'f06hrnclom': '自營交易公司和資助戶口',
-  // A **prop firm**, in the retail sense, sells an evaluation: you pay a fee to trade a simulated account under strict rules, and if you hit a profit target without breaking them, you get a "funded account" and keep a share of profits. Some pay out as promised. The business model is still worth understanding: most firms earn mainly from evaluation fees, because most people fail.
-  'd6ywlpzuo5': '零售意義上的**自營交易公司**出售的是考核：你付費在嚴格規則下交易一個模擬戶口，如果在不違規的情況下達到利潤目標，你會得到一個「資助戶口」並保留部分利潤。有些確實按承諾付款。這種商業模式仍值得了解：大部分公司主要收入來自考核費，因為大部分人都失敗。',
-  // **Daily loss limit.** Often 4% to 5%. One bad session ends the account.
-  '1gfgen2hfvb': '**每日虧損上限。**通常 4% 至 5%。一個壞時段就會結束戶口。',
-  // **Maximum drawdown.** Often 8% to 10%, sometimes trailing behind your highest balance, so profits you made can raise the level at which you fail.
-  'gvt033jdkh': '**最大回撤。**通常 8% 至 10%，有時跟隨你的最高結餘移動，所以你賺到的利潤會提高你失敗的水平。',
-  // **Profit target and time.** A target of 8% to 10% pushes traders to risk too much.
-  '1p271q3k217': '**利潤目標和時限。**8% 至 10% 的目標會推使交易者承受過多風險。',
-  // **Consistency and news rules.** Limits on how much profit can come from one day, or bans on trading around announcements.
-  '11d2g8t2f8z': '**一致性和消息規則。**限制一天內可賺多少利潤，或禁止在消息公佈前後交易。',
-  // **Payout terms.** How often, with what minimums, and what the firm’s record of paying is.
-  '1qwpkrx1cj9': '**提款條款。**多久一次、最低金額是多少，以及公司的付款紀錄。',
+  'quhkihn5c2': '跟隨者被困',
+  // The same pattern on a daily chart: quiet buying, a 50% spike on huge volume, a long upper wick where the organisers sold, then a fall below the start.
+  '93w01kucvq': '日線上的同一模式：悄悄買入、在巨量下急升 50%、主謀沽出處留下長上影線，然後跌穿起點。',
+  // Organisers buy quietly
+  '2cezdtijoac': '主謀悄悄買入',
+  // Promotion: followers buy
+  '1nt6rbouq9f': '推廣：跟隨者買入',
+  // Organisers sell into it
+  '17l49havhdn': '主謀趁機沽出',
+  // **Signal groups**: someone with a profitable method gains little by selling it monthly, and many groups are paid by brokers for how much their followers trade.
+  '122jpnjws4j': '**訊號群組**：有賺錢方法的人以月費出售它所得無幾，而很多群組按跟隨者的交易量收取經紀的佣金。',
+  // Prop firms
+  '1qpedv5nfzu': '自營交易公司',
+  // A retail **prop firm** sells an evaluation: pass strict rules on a simulated account to get a funded one and a profit share. Most firms earn mainly from fees, because most people fail.
+  '2cvt1hzfqdq': '零售**自營交易公司**出售的是考核：在模擬戶口遵守嚴格規則，通過後獲得資助戶口和利潤分成。大部分公司主要靠考核費賺錢，因為大部分人都失敗。',
+  // **Daily loss limit**: often 4% to 5%.
+  '2gejh9scpx9': '**每日虧損上限**：通常 4% 至 5%。',
+  // **Maximum drawdown**: often 8% to 10%, sometimes trailing your highest balance.
+  '4at1pasr58': '**最大回撤**：通常 8% 至 10%，有時跟隨你的最高結餘移動。',
+  // **Profit target**: 8% to 10%, which pushes people to over-risk.
+  '2bemfpth66t': '**利潤目標**：8% 至 10%，逼人冒過大風險。',
+  // **Consistency, news and payout rules**: read them all.
+  '1rmmy4szc06': '**一致性、消息和提款規則**：全部都要讀。',
   // Is the challenge realistic for you?
   'jtfpwny0vs': '這個挑戰對你來說實際嗎？',
   // Target +8%, maximum drawdown 8%, daily limit 4%.
   '1121p3bzmzk': '目標 +8%，最大回撤 8%，每日上限 4%。',
-  // Risking 1% a trade, a normal run of seven losses takes you to minus 7%, one loss from failing.
-  '2as38rcrb8k': '每宗交易承受 1% 風險，正常的七連輸會令你虧損 7%，再輸一宗就失敗。',
-  // Risking 0.5% a trade gives room to survive that streak, but you then need 16R of net profit to pass.
-  '1gneto3lyhi': '每宗交易承受 0.5% 風險，有空間捱過那段連敗，但你就需要 16R 的淨利潤才能通過。',
-  // Check your own record: has your paper account ever gained 16R without first losing 16 trades’ worth? If not, the fee is buying a lottery ticket.
-  '2x4eeizs7e': '檢查自己的紀錄：你的模擬戶口有沒有試過在未先輸掉 16 宗交易的金額前就賺到 16R？如果沒有，這筆費用就是買彩票。',
+  // At 1% a trade, a normal run of seven losses leaves you one loss from failing.
+  'lwge7sok03': '每單冒 1%，正常的七連輸會令你只差一單就失敗。',
+  // At 0.5% you survive that, but need 16R net to pass.
+  '1vt7b7cx7mf': '每單冒 0.5% 可以撐過去，但要淨賺 16R 才能通過。',
+  // If your paper record has never done that, the fee buys a lottery ticket.
+  '2bf28bj9j3x': '如果你的模擬紀錄從未做到，考核費只是買彩票。',
   // If you would not pass on paper, you will not pass after paying
   'mcdwyh6tf3': '如果模擬交易也過不了，付錢後也過不了',
-  // Run the rules against your own Journal first. The limits a prop firm imposes are sensible ones to trade under anyway, and practising them here costs nothing.
-  'pi63o8dr6d': '先用你自己的交易日誌對照這些規則。自營交易公司的限制本來就是合理的交易規範，在這裡練習不用花錢。',
+  // Run the rules against your own Journal first. They are sensible limits to practise under for free.
+  '1352nilakc8': '先用你自己的交易日誌套用這些規則。它們本身就是值得免費練習的合理限制。',
   // A simple test
   'hdimoaffey': '一個簡單的測試',
-  // Before paying for anything in trading, ask: how does this person make money, and does it depend on me winning? If the answer is "from my fee, whether I win or not", weigh their advice accordingly.
-  '2bhk5x9xhq3': '在交易方面付錢買任何東西之前，問：這個人怎樣賺錢，而這是否取決於我贏錢？如果答案是「從我的費用，不論我輸贏」，就相應地衡量他們的建議。',
+  // Ask how the seller makes money, and whether it depends on you winning.
+  '5qwco3im0z': '問賣家如何賺錢，以及這是否取決於你贏錢。',
   // From paper to real money
   '12bmedrhqsz': '由模擬交易到真錢',
   // Paper trading leaves out fear. How to know when you are ready, how to start small enough that mistakes are cheap, and what to expect honestly.
   '2k78ta96vo': '模擬交易沒有恐懼。如何知道你準備好了、如何從足夠小的規模開始令錯誤代價低廉，以及誠實的預期。',
-  // Everything you have done in this app uses simulated money. That is its strength: mistakes are free. It is also its limit. Paper trading does not make your heart race when a position is down, and it fills every order perfectly. The step to real money is a change in psychology more than in method.
-  '4gwu4bgz69': '你在這個應用程式中做的一切都用模擬資金。這是它的優點：犯錯不用付錢。這也是它的局限。持倉虧損時，模擬交易不會令你心跳加速，而且每張訂單都完美成交。轉到真錢與其說是方法的改變，不如說是心理的改變。',
-  // What paper trading hides
-  '1cnjhpk37g': '模擬交易隱藏了甚麼',
-  // **Emotion.** A paper loss does not hurt. With real money, the urge to move a stop or close a winner early is far stronger.
-  'ali22mqui3': '**情緒。**模擬虧損不痛。用真錢時，移動止蝕或提早平掉贏錢交易的衝動強烈得多。',
-  // **Fills.** Real orders can be filled late, partly, or at a worse price, most of all in fast markets.
-  'ou7iqevth9': '**成交。**真實訂單可能延遲成交、部分成交或以較差價格成交，在快速市場中尤其如此。',
-  // **Size effects.** Your paper order never moves the price. In a thin market a real one can.
-  '1i4fjpcrr26': '**規模效應。**你的模擬訂單從不推動價格。在交投稀疏的市場中，真實訂單可以。',
-  // **Boredom and time.** It is easy to be disciplined for an hour of practice, harder across months.
-  '1p37e64vct1': '**沉悶和時間。**練習一小時保持紀律很容易，持續幾個月就難得多。',
-  // Are you ready? A checklist
-  '1rrze2auq95': '你準備好了嗎？檢查清單',
-  // You have a written playbook with one to three setups.
-  '1hrsxv7j8q0': '你有一份包含一至三個形態的書面交易手冊。',
-  // You have logged at least 50 paper trades taken from that playbook.
-  '28ynvkwhzfn': '你已記錄了至少 50 宗按交易手冊進行的模擬交易。',
-  // The expectancy across those trades is positive after fees.
-  '20py1tlj3so': '這些交易扣除手續費後的期望值是正數。',
-  // You followed your plan on at least four trades in five.
-  '2878i1mbi9u': '每五宗交易中至少有四宗遵守了計劃。',
-  // You have sat through your system’s normal losing streak on paper without changing the rules.
-  'jedph347ch': '你在模擬交易中捱過了系統的正常連敗，而沒有更改規則。',
-  // The money you would use is money you can lose completely without it affecting your life. Not rent, not savings you need, never borrowed.
-  'rd6gdrwul5': '你會用的錢，是全部輸掉也不影響生活的錢。不是租金，不是你需要的儲蓄，絕不是借來的。',
-  // If any of these is missing, more paper trading is not a delay. It is the cheapest tuition available.
-  '1oj0kcw77no': '如果缺少任何一項，更多模擬交易不是拖延，而是最便宜的學費。',
-  // Starting small
-  '197o5ymk3zc': '由小開始',
-  // Begin with the smallest size the market allows, so that a full loss is a trivial sum. The goal of the first months is not profit. It is to find out whether you trade real money the same way you traded paper. Size from the stop exactly as before:
-  'u0nuwsnc17': '從市場容許的最小規模開始，令全額損失只是微不足道的金額。最初幾個月的目標不是利潤，而是找出你用真錢交易時是否與模擬交易一樣。完全按之前的方法由止蝕定規模：',
-  // Trade minimum size for at least 30 trades.
-  'tm9axo4dal': '以最小規模至少交易 30 宗。',
-  // Compare the results, and your plan-following rate, with your paper record.
-  '1m676h2iyil': '把成績和遵守計劃比率與你的模擬紀錄比較。',
-  // If they match, raise the risk a step, for example from 0.25% to 0.5% of the account. If they do not, go back to paper and find out why.
-  '11729iuit3g': '如果兩者相符，把風險提高一級，例如由戶口的 0.25% 提高到 0.5%。如果不相符，回到模擬交易找出原因。',
+  // Paper trading makes mistakes free, but it hides **emotion**, imperfect **fills**, your order **moving the price**, and the **boredom** of months. The step to real money is mostly psychological.
+  '12mw3f1xnuk': '模擬交易令錯誤免費，但它隱藏了**情緒**、不完美的**成交**、你的訂單**推動價格**，以及幾個月的**沉悶**。轉用真錢主要是心理上的轉變。',
+  // Are you ready?
+  '1e3cwhxu7d7': '你準備好了嗎？',
+  // A written playbook with one to three setups.
+  '12igao89sgm': '一本有一至三個形態的書面交易手冊。',
+  // At least 50 paper trades from it, with positive expectancy after fees.
+  'hiygsed7g2': '最少 50 宗按手冊做的模擬交易，扣除手續費後期望值為正。',
+  // The plan followed on at least four trades in five.
+  '17h6cwifuiv': '每五宗最少有四宗遵守計劃。',
+  // A normal losing streak sat through without changing the rules.
+  'ssu0hljfd': '撐過一段正常的連輸而沒有改規則。',
+  // Money you can lose completely: not rent, not needed savings, never borrowed.
+  '13rds5o60ek': '可以全部輸掉的錢：不是租金，不是需要的儲蓄，絕不是借來的。',
+  // Missing any of these? More paper trading is the cheapest tuition there is. Then start at the smallest size the market allows, sized from the stop as always:
+  '2s1ztz8k97': '有任何一項未達到？多做模擬交易就是最便宜的學費。然後以市場容許的最小注碼開始，照舊按止蝕計算：',
+  // Minimum size for at least 30 trades.
+  '2giw8cg8d25': '最小注碼最少 30 宗交易。',
+  // Compare results and plan-following with your paper record.
+  '14g9q08obhj': '把結果和遵守計劃的比率與模擬紀錄比較。',
+  // If they match, raise risk a step, such as 0.25% to 0.5%. If not, back to paper.
+  '1zz9nlieg0k': '如果相符，把風險提高一級，例如由 0.25% 到 0.5%。如果不相符，回到模擬盤。',
   // Never raise size after a winning streak or to recover a loss.
   '1rbvr7fihh4': '永遠不要在連贏後或為了追回虧損而加大規模。',
-  // Honest expectations
-  '29jg0t40nju': '誠實的預期',
-  // Studies of brokerage records in several countries find that most retail day traders lose money, and only a few percent are consistently profitable over years.
-  'usodhwgykx': '對多個國家證券紀錄的研究發現，大部分零售即日交易者虧錢，只有百分之幾能多年持續獲利。',
-  // A professional fund that makes 15% to 20% a year after costs is doing very well. Promises of that per month are fantasy or fraud.
-  'of8cd2euo': '扣除成本後每年賺 15% 至 20% 的專業基金已經表現非常好。承諾每月有這樣回報的，不是幻想就是欺詐。',
-  // For most people, steady investing in a broad index fund will beat their trading. Trading can still be worth doing as a skill and an interest, with money set aside for it.
-  '9adfdnmevm': '對大部分人來說，穩定投資廣泛的指數基金會勝過他們的交易。交易仍然可以作為一項技能和興趣，用預留的資金去做。',
-  // The practical side
-  'r1ccv48swv': '實際事項',
-  // Use a regulated broker or a large, established exchange. Read how deposits are protected.
-  '1dilfbzw8qq': '使用受監管的經紀或大型、歷史悠久的交易所。了解存款受到怎樣的保障。',
-  // Turn on two-factor authentication. Never share login details or recovery phrases.
-  '24o01vyuikr': '開啟雙重認證。永遠不要分享登入資料或恢復短語。',
-  // Keep records of every trade. In most countries trading profits are taxable and you are responsible for reporting them.
-  '26fkbfzgpk4': '保存每宗交易的紀錄。在大部分國家，交易利潤需要課稅，而你有責任申報。',
-  // Keep leverage off, or very low, until you have a year of real results.
-  '1v5dd7mqxu4': '在有一年真實成績之前，不用槓桿或只用非常低的槓桿。',
+  // **Honestly**: most retail day traders lose; only a few percent profit for years.
+  '17pompjota7': '**老實說**：大部分零售即日交易者輸錢；只有百分之幾能多年賺錢。',
+  // **15% to 20% a year** is excellent for a professional fund. That per month is fantasy or fraud.
+  '1dj9tbd8tq9': '**每年 15% 至 20%** 對專業基金來說已經極好。每月這麼多是幻想或騙局。',
+  // **For most people** a broad index fund beats their trading.
+  '7vkmk54m95': '**對大部分人來說**，廣泛的指數基金勝過他們自己的交易。',
+  // **Practically**: a regulated broker, two-factor login, records for tax, little or no leverage for the first year.
+  '1uej89efx11': '**實際上**：受監管的經紀、雙重認證登入、保留報稅紀錄，第一年少用或不用槓桿。',
   // This app cannot tell you that you are ready
   '8116kaa0cb': '這個應用程式無法告訴你已經準備好',
-  // A good paper record is necessary, not sufficient. Nothing here is financial advice, and no course or tool can remove the risk of losing money. Decide what you can afford to lose before you start, and stop if you reach it.
-  'eu5mdld05h': '良好的模擬紀錄是必要條件，但不是充分條件。這裡的一切都不是投資建議，沒有任何課程或工具能消除虧錢的風險。開始前決定你能承受損失多少，到達時就停止。',
+  // A good paper record is necessary, not sufficient. Nothing here is financial advice. Decide what you can afford to lose, and stop if you reach it.
+  '2jy2319ld3': '良好的模擬紀錄是必要條件，但並不足夠。這裏的內容都不是投資建議。先決定你能承受輸多少，到了就停。',
   // Keep practising here
   '21q5hhw2s4f': '繼續在這裡練習',
-  // Replay lets you trade months of history in an evening, the Backtester tests an idea in seconds, and the Journal and Analytics keep score. Real money does not replace any of that. It adds to it.
-  '218imtsw26g': '重播讓你一個晚上交易幾個月的歷史，回測器在幾秒內測試一個想法，交易日誌和績效分析為你計分。真錢不會取代這些，而是加在其上。',
+  // Replay, the Backtester, the Journal and Analytics still help once you trade for real.
+  'e5trnc55ut': '即使開始用真錢交易，重播、回測器、交易日誌和分析頁仍然有用。',
   // You test 300 parameter combinations and pick the best. Why is its result unreliable?
   '244c9879dfe': '你測試了 300 個參數組合並選出最好的。為甚麼它的結果不可靠？',
   // Computers make rounding errors
@@ -350,8 +296,6 @@ export default {
   '1uba8gb6n9g': '前視偏差：訊號出現時還不知道低點',
   // Slippage
   '2ffkxy4rmk2': '滑價',
-  // Survivorship bias
-  '2epa0q42dyo': '倖存者偏差',
   // The low of a candle is only known once it has closed. Using it for the entry uses the future.
   'idxje1c3p9': '陰陽燭的低點只在收市後才知道。用它來入場等於使用未來。',
   // A strategy works with a period of 20 but fails with 18 and with 22. What does that suggest?
@@ -404,12 +348,8 @@ export default {
   'jxtgulidov': '交易手冊把幾個形態定義得足夠精確，別人也能照著做。',
   // How many setups should a beginner start with?
   '8048xzfhxh': '初學者應該從多少個形態開始？',
-  // One
-  '281h3ebu7y4': '一個',
   // Five
   '1805my4x30e': '五個',
-  // Ten
-  '2b7p5c87dcx': '十個',
   // As many as possible
   '1cj54zswv31': '越多越好',
   // One setup, logged for 50 trades, teaches more than ten traded at random.
@@ -476,8 +416,6 @@ export default {
   '28dzrgei1ga': '破壞規則而贏錢獎勵了壞行為，所以是最危險的一種。',
   // How many trades are needed before judging a setup’s numbers?
   '9ak8ysytud': '評判一個形態的數字前需要多少宗交易？',
-  // 30 to 50
-  '1uw212alj7w': '30 至 50',
   // 1,000 at least
   '299ou155r1r': '至少 1,000',
   // Ten trades are dominated by luck. Thirty to fifty start to mean something.
