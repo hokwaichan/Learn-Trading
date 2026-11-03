@@ -10,42 +10,34 @@ export default {
   '26mtjymsgzb': '聰明錢概念是甚麼，以及結構突破',
   // Smart money concepts rename and sharpen ideas you already know. Start with the two labels every SMC chart is covered in: BOS and CHoCH.
   '1jgliqf5g60': '聰明錢概念為你已認識的概念重新命名並使之更精確。先從每張聰明錢概念圖表上都佈滿的兩個標籤開始：BOS 和 CHoCH。',
-  // **Smart money concepts** (SMC) is a style of chart reading built on one idea: large institutions move markets, they need a lot of orders on the other side to fill their own, and their activity leaves marks on the chart that a small trader can follow. The style grew out of the teaching of a trader known as ICT and spread widely online.
-  '12q0no78k11': '**聰明錢概念**（SMC）是一種建基於一個想法的圖表解讀方式：大型機構推動市場，它們需要對手方有大量訂單才能完成自己的交易，而它們的活動會在圖表上留下小交易者可以跟隨的痕跡。這種風格源自一位名叫 ICT 的交易者的教學，並在網上廣泛流傳。',
-  // Read this first
-  '4l1hknzjll': '先讀這段',
-  // Much of SMC is older price action under new names: support becomes "demand", a false breakout becomes a "liquidity sweep". The names are useful because they are precise. The story about what institutions intend is a way of thinking, not something anyone can check from a chart. No study has shown that SMC beats simpler methods. Learn it as a clear way to describe price, and test it like anything else.
-  '1wqq10ugz90': '聰明錢概念大部分是舊有的價格行為換上新名稱：支持位變成「需求區」，假突破變成「流動性掃蕩」。這些名稱有用，因為它們很精確。至於機構意圖的說法，只是一種思考方式，沒有人能從圖表上驗證。沒有研究顯示聰明錢概念勝過較簡單的方法。把它當作描述價格的清晰方式來學習，並像測試其他東西一樣測試它。',
-  // Structure, again
-  '19j4crst016': '再談結構',
-  // You already know that an uptrend is a series of higher highs and higher lows. SMC keeps that definition and adds two labels for the moments structure changes.
-  '2898egliieh': '你已經知道上升趨勢是一連串更高的高點和更高的低點。聰明錢概念保留這個定義，並為結構改變的時刻加上兩個標籤。',
-  // A **break of structure** (BOS) is price closing beyond the last swing point in the direction of the trend: a new higher high in an uptrend, a new lower low in a downtrend. It says the trend is continuing.
-  '5f4d2z8xl4': '**結構突破**（BOS）是價格沿趨勢方向收市穿越最近的擺動點：上升趨勢中創出新的更高高點，下跌趨勢中創出新的更低低點。它說明趨勢正在延續。',
-  // A **change of character** (CHoCH) is the first close beyond a swing point against the trend: in an uptrend, the first close below the most recent higher low. It says the trend may be turning.
-  '1zae89ge0un': '**特性轉變**（CHoCH）是第一次逆趨勢方向收市穿越擺動點：在上升趨勢中，第一次收市跌穿最近一個更高的低點。它說明趨勢可能正在轉向。',
-  // An uptrend breaks structure upward twice. Then a lower high forms, price closes below the last higher low (the change of character), and the next break confirms a downtrend.
-  'osn5jvqtqu': '一段上升趨勢兩次向上突破結構。然後形成一個更低的高點，價格收市跌穿最近一個更高的低點（特性轉變），下一次突破確認下跌趨勢。',
   // BOS
   'vpgpvjxle9': 'BOS',
-  // BOS up
-  'v0zjj0oad8': '向上 BOS',
   // CHoCH
   '1q1b3wnb6me': 'CHoCH',
+  // **Smart money concepts** (SMC) read charts on one idea: large institutions move markets, need many orders on the other side, and leave marks a small trader can follow. It grew from the teaching of a trader known as ICT.
+  '1gm0b52d0y': '**聰明錢概念**（SMC）建基於一個想法解讀圖表：大型機構推動市場，需要對手方有大量訂單，並留下小交易者可以跟隨的痕跡。它源自一位名叫 ICT 的交易者的教學。',
+  // Read this first
+  '4l1hknzjll': '先讀這段',
+  // Much of SMC is older price action with precise new names: support becomes "demand", a false breakout a "liquidity sweep". The story about what institutions intend cannot be checked from a chart, and no study shows SMC beats simpler methods. Learn it as clear vocabulary, and test it.
+  'ezx0jbdxx2': '聰明錢概念大部分是舊有價格行為換上精確的新名稱：支持位變成「需求區」，假突破變成「流動性掃蕩」。機構意圖的說法無法從圖表驗證，也沒有研究顯示它勝過較簡單的方法。把它當作清晰的詞彙來學，並加以測試。',
+  // A **break of structure** (BOS) is a close beyond the last swing in the trend direction. The trend continues.
+  '153rkbgm4kp': '**結構突破**（BOS）是沿趨勢方向收市越過最近的擺動點。趨勢延續。',
+  // A **change of character** (CHoCH) is the first close beyond a swing against the trend, such as below the last higher low in an uptrend. The trend may be turning.
+  'fsyfvzx36e': '**特性轉變**（CHoCH）是第一次逆趨勢收市越過擺動點，例如上升趨勢中收市跌穿最近一個更高的低點。趨勢可能正在轉向。',
+  // An uptrend breaks structure upward twice. Then a lower high forms, price closes below the last higher low (the change of character), and the next break confirms a downtrend.
+  'osn5jvqtqu': '一段上升趨勢兩次向上突破結構。然後形成一個更低的高點，價格收市跌穿最近一個更高的低點（特性轉變），下一次突破確認下跌趨勢。',
+  // BOS up
+  'v0zjj0oad8': '向上 BOS',
   // BOS down
   '1z1ke2skpop': '向下 BOS',
-  // Rules that keep it honest
-  'sffjjgh12u': '保持客觀的規則',
-  // Only a candle **close** beyond the level counts. A wick through it is not a break; it may be the opposite, a sweep.
-  '26pg4s5m7p9': '只有陰陽燭**收市**越過價位才算數。影線穿過不算突破；它可能恰恰相反，是一次掃蕩。',
-  // Decide how you pick swing points and keep to it. A swing that needs three lower candles either side gives fewer, more meaningful breaks than one that needs a single candle.
-  'tf6qrw0i2s': '決定好你如何揀選擺動點並堅持下去。要求兩邊各有三支較低陰陽燭的擺動點，比只要求一支的產生更少但更有意義的突破。',
-  // A change of character on the 5-minute chart means little inside a daily trend. Read structure from the higher timeframe down.
-  'sqw8pif588': '5 分鐘圖上的特性轉變在日線趨勢中意義不大。由較高的時間週期向下解讀結構。',
-  // What a break tells you
-  '31i0dwth7m': '突破告訴你甚麼',
-  // A break of structure is permission to keep trading with the trend: look for pullbacks to join it. A change of character is a reason to stop looking for trades in the old direction, and to wait. It is not yet a reason to trade the other way, because many are followed by nothing more than a deeper pullback.
-  'nq686p55cd': '結構突破是繼續順勢交易的許可：找回調加入。特性轉變是停止尋找舊方向交易的理由，並且要等待。它還不是反向交易的理由，因為很多特性轉變之後只是出現更深的回調。',
+  // Only a **close** beyond the level counts. A wick through it may be the opposite, a sweep.
+  '1u8v9a3r7uq': '只有**收市**越過價位才算數。影線穿過可能恰恰相反，是一次掃蕩。',
+  // Pick swing points one way and keep to it. Three candles either side gives fewer, more meaningful breaks.
+  '1czn2wjuqi4': '以一種方式揀選擺動點並堅持下去。兩邊各三支陰陽燭，得出的突破較少但更有意義。',
+  // Read structure from the higher timeframe down.
+  'bg743uhsdk': '由較高的時間週期向下解讀結構。',
+  // A BOS is permission to keep trading with the trend. A CHoCH is a reason to stop and wait, not yet to trade the other way: many lead only to a deeper pullback.
+  '5n47qel9tl': '結構突破是繼續順勢交易的許可。特性轉變是停下來等待的理由，還不是反向交易的理由：很多只帶來更深的回調。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
   // On the Charts page open Overlays and switch on Market structure. Swing points get a small arrow, and each break is labelled BOS or CHoCH using exactly the rules above, with swings of three candles either side.
@@ -54,52 +46,44 @@ export default {
   '2bxo4jr8h4b': '流動性：止蝕盤在哪裡',
   // Stop orders gather at obvious places. Price is drawn to them, and often reverses just after reaching them.
   '2c28f548urx': '觸發單聚集在明顯的地方。價格會被它們吸引，並常常在到達後隨即反轉。',
-  // In everyday trading, liquidity means how easily you can buy or sell. In SMC the word has a narrower meaning: a price where many orders are waiting. Above an obvious high sit the stop-losses of everyone who is short, plus the buy orders of breakout traders. Below an obvious low sit the stops of everyone who is long. Those clusters are called a **liquidity pool**.
-  '2932xlbirne': '在日常交易中，流動性指你能否輕易買賣。在聰明錢概念中，這個詞的意思較窄：很多訂單在等候的價格。明顯高點之上，有所有空倉的止蝕盤，加上突破交易者的買單。明顯低點之下，有所有多倉的止蝕盤。這些聚集點叫**流動性池**。',
-  // Where pools form
-  '20bf0xqyohp': '流動性池在哪裡形成',
-  // **Equal highs and equal lows**: two or three swings at almost the same price. The level looks strong, so traders trust it and put stops just beyond.
-  '1006ry2gims': '**等高點和等低點**：兩三個幾乎在同一價格的擺動點。這個價位看起來很強，所以交易者信任它，並把止蝕放在剛好越過它的地方。',
-  // **The previous day, week or session high and low**: levels everyone can see.
-  '21hcs8909eq': '**前一日、前一星期或前一個時段的高低點**：人人都看得見的價位。',
-  // **Trend lines and round numbers**: anywhere textbooks say to put a stop.
-  '1sq1ciu19xh': '**趨勢線和整數**：任何教科書說應該放止蝕的地方。',
-  // Liquidity above the market is called **buy-side liquidity** (the stops there are buy orders). Liquidity below is **sell-side liquidity**.
-  '28tric98gta': '市場上方的流動性叫**買方流動性**（那裡的止蝕盤是買單）。下方的流動性叫**賣方流動性**。',
-  // The sweep
-  '2ay5rb1bzo3': '掃蕩',
-  // A large trader who wants to sell needs many buyers at once. The cluster of buy orders above a high is exactly that. So price often pushes just beyond the level, triggers the orders, and turns. This is a **liquidity sweep**, also called a stop hunt. On the chart it is a wick beyond the level and a close back inside.
-  '24ar9e1t35s': '想賣出的大戶需要同一時間有很多買家。高點之上那堆買單正好就是。所以價格常常剛好推過價位，觸發那些訂單，然後轉向。這就是**流動性掃蕩**，亦稱獵殺止蝕。在圖表上，它是一條越過價位的影線，加上收市回到範圍內。',
+  // In SMC, liquidity means a price where many orders wait. Above an obvious high sit the stops of short sellers and the orders of breakout buyers; below an obvious low, the stops of buyers. Such a cluster is a **liquidity pool**.
+  '1t25dz7xlq7': '在聰明錢概念中，流動性指很多訂單在等候的價格。明顯高點之上有空倉的止蝕盤和突破買家的訂單；明顯低點之下有多倉的止蝕盤。這樣的聚集叫**流動性池**。',
+  // Above an obvious high
+  '180ua7c9p2h': '明顯高點之上',
+  // **Equal highs and lows**: the level looks strong, so stops gather just beyond.
+  '162wp9rursx': '**等高點和等低點**：價位看起來很強，所以止蝕盤聚集在剛好之外。',
+  // **Previous day, week or session highs and lows**: levels everyone sees.
+  '2156oz8rtxc': '**前一日、前一星期或前一個時段的高低點**：人人都看得見的價位。',
+  // **Trend lines and round numbers**: where textbooks say to put stops.
+  '5gtenv2va3': '**趨勢線和整數**：教科書說應該放止蝕的地方。',
+  // Above the market is **buy-side liquidity**; below is **sell-side liquidity**. A big seller needs many buyers at once, so price often pokes just beyond a high, triggers the orders and turns: a **liquidity sweep**, or stop hunt. On the chart it is a wick beyond and a close back inside.
+  '8ct0pkhkn7': '市場上方是**買方流動性**；下方是**賣方流動性**。大賣家需要同一時間有很多買家，所以價格常常剛好戳穿高點、觸發訂單然後轉向：這是**流動性掃蕩**，亦稱獵殺止蝕。在圖表上，它是一條越過價位的影線，加上收市回到範圍內。',
   // Three equal highs near 110 make an obvious resistance level. Price spikes through it to 112, closes back below, and falls. Traders who bought the breakout, and shorts who were stopped out, provided the buying that sellers needed.
   '1cpknrpkfl7': '三個約在 110 的等高點形成明顯的阻力位。價格急升穿過它到 112，收市回到下方，然後下跌。買入突破的交易者和被止蝕的空倉，提供了賣家所需的買盤。',
   // Equal highs: stops rest above
   '21edsf341kt': '等高點：上方有止蝕盤',
   // Sweep: wick above, close back below
   '1a2zl2k83hy': '掃蕩：影線在上方，收市回到下方',
-  // How traders use it
-  '1w40t8mm8lk': '交易者如何使用它',
-  // **As a target.** If you are long, the pool above the nearest high is a natural place to take profit, because price is likely to reach for it.
-  '2es4zqgs9vt': '**作為目標。**如果你持有多倉，最近高點之上的流動性池是自然的止賺位置，因為價格很可能會伸手去拿。',
-  // **As a warning.** If your stop is exactly where everyone else puts theirs, expect it to be tested. Place it beyond the level by a margin that reflects normal noise, or wait for the sweep before entering.
-  '1g98h1f3g61': '**作為警號。**如果你的止蝕剛好放在所有人都放的地方，預期它會被測試。把它放在越過價位、反映正常雜訊的距離之外，或者等掃蕩發生後才入場。',
-  // **As a setup.** A sweep followed by a change of character on a lower timeframe is the core SMC reversal entry, covered at the end of this module.
-  '5vbyy5szod': '**作為形態。**掃蕩之後在較低時間週期出現特性轉變，是聰明錢概念的核心反轉入場方式，這個單元最後會講到。',
+  // **As a target**: the pool above the nearest high is a natural place to take profit on a long.
+  'v47lq75bor': '**作為目標**：最近高點之上的流動性池，是多倉自然的止賺位置。',
+  // **As a warning**: a stop exactly where everyone puts theirs will be tested. Leave room, or wait for the sweep.
+  '3ew1jydpvs': '**作為警號**：止蝕放在人人都放的地方，就會被測試。留空間，或等掃蕩後才入場。',
+  // **As a setup**: a sweep then a lower-timeframe CHoCH is the core SMC reversal, at the end of this module.
+  '1e4kpd69zj4': '**作為形態**：掃蕩之後在較低時間週期出現特性轉變，是聰明錢概念的核心反轉入場，本單元最後會講。',
   // A sweep and a breakout start the same way
   '2d2iyut3w7a': '掃蕩和突破的開始一模一樣',
-  // At the moment price pokes above a high you cannot tell which it is. Only the close tells you: back inside is a sweep, held beyond is a break of structure. Do not trade the first tick through a level in either direction.
-  '29km7m6w1m4': '價格剛穿過高點的那一刻，你無法分辨是哪一種。只有收市才能告訴你：回到範圍內是掃蕩，守在外面是結構突破。不要在任何方向穿過價位的第一個報價就交易。',
+  // Only the close tells them apart: back inside is a sweep, held beyond is a break. Do not trade the first tick through a level.
+  '1iv3piwks2y': '只有收市才能分辨：回到範圍內是掃蕩，守在外面是突破。不要在穿過價位的第一個報價就交易。',
   // The same event, three names
   '1csn0owa6d0': '同一件事，三個名稱',
-  // A fakeout in the Market structure module, a spring or upthrust in Wyckoff, and a liquidity sweep here are the same thing seen from different schools.
-  '28tuun16sb1': '市場結構單元中的假突破、威科夫的彈簧或上衝，以及這裡的流動性掃蕩，是不同學派眼中的同一件事。',
+  // A fakeout, a Wyckoff spring or upthrust, and a liquidity sweep are the same thing seen by different schools.
+  '2aqskccxr8k': '假突破、威科夫的彈簧或上衝，以及流動性掃蕩，是不同學派眼中的同一件事。',
   // Order blocks
   '28901x8quxl': '訂單塊',
   // The last candle against a strong move. SMC traders treat it as a zone where price is likely to react when it returns.
   '1tn809d8kt0': '強勁走勢之前方向相反的最後一支陰陽燭。聰明錢概念交易者把它當作價格回來時很可能有反應的區域。',
-  // An **order block** is the last down candle before a strong move up that breaks structure (a bullish order block), or the last up candle before a strong move down that breaks structure (a bearish one). The claim is that large buyers were filling orders in that candle, could not fill them all, and will buy again if price comes back.
-  '2amnx2jet4k': '**訂單塊**是突破結構的強勁升勢之前最後一支下跌陰陽燭（看漲訂單塊），或突破結構的強勁跌勢之前最後一支上升陰陽燭（看跌訂單塊）。說法是大買家在那支陰陽燭中成交訂單，未能全部成交，如果價格回來就會再買。',
-  // Whether or not that story is true, the zone marks the origin of a move strong enough to break structure. Traders who missed the move are waiting for a second chance at the same price, which is the same reasoning as ordinary support.
-  'qxxavsqq0k': '不論這個說法是真是假，這個區域標示了一段強勁到足以突破結構的走勢的起點。錯過這段走勢的交易者正等待在同一價格有第二次機會，這與普通支持位的道理相同。',
+  // An **order block** is the last down candle before a strong rally that breaks structure (bullish), or the last up candle before a strong fall that does (bearish). The claim is that big buyers left orders there; plainly, it marks where a strong move began, and traders who missed it wait there, like ordinary support.
+  '1mtbwa6tolu': '**訂單塊**是突破結構的強勁升勢之前最後一支下跌陰陽燭（看漲），或突破結構的強勁跌勢之前最後一支上升陰陽燭（看跌）。說法是大買家在那裡留下了訂單；樸實地說，它標示了強勁走勢的起點，錯過走勢的交易者在那裡等候，與普通支持位一樣。',
   // The last down candle before the rally is the order block (101.8 to 103.6). The rally closes above the previous swing high, breaking structure. Price later returns to the block, holds, and rises again.
   'no22f009u1': '升勢前最後一支下跌陰陽燭就是訂單塊（101.8 至 103.6）。升勢收市高於之前的擺動高點，突破結構。價格之後回到訂單塊，守住，再次上升。',
   // Bullish order block
@@ -108,18 +92,14 @@ export default {
   'd7zw79ldwk': '結構突破',
   // Return to the block
   '9csh1x7w1y': '回到訂單塊',
-  // What makes a block worth marking
-  'm996cudzu6': '甚麼樣的訂單塊值得標記',
-  // **It led to a break of structure.** A down candle followed by a small bounce is not an order block.
-  '2f0nwn6vdw2': '**它引發了結構突破。**一支下跌陰陽燭之後只有小反彈，並不是訂單塊。',
-  // **The move away was fast.** Large candles with little overlap, which SMC calls **displacement**, often leaving a fair value gap behind.
-  '7i3ftjmfi2': '**離開的走勢很快。**由大陰陽燭組成、很少重疊，聰明錢概念叫這做**位移**，常常在後面留下公允價值缺口。',
-  // **It is fresh.** A block that price has already returned to once has had its orders used. The first return is the one that counts; SMC calls a block that has been revisited **mitigated**.
-  '1gvepnpsizi': '**它是新鮮的。**價格已經回來過一次的訂單塊，訂單已被用掉。第一次回來才算數；聰明錢概念把被重訪過的訂單塊叫**已回補**。',
-  // **It took liquidity first.** A block formed right after a sweep of a low is considered stronger.
-  '184xbegta8w': '**它先取走了流動性。**在掃蕩低點後立即形成的訂單塊被視為更強。',
-  // Trading the return
-  '2exuvruus29': '交易價格的回來',
+  // **It led to a break of structure.**
+  '1ximwvwls77': '**它引發了結構突破。**',
+  // **The move away was fast**: large candles with little overlap, **displacement**, often leaving a fair value gap.
+  '5t64quqku6': '**離開的走勢很快**：大陰陽燭、很少重疊，即**位移**，常常留下公允價值缺口。',
+  // **It is fresh**: only the first return counts; a revisited block is **mitigated**.
+  '1qjdsnbhooz': '**它是新鮮的**：只有第一次回來才算數；被重訪過的訂單塊叫**已回補**。',
+  // **It took liquidity first**: a block right after a sweep is stronger.
+  '1ex5grn1hfl': '**它先取走了流動性**：掃蕩後立即形成的訂單塊更強。',
   // A long from a bullish order block
   'wy8d52io73': '從看漲訂單塊做多',
   // The block spans 101.8 to 103.6. Price has broken structure and is now falling back.
@@ -132,100 +112,90 @@ export default {
   '201sw8i6tcx': '目標：升勢創出的高點，111.5。回報：7.9，約 3.6 比 1。',
   // Most candles are not order blocks
   '79fu6vc8xi': '大部分陰陽燭都不是訂單塊',
-  // If you mark every opposite-coloured candle before every move, the chart fills with zones and price is always "reacting" to one of them. Use the strict definition: the block must lead to a break of structure, and you only trade its first return. Expect many to fail even then.
-  'zascpekbro': '如果你把每段走勢之前每一支相反顏色的陰陽燭都標記出來，圖表就會塞滿區域，價格永遠都在對其中一個「作出反應」。使用嚴格的定義：訂單塊必須引發結構突破，而且你只交易它的第一次回來。即使如此，也要預期很多會失敗。',
+  // Mark every opposite candle and price always "reacts" to one. Use the strict rule and trade only the first return. Many still fail.
+  '2ghiq88bikz': '把每支相反顏色的陰陽燭都標記出來，價格永遠都在對其中一個「作出反應」。使用嚴格的規則，只交易第一次回來。即使這樣，很多仍會失敗。',
   // Overlays, Order blocks marks them by this rule and removes each one once price has come back to it.
   '2b7605gm0c3': '「圖層」中的「訂單塊」按這條規則標記它們，價格回來後就會移除。',
   // Fair value gaps
   '1zxkljjd3cz': '公允價值缺口',
-  // A three-candle pattern that shows price moved too fast for normal two-sided trading. Price often comes back to it.
-  '38u47efnz7': '一個三支陰陽燭的形態，顯示價格移動得太快，未能進行正常的雙向交易。價格常常會回到這裡。',
-  // When price moves very fast in one direction, it can skip through a range of prices with almost no trading on the other side. A **fair value gap** (FVG), also called an imbalance, is the visible trace of that on a candle chart.
-  '1lpym4i9hro': '當價格朝一個方向移動得非常快，它可能跳過一段價格範圍，另一邊幾乎沒有成交。**公允價值缺口**（FVG），亦稱失衡，就是這種情況在陰陽燭圖上的可見痕跡。',
-  // How to spot one
-  '28db9zyprp2': '如何辨認',
-  // Look at three candles in a row. In a bullish fair value gap, the **low of the third candle is above the high of the first**. The space between those two prices was crossed only by the middle candle. A bearish gap is the mirror image: the high of the third candle is below the low of the first.
-  'c4398vsmn0': '看連續三支陰陽燭。在看漲公允價值缺口中，**第三支陰陽燭的低點高於第一支的高點**。這兩個價格之間的空間只被中間那支陰陽燭穿過。看跌缺口是鏡像：第三支陰陽燭的高點低於第一支的低點。',
-  // The first candle tops out at 102.2 and the third bottoms at 104.4, so the range between was traded only by the large middle candle. Price later dips back into that range, finds buyers, and continues up.
-  'g1rzxrn0r4': '第一支陰陽燭最高到 102.2，第三支最低到 104.4，所以中間的範圍只由那支大的中間陰陽燭成交過。價格之後回落到這個範圍，找到買家，繼續上升。',
   // Fair value gap
   'osr8gfkoad': '公允價值缺口',
+  // A three-candle pattern that shows price moved too fast for normal two-sided trading. Price often comes back to it.
+  '38u47efnz7': '一個三支陰陽燭的形態，顯示價格移動得太快，未能進行正常的雙向交易。價格常常會回到這裡。',
+  // A **fair value gap** (FVG), or imbalance, is a range price moved through too fast to trade both ways. In three candles, a bullish gap has the **low of the third candle above the high of the first**; only the middle candle crossed that space. A bearish gap is the mirror image.
+  'wam6j9333a': '**公允價值缺口**（FVG），亦稱失衡，是價格移動得太快、未能雙向交易的範圍。在三支陰陽燭中，看漲缺口是**第三支陰陽燭的低點高於第一支的高點**；只有中間那支穿過這段空間。看跌缺口是鏡像。',
+  // The first candle tops out at 102.2 and the third bottoms at 104.4, so the range between was traded only by the large middle candle. Price later dips back into that range, finds buyers, and continues up.
+  'g1rzxrn0r4': '第一支陰陽燭最高到 102.2，第三支最低到 104.4，所以中間的範圍只由那支大的中間陰陽燭成交過。價格之後回落到這個範圍，找到買家，繼續上升。',
   // Displacement candle
   '1fuy6xkottx': '位移陰陽燭',
   // Price returns into the gap
   '1ikwr5b6lsc': '價格回到缺口',
-  // Why price returns
-  '194svlpobh8': '價格為甚麼會回來',
-  // The usual explanation is that the fast move left orders unfilled, and the market comes back to trade through those prices properly. A plainer one: after a sharp move, the first pullback tends to stop somewhere inside the candle that caused it, because that is where traders who missed it are waiting.
-  '272vh9ftc01': '常見的解釋是快速走勢留下了未成交的訂單，市場會回來在這些價格正常成交。較樸實的解釋是：急劇走勢之後，第一次回調往往停在引發走勢的那支陰陽燭之內，因為錯過了的交易者正在那裡等待。',
-  // Using gaps
-  '1as3r9ckrqb': '運用缺口',
-  // **Entry on the return.** In an uptrend, a bullish gap is a place to look for a long when price falls back into it. Many traders use the midpoint of the gap.
-  'zjd3dyjh8g': '**在回來時入場。**在上升趨勢中，價格回落到看漲缺口時，就是找做多機會的地方。很多交易者用缺口的中點。',
-  // **Stop beyond the gap.** If price trades all the way through it, the gap is filled and the idea is over.
-  '24skepc1df4': '**止蝕放在缺口之外。**如果價格完全穿過它，缺口就被回補了，想法也就結束。',
-  // **With structure, not alone.** A gap created by the move that broke structure matters more than one in the middle of a range.
-  'dzm2z04d9m': '**配合結構，而不是單獨使用。**由突破結構的走勢製造的缺口，比區間中間的缺口更重要。',
-  // Filled, or not
-  '10i5h4b4bfq': '回補與否',
-  // A gap is **filled** when price trades all the way through it. A gap that price only dips into and leaves is said to have been respected. Old, unfilled gaps on higher timeframes are also used as targets, on the view that price is likely to reach them eventually.
-  '2bdd1572fhn': '價格完全穿過缺口，缺口就被**回補**了。價格只是進入然後離開的缺口，叫做被尊重。較高時間週期上未回補的舊缺口也會被用作目標，認為價格最終很可能到達那裡。',
+  // The first pullback after a sharp move tends to stop inside the candle that caused it, because traders who missed it wait there.
+  '2f0arjdq4mo': '急劇走勢後的第一次回調，往往停在引發走勢的那支陰陽燭之內，因為錯過的交易者在那裡等候。',
+  // **Entry on the return**: in an uptrend, buy as price dips into a bullish gap, often at its midpoint.
+  'kdd785bz7z': '**在回來時入場**：在上升趨勢中，價格回落到看漲缺口時買入，常用缺口的中點。',
+  // **Stop beyond the gap**: if price crosses it completely, the gap is **filled** and the idea is over.
+  'a00d863u16': '**止蝕放在缺口之外**：如果價格完全穿過它，缺口就被**回補**了，想法也就結束。',
+  // **With structure**: a gap from the move that broke structure matters most. Old unfilled higher-timeframe gaps are used as targets.
+  '16itob4rfr': '**配合結構**：由突破結構的走勢造成的缺口最重要。較高時間週期上未回補的舊缺口會被用作目標。',
   // Gaps are everywhere on low timeframes
   'e7v9zt9ztc': '低時間週期上缺口到處都是',
-  // A 1-minute chart prints dozens of fair value gaps a day and most mean nothing. Favour gaps on the 15-minute chart and above, made by a clearly large candle, in the direction of the higher-timeframe trend.
-  '24i00jlhj4j': '1 分鐘圖一天會出現幾十個公允價值缺口，大部分毫無意義。優先考慮 15 分鐘圖或以上、由明顯大陰陽燭造成、順著較高時間週期趨勢方向的缺口。',
+  // A 1-minute chart prints dozens a day. Prefer gaps on 15-minute charts and up, from a clearly large candle, with the higher-timeframe trend.
+  '1abaog5pd3l': '1 分鐘圖一天會出現幾十個缺口。優先考慮 15 分鐘圖或以上、由明顯大陰陽燭造成、順着較高時間週期趨勢的缺口。',
   // Overlays, Fair value gaps shades each open gap and labels its direction. Gaps disappear from the chart once they are filled.
   '1miz7ysbrfi': '「圖層」中的「公允價值缺口」會為每個未回補的缺口加上陰影並標示方向。缺口被回補後就會從圖表上消失。',
   // Premium and discount
   '11qgip9hloz': '溢價區與折讓區',
+  // Premium
+  'jkwkoucfb4': '溢價區',
   // Split the current range in half. Buy in the lower half, sell in the upper half. A simple filter that stops you chasing.
   '2dzluj46w2j': '把目前的區間一分為二。在下半部買入，在上半部賣出。一個能阻止你追價的簡單過濾器。',
-  // Imagine the market is moving between a recent swing low and a recent swing high. SMC calls this the **dealing range**. Draw a line at its midpoint, the **equilibrium**. Everything above the midpoint is called **premium**: price is expensive relative to the range. Everything below is **discount**: price is cheap relative to the range.
-  '22c0qly5l0o': '想像市場在最近的擺動低點和擺動高點之間移動。聰明錢概念叫這做**交易區間**。在它的中點畫一條線，即**平衡點**。中點以上一切叫**溢價區**：相對區間而言價格昂貴。以下一切叫**折讓區**：相對區間而言價格便宜。',
+  // Between the recent swing low and high is the **dealing range**; its midpoint is the **equilibrium**. Above it is **premium**, expensive for the range; below it **discount**, cheap.
+  'kacza88blp': '最近擺動低點和高點之間是**交易區間**；它的中點是**平衡點**。中點以上是**溢價區**，相對區間昂貴；以下是**折讓區**，相對區間便宜。',
   // The move from 100 to 120 sets the range. Its midpoint is 110. The pullback goes below 110 into the discount half before the uptrend continues.
   'cjxnm66f8d': '由 100 到 120 的走勢定出區間。中點是 110。回調跌到 110 以下，進入折讓的一半，然後上升趨勢才繼續。',
   // Range high
   '4i5m2aiggq': '區間高點',
   // Equilibrium (50%)
   '1gq4f0dk861': '平衡點（50%）',
+  // Equilibrium
+  '1fpgpenbx9p': '平衡點',
   // Range low
   '195tr1whfax': '區間低點',
   // Discount: look for longs here
   '1d3fot5gvv3': '折讓區：在這裡找做多機會',
-  // The rule
-  '24onrw4sj98': '規則',
-  // In an uptrend, look for longs only when price has pulled back into the **discount** half.
-  '8rnykr01x7': '在上升趨勢中，只在價格回調到**折讓區**時才找做多機會。',
-  // In a downtrend, look for shorts only when price has rallied into the **premium** half.
-  '29529hnamj2': '在下跌趨勢中，只在價格反彈到**溢價區**時才找做空機會。',
-  // Take profit on the other side: longs are closed in premium, shorts in discount.
-  '1prdrvzm8j4': '在另一邊止賺：多倉在溢價區平倉，空倉在折讓區平倉。',
-  // This is the old advice to buy low and sell high, given a precise definition. Its real value is as a filter. Buying in premium means your stop has to sit far away, below the range low, while your target, the range high, is close. The risk/reward is poor before the trade begins.
-  '253w999r28w': '這就是古老的「低買高賣」建議，加上了精確的定義。它真正的價值在於作為過濾器。在溢價區買入，代表你的止蝕要放得很遠（區間低點之下），而目標（區間高點）卻很近。交易開始前風險回報就已經很差。',
-  // Putting it with what you know
-  '2ajma0fpm99': '與你已知的結合',
-  // Premium and discount tell you roughly where. An order block or a fair value gap inside the discount half tells you exactly where. An order block sitting in premium during an uptrend is one SMC traders skip.
-  'k73ledu9di': '溢價區和折讓區大致告訴你在哪裡。折讓區內的訂單塊或公允價值缺口準確告訴你在哪裡。上升趨勢中位於溢價區的訂單塊，聰明錢概念交易者會跳過。',
+  // Discount
+  '1233k31v7xe': '折讓區',
+  // In an uptrend, look for longs only in **discount**.
+  '9nshuq24ql': '在上升趨勢中，只在**折讓區**找做多機會。',
+  // In a downtrend, look for shorts only in **premium**.
+  '22hkl8t0cl4': '在下跌趨勢中，只在**溢價區**找做空機會。',
+  // Take profit on the other side.
+  '19rssjfenpn': '在另一邊止賺。',
+  // It is "buy low, sell high" made precise, and a filter: buying in premium means a far stop and a near target. Premium and discount say roughly where; an order block or gap in discount says exactly where.
+  '17oi7i5zrai': '這是把「低買高賣」變得精確，也是一個過濾器：在溢價區買入，代表止蝕遠、目標近。溢價區和折讓區告訴你大概在哪裡；折讓區內的訂單塊或缺口告訴你準確在哪裡。',
   // The range has to be chosen
   'an3qdrhthi': '區間必須自己揀選',
-  // The midpoint depends on which swing high and low you use, and two traders will pick different ones. Use the swing points of the timeframe you are trading, and redraw the range only when structure breaks, not when the result is inconvenient.
-  '1deo47s014s': '中點取決於你用哪個擺動高點和低點，而兩個交易者會揀不同的。用你交易的時間週期的擺動點，並只在結構突破時才重畫區間，而不是在結果不合心意時。',
+  // Use the swings of your trading timeframe, and redraw only when structure breaks, not when the result is inconvenient.
+  '11qdtwk3hnz': '用你交易時間週期的擺動點，只在結構突破時才重畫區間，而不是在結果不合心意時。',
   // Fibonacci in disguise
   'tmt844h5ij': '喬裝的斐波那契',
-  // The equilibrium is the 50% retracement. The next module covers the "optimal trade entry", which narrows the discount half to the 62% to 79% zone.
-  '180uh77ia7w': '平衡點就是 50% 回撤。下一個單元會講「最佳交易入場點」，它把折讓的一半收窄到 62% 至 79% 的區域。',
+  // The equilibrium is the 50% retracement. The next module narrows discount to the 62% to 79% "optimal trade entry".
+  'r6untjyq4k': '平衡點就是 50% 回撤。下一個單元會把折讓區收窄到 62% 至 79% 的「最佳交易入場點」。',
   // Putting an SMC trade together
   'uztlhn7ef0': '組合一宗聰明錢概念交易',
   // Sweep, shift, return: the standard SMC reversal setup step by step, with the checks that keep it from becoming a story told after the fact.
   '1emaes1wbtv': '掃蕩、轉向、回來：標準的聰明錢概念反轉形態逐步拆解，以及防止它變成事後故事的檢查。',
-  // The pieces from this module combine into one widely taught setup. It has three parts, and the order matters.
-  '1oa8qgh8qw5': '這個單元的各個部分組成一個廣泛教授的形態。它有三部分，次序很重要。',
-  // **Sweep.** Price takes out an obvious low (or high) and closes back inside. Liquidity has been collected.
-  '1izgo7z4bvi': '**掃蕩。**價格掃掉一個明顯的低點（或高點），然後收市回到範圍內。流動性已被收集。',
-  // **Shift.** Price then moves sharply the other way and closes beyond a recent swing point: a change of character, made with displacement, usually leaving a fair value gap.
-  'm7pjgos70f': '**轉向。**價格之後急劇轉向，收市越過最近的擺動點：一次以位移完成的特性轉變，通常留下公允價值缺口。',
-  // **Return.** Price pulls back into the fair value gap or the order block left by that move. That is the entry.
-  '2dm9nkysvh6': '**回來。**價格回調到那段走勢留下的公允價值缺口或訂單塊。那就是入場點。',
+  // Sweep, shift, return
+  '1hoclta7gus': '掃蕩、轉向、回來',
+  // The pieces of this module combine into one widely taught setup, in this order:
+  '450kfmdwe6': '這個單元的各部分組成一個廣泛教授的形態，次序如下：',
+  // **Sweep.** Price takes an obvious low (or high) and closes back inside.
+  '1uarug3gxiv': '**掃蕩。**價格掃掉一個明顯的低點（或高點），然後收市回到範圍內。',
+  // **Shift.** A sharp move the other way closes beyond a swing: a CHoCH with displacement, usually leaving a fair value gap.
+  '1xg8f7vuq6e': '**轉向。**一段方向相反的急劇走勢收市越過擺動點：一次帶有位移的特性轉變，通常留下公允價值缺口。',
+  // **Return.** Price pulls back into that gap or order block. That is the entry.
+  'wxhyrrwltc': '**回來。**價格回調到那個缺口或訂單塊。那就是入場點。',
   // A downtrend sweeps under its last low and closes back above it. Two strong candles follow, closing above the previous swing high and leaving a fair value gap. Price returns to the gap and the new uptrend begins.
   '1g8qaq6rezo': '一段下跌趨勢掃過最後的低點後收市回到其上方。之後兩支強勁的陰陽燭收市高於之前的擺動高點，並留下公允價值缺口。價格回到缺口，新的上升趨勢開始。',
   // 1. Sweep of the low
@@ -246,22 +216,20 @@ export default {
   'gfg289fq5s': '第一個目標：下跌趨勢開始的高點，112。回報：5.8，略高於 1 比 1。',
   // Second target: the next pool of liquidity above. Many traders close half at the first target and move the stop to the entry price.
   '7ujzlik78q': '第二個目標：上方下一個流動性池。很多交易者在第一個目標平掉一半，並把止蝕移到入場價。',
-  // A checklist before taking it
-  '10ol1jrj2gh': '入場前的檢查清單',
-  // Does the higher timeframe agree, or at least not disagree?
-  '1xbhpvnekrc': '較高的時間週期是否同意，或者至少不反對？',
-  // Was real liquidity taken: an obvious level, not a random wick?
-  '1vueqjujuik': '是否取走了真正的流動性：一個明顯的價位，而不是隨意的影線？',
-  // Did the shift close beyond a swing point, with large candles?
-  'z3brfxgkl8': '轉向是否以大陰陽燭收市越過擺動點？',
-  // Is the entry in the discount half of the new range (for a long)?
-  '2fzol0kgul6': '入場點是否位於新區間的折讓一半（做多時）？',
-  // Is the risk/reward at least 2 to 1 to a realistic target? In the example above the first target alone is not enough.
-  '1d1we3gc79e': '到實際目標的風險回報是否至少 2 比 1？在上面的例子中，單是第一個目標並不足夠。',
-  // An honest assessment
-  'hn5uv7y9ds': '坦白的評估',
-  // This setup is popular because the winners are dramatic: a tight stop under a fresh low and a long run afterwards. What social media does not show is how often the return never comes, so there is no trade, or the gap fails and the stop is hit. Because every element needs judgement, two SMC traders rarely mark the same chart the same way, which makes the method hard to test and easy to believe in.
-  '1u8a5xk6muz': '這個形態受歡迎，是因為成功的交易很戲劇化：在新低點下方放一個很窄的止蝕，之後一路長跑。社交媒體不會顯示的是，價格有多常根本沒有回來（所以沒有交易），或者缺口失效、止蝕被觸發。因為每個元素都需要判斷，兩個聰明錢概念交易者很少會以同樣方式標記同一張圖表，這令這個方法很難測試，卻很容易令人相信。',
+  // Checklist
+  'oopp25aa3z': '檢查清單',
+  // The higher timeframe agrees, or at least does not disagree.
+  'rxc0r437yc': '較高的時間週期同意，或至少不反對。',
+  // Real liquidity was taken: an obvious level, not a random wick.
+  'm4s5ijxr2w': '取走了真正的流動性：一個明顯的價位，而不是隨意的影線。',
+  // The shift closed beyond a swing with large candles.
+  '6x0tdq8qxk': '轉向以大陰陽燭收市越過擺動點。',
+  // The entry is in discount (for a long).
+  '82iwvlsjh0': '入場點在折讓區（做多時）。',
+  // At least 2 to 1 to a realistic target. Above, the first target alone is not enough.
+  '1rhd4w70uec': '到實際目標至少 2 比 1。上面的例子中，單是第一個目標並不足夠。',
+  // The winners are dramatic, which is why it is popular. Social media skips the times the return never comes or the gap fails. Every element needs judgement, so it is hard to test and easy to believe in.
+  'ft23mqmou0': '成功的交易很戲劇化，所以這個形態受歡迎。社交媒體不會顯示價格沒有回來、或缺口失效的時候。每個元素都需要判斷，所以它很難測試，卻很容易令人相信。',
   // Test it on charts you have not seen
   'ox74n33qga': '在你沒看過的圖表上測試',
   // Open Replay, pick a random date, switch on the overlays, and take only setups that meet every item on your checklist. Log each one in the Journal with the setup tag "SMC". After fifty trades the Analytics page will tell you whether it works in your hands. That number is worth more than any video.
@@ -338,8 +306,6 @@ export default {
   '1dx64p9yh4b': '買方流動性在哪裡？',
   // Below an obvious low
   '16vsdptmxex': '明顯低點之下',
-  // Above an obvious high
-  '180ua7c9p2h': '明顯高點之上',
   // At the current price
   'ur1n7pqp5a': '目前價格',
   // Only at round numbers
@@ -488,12 +454,6 @@ export default {
   '14dmfadpdqp': '平衡點是中點：(200 + 240) / 2 = 220。',
   // In that range, price is at 208. It is in:
   '1tybgc6xghg': '在這個區間中，價格是 208。它位於：',
-  // Premium
-  'jkwkoucfb4': '溢價區',
-  // Discount
-  '1233k31v7xe': '折讓區',
-  // Equilibrium
-  '1fpgpenbx9p': '平衡點',
   // Neither
   '1xlfibnn70k': '兩者都不是',
   // Below the midpoint is discount: cheap relative to the range.
@@ -526,8 +486,6 @@ export default {
   '1cmq3nd0xr': '標準聰明錢概念反轉形態的正確次序是甚麼？',
   // Return, shift, sweep
   'n0kb0kdzui': '回來、轉向、掃蕩',
-  // Sweep, shift, return
-  '1hoclta7gus': '掃蕩、轉向、回來',
   // Shift, sweep, return
   'snfj10vewv': '轉向、掃蕩、回來',
   // Sweep, return, shift
