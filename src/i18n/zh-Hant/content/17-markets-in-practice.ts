@@ -10,216 +10,186 @@ export default {
   '1pzem70drac': '加密貨幣市場如何運作',
   // Open all hours, spread across many exchanges, lightly regulated, and far more volatile than shares. What that means for a trader.
   '1jf2dhe1v26': '全天候開放、分散在很多交易所、監管寬鬆，而且比股票波動得多。這對交易者意味著甚麼。',
-  // Most of the live charts in this app are crypto, so it is worth knowing how that market differs from the stock market the textbooks describe.
-  'erl886mmmr': '這個應用程式的實時圖表大部分是加密貨幣，所以值得知道這個市場與教科書描述的股票市場有何不同。',
-  // Always open, never in one place
-  'jujnkwtc1g': '永遠開放，從不集中一處',
-  // **24 hours, 7 days.** There is no closing bell, so there are no overnight gaps, but there is also no time when you are safely out of the market by default. Weekend trading is thin and moves reverse more often.
-  'difcew11so': '**每日 24 小時，每週 7 天。**沒有收市鐘聲，所以沒有隔夜裂口，但也沒有一個你預設安全地離開市場的時間。週末交投稀疏，走勢較常反轉。',
-  // **Many exchanges.** Bitcoin trades on dozens of venues at slightly different prices. There is no single official price. The charts here come from one exchange.
-  '260qku8iqsh': '**很多交易所。**比特幣在數十個交易場所以略有不同的價格交易。沒有單一的官方價格。這裡的圖表來自一個交易所。',
-  // **Pairs.** You trade one asset against another: BTC/USDT is Bitcoin priced in Tether. USDT is a **stablecoin**, a token designed to stay worth one US dollar.
-  '1my3l7boh4z': '**貨幣對。**你以一種資產兌另一種資產交易：BTC/USDT 是以 Tether 計價的比特幣。USDT 是一種**穩定幣**，一種設計成價值保持一美元的代幣。',
-  // The order book is the market
-  'yy4alsiler': '買賣盤就是市場',
-  // On a crypto exchange you trade directly against other users through the order book, and you can see it. The depth on each side shows how much it would take to move price.
-  '2aagbt3qakk': '在加密貨幣交易所，你透過買賣盤直接與其他用戶交易，而且你看得見它。每一邊的深度顯示需要多少才能推動價格。',
+  // Most live charts in this app are crypto, which differs from the stock market in a few important ways.
+  'e0mvueaudw': '本應用大部分實時圖表是加密貨幣，它和股票市場有幾個重要分別。',
+  // Rows of computer racks with cooling fans in a large Bitcoin mining facility
+  'jxdrvq8ocy': '一個大型比特幣挖礦場內，一排排帶散熱扇的電腦機架',
+  // A Bitcoin mining farm. New coins come from computers like these, not from a company or a central bank.
+  '1twugrd3ber': '比特幣挖礦場。新幣來自這類電腦，而不是來自公司或中央銀行。',
+  // **24 hours, 7 days**: no overnight gaps, but no time you are safely out by default. Weekends are thin.
+  'j6krc4as53': '**全年無休**：沒有隔夜裂口，但也沒有預設安全離場的時間。週末成交稀薄。',
+  // **Many exchanges**: dozens of venues at slightly different prices, no single official price.
+  'tefjtacj9m': '**交易所眾多**：幾十個平台價格略有不同，沒有單一官方價格。',
+  // **Pairs**: BTC/USDT is Bitcoin priced in Tether, a **stablecoin** meant to stay worth one dollar.
+  '1ndcuoifu0r': '**交易對**：BTC/USDT 是以 Tether 計價的比特幣，Tether 是一種**穩定幣**，設計上保持值一美元。',
+  // You trade against other users through an order book you can see. Its depth shows how much it would take to move price.
+  'kt1d43d9fr': '你透過可見的訂單簿與其他用戶交易。它的深度顯示要多大的訂單才能推動價格。',
   // Volatility
   'zh226mzm1': '波動',
-  // Bitcoin routinely moves 3% to 5% in a day; smaller coins move 10% or more. A stock index moving 2% is a headline. This cuts both ways: targets are reached faster, and so are stops. Position sizes must be smaller to keep the same dollar risk, and leverage that would be moderate on a stock index is reckless on a small coin.
-  'c8h0loaf5e': '比特幣一天經常波動 3% 至 5%；較小的幣波動 10% 或以上。股票指數波動 2% 已是頭條新聞。這是雙刃劍：目標更快達到，止蝕也一樣。持倉規模必須較小才能保持相同的金額風險，而在股票指數上算溫和的槓桿，在小型幣上就是魯莽。',
-  // Risks that charts do not show
-  '1dwuu2h9fu2': '圖表看不到的風險',
-  // **Exchange risk.** Coins held on an exchange are a claim on that company. Exchanges have been hacked, have frozen withdrawals, and have collapsed with customer money. This is called **counterparty risk**.
-  '1chyplc1yl5': '**交易所風險。**存放在交易所的幣是對該公司的申索權。交易所曾被黑客入侵、凍結提款，甚至連同客戶資金倒閉。這叫做**對手方風險**。',
-  // **Stablecoin risk.** A stablecoin is only as good as what backs it. Some have lost their peg, and one large one went to zero.
-  '1pq2ikqmwrg': '**穩定幣風險。**穩定幣只與支持它的資產一樣可靠。有些曾經脫鈎，有一隻大型穩定幣更跌至零。',
-  // **Thin coins.** Small tokens can have so little trading that a modest order moves the price several percent, and you may not be able to sell at all in a panic.
-  '26bmyxiaavj': '**交投稀疏的幣。**小型代幣的交易量可以少到一張普通訂單就令價格移動幾個百分點，恐慌時你可能根本賣不出。',
-  // **Manipulation.** Rules against wash trading and coordinated pumps are weakly enforced compared with stock markets.
-  '1xtn998rczw': '**操控。**與股票市場相比，禁止虛假交易和協同拉高的規則執行得很弱。',
-  // **Regulation and tax.** Both vary by country and change often. Profits are usually taxable.
-  'tdbxsvx6bw': '**監管和稅務。**兩者因國家而異，而且經常改變。利潤通常需要課稅。',
-  // What carries over
-  'jo9vhj7ao6': '甚麼可以沿用',
-  // Everything in the earlier modules applies: structure, levels, risk per trade, expectancy. Crypto is not a different game. It is the same game played faster, with fewer safeguards.
-  '10sh7cv4vnb': '之前單元的一切都適用：結構、價位、每宗交易風險、期望值。加密貨幣不是另一個遊戲，而是同一個遊戲玩得更快、保障更少。',
+  // A chart of the Bitcoin price in US dollars on a logarithmic scale, rising over many years with several deep falls
+  '1o5iwyl59ng': '以對數尺度顯示的比特幣美元價格圖，多年來上升，中間有數次大跌',
+  // Bitcoin in dollars on a log scale. Repeated falls of 70% or more along a long rise.
+  'pltqh810o7': '以對數尺度顯示的比特幣美元價格。長期上升途中多次下跌 70% 或以上。',
+  // Bitcoin often moves 3% to 5% a day, small coins 10% or more. Targets and stops are hit faster, so positions must be smaller and leverage lower.
+  '14kxivo7fa0': '比特幣每日常波動 3% 至 5%，小幣 10% 或以上。目標和止蝕都更快觸及，所以倉位要更小，槓桿要更低。',
+  // **Exchange risk**: coins on an exchange are a claim on that company. Exchanges have been hacked and have collapsed.
+  '1dpu5wohp6s': '**交易所風險**：放在交易所的幣只是對該公司的申索。交易所曾被入侵，也曾倒閉。',
+  // **Stablecoin risk**: some have lost their peg; one large one went to zero.
+  'evsxdjf2n7': '**穩定幣風險**：有些曾脫鈎；一個大型穩定幣跌到零。',
+  // **Thin coins**: a modest order can move price several percent.
+  '1sgwppv1aob': '**冷門幣**：一張普通大小的訂單就能令價格變動幾個百分點。',
+  // **Manipulation and regulation**: weakly enforced rules; tax and law vary by country.
+  '1wndmaxa12q': '**操控和監管**：規則執行寬鬆；稅務和法律因地而異。',
   // Trade the largest, most liquid coins while learning.
   'ed9sq04sqa': '學習期間交易最大、流動性最高的幣。',
-  // Halve the position size you would use on a stock.
-  '2297cvy42r6': '持倉規模減至你在股票上會用的一半。',
-  // Never keep more on an exchange than you are prepared to lose with it.
-  'lp3nk4ccf6': '永遠不要在交易所存放多於你準備連同它一起損失的金額。',
+  // Halve the size you would use on a stock.
+  'r1jt2my9qg': '倉位減半，相對於你在股票上所用的。',
+  // Never keep more on an exchange than you could lose with it.
+  '19861s29lac': '放在交易所的資金，不要多於你能承受隨它一起損失的數目。',
   // This app is not an exchange
   '1ekfe0yzqy7': '這個應用程式不是交易所',
-  // Everything here is paper trading on real prices. Nothing is bought or sold, and no exchange account is involved. The risks above apply the day you trade with real money.
-  'g54sn3kst9': '這裡的一切都是以真實價格進行的模擬交易。沒有買入或賣出任何東西，也不涉及任何交易所戶口。上述風險在你用真錢交易的那天才適用。',
+  // Everything here is paper trading on real prices. The risks above apply the day you use real money.
+  '1vulli4287f': '這裏一切都是以真實價格進行的模擬交易。上述風險在你用真錢那天才適用。',
   // Reading funding, open interest and liquidations
   '2ekbhrkwz34': '解讀資金費率、未平倉合約和強制平倉',
   // Perpetual futures publish data that shows how crowded a trade is. A crowded trade is the fuel for a violent move the other way.
   '23uiriez8p7': '永續期貨公佈的數據顯示一宗交易有多擁擠。擁擠的交易是向反方向劇烈走勢的燃料。',
-  // The Futures module explained how a perpetual contract works. Beyond price, perpetuals produce three pieces of data that traders watch to judge positioning: the funding rate, open interest, and liquidations.
-  '1vsp8rw9n0n': '「期貨」單元解釋了永續合約如何運作。除了價格，永續合約還產生三項交易者用來判斷持倉狀況的數據：資金費率、未平倉合約和強制平倉。',
-  // Funding as a crowd gauge
-  'ta5d90n1d0': '以資金費率衡量擁擠程度',
-  // The **funding rate** is paid from longs to shorts when it is positive, and the other way when negative. It rises when more traders want to be long with leverage than short.
-  '1jrnyzihy64': '**資金費率**為正數時由多倉付給空倉，為負數時則相反。當想以槓桿做多的交易者多於做空的，它就會上升。',
-  // **High positive funding**: longs are crowded and paying to stay in. Not a sell signal alone, but the trade is expensive to hold and vulnerable.
-  'vng1mkeaxa': '**高正資金費率**：多倉擁擠，並要付錢才能留在場內。單憑這點不是賣出訊號，但這宗交易持有成本高而且脆弱。',
-  // **Negative funding**: shorts are crowded. The same vulnerability, upward.
-  'ifrvuu225o': '**負資金費率**：空倉擁擠。同樣脆弱，只是方向向上。',
-  // **Near zero**: positioning is balanced.
-  '1jot08t5anv': '**接近零**：持倉平衡。',
+  // Beyond price, perpetuals publish three things that show positioning: funding, open interest and liquidations.
+  '2g4o1i1cpsg': '除了價格，永續合約還公布三項顯示倉位分布的數據：資金費率、未平倉合約和強制平倉。',
+  // **High positive funding**: longs are crowded and paying to stay in. Expensive and vulnerable.
+  '1ots2kg33m1': '**資金費率高且為正**：好倉擠擁，要付錢才能留倉。成本高且脆弱。',
+  // **Negative funding**: shorts are crowded, vulnerable upward.
+  '17z3aghnl5b': '**資金費率為負**：淡倉擠擁，容易向上急升。',
+  // **Near zero**: balanced.
+  'p2p6s2i8x': '**接近零**：好淡平衡。',
   // Daily cost of funding = position value x funding rate x 3
   '1cuh8leas3h': '每日資金費用 = 持倉價值 x 資金費率 x 3',
-  // At 0.05% every 8 hours, a $10,000 long pays $15 a day. Over a month that is about 4.5% of the position, and far more as a share of the margin if you are leveraged.
-  '1alietd38dn': '每 8 小時 0.05%，$10,000 的多倉每天付 $15。一個月約是持倉的 4.5%，如果用了槓桿，佔保證金的比例就高得多。',
-  // Open interest
-  'o4bkjfv8pl': '未平倉合約',
-  // **Open interest** is the total number of contracts currently open. It rises when new positions are opened and falls when they are closed.
-  '168xp76f0tv': '**未平倉合約**是目前未平倉的合約總數。新開倉時它上升，平倉時它下降。',
-  // **Price up, open interest up**: new money is entering on the long side. The trend has participation.
-  'imb4bdorya': '**價格上升，未平倉合約上升**：新資金從多方入場。趨勢有參與度。',
-  // **Price up, open interest down**: shorts are closing. A short-covering rally, which tends to run out.
-  '7sscvccw4x': '**價格上升，未平倉合約下降**：空倉正在平倉。這是空頭回補帶動的升勢，往往後勁不繼。',
-  // **Price flat, open interest climbing fast**: leverage is building on both sides. A sharp move is being set up, direction unknown.
-  'tjh3f074ly': '**價格持平，未平倉合約急升**：兩邊的槓桿都在累積。一次急劇走勢正在醞釀，方向未知。',
-  // **Open interest collapsing**: positions were forced out. The move that did it is often near its end.
-  '1x02gm62huo': '**未平倉合約急跌**：持倉被迫平倉。造成這情況的走勢常已接近尾聲。',
-  // The liquidation cascade
-  '5rmmuchqqt': '強制平倉連鎖反應',
-  // When price falls to the liquidation level of leveraged longs, the exchange sells their positions at market. That selling pushes price lower, which liquidates the next layer of longs, and so on. This chain reaction is a **liquidation cascade**. On the chart it is a sudden long candle on enormous volume, usually followed by a sharp partial recovery once the forced selling stops.
-  '1m32r925ojm': '當價格跌到槓桿多倉的強制平倉價，交易所會以市價賣出他們的持倉。這些賣盤令價格再跌，觸發下一層多倉的強制平倉，如此類推。這種連鎖反應就是**強制平倉連鎖反應**。在圖表上，它是一支突然出現、成交量巨大的長陰陽燭，通常在強制賣盤停止後出現急劇的部分回升。',
-  // A slow, leveraged climb, then one candle erases two weeks of gains on several times the normal volume and leaves a long lower wick. The fall fed on itself as leveraged longs were liquidated, and stopped when there were none left to sell.
-  '1v6qqxtotu6': '一段緩慢的槓桿式上升，然後一支陰陽燭以數倍於正常的成交量抹去兩星期的升幅，並留下長下影線。槓桿多倉被強制平倉令下跌自我強化，直到再沒有人要被迫賣出才停止。',
+  // At 0.05% every 8 hours, a $10,000 long pays $15 a day: about 4.5% a month.
+  '2m5oyk9pvs': '每 8 小時 0.05%，$10,000 的好倉每日付 $15：每月約 4.5%。',
+  // **Open interest** is the number of contracts open.
+  'ai02igstab': '**未平倉合約**（OI）是目前未平倉的合約數量。',
+  // **Price up, OI up**: new longs; the trend has participation.
+  'u7u6apdu1n': '**價升、OI 升**：新好倉入場；趨勢有人參與。',
+  // **Price up, OI down**: shorts closing; a rally that tends to run out.
+  '4npog02dc2': '**價升、OI 跌**：淡倉平倉；這種升勢往往後勁不繼。',
+  // **Price flat, OI climbing fast**: leverage building on both sides; a sharp move is coming.
+  '12tj222di4x': '**價平、OI 急升**：兩邊都在加槓桿；急劇走勢即將出現。',
+  // **OI collapsing**: positions forced out; the move is often near its end.
+  '28id3tjz1pp': '**OI 急跌**：倉位被迫平掉；走勢往往接近尾聲。',
+  // When price hits leveraged longs’ liquidation levels, the exchange sells them at market, pushing price into the next layer: a **liquidation cascade**.
+  '1pn2igd0ox1': '當價格觸及槓桿好倉的強制平倉價，交易所以市價賣出它們，把價格推向下一層：這就是**連環強制平倉**。',
+  // A slow leveraged climb, then one candle erases two weeks of gains on huge volume. The fall fed on itself until no leveraged longs were left, then bounced.
+  'nphnty7o5c': '槓桿推動的緩慢上升，然後一支陰陽燭在巨量下抹去兩星期的升幅。下跌自我加速，直到再沒有槓桿好倉可被平掉，然後反彈。',
   // Cascade: forced selling
   '262tga8oxr4': '連鎖反應：強制賣出',
   // Rebound once it ends
   '54dyusc103': '結束後反彈',
-  // Using it
-  'mrxntxfkuu': '運用它',
-  // Do not join a crowded side with high leverage. If funding is extreme and open interest is at a record, you are the fuel.
-  'znk993elzw': '不要以高槓桿加入擁擠的一方。如果資金費率極端而未平倉合約創紀錄，你就是燃料。',
-  // After a cascade, the forced sellers are gone. Chasing the move at that point is usually late.
-  '1fcva2drdx4': '連鎖反應之後，被迫賣出的人已經離場。這時追逐走勢通常已經太遲。',
-  // Keep your own liquidation price far from where others’ are: use low leverage and a stop-loss well before liquidation.
-  '2esybia7kqw': '讓你自己的強制平倉價遠離其他人的：用低槓桿，並在強制平倉前很遠的地方設止蝕。',
+  // Extreme funding and record open interest: you are the fuel. Avoid high leverage.
+  'x9gvfgu7w4': '資金費率極端、未平倉合約創紀錄：你就是燃料。避免高槓桿。',
+  // After a cascade the forced sellers are gone; chasing is usually late.
+  '1pfcbwva1hs': '連環強制平倉後，被迫賣出的人已經走了；這時追入通常太遲。',
+  // Keep your liquidation price far away: low leverage, a stop well before it.
+  'hxz2ld8t9e': '讓你的強制平倉價遠離市價：低槓桿，止蝕設在強制平倉之前很遠。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
-  // The futures simulator charges a fixed, typical funding rate and does not show open interest, because that data is not available from every region. The Futures page shows your own liquidation price on the chart, and the gauge shows how close you are.
-  '774lhgmaec': '期貨模擬器收取一個固定的典型資金費率，並不顯示未平倉合約，因為並非每個地區都能取得這些數據。期貨頁在圖表上顯示你自己的強制平倉價，量表則顯示你有多接近。',
-  // Positioning data is a condition, not a timing tool
-  '5ruxxkow0o': '持倉數據是一種狀況，不是時機工具',
-  // Funding can stay high for weeks in a bull market. It tells you the risk in the position, not when the reversal comes.
-  'o9fjvuoqjv': '在牛市中資金費率可以持續高企幾個星期。它告訴你持倉的風險，而不是反轉甚麼時候到來。',
+  // The futures simulator charges a fixed, typical funding rate and does not show open interest. The Futures page shows your liquidation price on the chart.
+  '12clo83rh0a': '期貨模擬器收取固定的典型資金費率，不顯示未平倉合約。期貨頁面會在圖表上顯示你的強制平倉價。',
+  // A condition, not a timing tool
+  'm59rh44u0q': '是狀況，不是入市時機工具',
+  // Funding can stay high for weeks in a bull market. It shows the risk, not when the reversal comes.
+  '1rxob9dfhhl': '牛市中資金費率可以高企幾星期。它顯示風險，而不是反轉何時出現。',
   // Forex: pairs, pips and lots
   'egsvjvtal9': '外匯：貨幣對、點子和手數',
   // The currency market has its own units. Once you can convert a pip into money, everything else is the same as any other chart.
   '1x4vtk48upv': '貨幣市場有自己的單位。只要你能把點子換算成金錢，其他一切都與任何圖表一樣。',
-  // Forex is the market for exchanging one currency for another. It is the largest market in the world, open from Monday morning in Asia to Friday evening in New York. One forex chart, EUR/USD, is included in this app.
-  '1fhrc4gi8sd': '外匯是把一種貨幣兌換成另一種貨幣的市場。它是全球最大的市場，由亞洲的星期一早上開放到紐約的星期五晚上。這個應用程式包含一個外匯圖表：EUR/USD。',
-  // Reading a pair
-  '21hfie41i20': '解讀貨幣對',
-  // In EUR/USD at 1.0850, one euro costs 1.0850 US dollars. The first currency is the **base**; the second is the **quote**. Buying the pair means buying euros and selling dollars: you profit if the euro strengthens.
-  '18y3nfsk1rb': 'EUR/USD 在 1.0850 時，一歐元值 1.0850 美元。第一個貨幣是**基礎貨幣**；第二個是**報價貨幣**。買入這個貨幣對代表買入歐元、賣出美元：歐元轉強你就獲利。',
-  // EUR/USD through 2025 on the daily chart. The whole year spans roughly 15%. A stock can move that much in a week, which is why currencies are usually traded with leverage, and why that leverage needs care.
-  '23625f89d5a': 'EUR/USD 在 2025 年的日線圖。全年的波幅約 15%。一隻股票一星期就可以波動這麼多，這就是為甚麼貨幣通常以槓桿交易，也是為甚麼槓桿需要小心。',
-  // Pips
-  '15rfgw1ar52': '點子',
-  // A **pip** is the standard unit of movement: for most pairs, 0.0001, the fourth decimal place. A move from 1.0850 to 1.0875 is 25 pips. For pairs quoted in Japanese yen a pip is 0.01.
-  'cwjj2gosv5': '**點子**是標準的波動單位：大部分貨幣對是 0.0001，即小數點後第四位。由 1.0850 到 1.0875 是 25 點子。以日圓報價的貨幣對，一點子是 0.01。',
-  // Lots
-  'yrmmexw4tj': '手數',
-  // Position size is quoted in **lots**. A **standard lot** is 100,000 units of the base currency, a mini lot is 10,000 and a micro lot is 1,000.
-  '1byp8seq2fz': '持倉規模以**手**報價。一**標準手**是 100,000 單位基礎貨幣，迷你手是 10,000，微型手是 1,000。',
+  // Forex is the market for swapping currencies, the largest in the world, open Monday in Asia to Friday in New York.
+  '1ed7nowt1rz': '外匯是兌換貨幣的市場，是全球最大的市場，由星期一亞洲開市至星期五紐約收市。',
+  // A currency exchange office window showing buy and sell rates for many currencies on an electronic board
+  'i1pnkprsaf': '一間找換店的電子牌，顯示多種貨幣的買入價和賣出價',
+  // An exchange office shows the same idea as a forex chart: a buy price and a slightly worse sell price for each pair.
+  '2dr8l00sj4b': '找換店與外匯圖表是同一個概念：每種貨幣都有買入價和稍差的賣出價。',
+  // In EUR/USD at 1.0850, one euro costs 1.0850 dollars. The first currency is the **base**, the second the **quote**. Buying the pair means buying euros.
+  '13gx0majnzs': 'EUR/USD 報 1.0850，即一歐元值 1.0850 美元。第一種貨幣是**基準貨幣**，第二種是**報價貨幣**。買入這個貨幣對即是買入歐元。',
+  // EUR/USD through 2025. The whole year spans about 15%, a week for some stocks, which is why currencies are traded with leverage.
+  '1l20zmmmx4e': '2025 年的 EUR/USD。全年波幅約 15%，某些股票一星期就能走完，所以貨幣通常以槓桿交易。',
+  // **Pip**: 0.0001 for most pairs (0.01 for yen pairs). 1.0850 to 1.0875 is 25 pips.
+  '22bupwxfot7': '**點子**：大部分貨幣對為 0.0001（日圓貨幣對為 0.01）。1.0850 到 1.0875 是 25 點子。',
+  // **Lots**: standard 100,000 units, mini 10,000, micro 1,000.
+  '1l21paeohyw': '**手**：標準手 100,000 單位，迷你手 10,000，微型手 1,000。',
+  // 100,000 units
+  'm8bs4l08vn': '100,000 單位',
   // Value of one pip = position size x 0.0001 (in the quote currency)
   'hbmtgntdhy': '每點子價值 = 持倉規模 x 0.0001（以報價貨幣計）',
-  // For EUR/USD: a standard lot is worth $10 a pip, a mini lot $1, a micro lot $0.10.
-  '1zacvjr7tqo': '以 EUR/USD 計：一標準手每點子值 $10，迷你手 $1，微型手 $0.10。',
+  // EUR/USD: a standard lot is $10 a pip, a mini lot $1, a micro lot $0.10.
+  '282oo7nvv2n': 'EUR/USD：標準手每點子 $10，迷你手 $1，微型手 $0.10。',
   // Sizing a forex trade
   'ucczol4887': '為外匯交易定規模',
-  // Account $5,000, risking 1%: $50.
-  '1zp4ju2pgm4': '戶口 $5,000，承受 1% 風險：$50。',
-  // Entry on EUR/USD at 1.0850, stop at 1.0825: 25 pips.
-  'voc4b1tdfa': '在 1.0850 買入 EUR/USD，止蝕 1.0825：25 點子。',
-  // $50 / 25 pips = $2 a pip.
-  'd9imjsn6j3': '$50 / 25 點子 = 每點子 $2。',
-  // $2 a pip is two mini lots, or 20,000 euros of position.
-  'lipmtbl21j': '每點子 $2 是兩迷你手，即 20,000 歐元的持倉。',
-  // That position is worth about $21,700: more than four times the account. Leverage is needed just to take a 1% risk, which is normal in forex and is why the stop is not optional.
-  'srkysf4p30': '這個持倉價值約 $21,700：超過戶口的四倍。單是承受 1% 風險就需要槓桿，這在外匯是正常的，也是為甚麼止蝕不是可有可無。',
-  // What moves currencies
-  'pkdt64acj1': '甚麼推動貨幣',
-  // **Interest rates.** Money flows toward currencies that pay more. Central bank decisions are the biggest scheduled events.
-  'p8r69o4blb': '**利率。**資金流向息率較高的貨幣。央行議息是最大的預定事件。',
-  // **Economic data.** Inflation and employment figures, because they change what central banks are expected to do.
-  '1ohm7jn67x9': '**經濟數據。**通脹和就業數字，因為它們改變市場對央行行動的預期。',
-  // **Risk mood.** In a scare, money moves into the dollar, yen and Swiss franc.
-  'ow026d0cov': '**風險情緒。**恐慌時，資金流入美元、日圓和瑞士法郎。',
-  // Holding a pair overnight also earns or costs a small amount of interest, the difference between the two currencies’ rates. Buying a high-rate currency against a low-rate one to collect that difference is a **carry trade**.
-  'y09hxc88cu': '隔夜持有貨幣對也會賺取或支付少量利息，即兩種貨幣利率的差額。買入高息貨幣、賣出低息貨幣以收取這個差額，叫做**套息交易**。',
-  // Costs and brokers
-  '22zxjzxgxtu': '成本和經紀',
-  // Most retail forex has no commission; the cost is the spread, often around one pip on major pairs and much wider on minor ones or around news. Retail forex is traded through a broker, not a central exchange, so the broker’s quality matters. Use one regulated in a major jurisdiction.
-  '64f76ct5t5': '大部分零售外匯沒有佣金；成本是差價，主要貨幣對通常約一點子，次要貨幣對或消息公佈前後則闊得多。零售外匯透過經紀而不是中央交易所交易，所以經紀的質素很重要。選擇一個在主要司法管轄區受監管的經紀。',
+  // Account $5,000, risk 1%: $50.
+  '1iyqipsd54q': '戶口 $5,000，風險 1%：$50。',
+  // Entry 1.0850, stop 1.0825: 25 pips.
+  'cokxv4eq60': '入場 1.0850，止蝕 1.0825：25 點子。',
+  // $50 / 25 = $2 a pip: two mini lots.
+  '1h531hnz0hb': '$50 / 25 = 每點子 $2：兩迷你手。',
+  // That position is worth about $21,700, over four times the account. Leverage is normal here, which is why the stop is not optional.
+  '19erl38690j': '這個倉位約值 $21,700，超過戶口四倍。外匯用槓桿很正常，所以止蝕不可或缺。',
+  // **Interest rates**: money flows to higher-paying currencies.
+  '1k5a5ugq19x': '**利率**：資金流向利息較高的貨幣。',
+  // **Economic data**: inflation and jobs change rate expectations.
+  'oyma1hp8py': '**經濟數據**：通脹和就業數據改變對利率的預期。',
+  // **Risk mood**: in a scare money goes to the dollar, yen and Swiss franc.
+  'dt3zcgkd': '**市場情緒**：恐慌時資金流向美元、日圓和瑞士法郎。',
+  // **Carry**: holding overnight earns or pays the rate difference.
+  'zx8px6qmtn': '**套息**：隔夜持倉會賺取或支付兩種貨幣的息差。',
+  // Retail forex usually has no commission; the cost is the spread, about one pip on major pairs. Use a broker regulated in a major jurisdiction.
+  'qwqn3n85tt': '零售外匯通常沒有佣金；成本是買賣差價，主要貨幣對約一點子。選用受主要地區監管的經紀。',
   // High leverage is the default, and the danger
   '1xsy742wyfl': '高槓桿是預設，也是危險',
-  // Brokers commonly offer 30 to 1 or more. With 30 to 1, a move of about 3% against you wipes out the margin. Size from your stop, as above, and ignore how much the broker would let you trade.
-  'yarss812xm': '經紀通常提供 30 比 1 或更高的槓桿。以 30 比 1 計，約 3% 的逆向走勢就會抹去保證金。按上述方法由止蝕定規模，不要理會經紀容許你交易多少。',
-  // EUR/USD has bundled daily history, so it can be charted, replayed and backtested. Quantities are in units of the base currency: 10,000 is one mini lot.
-  'eqdfs6pq40': 'EUR/USD 附有內置的每日歷史數據，所以可以繪圖、重播和回測。數量以基礎貨幣單位計：10,000 是一迷你手。',
+  // At 30 to 1, a 3% move against you wipes out the margin. Size from the stop and ignore how much the broker allows.
+  '17za70xo13y': '30 倍槓桿下，逆向 3% 就會蝕光保證金。按止蝕計算倉位，不要理會經紀容許你做多大。',
+  // EUR/USD has bundled daily history for charts, replay and backtests. Quantities are base-currency units: 10,000 is one mini lot.
+  'patt8m8qyd': 'EUR/USD 附有每日歷史數據，可用於圖表、重播和回測。數量以基準貨幣單位計：10,000 即一迷你手。',
   // The true cost of a trade
   '113954o5stm': '一宗交易的真實成本',
   // Fees, spread, slippage and funding come off every trade whether it wins or loses. Many strategies that look profitable are not, once these are counted.
   'rmyutxi3f0': '手續費、差價、滑價和資金費用，不論輸贏都會從每宗交易中扣除。很多看似有利可圖的策略，計入這些後就不是了。',
-  // A backtest or a chart shows the price. Your account receives the price minus costs. For longer-term trading the difference is small. For active trading it is often the whole edge.
-  '28y2p4y6qq4': '回測或圖表顯示的是價格。你的戶口收到的是價格減去成本。對長線交易來說差別很小。對活躍交易來說，它往往就是整個優勢。',
-  // The four costs
-  'sya4ffcfeh': '四種成本',
-  // **Commission or fee.** A percentage of the trade value, charged on entry and again on exit. Many exchanges charge less for limit orders that wait in the book (maker) than for orders that fill at once (taker).
-  'am5021oa94': '**佣金或手續費。**交易價值的一個百分比，入場時收一次，出場時再收一次。很多交易所對在買賣盤中等候的限價單（掛單方）收費，低於即時成交的訂單（吃單方）。',
-  // **Spread.** You buy at the ask and sell at the bid. Crossing the spread costs half of it each way.
-  '22rr8w43d14': '**差價。**你以賣出價買入，以買入價賣出。每一邊跨越差價都要付一半差價。',
-  // **Slippage.** The difference between the price you expected and the price you got. It grows with order size, with speed of the market, and on stop orders, which become market orders at the worst moment.
-  '1u1dokl64zl': '**滑價。**你預期的價格和實際成交價的差距。它隨訂單大小、市場速度而增加，觸發單也會在最壞的時刻變成市價單。',
-  // **Holding costs.** Funding on perpetuals, overnight interest in forex, borrowing costs on short stock positions.
-  '245n0tg6utd': '**持倉成本。**永續合約的資金費用、外匯的隔夜利息、做空股票的借貨成本。',
+  // Your account receives the price minus costs. For active trading the costs are often the whole edge.
+  'rwikyepwxx': '你的戶口收到的是價格減去成本。對活躍交易來說，成本往往就是全部優勢。',
+  // **Fee**: charged on entry and exit; limit (maker) orders often pay less than market (taker) orders.
+  '1e9yu6kf5oa': '**手續費**：入場和出場都收；限價（掛單方）訂單通常比市價（吃單方）訂單便宜。',
+  // **Spread**: buy at the ask, sell at the bid.
+  'a7bgjz5444': '**買賣差價**：以賣出價買入，以買入價賣出。',
+  // **Slippage**: the gap between expected and actual fill, worst on stops in fast markets.
+  'd57wznnb81': '**滑價**：預期與實際成交價之差，在急市中的止蝕最嚴重。',
+  // **Holding costs**: funding, overnight interest, borrowing for shorts.
+  '188x7kn329m': '**持倉成本**：資金費率、隔夜利息、沽空的借貨費。',
   // One round trip
   'xkhhihxngt': '一次來回',
-  // You buy $5,000 of Ethereum with a market order and later sell with a market order.
-  '1kydh9cokhy': '你以市價單買入 $5,000 以太幣，之後以市價單賣出。',
-  // Fee: 0.1% each way: $5 + $5 = $10.
-  '12qnaj4ldsx': '手續費：每邊 0.1%：$5 + $5 = $10。',
-  // Spread: 0.02%, half each way: $1.
-  'n5jh52djx7': '差價：0.02%，每邊一半：$1。',
-  // Slippage: 0.05% each way: $5.
-  '1hucpk0o677': '滑價：每邊 0.05%：$5。',
-  // Total: $16, or 0.32% of the position. The trade has to make 0.32% before it earns anything.
-  '21woiw6hqeo': '總計：$16，即持倉的 0.32%。交易要先賺 0.32% 才開始有收益。',
-  // Costs against expectancy
-  '16u1cg0gfe7': '成本與期望值',
-  // Expectancy is what a trade earns on average before costs. Subtract the round-trip cost from every trade, winners and losers alike. A system that averages 0.4% a trade before costs and pays 0.32% is barely profitable. Take four such trades a day and the costs alone are more than 1% of the capital in use, every day.
-  'af5riqpwmx': '期望值是一宗交易在扣除成本前的平均收益。從每宗交易（不論輸贏）中減去來回成本。一個平均每宗交易賺 0.4%、要付 0.32% 成本的系統，幾乎沒有利潤。一天做四宗這樣的交易，單是成本每天就超過所用資金的 1%。',
-  // Run the simulation with a modest edge and picture a fixed cost taken from every trade. The gently rising line flattens, then falls.
-  '16gdvfna2vq': '用一個溫和的優勢執行模擬，想像每宗交易都扣除固定成本。緩緩上升的線會變平，然後下跌。',
-  // Reducing them
-  'g21fd901n5': '減低成本',
-  // **Trade less.** The surest way. One good trade costs a fifth of five mediocre ones.
-  '1egb10o21ie': '**少交易。**最可靠的方法。一宗好交易的成本是五宗平庸交易的五分之一。',
-  // **Use limit orders** when you can wait. No spread, usually a lower fee, no slippage. The price is that you may not be filled.
-  'mxhcmcy7yq': '**能等的時候使用限價單。**沒有差價，手續費通常較低，沒有滑價。代價是可能無法成交。',
-  // **Trade liquid markets at liquid times.** Spreads widen sharply overnight, at weekends and around news.
-  '1u6buvaj621': '**在流動時間交易流動的市場。**隔夜、週末和消息公佈前後，差價會急劇擴闊。',
-  // **Make the target large relative to the cost.** A 3% target absorbs 0.3% easily. A 0.3% target does not exist after costs.
-  '28ogpaxxjnn': '**讓目標相對成本夠大。**3% 的目標輕易吸收 0.3%。0.3% 的目標扣除成本後就不存在。',
-  // **Keep leverage low** on perpetuals you intend to hold: funding is charged on the full position, not on your margin.
-  'w0uor3s2cr': '**保持低槓桿**，如果你打算持有永續合約：資金費用按整個持倉收取，而不是按你的保證金。',
-  // Settings lets you change the fee and slippage used by paper trading and the Backtester. Run the same backtest with fees at 0% and at 0.1% and compare the results: for high-turnover strategies the difference is usually the entire profit. The Journal shows the fees paid on every trade.
-  '1i4tehy23kd': '「設定」讓你更改模擬交易和回測器使用的手續費和滑價。以 0% 和 0.1% 手續費執行同一個回測並比較結果：對高周轉率的策略來說，差別通常就是全部利潤。交易日誌顯示每宗交易支付的手續費。',
+  // $5,000 of Ethereum, market order in and out.
+  'hvwebpsdy7': '$5,000 以太幣，市價入場及出場。',
+  // Fee 0.1% each way: $10.
+  '2e4v86kpzl9': '手續費每邊 0.1%：$10。',
+  // Spread: $1. Slippage 0.05% each way: $5.
+  '1qrmwaxens9': '買賣差價：$1。滑價每邊 0.05%：$5。',
+  // Total $16, or 0.32%, before the trade earns anything.
+  '1dgtnvdr6lv': '合共 $16，即 0.32%，交易未賺錢前已付出。',
+  // A system averaging 0.4% a trade before costs and paying 0.32% is barely profitable. Picture a fixed cost taken from every trade in the simulation: the rising line flattens, then falls.
+  '1g9pvvsxazu': '一個未計成本平均每單賺 0.4%、要付 0.32% 成本的系統，只是勉強有利可圖。想像模擬中每單都扣除固定成本：上升的線會變平，然後下跌。',
+  // **Trade less.**
+  '2cclrdwucob': '**少交易。**',
+  // **Use limit orders** when you can wait.
+  '1ql65nrgqy': '能等時**用限價單**。',
+  // **Trade liquid markets at liquid times.**
+  '1d3e3agexte': '**在流動性高的時段交易流動性高的市場。**',
+  // **Make the target large relative to cost**: 3% absorbs 0.3%; a 0.3% target vanishes.
+  'x1mddl70m': '**目標要比成本大很多**：3% 能吸收 0.3%；0.3% 的目標會消失。',
+  // **Keep leverage low**: funding is charged on the full position.
+  '7s4bvlpfyv': '**保持低槓桿**：資金費率按整個倉位收取。',
+  // Settings changes the fee and slippage for paper trading and the Backtester. Run a backtest at 0% and 0.1% fees: for high-turnover strategies the difference is usually the whole profit.
+  '1ztr7do083q': '設定頁可改模擬交易和回測器的手續費和滑價。用 0% 和 0.1% 手續費各回測一次：對高周轉策略來說，差別通常就是全部利潤。',
   // Stops fill worse than you plan
   '1uiu7cifrkh': '止蝕的成交價比你計劃的差',
-  // A stop-loss becomes a market order when it triggers, in a market that is moving against you. In a fast move or across a gap, the fill can be well beyond the stop price. Size positions with some allowance for that, and never assume the loss is capped exactly at the stop.
-  '1gakihgi6sx': '止蝕觸發時會在一個對你不利的市場中變成市價單。在快速走勢或跨越裂口時，成交價可能遠超止蝕價。定持倉規模時要為此預留空間，永遠不要假設損失會準確地限於止蝕價。',
+  // A triggered stop is a market order in a market moving against you. In a gap the fill can be far beyond the stop.
+  '1yrfcpv5ufe': '止蝕被觸發後是在逆市中的市價單。遇上裂口，成交價可遠遠超出止蝕價。',
   // What is a stablecoin?
   'bv1v6rwfnp': '穩定幣是甚麼？',
   // A coin whose price never changes by law
@@ -342,6 +312,8 @@ export default {
   '1c6sru7f6dy': '歐元值 110 美元',
   // The spread is 1.1 pips
   '23ungt50ftl': '差價是 1.1 點子',
+  // The spread
+  'apx723s67j': '差價',
   // The base currency (EUR) is priced in the quote currency (USD).
   '24mt93ctdh7': '基礎貨幣（EUR）以報價貨幣（USD）計價。',
   // EUR/USD moves from 1.0850 to 1.0890. How many pips is that?
@@ -354,8 +326,6 @@ export default {
   '11f09t1h1bc': '1,000 單位',
   // 10,000 units
   '1k77940qdzn': '10,000 單位',
-  // 100,000 units
-  'm8bs4l08vn': '100,000 單位',
   // 1,000,000 units
   '1yrv440szf4': '1,000,000 單位',
   // A standard lot is 100,000 units of the base currency. A mini lot is 10,000 and a micro lot 1,000.
@@ -390,8 +360,6 @@ export default {
   '4ha2edliqy': '可用槓桿是上限，不是建議。規模由風險決定。',
   // Which of these is a trading cost even with a "zero commission" broker?
   '23rmgv2us5z': '即使經紀「零佣金」，以下哪一項仍是交易成本？',
-  // The spread
-  'apx723s67j': '差價',
   // The candle colour
   '24snh2yqgiz': '陰陽燭顏色',
   // The timeframe
