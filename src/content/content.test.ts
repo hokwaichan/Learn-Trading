@@ -232,7 +232,9 @@ describe('glossary', () => {
     expect(linked('The standard deviation shows how spread out they are.')).toEqual(['standard-deviation']);
   });
 
-  it('every lesson links at least one glossary term', () => {
+  // Links every sentence of the curriculum: about half a second locally, but shared CI
+  // runners can be ten times slower, so it gets more than the default 5 seconds.
+  it('every lesson links at least one glossary term', { timeout: 30_000 }, () => {
     const matcher = buildMatcher(GLOSSARY);
     for (const lesson of lessons) {
       const seen = new Set<string>();
