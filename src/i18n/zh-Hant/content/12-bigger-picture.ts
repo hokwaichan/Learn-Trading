@@ -10,74 +10,60 @@ export default {
   '1wpmeu6o5bl': '由上而下分析：不止一個時間週期',
   // Start on a high timeframe to find the direction, then move down to find the entry. The single habit that removes the most bad trades.
   '1xns6aoct3m': '先在較高的時間週期找方向，再向下找入場點。這是能減少最多壞交易的單一習慣。',
-  // Every chart is a zoomed view of the same market. A strong rally on the 5-minute chart can be a small bounce inside a daily downtrend. Traders who look at only one timeframe keep buying those bounces and wondering why they fail. **Top-down analysis** means reading the market from the largest view to the smallest before placing a trade.
-  '1oy5iwij5lo': '每張圖表都是同一個市場的放大畫面。5 分鐘圖上的強勁升勢，可能只是日線下跌趨勢中的一次小反彈。只看一個時間週期的交易者會不斷買入這些反彈，然後納悶為甚麼它們會失敗。**由上而下分析**是在落單前，由最大的畫面到最小的畫面閱讀市場。',
-  // Three timeframes, three jobs
-  '3pfhy701wu': '三個時間週期，三項工作',
-  // **The higher timeframe sets the direction.** Is the market in an uptrend, a downtrend or a range? Where are the major support and resistance levels? You only take trades that agree with this.
-  'k945eofm4z': '**較高的時間週期決定方向。**市場處於上升趨勢、下跌趨勢還是區間？主要的支持位和阻力位在哪裡？你只做與此一致的交易。',
-  // **The middle timeframe finds the setup.** This is the chart you actually trade: a pullback to support, a breakout, a pattern.
-  'uxj8fwahxu': '**中間的時間週期找出形態。**這是你實際交易的圖表：回調到支持位、突破、某個形態。',
-  // **The lower timeframe times the entry.** Zooming in lets you enter closer to your stop-loss, which makes the same idea a better risk/reward.
-  '1r2tgn86fiu': '**較低的時間週期決定入場時機。**放大圖表讓你在更接近止蝕的位置入場，令同一個想法有更好的風險回報。',
-  // A common spacing is a factor of four to six between each: daily, 4-hour and 1-hour for a swing trader; 4-hour, 1-hour and 15-minute for a day trader. The exact choice matters less than using the same three every time.
-  '24h8jqq9iv6': '常見的間距是每級相差四至六倍：波段交易者用日線、4 小時和 1 小時；日內交易者用 4 小時、1 小時和 15 分鐘。確切的選擇並不太重要，重要的是每次都用同樣的三個。',
+  // A strong rally on the 5-minute chart can be a small bounce in a daily downtrend. **Top-down analysis** reads the market from the largest view to the smallest before trading.
+  'rsg8jlhvdb': '5 分鐘圖上的強勁升勢，可能只是日線下跌趨勢中的小反彈。**由上而下分析**在交易前由最大的視角讀到最小的視角。',
+  // **Higher timeframe: direction.** Uptrend, downtrend or range, and the major levels. Only trade with it.
+  '1o7lwcfmno4': '**較高的時間週期：方向。**上升、下跌還是區間，以及主要價位。只順着它交易。',
+  // **Middle timeframe: the setup** you actually trade, such as a pullback or breakout.
+  'ts5u0u6wkx': '**中間的時間週期：你真正交易的形態**，例如回調或突破。',
+  // **Lower timeframe: the entry**, closer to the stop for a better risk/reward.
+  '1ugi8fgrl7j': '**較低的時間週期：入場**，更接近止蝕，令風險回報更好。',
+  // Space them four to six times apart: daily, 4-hour and 1-hour for swing trading; 4-hour, 1-hour and 15-minute for day trading. Use the same three every time.
+  'vlwz3pzzs7': '每個週期相距四至六倍：波段交易用日線、4 小時和 1 小時；日內交易用 4 小時、1 小時和 15 分鐘。每次都用同樣三個。',
   // Two years of SPY on the daily chart with the 50-day and 200-day averages: the higher-timeframe view. Price above both rising averages means the direction is up, so on the lower timeframes you would look only for buys.
   '224gbc3qjvx': 'SPY 兩年的日線圖，加上 50 日和 200 日平均線：較高時間週期的畫面。價格高於兩條上升中的平均線代表方向向上，所以在較低的時間週期你只會找買入機會。',
-  // Confluence
-  'g3ynru67kl': '匯聚',
-  // When several independent reasons point at the same price, traders call it **confluence**. A daily support level that lines up with a rising moving average and a 4-hour swing low is a stronger place to buy than any one of them alone. Confluence does not make a trade certain; it means more traders are watching the same price.
-  '13bxgnk7r6m': '當幾個互相獨立的理由都指向同一個價格，交易者叫它**匯聚**。一個日線支持位剛好與上升中的移動平均線和 4 小時擺動低點重疊，是比其中任何一個單獨出現更強的買入位置。匯聚不會令交易變得肯定；它代表更多交易者在留意同一個價格。',
-  // When timeframes disagree
-  '1vpf81290u3': '時間週期互相矛盾時',
-  // **Higher up, lower down**: a pullback inside an uptrend. This is usually an opportunity, once the lower timeframe turns back up.
-  '1gzg9k5rlg8': '**高的向上，低的向下**：上升趨勢中的回調。一旦較低的時間週期重新轉升，這通常就是機會。',
-  // **Higher in a range**: expect lower-timeframe trends to fail at the edges of the range.
-  '1ftgs4xws3b': '**高的處於區間**：預期較低時間週期的趨勢會在區間邊緣失敗。',
-  // **No clear picture on the higher timeframe**: the honest reading is "no trade".
-  '5axv1vf9t8': '**較高的時間週期沒有清晰畫面**：誠實的解讀是「不交易」。',
+  // When several independent reasons point at one price, such as daily support, a rising average and a 4-hour swing low, that is **confluence**. More traders watch that price; it is still not a certainty.
+  '2179ynt5mij': '幾個獨立理由指向同一價格，例如日線支持位、上升的平均線和 4 小時擺動低點，就是**匯聚**。更多交易者留意那個價格；但它仍然不是確定的。',
+  // **Higher up, lower down**: a pullback in an uptrend, often an opportunity once the lower chart turns up.
+  '1ysjxa70yfz': '**高的向上，低的向下**：上升趨勢中的回調，較低週期轉回向上時往往是機會。',
+  // **Higher in a range**: lower-timeframe trends tend to fail at its edges.
+  '1whcbd4v3xq': '**高的處於區間**：較低週期的趨勢往往在區間邊緣失敗。',
+  // **No clear higher picture**: no trade.
+  '1rjefq10goi': '**較高的時間週期沒有清晰畫面**：不交易。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
   // On the Charts page, switch between 1d, 4h and 1h with the buttons above the chart. Draw your higher-timeframe levels first: drawings stay on the chart when you change timeframe.
   '18792cyq53j': '在圖表頁，用圖表上方的按鈕在 1d、4h 和 1h 之間切換。先畫出較高時間週期的價位：切換時間週期時，繪圖會保留在圖表上。',
   // Do not keep zooming until you find a reason
   '2b2gtmen2ew': '不要一直放大直至找到理由',
-  // Looking at more and more timeframes until one of them agrees with what you already wanted to do is confirmation bias. Decide which three you use and stop there.
-  'cpltnqrihy': '不斷看更多時間週期，直至其中一個同意你本來就想做的事，這就是確認偏誤。決定好用哪三個，然後就此為止。',
+  // Hunting through timeframes until one agrees with you is confirmation bias. Pick three and stop there.
+  'ti1j2i41ep': '不斷翻看時間週期，直到某一個同意你，這是確認偏誤。選定三個就停。',
   // Fibonacci retracements and extensions
   '4zpahr1rxd': '斐波那契回撤和延伸',
   // A way to measure how far a pullback has gone and where a move might reach, using fixed percentages of the last swing.
   'pj6ehtzfr2': '用上一段擺動的固定百分比，量度回調走了多遠，以及走勢可能到達哪裡。',
-  // After a strong move, price usually gives some of it back before continuing. A **Fibonacci retracement** measures that pullback as a percentage of the move. The tool draws horizontal lines at 23.6%, 38.2%, 50%, 61.8% and 78.6% between the start and end of a swing, and traders watch those lines for the pullback to end.
-  '2fryl65p980': '強勁的走勢之後，價格通常會先回吐一部分才繼續。**斐波那契回撤**以該走勢的百分比量度這次回調。這個工具在擺動起點和終點之間的 23.6%、38.2%、50%、61.8% 和 78.6% 畫出水平線，交易者會留意回調在這些線上結束。',
-  // The percentages come from the Fibonacci number sequence (the 50% line does not, but is included because half-way pullbacks are so common). There is nothing magic in the numbers. They work as well as they do because so many traders draw the same lines and place orders near them.
-  'd3uvmkjjl4': '這些百分比來自斐波那契數列（50% 不是，但因為一半的回調非常常見而被包括在內）。這些數字並沒有魔力。它們之所以有一定效用，是因為很多交易者畫同樣的線，並在附近落單。',
+  // A **Fibonacci retracement** measures a pullback as a share of the last swing, with lines at 23.6%, 38.2%, 50%, 61.8% and 78.6%. Nothing is magic about the numbers; they work because so many traders watch the same lines.
+  'gvkcfzxnku': '**斐波那契回撤**把回調量度為上一段擺動的比例，線條在 23.6%、38.2%、50%、61.8% 和 78.6%。這些數字沒有魔力；它們有效是因為太多交易者留意同樣的線。',
+  // A candlestick chart with Fibonacci retracement lines drawn across a fall, and price bouncing to one of the lines before turning down
+  '232kmolml4o': '一張陰陽燭圖表，在一段下跌上畫了斐波那契回撤線，價格反彈到其中一條線後轉向下',
+  // Fibonacci lines drawn over a fall. The bounce stalls at one of the lines (circled) and the fall resumes.
+  'pj3ltd0gh6': '畫在一段下跌上的斐波那契線。反彈在其中一條線（圈出）停下，下跌恢復。',
   // A rise from 100 to 130, then a pullback. It ended between the 50% line (115) and the 61.8% line (111.5), and the trend resumed.
   '1t4yvmah5kb': '由 100 升到 130，然後回調。回調在 50% 線（115）和 61.8% 線（111.5）之間結束，趨勢隨即恢復。',
   // End of the move
   '16424qnnxu8': '走勢終點',
   // Pullback ends here
   't64ckz39mv': '回調在這裡結束',
-  // How to draw it
-  '234rrdvybzz': '如何畫',
-  // Find a clear swing: a move with an obvious start and end.
-  '1pnx03ov656': '找一段清晰的擺動：起點和終點都很明顯的走勢。',
-  // In an uptrend, draw from the swing low up to the swing high. In a downtrend, from the swing high down to the swing low.
-  'p2y05e0tc2': '在上升趨勢中，由擺動低點畫到擺動高點。在下跌趨勢中，由擺動高點畫到擺動低點。',
-  // The lines between show where a pullback of each size would reach.
-  '53gcj5tbtr': '中間的線顯示每種幅度的回調會到達哪裡。',
-  // Reading the depth of a pullback
-  'j7sdyo6g7j': '解讀回調的深度',
-  // **Shallow (23.6% to 38.2%)**: the trend is strong. Buyers did not wait for a better price.
-  '27bo9hlxmvb': '**淺（23.6% 至 38.2%）**：趨勢強勁。買家沒有等更好的價格。',
-  // **Middle (50% to 61.8%)**: the most watched area. A normal, healthy pullback.
-  'szn2mt2qqx': '**中等（50% 至 61.8%）**：最受關注的區域。正常、健康的回調。',
-  // **Deep (78.6% and beyond)**: the move is being undone. If price passes the start of the swing, the idea is wrong.
-  '1s0p9n53ldi': '**深（78.6% 或以上）**：走勢正在被抹去。如果價格越過擺動的起點，想法就錯了。',
-  // Extensions: where might it go?
-  '1cwcqx6vhzw': '延伸：它可能走到哪裡？',
-  // **Fibonacci extensions** project the same swing forwards to give targets beyond its end, most often 127.2% and 161.8% of its length. If a rise from 100 to 130 pulls back and resumes, the 161.8% extension is at 148.5. Traders use these as places to take profit when there is no earlier price history to give a resistance level.
-  '25wll07z1ne': '**斐波那契延伸**把同一段擺動向前投射，給出超出終點的目標，最常見是其長度的 127.2% 和 161.8%。如果由 100 升到 130 的走勢回調後恢復，161.8% 延伸在 148.5。當之前沒有價格歷史可以提供阻力位時，交易者會用這些位置止賺。',
+  // Draw from swing low to swing high in an uptrend, high to low in a downtrend.
+  '19kayxpdxr1': '上升趨勢由擺動低點畫到擺動高點，下跌趨勢由高點畫到低點。',
+  // **Shallow (23.6% to 38.2%)**: a strong trend.
+  '251uq5rx71p': '**淺（23.6% 至 38.2%）**：強勁的趨勢。',
+  // **Middle (50% to 61.8%)**: the most watched, a healthy pullback.
+  '13gje323tv8': '**中等（50% 至 61.8%）**：最多人留意，健康的回調。',
+  // **Deep (78.6% and beyond)**: the move is being undone. Past the start of the swing, the idea is wrong.
+  '1s9mc27ea7b': '**深（78.6% 或以上）**：走勢正被抵銷。越過擺動起點，想法就錯了。',
+  // **Fibonacci extensions** project the swing forward for targets, usually 127.2% and 161.8%. A rise from 100 to 130 has its 161.8% extension at 148.5.
+  'puyhk1h81': '**斐波那契延伸**把擺動向前投射作為目標，通常是 127.2% 和 161.8%。由 100 升到 130 的走勢，161.8% 延伸位在 148.5。',
   // A trade planned with Fibonacci
   'tlamqoi86d': '用斐波那契計劃一宗交易',
   // Price rose from 100 to 130 and is pulling back.
@@ -90,66 +76,64 @@ export default {
   '8dsb2pgq67': '第一個目標：130 的舊高位。回報 16，風險回報約 2.7 比 1。',
   // Lines everywhere
   'z2txtjk16k': '到處都是線',
-  // With five retracement lines, price is always near one of them, so it is easy to believe the tool "worked" after the fact. Use it together with something independent, such as a support level or a moving average, and decide which line you are trading before price gets there.
-  '1wzi63azf63': '有五條回撤線，價格總會接近其中一條，所以事後很容易相信這個工具「有效」。要配合一些獨立的東西使用，例如支持位或移動平均線，並在價格到達之前決定你交易的是哪一條線。',
+  // With five lines price is always near one. Combine Fibonacci with something independent and choose your line before price arrives.
+  '1p99ljndedi': '有五條線，價格總會接近其中一條。把斐波那契與獨立的東西結合，並在價格到達前選好你要交易的線。',
   // The Fibonacci tool is in the drawing tools above the chart. Click the start of a move, then its end.
   'xl02jbbw9g': '斐波那契工具在圖表上方的繪圖工具中。點擊走勢的起點，再點擊它的終點。',
   // Divergence: when price and momentum disagree
   'ny81rhogpc': '背馳：當價格與動能意見不一',
   // Price makes a new high but the indicator does not. An early warning that a trend is tiring, and one of the most misused signals in trading.
   'zeo5gqvfww': '價格創新高，但指標沒有。這是趨勢疲倦的早期警號，也是交易中最常被誤用的訊號之一。',
-  // In a healthy uptrend each new high in price comes with strong momentum. **Divergence** is when they stop agreeing: price pushes to a higher high, but an oscillator such as RSI or MACD makes a lower high. The move is still going, but with less force behind it.
-  '2mz7b5g2q7': '在健康的上升趨勢中，價格的每個新高都伴隨強勁的動能。**背馳**是兩者不再一致：價格推高到更高的高點，但 RSI 或 MACD 這類擺動指標卻創出更低的高點。走勢仍在繼續，但背後的力量變弱了。',
+  // **Divergence** is price and momentum disagreeing: price makes a higher high, but RSI or MACD makes a lower high. The move goes on with less force behind it.
+  'rlutg4w852': '**背馳**是價格和動能意見不一：價格創出更高的高點，RSI 或 MACD 的高點卻較低。走勢仍在繼續，但力量減弱了。',
+  // A Bitcoin price chart making higher highs above an RSI pane whose peaks slope down, with lines drawn along both
+  '57y2r0gngk': '一張比特幣價格圖表創出更高的高點，下方 RSI 窗格的高點卻向下傾斜，兩者都畫了線',
+  // Bitcoin rising to higher highs while RSI makes lower highs: bearish divergence before the fall.
+  'nm1r43tock': '比特幣升到更高的高點，RSI 卻創出更低的高點：下跌前的看跌背馳。',
   // Price makes a slightly higher high the second time, but look at RSI underneath: its second peak is clearly lower than its first. The second rally was slower and weaker. This is bearish divergence.
   'mrbfurouym': '價格第二次創出稍高的高點，但看看下面的 RSI：它的第二個峰頂明顯低於第一個。第二次上升較慢較弱。這是看跌背馳。',
   // Price: higher high
   '22uoxbl25ov': '價格：更高的高點',
-  // The two regular kinds
-  '1g0uruch70p': '兩種常規背馳',
-  // **Bearish divergence**: price makes a higher high, the indicator makes a lower high. Buying pressure is fading. A warning for longs.
-  '8d2bp5ul9e': '**看跌背馳**：價格創出更高的高點，指標創出更低的高點。買盤壓力正在減退。對多倉是一個警號。',
-  // **Bullish divergence**: price makes a lower low, the indicator makes a higher low. Selling pressure is fading. A warning for shorts.
-  '1mday9igeyj': '**看漲背馳**：價格創出更低的低點，指標創出更高的低點。賣盤壓力正在減退。對空倉是一個警號。',
-  // Hidden divergence
-  'lxrb8q8xao': '隱藏背馳',
-  // There is also a version that points to the trend continuing. In an uptrend, if price makes a higher low while the indicator makes a lower low, the pullback had plenty of momentum on paper but could not push price down. That is called **hidden divergence**, and it favours the existing trend.
-  '1ony7fwnwk': '還有一種指向趨勢延續的版本。在上升趨勢中，如果價格創出更高的低點，指標卻創出更低的低點，代表回調表面上動能充足，卻無法把價格壓低。這叫**隱藏背馳**，它有利於現有的趨勢。',
-  // How to use it
-  'k9ld3g4u2w': '如何使用它',
-  // Treat divergence as a warning, not an entry. It says "this is weakening", not "this is over".
-  '1u853c6bjqr': '把背馳當作警號，而不是入場點。它說的是「這正在轉弱」，而不是「這已經結束」。',
-  // Wait for price itself to confirm: a break of the last swing low after bearish divergence, or of the last swing high after bullish divergence.
-  'v1i3vhgbwv': '等價格本身確認：看跌背馳後跌穿最近的擺動低點，或看漲背馳後升穿最近的擺動高點。',
-  // Give more weight to divergence that appears at a level that already matters, such as major resistance.
-  '1em20a1839s': '出現在本身已經重要的價位（例如主要阻力位）的背馳，應給予更大比重。',
+  // **Bearish divergence**: higher price high, lower indicator high. Buying is fading.
+  'i01c5gljx9': '**看跌背馳**：價格高點更高，指標高點更低。買盤正在減弱。',
+  // Bearish divergence
+  '1e0ndwkw4hv': '看跌背馳',
+  // **Bullish divergence**: lower price low, higher indicator low. Selling is fading.
+  'jasaszol1f': '**看漲背馳**：價格低點更低，指標低點更高。賣盤正在減弱。',
+  // Bullish divergence
+  '71p860klfx': '看漲背馳',
+  // **Hidden divergence**: in an uptrend, a higher price low with a lower indicator low favours the trend continuing.
+  '1nb82vhwbiw': '**隱藏背馳**：在上升趨勢中，價格低點更高而指標低點更低，有利趨勢延續。',
+  // Treat it as a warning, not an entry.
+  'dtpanopvkk': '把它當作警號，而不是入場訊號。',
+  // Wait for price to confirm: a break of the last swing.
+  '17os6t2ng37': '等價格確認：跌穿或升穿最近的擺動點。',
+  // Trust it more at a level that already matters.
+  'g4z1k8jdce': '在本身已經重要的價位出現時，更可信。',
   // Divergence can last a long time
   '1r3b53ehxjm': '背馳可以持續很久',
-  // In a strong trend, an indicator can show divergence again and again while price keeps climbing. Traders who short every bearish divergence in a bull market lose money steadily. This is the main reason the signal has a poor reputation: it is used as an entry when it is only a caution.
-  'mwfdururpt': '在強勁的趨勢中，指標可以一次又一次顯示背馳，而價格繼續上升。在牛市中每次看跌背馳都做空的交易者會穩定地虧錢。這是這個訊號聲譽不佳的主要原因：它只是提醒，卻被當作入場點使用。',
+  // In a strong trend it can appear again and again while price climbs. Shorting every bearish divergence in a bull market loses steadily.
+  '1v16yjwguw4': '在強勁趨勢中，它可以在價格上升時一次又一次出現。在牛市中每次看跌背馳都做空，會穩定地虧錢。',
   // Which indicator?
   'byzat1dxk9': '用哪個指標？',
-  // RSI and the MACD histogram are the usual choices. They measure nearly the same thing, so divergence on both at once is one piece of evidence, not two.
-  'wac6fx67jh': 'RSI 和 MACD 柱狀圖是常見的選擇。它們量度的東西幾乎相同，所以兩者同時出現背馳只是一份證據，而不是兩份。',
+  // RSI and the MACD histogram measure nearly the same thing, so divergence on both is one piece of evidence, not two.
+  '1n1b9ntt29j': 'RSI 和 MACD 柱狀圖量度的東西幾乎一樣，所以兩者同時背馳只算一項證據，不是兩項。',
   // Volume, accumulation and distribution
   'zu396eu71m': '成交量、吸籌和派發',
   // Volume shows how much effort is behind a move. The Wyckoff method uses it to read ranges as large traders building or unloading positions.
   '8vjwes0lcy': '成交量顯示走勢背後有多少力氣。威科夫方法用它把區間解讀為大戶在建倉或出貨。',
-  // Price tells you what happened. **Volume** tells you how many traders took part. A rise on heavy volume has real buying behind it; the same rise on thin volume can be undone by one large seller. Reading the two together is one of the oldest skills in trading.
-  'vgr2czn4b0': '價格告訴你發生了甚麼。**成交量**告訴你有多少交易者參與。大成交量下的上升背後有真正的買盤；同樣的上升如果成交量稀少，一個大賣家就能把它抹去。把兩者一起解讀，是交易中最古老的技巧之一。',
-  // Effort and result
-  'dasnojn7ws': '力氣與結果',
-  // **Heavy volume, large move**: effort and result agree. The move is genuine.
-  'd36xqqmoc5': '**大成交量、大走勢**：力氣與結果一致。走勢是真實的。',
-  // **Heavy volume, small move**: a lot of trading for little progress. Someone is absorbing the pressure. After a long rise this often marks a top; after a long fall, a bottom.
-  '20lmuaj8aap': '**大成交量、小走勢**：大量交易卻進展很少。有人在吸收壓力。在長時間上升之後，這常常標示頂部；在長時間下跌之後，則標示底部。',
-  // **Light volume, large move**: little took part. Easy to reverse.
-  'fm08z3qkp': '**小成交量、大走勢**：參與的人很少。容易逆轉。',
-  // **Volume drying up in a pullback**: sellers are not interested. Healthy for an uptrend.
-  '1qrkq869chl': '**回調時成交量萎縮**：賣家沒有興趣。對上升趨勢是健康的。',
-  // The Wyckoff idea
-  '12sqchp6yax': '威科夫的概念',
-  // Richard Wyckoff, writing a century ago, described markets as cycling through four phases. In **accumulation**, large traders quietly buy inside a range after a decline. Then comes the markup (the uptrend), then **distribution**, where they sell inside a range near the top, then the markdown. The **Wyckoff method** is the practice of deciding which phase a range belongs to before it breaks.
-  'p2aydkwz3z': '一百年前，理查德·威科夫把市場描述為在四個階段之間循環。在**吸籌**階段，大戶在下跌後的區間內悄悄買入。然後是拉升（上升趨勢），之後是**派發**，他們在接近頂部的區間內賣出，然後是下跌。**威科夫方法**就是在區間突破之前，判斷它屬於哪一個階段。',
+  // Price shows what happened; **volume** shows how many took part. Read them together:
+  '12v5ceax7qb': '價格顯示發生了甚麼；**成交量**顯示有多少人參與。把兩者一起看：',
+  // **Heavy volume, big move**: genuine.
+  '1c7mpbxpaw6': '**大成交量、大走勢**：真實的。',
+  // **Heavy volume, small move**: someone is absorbing the pressure, often near a top or bottom.
+  '1ffg1cyx1bw': '**大成交量、小走勢**：有人在吸收壓力，常在頂部或底部附近。',
+  // **Light volume, big move**: easy to reverse.
+  '1yzdj1vp7f8': '**小成交量、大走勢**：容易反轉。',
+  // **Volume drying up in a pullback**: sellers are not interested, healthy in an uptrend.
+  'z3v5gzp7ys': '**回調時成交量萎縮**：賣家沒有興趣，在上升趨勢中是健康的。',
+  // Richard Wyckoff described four phases: **accumulation** (large traders buying in a range after a fall), markup, **distribution** (selling in a range near the top) and markdown. The **Wyckoff method** tries to tell which a range is before it breaks.
+  '3dx9qugpyn': '理查德·威科夫描述了四個階段：**吸籌**（大戶在下跌後的區間內買入）、上升、**派發**（在頂部附近的區間內賣出）和下跌。**威科夫方法**嘗試在區間被突破前判斷它屬於哪一種。',
   // A decline ends on heavy volume, then a range forms. Price dips under the lows, snaps back the same day on a volume spike (the spring), and breaks out on heavy volume.
   '1d63cm3e3cq': '一段下跌在大成交量下結束，然後形成區間。價格跌穿低點，當天在成交量急升下彈回（彈簧），然後在大成交量下突破。',
   // Accumulation range
@@ -158,22 +142,20 @@ export default {
   '1g5q5w9wndb': '彈簧：低點的假跌破',
   // Breakout on heavy volume
   'g8imnwoaij': '大成交量突破',
-  // Signs to look for
-  '1tmb8utgs42': '要留意的跡象',
-  // **Climax volume**: a huge spike at the end of a decline (a selling climax) or a rally (a buying climax), where the last panicked traders get out or in.
-  '1pkpf1a42iz': '**高潮成交量**：在下跌末段（賣出高潮）或上升末段（買入高潮）出現的巨大急升，最後一批恐慌的交易者離場或入場。',
-  // **The spring**: a brief dip below the bottom of an accumulation range that reverses at once. It triggers stop-losses and lets large buyers fill their orders. The mirror image at a top is called an **upthrust**.
-  '6t2fu8s4tb': '**彈簧**：短暫跌穿吸籌區間的底部後立即反轉。它觸發止蝕盤，讓大買家成交他們的訂單。頂部的鏡像叫**上衝**。',
-  // **The breakout and its test**: price leaves the range on rising volume, then returns to the edge on low volume and holds.
-  'cvvlx17fao': '**突破及其測試**：價格在成交量上升下離開區間，然後在小成交量下回到邊緣並守住。',
+  // **Climax volume**: a huge spike at the end of a decline or rally, the last panicked traders out or in.
+  '2afa6idwm61': '**高潮成交量**：在下跌或升勢末段出現的巨大成交量，是最後一批恐慌的交易者離場或入場。',
+  // **The spring**: a brief dip below an accumulation range that reverses at once, triggering stops. At a top it is an **upthrust**.
+  '1wzmrnyh52r': '**彈簧**：短暫跌穿吸籌區間後立即反轉，觸發止蝕盤。在頂部出現的叫**上衝**。',
+  // **Breakout and test**: out of the range on rising volume, back to the edge on low volume, and holding.
+  '1tvy2gvquix': '**突破及其測試**：在成交量上升時離開區間，在成交量低時回到邊緣並守住。',
   // Easy to see afterwards, hard at the time
   '145jkfmjdk7': '事後容易看見，當時很難',
-  // Every range looks like accumulation if it breaks upward and like distribution if it breaks down. In real time you cannot know who is buying. Treat a Wyckoff reading as a hypothesis with a clear point where it is wrong, such as a close back below the spring.
-  '1g8p1k0itoe': '每個區間如果向上突破就像吸籌，向下突破就像派發。在實時中你無法知道誰在買。把威科夫的解讀當作一個假設，並設好一個清晰的失效點，例如收市跌回彈簧之下。',
+  // Any range looks like accumulation if it breaks up. Treat a Wyckoff reading as a hypothesis with a clear point where it is wrong.
+  'f8ezffp8xr': '任何向上突破的區間看起來都像吸籌。把威科夫的解讀當作一個有明確錯誤點的假設。',
   // Where this leads
   'mgs4za56y5': '這會引向哪裡',
-  // The spring is the same event that the next module calls a liquidity sweep. The vocabulary is different; the chart is the same.
-  'q4fm8cdit9': '彈簧就是下一個單元所說的流動性掃蕩。用語不同，圖表一樣。',
+  // The spring is what the next module calls a liquidity sweep: different words, same chart.
+  'w4fy2af5qm': '彈簧就是下一個單元所說的流動性掃蕩：用詞不同，圖表一樣。',
   // In top-down analysis, what is the job of the highest timeframe?
   'wubnc8hzbr': '在由上而下分析中，最高時間週期的工作是甚麼？',
   // To time the exact entry
@@ -190,6 +172,8 @@ export default {
   '3zaiqdb6do': '日線圖處於明確的上升趨勢。15 分鐘圖正在下跌。最有用的解讀是：',
   // The trend has reversed, so sell
   '192ma7hlffp': '趨勢已經反轉，所以賣出',
+  // The trend has reversed
+  'pgq1pvswec': '趨勢已經反轉',
   // A pullback inside an uptrend, which may become a buying opportunity
   '1zs34rx4p4v': '上升趨勢中的回調，可能變成買入機會',
   // The daily chart is wrong
@@ -232,8 +216,6 @@ export default {
   'sa0iok3d95': '趨勢疲弱',
   // The trend is strong: buyers did not wait for a deeper discount
   '12tlghrq7n2': '趨勢強勁：買家沒有等更深的折讓',
-  // The trend has reversed
-  'pgq1pvswec': '趨勢已經反轉',
   // Nothing can be said
   '1039n9yzrlr': '甚麼都說不出',
   // A shallow pullback means traders were eager to rejoin the move. Deep pullbacks show less conviction.
@@ -276,10 +258,6 @@ export default {
   '1mgm8v69k53': '完全回撤取消了這段走勢。重畫工具來挽救想法，正是要避免的錯誤。',
   // Price makes a higher high while RSI makes a lower high. This is:
   'poyf1l7ki4': '價格創出更高的高點，RSI 卻創出更低的高點。這是：',
-  // Bullish divergence
-  '71p860klfx': '看漲背馳',
-  // Bearish divergence
-  '1e0ndwkw4hv': '看跌背馳',
   // A breakout
   '1edkipaig6b': '突破',
   // A golden cross
