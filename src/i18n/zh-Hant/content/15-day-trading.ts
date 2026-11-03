@@ -10,54 +10,46 @@ export default {
   '1rkid05z7lf': '交易日的形態',
   // Activity is not spread evenly through the day. Knowing when the market is busy, and when it is not, decides which setups are worth taking.
   '93hdss6yy0': '交投在一天內並不平均。知道市場甚麼時候繁忙、甚麼時候不繁忙，決定哪些形態值得交易。',
-  // A day trader opens and closes every position within the same day. That removes the risk of news arriving while you sleep, but it means competing in the busiest, fastest part of the market, where costs matter most. The first thing to learn is the rhythm of the day itself.
-  '25ptqh5pju4': '即日交易者在同一天內開倉和平倉。這消除了睡覺時有消息公佈的風險，但代表要在市場最繁忙、最快速、成本影響最大的部分競爭。首先要學的是一天本身的節奏。',
-  // The U shape
-  '1pvqmgztu56': 'U 形',
-  // In most markets, volume is highest just after the open, falls away through the middle of the day, and rises again into the close. Plot volume by hour and it looks like the letter U.
-  '1uy9xsvzv6e': '在大部分市場，成交量在開市後不久最高，在一天中段減少，然後在收市前再次上升。按小時繪出成交量，形狀就像字母 U。',
-  // One trading day, one candle per stretch of the session. The big moves and the heavy volume come at the open and into the close. The middle of the day drifts sideways on little volume.
-  'jns47xv5yf': '一個交易日，時段的每一段一支陰陽燭。大幅走勢和大成交量出現在開市和收市前。一天中段在少量成交下橫向漂移。',
+  // A day trader closes every position the same day: no overnight news risk, but the fastest part of the market, where costs matter most. Volume is highest after the open, falls at midday and rises into the close: a **U shape**.
+  '1yh2gk2xetl': '即日交易者在同一日內平掉所有倉位：沒有隔夜消息風險，但身處市場最快、成本最重要的部分。成交量在開市後最高，午市下降，臨近收市再上升：呈 **U 形**。',
+  // One trading day. Big moves and heavy volume at the open and into the close; the middle drifts sideways on little volume.
+  '21j7ftq2pgj': '一個交易日。大波動和大成交量出現在開市和臨近收市；中段在低成交量下橫行。',
   // Midday: quiet, choppy
   '1f1ag7e3b4f': '中段：平靜、反覆',
   // Open: fast and busy
   '1zgx4lps32a': '開市：快速而繁忙',
   // Close: volume returns
   '6gcdtqkpge': '收市：成交量回來',
-  // What each part is good for
-  '1lroyjtyxme': '每個部分適合做甚麼',
-  // **The open** (the first 30 to 60 minutes): the widest ranges and the strongest moves, but also the most false starts. Overnight news is being priced in.
-  'b9u8m12pyy': '**開市**（最初 30 至 60 分鐘）：波幅最闊、走勢最強，但假啟動也最多。隔夜消息正在被消化。',
-  // **Midday**: low volume, narrow ranges, breakouts that fail. Many day traders stop here.
-  '1z1dsgxk2oa': '**中段**：成交量低，波幅窄，突破失敗。很多即日交易者在這裡停手。',
-  // **The close** (the last hour): funds adjust positions for the end of the day. Trends that held all day often accelerate; others reverse as day traders close out.
-  '1re6xdo8nq0': '**收市**（最後一小時）：基金為一天結束調整持倉。全日維持的趨勢常會加速；其他則因即日交易者平倉而反轉。',
-  // Markets that never close
-  '173gueb5qli': '永不收市的市場',
-  // Crypto trades 24 hours a day, so it has no open or close of its own. It borrows its rhythm from traditional markets: the most active hours are the London and New York sessions, and the US stock market open at 9:30am New York time often brings a burst of volume to Bitcoin too. Weekends are thin.
-  '1lpyp87a997': '加密貨幣每日 24 小時交易，所以沒有自己的開市或收市。它借用傳統市場的節奏：最活躍的時間是倫敦和紐約時段，而紐約時間上午 9:30 美股開市，常常也為比特幣帶來一陣成交量。週末交投稀疏。',
+  // **The open** (first 30 to 60 minutes): the strongest moves and the most false starts.
+  'o51cyjllc5': '**開市**（首 30 至 60 分鐘）：走勢最強，假突破也最多。',
+  // **Midday**: narrow ranges and failed breakouts. Many day traders stop here.
+  '116tjy0qlmx': '**午市**：窄幅區間和失敗的突破。很多即日交易者在此停手。',
+  // **The close** (last hour): funds adjust positions; trends accelerate or reverse.
+  'zgdm1tyuml': '**收市**（最後一小時）：基金調整倉位；趨勢加速或反轉。',
+  // **Crypto** has no open or close, but borrows the rhythm: busiest in London and New York hours, often with a burst at the 9:30am US stock open. Weekends are thin.
+  'hewif2brxx': '**加密貨幣**沒有開市收市，但借用同樣節奏：倫敦和紐約時段最繁忙，美股早上 9 時 30 分開市時常有一陣成交。週末成交稀薄。',
   // Costs decide everything
   '299r9t1nm3t': '成本決定一切',
-  // A swing trader aiming for 8% barely notices a 0.1% fee. A day trader aiming for 0.5% pays the fee on entry and on exit, plus the spread and slippage, and has given away almost half the target before the trade starts. This is why day trading is far harder to make profitable than it looks.
-  '1874cmc17ks': '目標賺 8% 的波段交易者幾乎不會留意 0.1% 的手續費。目標賺 0.5% 的即日交易者入場和出場都要付手續費，再加上差價和滑價，交易開始前已經送走了差不多一半目標。這就是為甚麼即日交易遠比看起來難以獲利。',
-  // Trade liquid instruments, where the spread is small.
-  '10qaqtn6hk6': '交易流動性高、差價小的工具。',
-  // Trade during active hours, when the spread is at its narrowest.
-  '1y5ubyhsol9': '在活躍時間交易，那時差價最窄。',
-  // Count costs in every plan. If the target is not many times the round-trip cost, there is no trade.
-  '1nefm3t71o5': '在每個計劃中計算成本。如果目標不是來回成本的很多倍，就沒有交易。',
+  // Aiming for 0.5%, a day trader pays fees on entry and exit plus spread and slippage, and can give away half the target before starting.
+  '283g8fyqrnf': '目標 0.5% 的即日交易者，入場和出場都要付手續費，再加上買賣差價和滑價，未開始已可能付出一半目標。',
+  // Trade liquid instruments with small spreads.
+  '1c9gmhgpyg8': '交易流動性高、差價小的產品。',
+  // Trade the active hours.
+  '1g35y29g9sd': '在活躍時段交易。',
+  // If the target is not many times the round-trip cost, there is no trade.
+  '9bw2nb5sjw': '如果目標不是來回成本的很多倍，就不交易。',
   // More trades is not more profit
   'b8iwzr7k5h': '交易越多不等於利潤越多',
-  // The feeling that being at the screen means you should be trading is the day trader’s most expensive habit. Two or three good setups in the busy hours beat fifteen taken out of boredom at midday.
-  '1cgqhb3wngh': '覺得坐在屏幕前就應該交易，是即日交易者最昂貴的習慣。在繁忙時間做兩三個好形態，勝過在中段因為無聊而做十五個。',
+  // Two or three good setups in the busy hours beat fifteen taken out of boredom at midday.
+  'wwaj43b1kw': '繁忙時段的兩三個好形態，勝過午市因無聊而做的十五單。',
   // The opening range breakout
   'kfa23d1xgt': '開市區間突破',
   // Mark the high and low of the first minutes of the session. The break of that range is one of the oldest day-trading setups, with the risk defined in advance.
   '8uxblk3pig': '標記時段最初幾分鐘的高點和低點。突破這個區間是最古老的即日交易形態之一，風險事先已經界定。',
-  // In the first minutes of a session, buyers and sellers argue about where price should be after the overnight news. The high and low they set is the **opening range**. Once one side wins and price leaves that range, the move often continues, and that is the **opening range breakout** (ORB).
-  '1weuvjgh0fi': '在時段的最初幾分鐘，買家和賣家就隔夜消息後價格應該在哪裡爭持。他們定出的高點和低點就是**開市區間**。一旦一方勝出、價格離開這個區間，走勢常會延續，這就是**開市區間突破**（ORB）。',
-  // The first four candles set a range from 99.4 to 101.2. Price closes above it, comes back to test the top of the range, and then trends for the rest of the session.
-  'sqpxg71bbz': '最初四支陰陽燭定出 99.4 至 101.2 的區間。價格收市高於區間，回來測試區間頂部，然後在餘下時段持續上升。',
+  // The high and low of the first minutes is the **opening range**. When price leaves it, the move often continues: the **opening range breakout** (ORB).
+  'fwxkz8e7je': '開市首幾分鐘的高位和低位就是**開市區間**。價格離開區間後，走勢常會延續：這就是**開市區間突破**（ORB）。',
+  // The first four candles set a range from 99.4 to 101.2. Price closes above it, retests the top, then trends for the rest of the session.
+  'r82hs6hf66': '首四支陰陽燭形成 99.4 至 101.2 的區間。價格收在區間上方，回測頂部，然後整個時段持續上升。',
   // Opening range high
   '22dtbwcn3xl': '開市區間高點',
   // Opening range low: the stop
@@ -66,240 +58,192 @@ export default {
   'j4cijp2pjr': '突破：收市高於區間',
   // Retest holds
   '2d82nsv7vaw': '回測守住',
-  // The setup
-  '1s9ctl127z4': '交易形態',
-  // Choose the length of the opening range and keep it fixed: 15, 30 or 60 minutes are the usual choices.
-  '26f5l5h6l96': '選擇開市區間的長度並保持固定：常見選擇是 15、30 或 60 分鐘。',
-  // Mark its high and low when that time is up. Not before: the range is not finished.
-  'a0gftpoys5': '時間到了才標記它的高點和低點。不要提早：區間還未完成。',
-  // Enter when a candle **closes** outside the range, in that direction.
-  '596dd2v1ky': '陰陽燭**收市**在區間之外時，沿該方向入場。',
-  // Put the stop-loss on the other side of the range, or at its midpoint for a tighter stop.
-  '12768rqxmie': '止蝕放在區間另一邊，或放在中點以收窄止蝕。',
-  // Target one to two times the height of the range, or trail the stop.
-  '1xbhwfnuxv4': '目標是區間高度的一至兩倍，或使用追蹤止蝕。',
+  // Fix the range length: 15, 30 or 60 minutes.
+  '2d2wzftr5ai': '固定區間長度：15、30 或 60 分鐘。',
+  // Mark its high and low only when that time is up.
+  'xvgz9rc1gu': '時間到了才標出區間高低位。',
+  // Enter when a candle **closes** outside the range.
+  '1hxlw7n895n': '當陰陽燭**收市**在區間外時入場。',
+  // Stop on the other side, or at the midpoint for a tighter stop.
+  '295gx0xzuf': '止蝕設在區間另一邊，或中位以收窄止蝕。',
+  // Target one to two range heights, or trail.
+  '1cftmudfdfc': '目標為一至兩個區間高度，或用移動止蝕。',
   // In numbers
   '1agsz4c9vfz': '以數字看',
-  // The 30-minute range is 99.4 to 101.2, a height of 1.8.
-  'l5l35dgnvk': '30 分鐘區間是 99.4 至 101.2，高度 1.8。',
-  // A candle closes at 102.2. Buy at 102.2.
-  '9nv06mgrq': '一支陰陽燭收市於 102.2。在 102.2 買入。',
-  // Stop at the range midpoint, 100.3. Risk: 1.9.
-  '23skatufetq': '止蝕放在區間中點 100.3。風險：1.9。',
-  // Target twice the range height above the range: 101.2 + 3.6 = 104.8. Reward: 2.6, about 1.4 to 1. With the stop at the midpoint this is acceptable; with the stop at the range low it would not be.
-  '1qtkkqn0d2t': '目標是區間之上兩倍區間高度：101.2 + 3.6 = 104.8。回報：2.6，約 1.4 比 1。止蝕在中點時可以接受；止蝕在區間低點則不可以。',
-  // Filters that improve it
-  '2656cd8ka2t': '改善它的過濾條件',
-  // **Direction of the higher timeframe.** Take upside breaks in a daily uptrend and downside breaks in a daily downtrend.
-  '1neny8qne01': '**較高時間週期的方向。**日線上升趨勢中做向上突破，日線下跌趨勢中做向下突破。',
-  // **A narrow range.** A tight opening range means a small stop and a market that has not yet moved. A range already twice its normal size has used up the day’s energy.
-  '16bvdn977jf': '**窄的區間。**窄的開市區間代表止蝕小，而市場還未移動。已經是正常兩倍大的區間，已用盡了當日的能量。',
-  // **Volume on the break.** A breakout on rising volume is more likely to be real.
-  'xefd84sjhf': '**突破時的成交量。**成交量上升時的突破較可能是真的。',
-  // **The retest.** Waiting for price to come back to the edge of the range and hold filters out many false breaks, at the cost of missing some real ones.
-  '1the75xsi1m': '**回測。**等價格回到區間邊緣並守住，可以過濾很多假突破，代價是錯過一些真突破。',
+  // Range 99.4 to 101.2, height 1.8.
+  '169hdga76t4': '區間 99.4 至 101.2，高度 1.8。',
+  // Close at 102.2: buy.
+  '20tvno23fm9': '收市 102.2：買入。',
+  // Stop at the midpoint, 100.3. Risk: 1.9.
+  '1qra79cbfxm': '止蝕設在中位 100.3。風險：1.9。',
+  // Target 101.2 + 3.6 = 104.8. Reward 2.6, about 1.4 to 1.
+  'h61yceg4an': '目標 101.2 + 3.6 = 104.8。回報 2.6，約 1.4 比 1。',
+  // **Higher-timeframe direction**: take breaks that agree with the daily trend.
+  'i4inp9qgg1': '**較高時間框架的方向**：只做與日線趨勢一致的突破。',
+  // **A narrow range**: small stop, energy left. A range twice its normal size has used it up.
+  '16d9meovimr': '**窄的區間**：止蝕小，動能仍在。兩倍於正常大小的區間已用盡動能。',
+  // **Volume on the break** and **a holding retest** filter out false breaks.
+  '8kupggb4e': '**突破時的成交量**和**守得住的回測**可過濾假突破。',
   // Both sides can fail in one morning
   '2brzu5y3bm8': '一個早上兩邊都可以失敗',
-  // On a quiet day price breaks above the range, stops you out, breaks below, and stops you out again. Decide beforehand that you take one opening range trade a day, or one in each direction at most.
-  '22mihpupnww': '在平靜的日子，價格向上突破區間、令你止蝕，再向下突破、又令你止蝕。事先決定每天只做一宗開市區間交易，或最多每個方向一宗。',
+  // On a quiet day price breaks up, stops you, breaks down, stops you again. Take one opening range trade a day, or one each way at most.
+  '2576v5gsqyj': '平靜的日子，價格向上突破令你止蝕，再向下突破又令你止蝕。每日只做一次開市區間交易，最多每個方向一次。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
-  // Add the Opening Range indicator from the Indicators dialog on an intraday chart, and set the start hour to the session you trade. The Backtester has an opening range breakout preset you can run on Bitcoin with 15-minute candles.
-  '2avl077bchv': '在即日圖表的「指標」對話框加入「開市區間」指標，並把開始時間設為你交易的時段。回測器有一個開市區間突破預設，可以用 15 分鐘陰陽燭在比特幣上執行。',
+  // Add the Opening Range indicator on an intraday chart. The Backtester has an opening range breakout preset for Bitcoin on 15-minute candles.
+  '1onl9372r65': '在即日圖表加入「開市區間」指標。回測器有一個比特幣 15 分鐘圖的開市區間突破預設。',
   // VWAP as the intraday anchor
   '1qvuufo5p86': 'VWAP 作為即日錨點',
   // The average price everyone has paid today, weighted by volume. Day traders use it to tell who is in control and where a fair price is.
   'k2wj6r7rj3': '今天所有人支付的平均價格，按成交量加權。即日交易者用它判斷誰在主導，以及公平價格在哪裡。',
-  // You met **VWAP**, the volume-weighted average price, in the Indicators module. For a day trader it is the single most watched line on the chart, because it answers a simple question: is the average buyer today making money or losing it?
-  '296cmsei4j3': '你在「指標」單元見過 **VWAP**，即成交量加權平均價。對即日交易者來說，它是圖表上最多人留意的一條線，因為它回答一個簡單問題：今天的平均買家在賺錢還是虧錢？',
-  // **Price above VWAP**: the average participant who bought today is in profit. Buyers are in control, and dips toward the line tend to be bought.
-  'ajlg7iorku': '**價格高於 VWAP**：今天買入的平均參與者有利潤。買家主導，價格回落到這條線附近時往往有人買入。',
-  // **Price below VWAP**: the average buyer is losing. Sellers are in control, and rallies toward the line tend to be sold.
-  'cgtnifjri2': '**價格低於 VWAP**：平均買家在虧損。賣家主導，價格反彈到這條線附近時往往有人賣出。',
-  // **Price crossing back and forth**: no one is in control. A range day.
-  '1hirwgzi9ce': '**價格來回穿越**：沒有人主導。這是區間日。',
-  // SPY on the daily chart with VWAP, which on daily candles restarts each month. Notice how price that is above the line early in a month tends to stay above it, and how the line often acts as the level a pullback returns to. On an intraday chart the same thing happens within each day.
-  '24pgkswh0rp': 'SPY 日線圖加上 VWAP，在日線陰陽燭上每月重新開始。留意價格在月初高於這條線時往往保持在其上方，而這條線常是回調回到的價位。在即日圖表上，同樣情況在每一天內發生。',
-  // Three ways to trade it
-  '1yswk9btwb3': '三種交易方法',
-  // **The pullback.** In an uptrend that is holding above VWAP, buy the first pullback that reaches the line and turns. Stop just below it.
-  '3wrsqgdj64': '**回調。**在守在 VWAP 之上的上升趨勢中，買入第一次到達這條線並轉向的回調。止蝕剛好在它之下。',
-  // **The reclaim.** Price starts the day below VWAP, then closes back above it and holds on the retest. Control has changed hands. Enter on the retest.
-  '1w405mtfsbq': '**收復。**價格當日開始時低於 VWAP，然後收市回到其上方，並在回測時守住。主導權已易手。在回測時入場。',
-  // **The fade.** When price is stretched far from VWAP late in a quiet session, some traders bet on it drifting back. This goes against the trend and needs a small size and a firm stop.
-  '2dhyn11s3o0': '**逆勢。**在平靜時段後段價格遠離 VWAP 時，有些交易者押注它會漂回。這是逆趨勢交易，需要小規模和嚴格的止蝕。',
-  // Why institutions care
-  '25c6ddzhpy8': '機構為甚麼在意',
-  // Large funds that have to buy millions of shares in a day are often judged on whether they paid less than VWAP. So they buy more when price is below it and less when price is above. That behaviour is one reason the line attracts price, and it is one of the few indicator effects with a concrete cause behind it.
-  '1prmhomvoqa': '一天內要買入數以百萬計股票的大型基金，常以付出的價格是否低於 VWAP 來評核。所以價格低於它時它們買多些，高於它時買少些。這種行為是這條線吸引價格的原因之一，也是少數有具體成因的指標效應之一。',
-  // Limits
-  'h9yprr9ls1': '局限',
-  // VWAP restarts each session, so it is unreliable in the first few minutes, when it is built from very little data.
-  '1yus7zv33vf': 'VWAP 每個時段重新開始，所以在最初幾分鐘由很少數據構成，並不可靠。',
-  // On a strong trend day price leaves VWAP in the morning and never comes back. Waiting for a pullback to the line means missing the whole day.
-  '13on9r5dobb': '在強勁的趨勢日，價格早上離開 VWAP 就再沒有回來。等待回調到這條線代表錯過整天。',
-  // Crypto has no session, so the daily restart at midnight UTC is a convention. The line still works as an average, but treat the first hours after the restart with care.
-  'twft2owcj3': '加密貨幣沒有時段，所以在 UTC 午夜每日重新開始只是慣例。這條線作為平均數仍然有效，但重新開始後的最初幾小時要小心對待。',
-  // Add VWAP from the Indicators dialog. On intraday charts it restarts every UTC day; on daily charts, every month. The Backtester has a VWAP reclaim preset.
-  '2cgw90ci98y': '在「指標」對話框加入 VWAP。在即日圖表上它每個 UTC 日重新開始；在日線圖上每月重新開始。回測器有一個 VWAP 收復預設。',
+  // **VWAP** answers one question: is the average buyer today in profit?
+  'zshr82rcp7': '**VWAP** 回答一個問題：今日的平均買家是否在賺錢？',
+  // **Above VWAP**: buyers in control; dips to the line tend to be bought.
+  'xi9fq973l0': '**在 VWAP 上方**：買家佔上風；回落到線上往往有人買。',
+  // **Below VWAP**: sellers in control; rallies to the line tend to be sold.
+  '1segxoo0hsc': '**在 VWAP 下方**：賣家佔上風；反彈到線上往往有人沽。',
+  // **Crossing back and forth**: a range day.
+  'eu4muij5hr': '**來回穿越**：區間市的日子。',
+  // SPY daily with VWAP, which on daily candles restarts each month. Price above the line early in a month tends to stay above, and pullbacks often return to it. Intraday, the same happens within each day.
+  '141c3jua64e': 'SPY 日線加上 VWAP，在日線上每月重新計算。月初在線上方的價格往往留在上方，回調也常回到線上。在即日圖中，同樣情況在每日內發生。',
+  // **The pullback**: in an uptrend above VWAP, buy the first touch that turns. Stop just below.
+  '2010tftnqxc': '**回調**：在 VWAP 上方的上升趨勢中，買入第一次觸線後的轉向。止蝕設在線下方少許。',
+  // **The reclaim**: price starts below, closes back above and holds the retest.
+  '15snvqhtofx': '**收復**：價格開始在線下方，收回上方並守住回測。',
+  // **The fade**: far from VWAP late in a quiet session, bet on a drift back. Against the trend: small size, firm stop.
+  'ahyaz90ivl': '**逆向**：平靜時段尾段價格遠離 VWAP 時，押注它回歸。這是逆勢：細注、止蝕要硬。',
+  // Large funds are judged on whether they paid less than VWAP, so they buy more below it. That gives the line a real cause behind it.
+  'woududc61s': '大型基金以是否以低於 VWAP 的價格買入來評核，所以在線下方買得更多。這令這條線有實在的成因。',
+  // Unreliable in the first minutes, when it has little data.
+  '1mfpw481sm6': '開市首幾分鐘數據少，並不可靠。',
+  // On a strong trend day price never returns to it.
+  '2fcw16bt25q': '在強勢趨勢日，價格永遠不會回到線上。',
+  // In crypto the midnight UTC restart is only a convention.
+  'qtunh02a8g': '加密貨幣在 UTC 午夜重新計算，只是一個慣例。',
+  // Add VWAP from the Indicators dialog. It restarts every UTC day intraday, and every month on daily charts. The Backtester has a VWAP reclaim preset.
+  '22yfyzqxbmt': '在指標對話框加入 VWAP。即日圖每個 UTC 日重新計算，日線圖則每月。回測器有 VWAP 收復預設。',
   // A line is not a signal
   '8syb36b3a0': '一條線不是訊號',
-  // Price touching VWAP is not a reason to trade. The reason is the reaction: a rejection candle, a lower-timeframe change of character, a volume surge. The line tells you where to look.
-  'g44vs2t4xh': '價格觸及 VWAP 不是交易的理由。理由是反應：拒絕陰陽燭、較低時間週期的特性轉變、成交量急增。這條線告訴你該往哪裡看。',
+  // The reason to trade is the reaction at the line: a rejection candle, a change of character, a volume surge.
+  '27m42ycm0ny': '交易的理由是價格在線上的反應：拒絕陰陽燭、特性轉變、成交量急增。',
   // Key levels: yesterday’s high, low and close
   '14q16g0z5ov': '關鍵價位：昨日的高點、低點和收市價',
   // Before the session starts, mark a handful of prices everyone can see. Most intraday turning points happen at one of them.
   '8gydf3nj0h': '時段開始前，標記幾個人人都看得見的價格。大部分即日轉折點都在其中一個發生。',
-  // Intraday charts are noisy. What gives them structure is a short list of prices that come from the higher timeframe, which traders mark before the session begins. The most important are the **previous day high and low**, and the previous day’s close.
-  '20wwb6skuqo': '即日圖表雜訊多。賦予它們結構的，是一小份來自較高時間週期的價格清單，交易者在時段開始前標記好。最重要的是**前一日高點和低點**，以及前一日收市價。',
-  // AAPL with the previous day’s high, close and low drawn on each candle. Days that close beyond the previous day’s high or low tend to come in runs, during trends. In a range, price pokes through one of the lines and returns inside.
-  '1srqhstky1z': 'AAPL 在每支陰陽燭上畫出前一日的高點、收市價和低點。收市越過前一日高點或低點的日子，在趨勢中往往連續出現。在區間中，價格戳穿其中一條線後回到範圍內。',
-  // The levels to mark
-  'i8pkf4cizu': '要標記的價位',
-  // **Previous day high and low** (often written PDH and PDL): the edges of yesterday’s range. Stops and breakout orders sit just beyond both.
-  '12tnf8l2b1z': '**前一日高點和低點**（常寫作 PDH 和 PDL）：昨日區間的邊緣。止蝕盤和突破單就在兩者剛好之外。',
-  // **Previous day close**: above it, the instrument is up on the day; below it, down. In stocks the difference between yesterday’s close and today’s open is the overnight gap.
-  '12f276298s4': '**前一日收市價**：在其之上，該工具當日上升；在其之下，當日下跌。在股票中，昨日收市價和今日開市價的差距就是隔夜裂口。',
-  // **Today’s open**: price above the open means the day’s candle is green so far.
-  '4fjn231byf': '**今日開市價**：價格高於開市價代表當日陰陽燭暫時是綠色。',
-  // **Overnight or Asian session high and low**: the range made while the main session was closed.
-  '33gfq2mf65': '**隔夜或亞洲時段高點和低點**：主要時段休市期間形成的區間。',
-  // **Weekly high and low, and round numbers**: fewer, bigger levels behind the daily ones.
-  '10k0ye12txs': '**每週高點和低點，以及整數**：日線價位背後較少但較大的價位。',
-  // Two things can happen at a level
-  '1dxuhz5s08q': '價位上可能發生兩件事',
-  // **Break and hold.** Price closes beyond the level and then holds it on a retest. Yesterday’s high becomes today’s support. This is a trend day in the making.
-  '1zhamcacpv3': '**突破並守住。**價格收市越過價位，並在回測時守住。昨日的高點變成今日的支持位。這是正在形成的趨勢日。',
-  // **Sweep and reverse.** Price pokes through, triggers the orders, and closes back inside. This is the liquidity sweep from the Smart money module, and it often leads to a move back across the range.
-  'yo4c39w31l': '**掃蕩並反轉。**價格戳穿價位，觸發訂單，然後收市回到範圍內。這就是「聰明錢概念」單元的流動性掃蕩，常常帶來穿越區間的回程走勢。',
-  // You do not have to guess which one in advance. Wait for the candle to close, then trade the one that happened.
-  'rpclkooc76': '你不必事先猜是哪一種。等陰陽燭收市，然後交易實際發生的那一種。',
+  // Before the session
+  '1nqrk37xlyy': '時段開始前',
+  // Intraday structure comes from a few higher-timeframe prices marked before the session, above all the **previous day high and low**.
+  '1stjc0qq4ra': '即日的結構來自開市前標出的幾個較高時間框架價位，最重要的是**前一日高位和低位**。',
+  // AAPL with the previous day’s high, close and low on each candle. In trends, closes beyond them come in runs; in a range, price pokes through and returns.
+  '1m204qcbd71': 'AAPL 每支陰陽燭上都畫出前一日的高位、收市和低位。趨勢中，收在其外的情況會接連出現；區間市中，價格刺穿後會回來。',
+  // **Previous day high and low** (PDH, PDL): stops and breakout orders sit just beyond.
+  'ms4mmvikwx': '**前一日高位和低位**（PDH、PDL）：止蝕盤和突破盤就在其外。',
+  // **Previous day close**: above it the day is up; the gap to the open is the overnight gap.
+  '1pix0tljssp': '**前一日收市**：在其上方即當日上升；與開市價之間的差距就是隔夜裂口。',
+  // **Today’s open**, the **overnight range**, and **weekly levels and round numbers**.
+  '1qi7bycqlub': '**今日開市價**、**隔夜區間**，以及**每週價位和整數關口**。',
+  // **Break and hold**: a close beyond the level that holds on a retest. A trend day forming.
+  '1pve901dytx': '**突破並守住**：收在價位之外並守住回測。趨勢日正在形成。',
+  // **Sweep and reverse**: a poke through that closes back inside, the liquidity sweep from Smart money.
+  '1jn9tfmtrnw': '**掃蕩後反轉**：刺穿後收回價位內，即聰明錢單元中的流動性掃蕩。',
+  // Do not guess which: wait for the close and trade what happened.
+  'u9b5antv9j': '不要猜是哪一種：等收市，然後交易實際發生的情況。',
   // Planning a session
   '1n93exybdhm': '計劃一個時段',
-  // Yesterday: high 108, low 103, close 106.
-  '235hiqvrqv6': '昨日：高點 108，低點 103，收市 106。',
-  // Today opens at 106.5, above the close: a mildly bullish start.
-  '1s0sa6yi002': '今日在 106.5 開市，高於收市價：輕微看漲的開始。',
-  // Plan A: a 15-minute close above 108 that holds on a retest. Buy the retest, stop at 107.4, target the weekly high at 110.5.
-  'l5ohjjifit': '計劃 A：15 分鐘收市高於 108 並在回測時守住。在回測時買入，止蝕 107.4，目標是 110.5 的每週高點。',
-  // Plan B: a spike above 108 that closes back below. Short, stop above the spike, target the open at 106.5 and then yesterday’s close at 106.
-  '1e9n1bujexx': '計劃 B：急升穿過 108 後收市回到其下方。做空，止蝕放在急升之上，目標是 106.5 的開市價，然後是昨日 106 的收市價。',
-  // Anything between 104 and 107.5 is the middle of the range: no trade.
-  '10axcuonfn8': '104 至 107.5 之間的任何價格都是區間中間：不交易。',
-  // Add Previous Day Levels from the Indicators dialog. For session highs and lows, switch on Sessions in Overlays. Use the horizontal line tool for weekly levels.
-  'n9xxcdajcn': '在「指標」對話框加入「前一日價位」。時段高低點則在「圖層」開啟「交易時段」。每週價位用水平線工具畫。',
+  // Yesterday: high 108, low 103, close 106. Today opens 106.5.
+  '1qz663m6ixq': '昨日：高位 108，低位 103，收市 106。今日開市 106.5。',
+  // Plan A: a 15-minute close above 108 that holds. Buy the retest, stop 107.4, target 110.5.
+  'g1gtwr6o9i': '計劃 A：15 分鐘收市在 108 上方並守住。回測時買入，止蝕 107.4，目標 110.5。',
+  // Plan B: a spike above 108 that closes back below. Short, stop above the spike, target 106.5 then 106.
+  '15yyqc7jiql': '計劃 B：急升穿 108 後收回下方。沽空，止蝕在急升高位上方，目標 106.5 然後 106。',
+  // Between 104 and 107.5: no trade.
+  '2695s4sjphd': '104 至 107.5 之間：不交易。',
+  // Add Previous Day Levels from the Indicators dialog, and Sessions from Overlays.
+  '1wgythtilkq': '在指標對話框加入「前一日價位」，並在疊加層開啟「交易時段」。',
   // Fewer levels, not more
   '28y1c03q00b': '價位要少，不要多',
-  // A chart with twenty lines has a line near every price, and you will always find one to justify a trade. Five or six levels from the timeframe above are enough.
-  'vd37pjxjb0': '有二十條線的圖表，每個價格附近都有一條線，你總能找到一條來合理化一宗交易。來自上一級時間週期的五六個價位已經足夠。',
+  // With twenty lines there is always one to justify a trade. Five or six are enough.
+  '1j9y2p0d8f3': '畫了二十條線，總有一條能為交易找藉口。五六條就夠。',
   // Momentum setups and scalping
   '1fb6jai8zgp': '動力形態和炒短線',
   // Short-term trades that join a move already under way. The mechanics are simple; the arithmetic of costs is what makes them hard.
   '6mpsobj2td': '加入已在進行中的走勢的短線交易。機制很簡單；令它困難的是成本的算術。',
-  // Momentum trading is built on the observation that a fast move often continues for a short while after a pause. The trader does not predict the move. They wait for it to appear, wait for it to rest, and join when it resumes.
-  '2dsqdq0fc50': '動力交易建基於一個觀察：快速走勢在停頓後常會再延續一會。交易者不預測走勢。他們等走勢出現，等它休息，在它恢復時加入。',
-  // The flag: the basic momentum setup
-  's1v3himxj': '旗形：基本的動力形態',
-  // **The impulse.** A sharp move on high volume, well beyond the recent range.
-  'ihbeoavrqn': '**推動。**一段大成交量的急劇走勢，遠超近期區間。',
-  // **The pause.** A few small candles drifting slightly against the move, on falling volume. This is the flag from the Chart patterns module, on a short timeframe.
-  '1gdupwg53qd': '**停頓。**幾支小陰陽燭稍微逆走勢方向漂移，成交量下降。這就是「圖表形態」單元的旗形，放在短時間週期上。',
-  // **The trigger.** A candle closes beyond the pause in the direction of the impulse. Enter there.
-  'ifrvhp9kfb': '**觸發。**一支陰陽燭沿推動方向收市越過停頓。在那裡入場。',
-  // **The stop.** Below the low of the pause.
-  '2bo6fdzncp4': '**止蝕。**停頓的低點之下。',
-  // **The target.** The height of the impulse, measured from the breakout, or a trailing stop.
-  '22vhlhdnqxp': '**目標。**推動的高度，由突破點量度，或使用追蹤止蝕。',
-  // Three large candles on heavy volume, four small ones drifting down on light volume, then a close above the pause that starts the next leg.
-  '1bif3ymolod': '三支大成交量的大陰陽燭，四支小陰陽燭在少量成交下向下漂移，然後收市高於停頓，開始下一段走勢。',
+  // A fast move often continues after a pause. The momentum trader waits for the move, waits for it to rest, and joins when it resumes.
+  '157f85wjriu': '快速走勢在停頓後常會延續。動量交易者等走勢出現，等它休息，然後在它恢復時加入。',
+  // **Impulse**: a sharp move on high volume.
+  '2vc9rlj46v': '**推動**：高成交量下的急速走勢。',
   // Impulse
   '9beh3oy05s': '推動',
+  // **Pause**: a few small candles against it on falling volume, a short-timeframe flag.
+  '1j454z7iydx': '**停頓**：幾支逆向的小陰陽燭，成交量下降，即短時間框架的旗形。',
+  // **Trigger**: a close beyond the pause.
+  '1rf1630ika9': '**觸發**：收市突破停頓區。',
+  // **Stop** below the pause; **target** the impulse height, or trail.
+  '1nvadj7ievu': '**止蝕**設在停頓區下方；**目標**為推動的高度，或用移動止蝕。',
+  // Three large candles on heavy volume, four small ones on light volume, then a close above the pause that starts the next leg.
+  'ol3s7bdtdx': '三支大成交量的大陰陽燭，四支低成交量的小陰陽燭，然後收市突破停頓區，開始下一段走勢。',
   // Pause: low volume
   '1yo01smmyo': '停頓：成交量低',
   // Trigger: close above the pause
   'x37cv7b4ls': '觸發：收市高於停頓',
   // Stop below the pause
   '1mjn77s8o13': '止蝕在停頓之下',
-  // Scalping
-  'm14ml4oja4': '炒短線',
-  // Scalping takes the same ideas to the extreme: trades lasting seconds to a few minutes, aiming for moves of 0.1% to 0.3%. Scalpers watch the order book and the stream of trades as much as the chart.
-  '82go3tcaev': '炒短線把同樣的概念推到極致：交易持續數秒至幾分鐘，目標是 0.1% 至 0.3% 的走勢。炒短線者看買賣盤和成交紀錄，與看圖表一樣多。',
-  // The arithmetic
-  '2fiz09mnykj': '算術',
+  // **Scalping** takes this to the extreme: trades of seconds to minutes, aiming for 0.1% to 0.3%.
+  'ygarkrl912': '**剝頭皮**把這推到極端：持倉數秒至數分鐘，目標 0.1% 至 0.3%。',
   // Why scalping is so hard
   '24bs3p6z0ne': '為甚麼炒短線這麼難',
-  // Target: 0.2%. Stop: 0.2%. A fair-looking 1 to 1.
-  '5f1uum4ftz': '目標：0.2%。止蝕：0.2%。看似公平的 1 比 1。',
-  // Fee: 0.1% to enter and 0.1% to exit. That alone is 0.2%.
-  '1iji94816mh': '手續費：入場 0.1%，出場 0.1%。單是這樣已經是 0.2%。',
-  // Spread and slippage: say another 0.05%.
-  'kmo6913uzu': '差價和滑價：假設再多 0.05%。',
-  // A winning trade nets 0.2 - 0.25 = a loss of 0.05%. A losing trade costs 0.2 + 0.25 = 0.45%.
-  '1yxe34z3dgw': '贏的交易淨得 0.2 - 0.25 = 虧損 0.05%。輸的交易損失 0.2 + 0.25 = 0.45%。',
-  // With these costs the strategy loses money at every possible win rate.
-  '6t8nh2yl32': '在這樣的成本下，不論勝率多少，這個策略都會虧錢。',
-  // Professional scalpers survive because they pay a fraction of retail fees, often earn rebates for placing limit orders, and use software that reacts faster than a person can. A beginner has none of those advantages.
-  'zf1feobcui': '專業炒短線者能生存，是因為他們付的手續費只是散戶的一小部分，落限價單常能賺取回贈，並使用比人反應更快的軟件。初學者完全沒有這些優勢。',
-  // **If you want short-term trades**, make the target large compared with costs: at least ten times the round-trip fee and spread.
-  '1ytp6jet978': '**如果你想做短線交易**，讓目標相對成本夠大：至少是來回手續費和差價的十倍。',
-  // **Use limit orders where you can.** Many exchanges charge less for them, and you do not pay the spread.
-  '2bbkfik8uxg': '**盡可能使用限價單。**很多交易所對限價單收費較低，而且你不用付差價。',
+  // Target 0.2%, stop 0.2%.
+  '25t5b9kghmg': '目標 0.2%，止蝕 0.2%。',
+  // Fees 0.1% in and 0.1% out, plus 0.05% spread and slippage.
+  '85z7ia144o': '入場手續費 0.1%、出場 0.1%，再加 0.05% 差價和滑價。',
+  // A win nets -0.05%. A loss costs 0.45%.
+  'fftjt116x4': '贏一單淨得 -0.05%。輸一單損失 0.45%。',
+  // This loses at every win rate.
+  '1y58uwvg82y': '無論勝率多少都會輸錢。',
+  // Professionals survive on tiny fees, rebates for limit orders and fast software. A beginner has none of these.
+  '2belhhei1ag': '專業交易者靠極低手續費、限價單回贈和高速軟件生存。新手一樣都沒有。',
+  // **Make the target at least ten times** the round-trip cost.
+  '9wzya55656': '**目標最少是來回成本的十倍**。',
+  // **Use limit orders** where you can.
+  '1e2py6e0kz7': '**盡量用限價單**。',
   // **Trade only the most liquid symbols** in their busiest hours.
   'jy4d17cij6': '**只在最繁忙的時間交易流動性最高的代號**。',
   // Change the fee in Settings and watch
   'orj1j4rbe9': '在「設定」更改手續費然後觀察',
-  // The paper account charges 0.1% a fill by default. Run a week of quick trades in Replay on the 1-minute chart and look at the Fees column in the Journal. For most people it is larger than their gross profit.
-  '20ow5b2lmx9': '模擬戶口預設每次成交收取 0.1%。在重播模式用 1 分鐘圖做一星期的快速交易，然後看交易日誌的「手續費」欄。對大部分人來說，它比毛利還大。',
+  // The paper account charges 0.1% a fill. Run a week of quick trades in Replay on the 1-minute chart and check the Fees column in the Journal. For most people it exceeds their gross profit.
+  '1g2pt4ziwgm': '模擬戶口每次成交收 0.1%。在重播中用 1 分鐘圖做一星期快速交易，再看交易日誌的手續費一欄。對大部分人來說，它比總利潤還多。',
   // A daily routine and a daily loss limit
   'f4mpdggefh': '每日程序和每日虧損上限',
   // What separates a trader from a gambler is mostly what they do before and after the session, and the rule that ends a bad day early.
   'woxijjaw9c': '交易者和賭徒的分別，主要在於他們在時段前後做甚麼，以及提早結束壞日子的規則。',
-  // Day trading puts you through dozens of decisions under time pressure. The quality of those decisions falls quickly when you are tired, behind, or trying to win money back. A routine moves as many decisions as possible to a time when you are calm.
-  '19k3koc0d2c': '即日交易讓你在時間壓力下作出幾十個決定。當你疲倦、落後或想贏回錢時，這些決定的質素會迅速下降。程序把盡可能多的決定移到你冷靜的時候。',
-  // Before the session
-  '1nqrk37xlyy': '時段開始前',
-  // **Check the calendar.** Is there a central bank decision, an inflation report, or earnings for what you trade? Know the time. Either stand aside around it or plan for the volatility.
-  '1ht1le9e4su': '**查看日曆。**你交易的東西有沒有央行議息、通脹報告或業績公佈？知道時間。要麼在那段時間附近旁觀，要麼為波動作好計劃。',
-  // **Read the higher timeframe.** Trend, range, and where the nearest major levels are.
-  '1a1dqphrv6c': '**解讀較高時間週期。**趨勢、區間，以及最近的主要價位在哪裡。',
-  // **Mark your levels.** Yesterday’s high, low and close, the overnight range, VWAP.
-  '1x1xirpxs20': '**標記你的價位。**昨日的高點、低點和收市價、隔夜區間、VWAP。',
-  // **Write two or three plans.** "If price does X at level Y, I will do Z, with a stop at S." Anything not on the list is not a trade today.
-  '1mzzzu0wm3w': '**寫下兩三個計劃。**「如果價格在價位 Y 做出 X，我會做 Z，止蝕在 S。」不在清單上的，今天都不是交易。',
-  // **Set your limits.** The most you will lose today, and the most trades you will take.
-  '9lmokbwtxy': '**設定你的限制。**今天最多輸多少，以及最多做多少宗交易。',
+  // Decisions get worse when you are tired, behind or chasing losses. A routine moves them to calm moments.
+  '1u1lamege8w': '疲倦、落後或想追回虧損時，決定會變差。日常程序把決定移到冷靜的時候。',
+  // **Check the calendar** for rate decisions, inflation data or earnings.
+  '1u1in6a97j0': '**查看日曆**，留意議息、通脹數據或業績公布。',
+  // **Read the higher timeframe** and **mark your levels**.
+  '16a3552dva8': '**閱讀較高時間框架**並**標出你的價位**。',
+  // **Write two or three plans**: "if X at Y, I do Z, stop at S". Nothing else is a trade.
+  'zbzub25vvv': '**寫下兩三個計劃**：「如果 Y 價位出現 X，我就做 Z，止蝕在 S」。其他一律不是交易。',
+  // Nothing
+  '2109u9fst05': '沒有甚麼',
+  // **Set limits**: maximum loss and maximum trades today.
+  'listqz4dbv': '**設定上限**：今日最大虧損和最多交易次數。',
   // The daily loss limit
   'h4wnn07h6o': '每日虧損上限',
-  // A **daily loss limit** is a fixed amount, decided in advance, at which you stop trading for the day. No exceptions. A common choice is three times your risk per trade: if you risk 1% a trade, you stop at minus 3%.
-  'zrw4jmobh3': '**每日虧損上限**是事先決定的固定金額，到達時當日停止交易。沒有例外。常見的選擇是每宗交易風險的三倍：如果每宗交易承受 1% 風險，在虧損 3% 時停止。',
-  // It exists because of what happens to judgement after losses. The urge to get back to even produces bigger sizes and worse entries, which is how a normal losing day becomes a disaster. Try the simulation below: even a good system has runs of losses. The limit decides how much one of those runs is allowed to cost.
-  '24tvb4fwuka': '它的存在是因為虧損後判斷力會變化。想打和的衝動帶來更大的規模和更差的入場，正常的虧損日就是這樣變成災難。試試下面的模擬：即使好的系統也有連續虧損。上限決定這樣一段連敗可以損失多少。',
-  // During the session
-  'y77fnxq40t': '時段進行中',
-  // Trade only the plans you wrote.
-  '1ppzbs7m4zx': '只交易你寫下的計劃。',
-  // After each trade, win or lose, take a minute away from the screen before the next.
-  'acndnhok91': '每宗交易之後，不論輸贏，離開屏幕一分鐘才做下一宗。',
-  // After two losses in a row, halve your size or stop.
-  '1lq3t7sp3y4': '連輸兩宗之後，把規模減半或停止。',
-  // When the active hours end, stop. The midday drift is where plans get abandoned.
-  '2bmm43sgxj': '活躍時間結束時就停止。中段的漂移是計劃被放棄的地方。',
-  // After the session
-  '12wqmhqfemb': '時段結束後',
-  // Open the Journal. For each trade record the setup, how you felt, and whether you followed the plan.
-  '299jlyxh1e1': '打開交易日誌。為每宗交易記錄交易形態、你的感受，以及有沒有遵守計劃。',
-  // Note one thing done well and one to fix. Not ten.
-  'yj2nfgnfej': '記下一件做得好的事和一件要改善的事。不是十件。',
-  // Close the platform. Do not watch the market for the rest of the day.
-  '1om0g8w400a': '關閉交易平台。當日餘下時間不要看市場。',
+  // Stop for the day at a fixed loss, often three times your risk per trade: risking 1%, stop at -3%. Even a good system has losing runs; the limit decides what one may cost.
+  '1wk3wtmmpj4': '在固定虧損時停止當日交易，通常是每單風險的三倍：每單冒 1%，在 -3% 停手。再好的系統也有連續虧損；上限決定一段連輸可以付出多少。',
+  // **During**: trade only your plans, step away after each trade, halve size after two losses, stop when active hours end.
+  'hxn08jmuwx': '**交易中**：只做你的計劃，每單後離開螢幕一會，連輸兩單後減半，活躍時段結束便停手。',
+  // **After**: journal each trade, note one thing done well and one to fix, close the platform.
+  '1am1gb966of': '**收市後**：在日誌記錄每單，寫下一件做得好的事和一件要改的事，然後關掉平台。',
   // Process over outcome
   '2cnwlhoidw8': '重過程，不重結果',
-  // Grade each day on whether you followed your rules, not on whether you made money. A losing day inside the rules is a good day. A winning day made by breaking them teaches the habit that eventually empties the account.
-  'pe2yh47kr8': '以有沒有遵守規則為每一天評分，而不是以有沒有賺錢。守規則的虧損日是好日子。破壞規則而賺錢的日子，教曉你的是最終會清空戶口的習慣。',
+  // Grade each day on whether you followed your rules. A losing day inside the rules is a good day; a winning day that broke them teaches a bad habit.
+  'qoqpac0nsg': '以有否遵守規則為每日評分。守規則而虧損的日子是好日子；破規則而賺錢的日子會養成壞習慣。',
   // A limit only works if nothing can override it
   '8sfxo7cfg9': '上限只有在沒有東西能推翻它時才有效',
-  // Decide it when calm, write it down, and treat reaching it as the end of the session, not a signal to switch to a different strategy. Professional trading desks enforce this rule on their traders for a reason.
-  '1zh94nxt821': '在冷靜時決定，寫下來，並把到達上限視為時段結束，而不是轉用另一個策略的訊號。專業交易部門對交易員執行這條規則是有原因的。',
+  // Write it down when calm, and treat reaching it as the end of the session, not a cue to try another strategy.
+  'tr9z82nx89': '在冷靜時寫下來，觸及上限就當作當日交易結束，而不是轉試另一個策略的信號。',
   // How is volume usually spread across a trading day?
   '23nkfjg3tz6': '成交量通常怎樣分佈在一個交易日中？',
   // Evenly
@@ -408,8 +352,6 @@ export default {
   '1wz0bknsh71': '他們有利潤',
   // They have all sold
   '2ef044k360f': '他們全部已賣出',
-  // Nothing
-  '2109u9fst05': '沒有甚麼',
   // VWAP is the average price paid today. Above it, the average buyer is sitting on a gain.
   '158qy5uo659': 'VWAP 是今天支付的平均價格。在其之上，平均買家有帳面收益。',
   // What is a VWAP reclaim?
@@ -478,14 +420,14 @@ export default {
   '1kkn12iqttu': '掃蕩並反轉',
   // A break and hold: a possible trend day
   '2d4tjpercpq': '突破並守住：可能是趨勢日',
+  // A break and hold
+  'ne05z6mlcf': '突破並守住',
   // The market is closing
   'h19ww4jplm': '市場即將收市',
   // Old resistance acting as support after a clean break is the start of a trend day.
   '1ckz0i9j41k': '乾淨突破後舊阻力位成為支持位，是趨勢日的開始。',
   // Price spikes above yesterday’s high and closes back below it. This is:
   'y6z7pjb2oh': '價格急升穿過昨日高點，然後收市回到其下方。這是：',
-  // A break and hold
-  'ne05z6mlcf': '突破並守住',
   // A liquidity sweep
   '1gx83fl5zcf': '流動性掃蕩',
   // A gap
