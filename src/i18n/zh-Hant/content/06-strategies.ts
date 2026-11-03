@@ -10,164 +10,118 @@ export default {
   'bpaew9to5z': '順勢交易與移動平均線交叉',
   // Buy what is already going up and hold until it stops. Simple, and uncomfortable in practice.
   'kzxhpg7tww': '買入已經在上升的東西，持有至它停下為止。簡單，但實際做起來並不舒服。',
-  // A **strategy** is a set of rules that decides when you enter a trade, when you exit, and how much you trade. Rules matter because they can be tested on past data and followed without improvising under pressure.
-  '2gi3cdo13q6': '**策略**是一套決定何時入場、何時出場和交易多少的規則。規則之所以重要，是因為它可以用過去的數據測試，並且讓你在壓力下照做而不用即興發揮。',
-  // The idea
-  '2e2134w7yp8': '概念',
-  // **Trend following** assumes that a market already moving in one direction is more likely to continue than to reverse. You do not predict the trend. You wait for one to appear, join it, and stay until it ends.
-  'tw7slgzzae': '**順勢交易**假設一個已經朝某方向移動的市場，延續的機會大於反轉。你不預測趨勢，而是等它出現、加入它，並留到它結束。',
-  // A moving-average crossover system
-  '1ho9jhu9d5g': '移動平均線交叉系統',
-  // The classic rule set uses two moving averages, one fast and one slow:
-  '25trwphtrf6': '經典的規則使用兩條移動平均線，一條快、一條慢：',
-  // **Enter long** when the fast average crosses above the slow average.
-  '1cyy58wqfte': '快線向上穿越慢線時**做多入場**。',
-  // **Exit** when the fast average crosses back below.
-  'yx6vaghhva': '快線向下穿越回去時**出場**。',
+  // A **strategy** is a set of rules for entering, exiting and sizing a trade. Written rules can be tested on past data and followed without improvising under pressure.
+  '1jhhz43z7w1': '**策略**是一套關於入場、出場和持倉規模的規則。寫下來的規則可以用過去數據測試，也能在壓力下照做而不臨場發揮。',
+  // **Trend following** bets that a market already moving will keep moving. You do not predict the trend; you join it once it appears and stay until it ends. The classic rules use two moving averages:
+  'hv7kjmlttj': '**順勢交易**押注已在移動的市場會繼續移動。你不預測趨勢；趨勢出現後加入，一直持有到它結束。經典規則用兩條移動平均線：',
+  // **Enter long** when the fast average crosses above the slow one.
+  '1xbxv9so7v0': '快線升穿慢線時**做多入場**。',
+  // **Exit** when it crosses back below.
+  '2dfv36c4pps': '跌穿回去時**出場**。',
   // Optionally, go short on the downward cross instead of just exiting.
   '1g9l6qzkqm5': '也可以選擇在向下交叉時做空，而不只是出場。',
   // SPY with a 20-day and a 50-day EMA. Find each place the faster line crosses the slower one, and see how much of the following move a crossover trader would have caught.
   '7u60e2q1m3': 'SPY 加上 20 日和 50 日 EMA。找出每一個快線穿越慢線的地方，看看交叉交易者能捕捉到之後走勢的多少。',
-  // What to expect
-  'jg7uxrpl9s': '可以預期甚麼',
-  // **Low win rate, big winners.** Trend systems often win only 30% to 45% of the time. They make money because the few big trends pay for many small losses.
-  'zv1t46hjub': '**低勝率、大勝利。**順勢系統往往只有 30% 至 45% 的勝率。它們賺錢，是因為少數大趨勢足以支付很多小虧損。',
-  // **Late in, late out.** You never buy the bottom or sell the top. You give back part of every trend before the exit signal comes.
-  'qceowbawzk': '**遲入場、遲離場。**你永遠買不到底部，也賣不到頂部。在出場訊號出現之前，你會回吐每段趨勢的一部分。',
-  // **Long losing streaks in ranges.** In a sideways market every crossover is a whipsaw, and markets range a lot of the time.
-  '1tdq4qrwm2f': '**在區間市中長時間連續虧損。**在橫行市中，每次交叉都是來回打臉，而市場很多時候都在區間內。',
-  // Common improvements
-  '2d3dnyz9iyh': '常見的改良',
-  // A **trend filter**: only take long signals when price is above a long average such as the 200.
-  'lolmtswccd': '**趨勢過濾器**：只在價格高於長期平均線（例如 200）時才接受做多訊號。',
-  // A **trailing stop**: instead of waiting for the cross back, move your stop-loss up behind price as it rises, for example 3 ATR below the highest close.
-  '137z24q44x1': '**移動止蝕**：不等反向交叉，而是在價格上升時把止蝕跟在價格後面上移，例如放在最高收市價下方 3 個 ATR。',
-  // A **volatility filter**: skip signals when the averages are flat and tangled together.
-  '6rt7ytlww': '**波幅過濾器**：當平均線平坦而且糾纏在一起時，跳過訊號。',
+  // **Low win rate, big winners**: often 30% to 45% wins, paid for by a few big trends.
+  '33jpwv3kx7': '**低勝率、大勝利**：勝率常只有 30% 至 45%，靠幾段大趨勢彌補。',
+  // **Late in, late out**: you give back part of every trend before the exit.
+  'hdlrc5vrv7': '**遲入場、遲離場**：每段趨勢在出場前都要回吐一部分。',
+  // **Losing streaks in ranges**: every crossover is a whipsaw.
+  '27yankzlssw': '**區間市中連續虧損**：每次交叉都是來回打臉。',
+  // Common fixes: only buy above the 200-day average, trail a stop such as 3 ATR below the highest close, and skip signals when the averages are flat and tangled.
+  '1ushoxgtaf9': '常見改進：只在 200 日平均線之上買入，使用移動止蝕（例如最高收市價之下 3 個 ATR），以及在平均線平坦糾纏時跳過訊號。',
   // Test it yourself
   '2bhhqwbcq7i': '自己測試',
   // The Backtester has an EMA crossover preset. Run it on different symbols and periods and look at the win rate next to the total return.
   'qn4g4aq9s4': '回測器有一個 EMA 交叉的預設策略。用不同的品種和期間執行它，並比較勝率與總回報。',
   // The hard part is psychological
   '2cvzhsrox64': '難的是心理部分',
-  // Following a trend system means taking many small losses in a row and sitting through pullbacks in winning trades without closing early. Most people abandon the rules just before the trade that would have paid for everything.
-  '2cwil6wtn9y': '跟隨順勢系統，意味著接受連續多次小虧損，並在盈利交易回調時忍住不提早平倉。大部分人都在本來足以抵銷一切的那宗交易之前，放棄了規則。',
+  // Most people abandon the rules after a string of small losses, just before the trade that would have paid for them all.
+  '1sgftn6k59x': '大部分人在連續幾次小虧損後放棄規則，就在那宗本可彌補一切的交易之前。',
   // Breakout trading
   '2ow2y62z4l': '突破交易',
   // Enter when price escapes a range, on the bet that a new move is starting.
   '28hbhj0gch': '在價格衝出區間時入場，押注新的走勢正在開始。',
-  // **Breakout trading** enters when price moves beyond a level that has been containing it: the top of a range, a previous high, the edge of a triangle. The idea is that once the orders defending a level are gone, price can travel quickly.
-  '5vl4ot4n46': '**突破交易**在價格越過一直困住它的價位時入場：區間的頂部、之前的高位、三角形的邊緣。概念是一旦守住價位的訂單消失，價格就可以快速移動。',
-  // A simple rule set
-  '1qzzw2e75cb': '一套簡單的規則',
-  // Find a clear range or level that has held at least two or three times.
-  '42xdp494ft': '找一個至少守住兩三次的明確區間或價位。',
-  // **Enter long** on a candle that closes above resistance (or short on a close below support).
-  '1ul0zl7889u': '陰陽燭收市高於阻力位時**做多入場**（或收市低於支持位時做空）。',
+  // **Breakout trading** enters when price escapes a level that has held it: a range top, a previous high, a triangle edge. With the defending orders gone, price can travel fast.
+  'mwbshikcr': '**突破交易**在價格逃離一直困住它的價位時入場：區間頂部、之前的高點、三角形邊緣。防守的訂單沒有了，價格就能快速移動。',
+  // Find a level that has held two or three times.
+  '1sm2mhikyfc': '找一個守住過兩三次的價位。',
+  // **Enter** on a candle that closes beyond it.
+  '193ul2mn8nv': '在收市越過它的陰陽燭**入場**。',
   // **Stop-loss** just back inside the range.
   '1dvqa0uvot0': '**止蝕**放在剛好回到區間內的位置。',
-  // **Target** the height of the range projected from the breakout, or trail a stop.
-  '1b8fm6a0lpk': '**目標**是由突破點投射區間的高度，或使用移動止蝕。',
+  // **Target** the range height from the breakout, or trail a stop.
+  '1sulor9o4ia': '**目標**是由突破點投射區間高度，或使用移動止蝕。',
   // A range breakout trade. Entry on the close above resistance, stop back inside the range, target one range-height above.
   '1ls6zwco7c6': '一宗區間突破交易。收市高於阻力位時入場，止蝕回到區間內，目標在上方一個區間高度。',
+  // Entry
+  '5p496sooaa': '入場',
   // Resistance: entry on a close above
   '1if723d7f4u': '阻力位：收市高於此處入場',
+  // Resistance
+  '6rmylrnh3e': '阻力位',
   // Stop-loss back inside the range
   '26texi5ukvf': '止蝕回到區間內',
   // Target: range height projected up
   'hjx0psosl4': '目標：向上投射區間高度',
-  // Entry
-  '5p496sooaa': '入場',
-  // A rule you can test: the channel breakout
-  'nm0mrqbzto': '一條可以測試的規則：通道突破',
-  // A mechanical version buys when price makes a new **20-day high** and sells when it makes a new **10-day low**. No judgement is needed, which makes it easy to backtest. It is a trend-following system triggered by breakouts.
-  'y32pfqf840': '機械化的版本在價格創 **20 日新高**時買入，在創 **10 日新低**時賣出。它不需要判斷，所以很容易回測。這是由突破觸發的順勢系統。',
-  // **Many fakeouts.** A large share of breakouts fail and return inside the range. Individual losses should be small because the stop is close.
-  '2d81rtdb5yx': '**很多假突破。**很大一部分突破會失敗並回到區間內。由於止蝕很近，每次虧損都應該很小。',
-  // **Occasional large winners** when a breakout starts a real trend.
-  '1w6v3f8ie74': '**偶爾有大勝利**，當突破展開一段真正的趨勢時。',
-  // **Slippage.** Everyone sees the same level, so price can jump when it breaks and your fill may be worse than planned.
-  'vxnu2sy09o': '**滑價。**每個人都看到同一個價位，所以突破時價格可能跳升，你的成交價可能比計劃差。',
-  // Filters that help
-  '263r97q8bcc': '有幫助的過濾器',
-  // **Volume**: require the breakout candle to have clearly above-average volume.
-  'j4yc4uhimx': '**成交量**：要求突破陰陽燭的成交量明顯高於平均。',
-  // **Trend direction**: only take breakouts in the direction of the larger trend.
-  '230kvpo557g': '**趨勢方向**：只做順著較大趨勢方向的突破。',
-  // **Tight range first**: breakouts from a narrow, quiet range (a Bollinger squeeze) tend to travel further.
-  '2aormz9fbsh': '**先有窄區間**：從窄而平靜的區間（保力加收窄擠壓）出現的突破，往往走得更遠。',
-  // **Retest entry**: wait for price to come back to the level and hold.
-  '15ocvnkbdz4': '**回測入場**：等價格回到價位並守住。',
+  // A mechanical version buys a new **20-day high** and sells a new **10-day low**. It needs no judgement, so it is easy to backtest.
+  'qpo7jmylmk': '機械化版本在**20 日新高**買入，在**10 日新低**賣出。它不需要判斷，所以容易回測。',
+  // **Many fakeouts**, but small losses because the stop is close.
+  '1eq1dfqxhw7': '**很多假突破**，但止蝕近所以虧損小。',
+  // **Occasional big winners** when a real trend starts.
+  '1bhwrjgsl58': '真正的趨勢開始時**偶爾有大勝利**。',
+  // **Slippage**: everyone sees the level, so fills can be worse than planned.
+  '13dg0m2gfj7': '**滑價**：人人都看到同一價位，所以成交價可能比計劃差。',
+  // Slippage
+  '2ffkxy4rmk2': '滑價',
+  // **Filters**: above-average volume, the direction of the bigger trend, a tight range first, or a retest entry.
+  '28478xremug': '**過濾條件**：高於平均的成交量、大趨勢的方向、先有窄區間，或回測入場。',
   // Do not chase
   '16t6qk7y0u9': '不要追價',
-  // If the breakout candle has already run far beyond the level, your stop is far away and the trade is poor. Let it go, or wait for a retest.
-  '23xul342zzd': '如果突破陰陽燭已經遠遠超出價位，你的止蝕就會很遠，交易也很差。放過它，或者等待回測。',
+  // If the breakout candle has already run far, the stop is too far away. Let it go, or wait for a retest.
+  '1gs3juewtuc': '如果突破陰陽燭已經走得很遠，止蝕就太遠了。放過它，或等待回測。',
   // Mean reversion
   '207t666j5oa': '均值回歸',
   // Bet that a price stretched far from its average will come back. High win rate, dangerous losers.
   '1p5aobkivop': '押注偏離平均很遠的價格會回來。勝率高，但虧損的交易很危險。',
-  // **Mean reversion** is the opposite of trend following. It assumes that when price moves unusually far from its average, it tends to return. "Mean" is just another word for average. You buy what has fallen hard and sell what has risen hard.
-  '1jsi2708gad': '**均值回歸**與順勢交易相反。它假設當價格異常地遠離平均時，往往會回來。「均值」只是平均的另一個說法。你買入急跌的東西，賣出急升的東西。',
-  // A simple rule set with RSI
-  '21f4ck2jpmk': '用 RSI 的簡單規則',
-  // **Enter long** when the 14-period RSI falls below 30 (oversold).
-  'yhe7w0k2fw': '14 週期 RSI 跌穿 30（超賣）時**做多入場**。',
-  // **Exit** when RSI rises back above 50, or price returns to its 20-period average.
-  '25da1a2xp5p': 'RSI 回升至 50 以上，或價格回到 20 週期平均線時**出場**。',
-  // **Stop-loss** at a fixed distance, for example 2 ATR below entry.
-  'mvbmixv7ki': '**止蝕**放在固定距離，例如入場價下方 2 個 ATR。',
-  // A rule set with Bollinger Bands
-  'huofwlzjaz': '用保力加通道的規則',
-  // **Enter long** when price closes below the lower band.
-  '1jtvhwj910z': '價格收市低於下軌時**做多入場**。',
-  // **Exit** at the middle band (the 20-period average).
-  '2gct6djuz43': '在中軌（20 週期平均線）**出場**。',
+  // **Mean reversion** is the opposite of trend following: price stretched far from its average tends to come back. You buy hard falls and sell hard rises.
+  'j2j5z2n7mh': '**均值回歸**與順勢交易相反：遠離平均值的價格往往會回來。你買入急跌、賣出急升。',
+  // **With RSI**: buy when RSI(14) falls below 30; exit above 50 or at the 20-period average; stop 2 ATR below.
+  'u1totgfmch': '**用 RSI**：RSI(14) 跌穿 30 時買入；升過 50 或回到 20 週期平均線時出場；止蝕在 2 個 ATR 之下。',
+  // **With Bollinger Bands**: buy a close below the lower band; exit at the middle band.
+  'g0liteuoey': '**用保力加通道**：收市跌穿下軌時買入；在中線出場。',
   // SPY with Bollinger Bands and RSI. Look for closes below the lower band with RSI under 30, and whether price then returned to the middle band.
   '21u448sg0d4': 'SPY 加上保力加通道和 RSI。找出收市低於下軌而 RSI 低於 30 的地方，看看價格之後有沒有回到中軌。',
-  // **High win rate, small winners.** Most stretched moves do snap back a little, so 60% to 70% winners is common. Each win is small because the target is nearby.
-  '16jwxcvtzu': '**高勝率、小勝利。**大部分被拉伸的走勢確實會小幅回彈，所以 60% 至 70% 的勝率很常見。每次勝利都很小，因為目標很近。',
-  // **Rare, large losers.** Sometimes price is stretched because something has really changed, and it keeps going. One such trade can erase many wins.
-  '7ditbl5dev': '**罕見但巨大的虧損。**有時價格被拉伸，是因為真的有甚麼改變了，它會繼續走下去。一宗這樣的交易就能抹去很多次勝利。',
-  // **Best in ranges.** In a strong trend, "oversold" keeps getting more oversold.
-  'r29j64nf24': '**在區間市中最好。**在強勁的趨勢中，「超賣」會變得愈來愈超賣。',
-  // Making it safer
-  'gmjffw7w7d': '令它更安全',
-  // **Trade with the larger trend.** Buy oversold dips only when the long-term trend is up; skip them in a downtrend.
-  '4ksfgnuc22': '**順著較大的趨勢交易。**只在長期趨勢向上時買入超賣的回落；在下跌趨勢中跳過它們。',
-  // **Always use a stop-loss.** The whole danger of this style is the trade that does not come back.
-  '1iw3jmh5uly': '**永遠使用止蝕。**這種風格的全部危險，就是那宗回不來的交易。',
-  // **Never add to a loser.** Buying more as it falls ("averaging down") turns a small loss into a ruinous one.
-  '162qk92e76l': '**永遠不要向虧損的持倉加碼。**在下跌時買入更多（「向下攤平」）會把小虧損變成毀滅性的虧損。',
+  // **High win rate, small winners**: 60% to 70% wins is common.
+  '18xjff29iz7': '**高勝率、小勝利**：勝率 60% 至 70% 很常見。',
+  // **Rare, large losers**: when something has really changed, price keeps going.
+  'j2j2631y8k': '**罕見但巨大的虧損**：當情況真的改變了，價格會繼續走。',
+  // **Best in ranges**: in a strong trend, oversold gets more oversold.
+  '7ztcr3boh4': '**在區間市中最好**：在強勁趨勢中，超賣會變得更超賣。',
+  // Make it safer: buy dips only in a long-term uptrend, always use a stop, and never add to a loser.
+  'e7cu1cyyvf': '令它更安全：只在長期上升趨勢中買入回落，一定要設止蝕，永遠不要向虧損持倉加碼。',
   // Why both styles can work
   '29ls5e16y82': '為甚麼兩種風格都可以有效',
-  // Trend following and mean reversion sound contradictory, but they operate on different timescales and market conditions. Prices tend to revert over short stretches inside ranges and to trend over longer stretches. Neither works all the time.
-  '1al5yx5t2hq': '順勢交易和均值回歸聽起來互相矛盾，但它們在不同的時間尺度和市況下運作。價格往往在區間內的短時間內回歸，在較長時間內則走出趨勢。兩者都不是任何時候都有效。',
+  // Prices tend to revert over short stretches in ranges and trend over longer ones. Neither works all the time.
+  'mp88adjwnd': '價格在區間內短期傾向回歸，較長時間則傾向成趨勢。兩者都不是永遠有效。',
   // "It cannot go any lower"
   'widzkj3895': '「它不可能再低了」',
-  // It can. A stock that has fallen 80% can fall another 80%. Being oversold is a description of the past, not a floor.
-  'ipja9hal38': '它可以。一隻已經跌了 80% 的股票，可以再跌 80%。超賣只是對過去的描述，不是底部。',
+  // It can. A stock down 80% can fall another 80%. Oversold describes the past, not a floor.
+  'yqbefwn5an': '它可以。跌了 80% 的股票可以再跌 80%。超賣描述的是過去，不是底部。',
   // The support and resistance bounce
   '1s9jujoc5hz': '支持位和阻力位反彈',
   // Buy at support, sell at resistance. A range strategy with a naturally tight stop.
   '1scp2x7zpbm': '在支持位買入，在阻力位賣出。一種止蝕天然很近的區間策略。',
-  // The **bounce** strategy trades inside a range. Instead of waiting for price to break a level, you bet that the level will hold again: buy near support, sell near resistance.
-  '22x0f5bhlos': '**反彈**策略在區間內交易。你不等價格突破價位，而是押注價位會再次守住：在支持位附近買入，在阻力位附近賣出。',
-  // The rules
-  '1gdl6sjojw7': '規則',
-  // Identify a range with clear support and resistance, each tested at least twice.
-  '2bmwtzubogs': '找出一個有明確支持位和阻力位的區間，每個價位至少被測試過兩次。',
-  // Wait for price to reach support **and show a reaction**: a hammer, a bullish engulfing candle, or simply a candle that closes back up.
-  '1rikze4ksct': '等價格到達支持位**並出現反應**：一個錘頭、一支看漲吞沒陰陽燭，或者只是一支收市回升的陰陽燭。',
-  // **Enter long** after that reaction candle.
-  '1dnduvnjte6': '在那支反應陰陽燭之後**做多入場**。',
-  // **Stop-loss** just below the support zone.
-  'c633akx0qo': '**止蝕**放在支持區域下方少許。',
-  // **Take profit** a little before resistance.
-  '2b597cel6ip': '在阻力位之前少許**止賺**。',
+  // The **bounce** bets a level will hold again: buy near support, sell near resistance.
+  'utj7l20kxt': '**反彈**策略押注價位會再次守住：在支持位附近買入，在阻力位附近賣出。',
+  // Find a range whose support and resistance have each held twice.
+  'cwqfvqohwn': '找一個支持位和阻力位各守住過兩次的區間。',
+  // Wait for price to reach support **and react**: a hammer, an engulfing candle, a close back up.
+  'pdhvfsktov': '等價格到達支持位**並出現反應**：錘頭、吞沒陰陽燭，或收市回升。',
+  // **Enter long** after the reaction, **stop** just below support, **take profit** a little before resistance.
+  '1lpo0ka5wjk': '出現反應後**做多入場**，**止蝕**剛好在支持位之下，在阻力位之前一點**止賺**。',
   // A bounce trade. Price returns to support for the third time, shows a reaction, and travels back towards resistance.
   '1efuknw91y5': '一宗反彈交易。價格第三次回到支持位，出現反應，然後回升至阻力位。',
-  // Resistance
-  '6rmylrnh3e': '阻力位',
   // Support
   '1osc7jo1bd9': '支持位',
   // Stop-loss below support
@@ -176,72 +130,64 @@ export default {
   '3k7imt029x': '止賺在阻力位之前',
   // Entry after the reaction
   '4x576to2h': '出現反應後入場',
-  // Why the risk/reward is attractive
-  'mjy906difi': '為甚麼風險回報吸引',
-  // The stop sits just beyond the level, so the possible loss is small. The target is the other side of the range, which is much further away. In the chart above the risk is about 1.5 points and the reward about 7.
-  'cgzgm2b6ky': '止蝕就在價位之外，所以可能的虧損很小。目標在區間的另一邊，遠得多。在上圖中，風險約 1.5 點，回報約 7 點。',
-  // It works until the range ends. The last trade in every range is a loser, because that is the one where the level breaks.
-  '1kdec1n0hg1': '它在區間結束之前都有效。每個區間的最後一宗交易都會虧損，因為那正是價位被突破的一宗。',
-  // Levels weaken with each test, as the waiting orders get used up.
-  '86w522qh7p': '價位每被測試一次就會減弱，因為排隊的訂單被消耗了。',
-  // Entering without waiting for a reaction means buying into falling prices, which is called **catching a falling knife**.
-  '1t8npfdhwm': '不等反應就入場，代表在價格下跌時買入，這叫**接下墜的刀**。',
-  // **Strong trend arriving at the level?** A level tested by a steep, high-volume move is more likely to break. Stand aside.
-  '1jtdx6ehip2': '**強勁的趨勢正衝向價位？**被陡峭、大成交量的走勢測試的價位更容易被突破。不要參與。',
-  // **Middle of the range?** There is no edge there. The trade only makes sense near the edges.
-  '1p239z5hm6y': '**在區間中間？**那裡沒有優勢。這種交易只在邊緣附近才合理。',
-  // Bounce and breakout are two sides of one level
-  '9r7ffu9n83': '反彈和突破是同一個價位的兩面',
-  // At every level you are choosing between "it holds" and "it breaks". Range conditions and weak momentum favour the bounce; a trend pressing on the level with rising volume favours the breakout.
-  '12dkogy43g1': '在每一個價位，你都在「守住」和「突破」之間選擇。區間市況和疲弱的動能有利於反彈；趨勢以上升的成交量壓向價位則有利於突破。',
+  // The stop is close and the target far: here about 1.5 points of risk for 7 of reward.
+  '1h2qwth5ylr': '止蝕近、目標遠：這裡約 1.5 點風險換 7 點回報。',
+  // The last trade in every range loses, because that is when the level breaks.
+  'vt17aq6h2g': '每個區間的最後一宗交易都會虧損，因為那就是價位被突破的時候。',
+  // Each test weakens the level. A steep, high-volume move into it is more likely to break it.
+  '1zt4p1t5u1k': '每次測試都會削弱價位。急劇、大成交量地衝向價位，更可能把它突破。',
+  // Buying without a reaction is **catching a falling knife**. In the middle of the range there is no edge.
+  '1a35ve4vu6j': '沒等反應就買入是**接下墜的刀**。在區間中間沒有優勢。',
+  // In the middle of the range
+  '1vg5il8ymou': '區間的中間',
+  // Bounce or breakout?
+  'eo58e69z37': '反彈還是突破？',
+  // At every level you choose between "it holds" and "it breaks". Ranges and weak momentum favour the bounce; a trend pressing with rising volume favours the breakout.
+  '26qsjzjj119': '在每個價位你都在「守住」和「突破」之間選擇。區間和弱動能有利反彈；成交量上升的趨勢壓向價位則有利突破。',
   // Scalping, day, swing and position trading
   '157jhs1rf13': '超短線、日內、波段和長線持倉交易',
-  // Four styles defined by how long a trade lasts. Pick the one that fits your time and temperament.
-  '1p9k3wpvuo9': '按一宗交易持續多久來區分的四種風格。選擇適合你時間和性情的一種。',
-  // Any strategy can be run on any timeframe. How long you hold a trade is called your **trading style**, and it changes almost everything about the experience: how much time it takes, what it costs in fees, and how stressful it is.
-  'fzs5jaxqds': '任何策略都可以在任何時間週期執行。你持倉多久叫你的**交易風格**，它幾乎改變了一切體驗：要花多少時間、手續費成本多少，以及壓力有多大。',
   // Scalping
   'm14ml4oja4': '超短線交易',
-  // **Scalping** means holding for seconds to minutes, aiming for very small moves many times a day, on 1-minute charts or faster. Because each profit is tiny, fees and the spread take a large share. It needs constant attention and fast execution. It is the hardest style for a beginner.
-  'yc8tprj44d': '**超短線交易**指持倉幾秒至幾分鐘，在 1 分鐘或更快的圖表上，每天多次捕捉非常細小的波動。因為每次盈利都很小，手續費和差價會佔去很大比例。它需要時刻專注和快速執行。這是新手最難掌握的風格。',
+  // Four styles defined by how long a trade lasts. Pick the one that fits your time and temperament.
+  '1p9k3wpvuo9': '按一宗交易持續多久來區分的四種風格。選擇適合你時間和性情的一種。',
+  // How long you hold is your **trading style**. It decides how much time trading takes, what it costs in fees, and how stressful it is.
+  'azw8c5u22k': '持倉時間就是你的**交易風格**。它決定交易要花多少時間、手續費成本多少，以及壓力有多大。',
+  // The Nasdaq MarketSite tower in Times Square, New York, wrapped in a giant screen
+  'xfdils1u3b': '紐約時代廣場的納斯達克大樓，外牆是巨型屏幕',
+  // The Nasdaq MarketSite in New York. Day traders watch the open here; position traders may check once a week.
+  '256dc4fuo3l': '紐約的納斯達克大樓。日內交易者在這裡看開市；長線交易者可能一星期才看一次。',
+  // **Scalping**: seconds to minutes on 1-minute charts. Fees eat tiny profits; hardest for beginners.
+  '1mfisiye3vn': '**超短線交易**：在 1 分鐘圖上持倉數秒至數分鐘。手續費吃掉微小利潤；對新手最難。',
+  // Fees
+  'hluwovic4z': '手續費',
+  // **Day trading**: in and out the same day on 5-minute to 1-hour charts. No overnight risk, but needs hours free.
+  '5s3h7lv1yy': '**日內交易**：在 5 分鐘至 1 小時圖上，同日入場出場。沒有隔夜風險，但需要幾小時空閒。',
   // Day trading
   '1gakl2hk2uv': '日內交易',
-  // **Day trading** means opening and closing every position within the same day, on 5-minute to 1-hour charts. There is no overnight risk, since you are never holding when the market gaps on news. It needs several free hours while the market is active.
-  '25u3s0ma3im': '**日內交易**指在同一日內開倉並平掉所有持倉，使用 5 分鐘至 1 小時圖。沒有隔夜風險，因為市場因新聞裂口時你從不持倉。它需要在市場活躍時有幾個小時的空閒時間。',
+  // **Swing trading**: days to weeks on 4-hour and daily charts. Check once or twice a day; overnight risk.
+  '29b5i2tel80': '**波段交易**：在 4 小時和日線圖上持倉數日至數星期。每日看一兩次；有隔夜風險。',
   // Swing trading
   '18uumeu9zrw': '波段交易',
-  // **Swing trading** means holding for days to a few weeks, aiming to catch one swing of a trend, on 4-hour and daily charts. You check charts once or twice a day. Costs are low relative to the size of the moves. You do carry overnight and weekend risk.
-  '11jd3a4yhdj': '**波段交易**指持倉幾日至幾星期，在 4 小時和日線圖上捕捉趨勢中的一段波動。你每天看一兩次圖表。相對於走勢的大小，成本很低。但你要承受隔夜和週末的風險。',
+  // **Position trading**: weeks to months on daily and weekly charts. Least time, most patience.
+  '22sgesjet8w': '**長線持倉交易**：在日線和週線圖上持倉數星期至數月。花時間最少，需要最多耐性。',
   // Position trading
   'exglm94xjt': '長線持倉交易',
-  // **Position trading** means holding for weeks to months or more, following the major trend on daily and weekly charts. It needs the least time and the most patience, and usually involves fundamentals as well as charts.
-  '26r26t15f1r': '**長線持倉交易**指持倉幾星期至幾個月或更長，在日線和週線圖上跟隨主要趨勢。它需要的時間最少、耐性最多，而且通常除了圖表之外還會看基本因素。',
   // A year of SPY on the daily chart: the view a swing or position trader works from. A swing trader would aim to catch one leg of a move like these, lasting days to weeks. A scalper would be working inside a single one of these candles.
   'rj33r6p9np': 'SPY 一年的日線圖：波段或長線交易者看的畫面。波段交易者會嘗試捕捉這樣的一段走勢，為期幾日至幾星期。超短線交易者則是在其中一支陰陽燭之內工作。',
-  // **Time needed**: scalping most, position trading least.
-  '10j9uez9g6m': '**所需時間**：超短線最多，長線持倉最少。',
-  // **Number of trades**: scalping many, position trading few.
-  '3cx68oi1a2': '**交易次數**：超短線很多，長線持倉很少。',
-  // **Cost of fees and spread relative to profit**: highest for scalping, lowest for position trading.
-  'sb7hf36ja8': '**手續費和差價相對盈利的成本**：超短線最高，長線持倉最低。',
-  // **Stop distance**: tight for scalping, wide for position trading, so position sizes are smaller.
-  '1uprs0kmqwf': '**止蝕距離**：超短線很窄，長線持倉很闊，所以持倉規模較小。',
-  // Choosing
-  '20ii76nr4wp': '如何選擇',
-  // Have a job? Swing trading fits around it. Day trading and scalping do not.
-  '151m3eqwcvz': '有工作？波段交易可以配合你的時間。日內交易和超短線則不行。',
-  // Find it hard to sit still while a trade is open? Shorter holds may suit you, but watch the costs.
-  'yqewidgau9': '持倉期間很難安坐？較短的持倉時間可能適合你，但要留意成本。',
-  // New to this? Start with **swing trading on the daily or 4-hour chart**. Decisions are slow, noise is lower, and mistakes are cheaper.
-  'yw850kzqjf': '剛開始？從**日線圖或 4 小時圖上的波段交易**開始。決策慢、雜訊少，犯錯的代價也較低。',
+  // Shorter styles mean more trades, higher costs relative to profit, and tighter stops. Longer styles mean wider stops and smaller positions.
+  'rveyflruv': '較短的風格代表交易更多、成本相對利潤更高、止蝕更窄。較長的風格代表止蝕更闊、持倉更小。',
+  // Have a job? Swing trading fits around it.
+  '15mnlbrq6tj': '有工作？波段交易可以配合。',
+  // New? Start with **swing trading on the daily or 4-hour chart**: slow decisions, less noise, cheaper mistakes.
+  '2fgtakszt3s': '新手？從**日線圖或 4 小時圖上的波段交易**開始：決定慢、雜訊少、犯錯代價低。',
   // Shorter is not easier
   '276feraiqae': '較短不等於較容易',
-  // Short timeframes feel like faster learning and more opportunity. In practice they mean more noise, higher costs and less time to think. Most beginners who start by scalping lose quickly.
-  'zs4wrjr717': '短時間週期感覺學得更快、機會更多。實際上它代表更多雜訊、更高成本和更少思考時間。大部分以超短線起步的新手都很快虧錢。',
+  // Short timeframes feel like faster learning but bring more noise, higher costs and less time to think.
+  '13x70gjqge0': '短時間週期感覺學得更快，但帶來更多雜訊、更高成本和更少思考時間。',
   // One strategy, one style
   'fpjouxtjcd': '一個策略，一種風格',
-  // Pick one strategy and one style, write down the rules, and trade it on paper for at least 30 trades before changing anything. Switching approaches every few losses means you never find out whether any of them work.
-  '2b7pibqr62u': '選擇一個策略和一種風格，寫下規則，並在改變任何東西之前，用模擬交易做至少 30 宗交易。每輸幾次就轉換方法，代表你永遠不會知道哪一種有效。',
+  // Write the rules down and paper trade at least 30 trades before changing anything.
+  '1x85r2w9gfd': '把規則寫下來，並在改變任何東西之前做至少 30 宗模擬交易。',
   // What does trend following assume?
   '17fnmikxsye': '順勢交易假設甚麼？',
   // Prices always return to their average
@@ -388,8 +334,6 @@ export default {
   '1ujcqtayvdq': '向虧損的持倉加碼，會在價格繼續下跌時把損害成倍放大。要避免。',
   // Where does the bounce strategy enter long?
   '2ariyed9772': '反彈策略在哪裡做多入場？',
-  // In the middle of the range
-  '1vg5il8ymou': '區間的中間',
   // Near support, after price shows a reaction
   'jjmzjovloy': '在支持位附近、價格出現反應之後',
   // Above resistance
@@ -450,12 +394,8 @@ export default {
   'o2athecpva': '當你瞄準非常細小的波動，每宗交易的固定成本就佔了盈利的很大部分。',
   // What risk does a day trader avoid that a swing trader accepts?
   '5u3u5zi41q': '日內交易者避開了哪種波段交易者要承受的風險？',
-  // Slippage
-  '2ffkxy4rmk2': '滑價',
   // Overnight risk: price gapping while the position is held
   '22rv3bxolot': '隔夜風險：持倉期間價格出現裂口',
-  // Fees
-  'hluwovic4z': '手續費',
   // Liquidation
   '1oz08kgjh27': '強制平倉',
   // Day traders close everything before the end of the day, so overnight news cannot gap against them.

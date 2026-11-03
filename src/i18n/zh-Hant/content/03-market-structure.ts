@@ -10,130 +10,120 @@ export default {
   '1hkx05xb848': '趨勢：更高的高點和更低的低點',
   // A trend is defined by its turning points. Learn to read them and you can say which way a market is going.
   'b2pecku3tb': '趨勢由它的轉折點來定義。學會解讀它們，你就能說出市場正向哪個方向走。',
-  // Prices never move in a straight line. They advance, pull back, and advance again. Each place where price turns is a **swing**: a **swing high** is a peak with lower prices either side, and a **swing low** is a trough with higher prices either side. The pattern of these swings is called **market structure**.
-  '27ru00dls7p': '價格從來不會走直線。它會上升、回調、再上升。價格轉向的每一個地方都是一個**擺動點**：**擺動高點**是兩邊價格都較低的峰頂，**擺動低點**是兩邊價格都較高的谷底。這些擺動點組成的形態叫**市場結構**。',
-  // Uptrend
-  '2g7dcv3wmac': '上升趨勢',
-  // In an **uptrend** each swing high is above the previous one (a **higher high**) and each swing low is above the previous one (a **higher low**). Buyers are willing to pay more each time, and step in sooner on each dip.
-  '1lu2oeikehb': '在**上升趨勢**中，每個擺動高點都高於上一個（**更高的高點**），每個擺動低點也都高於上一個（**更高的低點**）。買家每次都願意付更多錢，每次回落都更早入場。',
+  // A trend
+  '1vhjsq54tl0': '趨勢',
+  // Price moves in waves. Each turn is a **swing**: a **swing high** is a peak, a **swing low** a trough. The pattern they make is the **market structure**.
+  '1nz4dunvpo2': '價格以波浪形式移動。每個轉折點是一個**擺動點**：**擺動高點**是波峰，**擺動低點**是波谷。它們形成的圖案就是**市場結構**。',
   // An uptrend: every peak and every trough is higher than the one before.
   '29s99yl52l2': '上升趨勢：每一個峰頂和每一個谷底都比上一個高。',
+  // An uptrend
+  'gngbvvxpta': '上升趨勢',
   // High
   'om1cpgg7ds': '高點',
   // Higher low
   '1np3csrrw2u': '更高的低點',
   // Higher high
   'p79i87rtsz': '更高的高點',
-  // Downtrend
-  '159rifm63y7': '下跌趨勢',
-  // A **downtrend** is the mirror image: **lower highs** and **lower lows**. Each bounce fails sooner and each drop goes further.
-  'o5n3rii6bz': '**下跌趨勢**是它的鏡像：**更低的高點**和**更低的低點**。每次反彈都更早失敗，每次下跌都走得更遠。',
-  // Range
-  '8wgrdlq9w9': '區間',
-  // When highs and lows are roughly level, the market is moving sideways in a **range** (also called consolidation). Markets spend a large share of their time doing this, and trend-following methods lose money in it.
-  'ziytfn4iq3': '當高點和低點大致持平，市場就在**區間**內橫行（亦稱整固）。市場有很大部分時間都是這樣，順勢方法在這段時間會虧錢。',
+  // **Uptrend**: higher highs and higher lows. Buyers pay more each time.
+  '258ib89lnrn': '**上升趨勢**：更高的高點和更高的低點。買家每次都願意付更多。',
+  // **Downtrend**: lower highs and lower lows. Each bounce fails sooner.
+  '1zn8pwfo32k': '**下跌趨勢**：更低的高點和更低的低點。每次反彈都更早失敗。',
+  // **Range**: highs and lows roughly level. Markets spend much of their time here, and trend methods lose money in it.
+  '4zdwb1xnys': '**區間**：高點和低點大致持平。市場有很多時間處於區間，趨勢方法在這裡會虧錢。',
   // When a trend ends
   'c23triq8jn': '趨勢何時結束',
-  // An uptrend is intact as long as it keeps making higher lows. The first warning is a **lower high**: a bounce that fails to reach the previous peak. The trend is broken when price then falls below the most recent higher low. This is called a **break of structure**.
-  '1alusqilgan': '只要上升趨勢繼續形成更高的低點，它就仍然完整。第一個警號是**更低的高點**：一次未能到達上一個峰頂的反彈。之後價格跌穿最近一個更高的低點，趨勢就被打破了。這叫**結構突破**。',
-  // Mark the last few swing highs and swing lows.
-  '2f5hykjxdhv': '標出最近幾個擺動高點和擺動低點。',
-  // Higher highs and higher lows: uptrend. Lower highs and lower lows: downtrend. Neither: range.
-  'f6jm23tshe': '更高的高點和更高的低點：上升趨勢。更低的高點和更低的低點：下跌趨勢。兩者都不是：區間。',
-  // Note the most recent swing low (in an uptrend). A close below it means the trend has changed.
-  '282wrtqc6yh': '記下最近的擺動低點（在上升趨勢中）。收市跌穿它，代表趨勢已經改變。',
+  // The first warning is a **lower high**: a bounce that cannot reach the last peak. The trend is broken when price then closes below the last higher low, a **break of structure**.
+  '1qjlw5kf1hl': '第一個警號是**更低的高點**：反彈無法到達上一個高峰。之後價格收市跌穿最近一個更高的低點，趨勢就被打破，這叫**結構突破**。',
+  // Mark the last few swing highs and lows.
+  '1wr4kewttp2': '標記最近幾個擺動高點和低點。',
+  // Rising highs and lows: uptrend. Falling: downtrend. Neither: range.
+  '1tcpbcmrju1': '高點和低點上升：上升趨勢。下降：下跌趨勢。兩者都不是：區間。',
+  // In an uptrend, watch the latest swing low. A close below it changes the trend.
+  '27xjgya8vc5': '在上升趨勢中，留意最近的擺動低點。收市跌穿它，趨勢就改變了。',
   // The trend is your friend
   'vewx7cpk39': '趨勢是你的朋友',
-  // Trades in the direction of the trend have the odds on their side. A beginner mistake is trying to pick the exact top or bottom. It is easier to join a move that is already under way.
-  '19gtg3g5ndg': '順著趨勢方向的交易，勝算在你那邊。新手常犯的錯誤是嘗試準確捕捉頂部或底部。加入一段已經展開的走勢會容易得多。',
+  // Trading with the trend puts the odds on your side. Joining a move that is under way is easier than picking the exact top or bottom.
+  '1x69i64z16t': '順勢交易令勝算站在你一邊。加入已在進行中的走勢，比捕捉準確的頂部或底部容易。',
   // Trends depend on the timeframe
   '1y3p5l625gr': '趨勢取決於時間週期',
-  // A market can be in an uptrend on the daily chart and a downtrend on the 15-minute chart at the same moment. Decide which timeframe you are trading and read the structure there.
-  'omyzkwvc14': '同一時刻，一個市場可以在日線圖上處於上升趨勢，在 15 分鐘圖上卻處於下跌趨勢。先決定你交易哪個時間週期，再在那裡解讀結構。',
+  // A market can rise on the daily chart and fall on the 15-minute chart at the same time. Read the structure on the timeframe you trade.
+  '2ddn8prpah6': '市場可以在日線圖上升，同時在 15 分鐘圖下跌。在你交易的時間週期上解讀結構。',
   // Support and resistance
   '1n1yz0331vp': '支持位和阻力位',
   // Prices where buyers or sellers have shown up before, and are likely to again.
   '1xz06agds34': '買家或賣家之前出現過、而且很可能會再出現的價格。',
-  // **Support** is a price level where falling prices have stopped and turned up before, because enough buyers appeared there. **Resistance** is a level where rising prices have stopped and turned down, because enough sellers appeared.
-  '133vr7fgl0a': '**支持位**是價格之前下跌時停下並回升的價位，因為那裡出現了足夠的買家。**阻力位**是價格上升時停下並回落的價位，因為那裡出現了足夠的賣家。',
-  // These levels exist because traders remember. People who missed buying at a low hope for a second chance there. People who bought at a high and watched it fall are relieved to sell when price returns. Many orders end up clustered around the same prices.
-  '267bz6pptru': '這些價位之所以存在，是因為交易者會記得。錯過在低位買入的人希望在那裡有第二次機會。在高位買入然後眼看它下跌的人，在價格回來時會如釋重負地賣出。大量訂單最終都聚集在相同的價格附近。',
+  // **Support** is a price where falls have stopped before because buyers appeared. **Resistance** is where rises have stopped because sellers appeared. Traders remember these prices, so orders cluster there again.
+  '29qrsp0y87b': '**支持位**是之前因買家出現而停止下跌的價格。**阻力位**是之前因賣家出現而停止上升的價格。交易者記得這些價格，所以訂單會再次聚集在那裡。',
+  // Resistance
+  '6rmylrnh3e': '阻力位',
   // A range between support near 101 and resistance near 110. Price turned at each level several times.
   '11qxgpzsecp': '支持位約 101、阻力位約 110 之間的區間。價格在每個價位都轉向了好幾次。',
+  // A range
+  '14jq54fy0f3': '區間',
   // Resistance: sellers appear here
   'vnxd4tdiuf': '阻力位：賣家在這裡出現',
   // Support: buyers appear here
   '1o2pxrlm8cp': '支持位：買家在這裡出現',
-  // Zones, not lines
-  '1z7e43krrz8': '是區域，不是線',
-  // Price rarely turns at exactly the same number. Treat support and resistance as a **zone** a little way either side of the level. A wick that pokes through and comes back has not broken it.
-  'to8jeupgma': '價格很少在完全相同的數字轉向。把支持位和阻力位當作價位兩邊各有少許空間的**區域**。影線穿過然後回來，並不算突破。',
+  // Treat a level as a **zone**, not an exact line. A wick that pokes through and comes back has not broken it.
+  '1fk0t11nqnc': '把價位看作一個**區域**，而不是一條準確的線。影線戳穿後回來，並不算突破。',
   // What makes a level strong
   'c1w3xvni9m': '甚麼令價位更強',
-  // **More touches**: a level that has turned price three times matters more than one that did it once.
-  '8jzjhvrn8b': '**觸及次數更多**：令價格轉向三次的價位，比只轉向一次的更重要。',
-  // **Longer timeframes**: a level on the daily chart outweighs one on the 5-minute chart.
-  'sycnoxdp3x': '**時間週期更長**：日線圖上的價位比 5 分鐘圖上的更有份量。',
-  // **Sharp reactions**: price that left the level quickly shows strong interest there.
-  '1q36mxo6o6s': '**反應急劇**：價格迅速離開該價位，顯示那裡有強烈的興趣。',
-  // **Round numbers**: levels such as 100 or 50,000 attract orders simply because people think in round numbers.
-  '1e1ewbqe9hz': '**整數**：100 或 50,000 這類價位會吸引訂單，只因為人們習慣以整數思考。',
+  // **More touches**: three turns matter more than one.
+  'xn9g2fr0nl': '**觸及次數更多**：三次轉向比一次更重要。',
+  // **Longer timeframes**: a daily level outweighs a 5-minute one.
+  '248cihcsfs3': '**時間週期更長**：日線價位比 5 分鐘圖的更有份量。',
+  // **Sharp reactions**: price that left quickly shows strong interest.
+  '229lz01795o': '**反應急劇**：價格迅速離開，顯示那裡有強烈興趣。',
+  // **Round numbers**: 100 or 50,000 attract orders because people think in round numbers.
+  'h38cft7x9f': '**整數**：100 或 50,000 會吸引訂單，因為人們習慣以整數思考。',
   // Role reversal
   '5ens5uwj1x': '角色互換',
-  // When price breaks clearly above resistance, that level often becomes support afterwards, and broken support often becomes resistance. Traders who sold at the old ceiling and were wrong are keen to buy back at the same price. A return to a broken level is called a **retest**.
-  '45szbe7gvn': '當價格明確升穿阻力位，該價位之後往往變成支持位，被跌穿的支持位也往往變成阻力位。在舊天花板賣出而判斷錯誤的交易者，很想在同一價格買回。價格回到被突破的價位叫**回測**。',
+  // Broken resistance often becomes support, and broken support becomes resistance. A return to a broken level is a **retest**.
+  '80anm5babs': '被突破的阻力位常常變成支持位，被突破的支持位則變成阻力位。回到已被突破的價位叫**回測**。',
   // Using levels
   'vcnji2pnce': '運用價位',
-  // Levels give you places to plan around: buy near support with a stop-loss just below it, or take profit just before resistance. They make the risk on a trade easy to define.
-  'd1if1b14b7': '價位給你可以圍繞它來計劃的地方：在支持位附近買入、止蝕放在它下方少許，或在阻力位之前止賺。它們令交易的風險很容易界定。',
+  // Buy near support with a stop-loss just below it, or take profit just before resistance. Levels make the risk easy to define.
+  '13d4jmtcm2k': '在支持位附近買入，止蝕剛好放在它之下；或在阻力位之前止賺。價位令風險容易界定。',
   // Every level breaks eventually
   'nrydlajrd2': '每個價位最終都會被突破',
-  // Support holds until it does not. The more often a level is tested, the more of the waiting orders get used up. Never assume a level will hold; that is what the stop is for.
-  '983xup0km7': '支持位會一直守住，直至守不住為止。一個價位被測試得愈多次，排隊的訂單就被消耗得愈多。永遠不要假設價位一定守得住；止蝕就是為此而設。',
+  // Each test uses up some of the waiting orders. Never assume a level will hold; that is what the stop is for.
+  '1wqm1xnkmpm': '每次測試都會用掉部分排隊中的訂單。永遠不要假設價位會守住；這就是止蝕的作用。',
   // Trend lines
   '178n2tynd6u': '趨勢線',
   // A sloping line through the swing lows or highs shows the pace of a trend and where it may find support.
   '28g6699z4es': '穿過擺動低點或高點的斜線，顯示趨勢的速度以及它可能在哪裡找到支持。',
-  // Support and resistance are horizontal. A **trend line** is the same idea on a slope: a straight line joining the swing lows of an uptrend, or the swing highs of a downtrend. It shows how fast the trend is moving and roughly where the next pullback might stop.
-  '1lmf3w8tlj5': '支持位和阻力位是水平的。**趨勢線**是同一個概念放在斜坡上：一條連接上升趨勢擺動低點、或下跌趨勢擺動高點的直線。它顯示趨勢移動得有多快，以及下一次回調大約可能在哪裡停下。',
-  // Drawing one
-  'zal3f2t2bb': '畫一條趨勢線',
-  // In an uptrend, find two clear swing lows and draw a line through them, extended to the right.
-  'bfst9giwuw': '在上升趨勢中，找兩個清晰的擺動低點，畫一條穿過它們並向右延伸的線。',
-  // In a downtrend, do the same through two swing highs.
-  '17jr4hz3goz': '在下跌趨勢中，用兩個擺動高點做同樣的事。',
-  // Two points only draw a line. A third touch that holds is what confirms it.
-  '1igtsv6dv34': '兩個點只能畫出一條線。第三次觸及並守住，才是確認。',
+  // A **trend line** is support or resistance on a slope: a line through the swing lows of an uptrend, or the swing highs of a downtrend. It shows the pace of the trend and where the next pullback may stop.
+  '1w9s5ifyyjb': '**趨勢線**是傾斜的支持位或阻力位：一條穿過上升趨勢擺動低點、或下跌趨勢擺動高點的線。它顯示趨勢的速度，以及下一次回調可能在哪裡停下。',
   // An uptrend line through the swing lows. Each pullback found buyers near the line.
   'rca1o7qif6': '一條穿過擺動低點的上升趨勢線。每次回調都在線附近找到買家。',
   // Uptrend line
   '1t66pyi851m': '上升趨勢線',
   // Third touch confirms
   '1pwdjlob4ez': '第三次觸及確認',
-  // You can draw this yourself: on the Charts page pick the trend line tool, click one swing low, then another.
-  '2awffj26z1c': '你可以自己畫：在圖表頁選擇趨勢線工具，點擊一個擺動低點，再點擊另一個。',
-  // Channels
-  '2x1rqqw8ji': '通道',
-  // If you draw a second line parallel to the trend line through the swing highs, you get a **channel**: a band price is travelling within. The lower line acts as support and the upper as resistance.
-  '11uss77hyho': '如果你畫第二條與趨勢線平行、穿過擺動高點的線，就得到一條**通道**：價格在內移動的帶狀區域。下線作為支持，上線作為阻力。',
-  // When a trend line breaks
-  '9bu62cm5s1': '趨勢線被突破時',
-  // A close clearly through a trend line says the trend has slowed, not necessarily reversed. Price may simply continue at a gentler slope or go sideways. Treat a break as a reason to tighten up or take some profit, and look to the swing structure (a lower high and lower low) for a real reversal.
-  '27h1z6ofbss': '收市明確穿過趨勢線，說明趨勢已經放緩，但不一定已經反轉。價格可能只是以較平緩的斜度繼續，或者橫行。把突破當作收緊止蝕或部分止賺的理由，並從擺動結構（更低的高點和更低的低點）去確認真正的反轉。',
+  // Pick two clear swing lows (or highs in a downtrend) and draw through them.
+  '18r1tod6zc3': '選兩個清晰的擺動低點（下跌趨勢則選高點），畫一條穿過它們的線。',
+  // Extend the line to the right.
+  '7f48xmnrdo': '把線向右延伸。',
+  // A third touch that holds confirms it. Draw your own with the trend line tool on the Charts page.
+  'l5jfxub64s': '第三次觸及而守住就確認了它。你可以在圖表頁用趨勢線工具自己畫。',
+  // A parallel line through the swing highs makes a **channel**: the lower line acts as support, the upper as resistance.
+  '1vdi7syu9uv': '穿過擺動高點畫一條平行線，就成為**通道**：下線作支持位，上線作阻力位。',
+  // A close through a trend line means the trend has slowed, not necessarily reversed. Look for a lower high and lower low before calling a reversal.
+  '1bndtf7cahb': '收市穿過趨勢線代表趨勢放緩，不一定是反轉。要先看到更低的高點和更低的低點，才算反轉。',
   // Trend lines are subjective
   '257f5lt20ig': '趨勢線帶有主觀成分',
-  // Two traders will draw slightly different lines on the same chart, depending on whether they use wicks or bodies and which swings they pick. Be consistent, and do not adjust a line just to make it fit what you hope will happen.
-  'a1u31ff3gv': '兩個交易者在同一張圖上會畫出略有不同的線，視乎他們用影線還是實體，以及揀選哪些擺動點。保持一致，不要只為了配合你的期望而調整一條線。',
+  // Wicks or bodies, which swings: two traders draw different lines. Be consistent, and never move a line to fit what you hope.
+  '1she0l7mre4': '用影線還是實體、選哪些擺動點：兩個交易者會畫出不同的線。保持一致，永遠不要為了配合期望而移動一條線。',
   // Steeper is weaker
   '1oayyzidtli': '愈陡愈弱',
-  // A very steep trend line cannot last; price is rising too fast to keep it up. Gentler lines with more touches are more reliable.
-  'o8xhuupqfp': '非常陡的趨勢線無法持久；價格升得太快，難以維持。較平緩、觸及次數更多的線更可靠。',
+  // Very steep lines cannot last. Gentler lines with more touches are more reliable.
+  '1nu53o3dtxk': '非常陡的線無法持久。較平緩、觸及次數較多的線更可靠。',
   // Breakouts and fakeouts
   '117l7kz4242': '突破和假突破',
   // When price leaves a range it can start a new move, or snap straight back. Volume and the retest help tell them apart.
   '1vdyhc2h5zo': '當價格離開區間，它可能展開新走勢，也可能立即彈回。成交量和回測有助分辨兩者。',
-  // A **breakout** is price moving clearly beyond a support or resistance level, usually after a period of going sideways. It matters because the orders that were holding price in have been used up, and a new move can begin.
-  '2819mfsof0k': '**突破**是價格明確越過支持位或阻力位，通常發生在一段橫行之後。它之所以重要，是因為一直困住價格的訂單已被消耗，新的走勢可以開始。',
+  // A **breakout** is price moving clearly beyond support or resistance, often after a quiet range. The orders holding price in are used up, and a new move can start.
+  'h0yi901x0d': '**突破**是價格明確越過支持位或阻力位，通常在平靜的區間之後。困住價格的訂單已被用掉，新的走勢可以開始。',
   // A real breakout. Price closes above resistance on heavy volume, comes back to retest the level from above, holds, and continues.
   'rxnomh8phg': '一次真正的突破。價格以大成交量收市高於阻力位，回來從上方回測該價位，守住，然後繼續。',
   // Resistance, then support
@@ -142,46 +132,44 @@ export default {
   'g8imnwoaij': '大成交量突破',
   // Retest holds
   '2d82nsv7vaw': '回測守住',
-  // Fakeouts
-  '1w09ml9xz8j': '假突破',
-  // A **fakeout** (or false breakout) is when price pokes beyond the level and then reverses back inside the range. Traders who bought the breakout are trapped, and their stop-losses add to the move back down.
-  '1qeb0lcr91': '**假突破**是價格穿越價位後又反轉回到區間內。買入突破的交易者被困，他們的止蝕盤更加劇了回落。',
+  // A **fakeout** is a poke beyond the level that snaps back inside. Breakout buyers are trapped, and their stops push price further back.
+  '2eswhwk5r22': '**假突破**是戳穿價位後又彈回範圍內。追突破的買家被困，他們的止蝕盤把價格推得更遠。',
   // A fakeout. Price pushes above resistance but cannot hold there and falls back into the range.
   '1x3ibvzcrxf': '一次假突破。價格推高到阻力位之上，但守不住，又跌回區間內。',
-  // Resistance
-  '6rmylrnh3e': '阻力位',
+  // A fakeout
+  '13k7ccw5jet': '假突破',
   // Breaks above...
   '23rnqmvuikf': '向上突破……',
   // falls back inside
   '1yzaw1yhvr8': '跌回區間內',
   // Telling them apart
   '72c13f2b3i': '分辨兩者',
-  // **A close, not a wick.** A candle that closes beyond the level is stronger evidence than a wick that pokes through.
-  '52ctk92gpn': '**看收市，不看影線。**收市越過價位的陰陽燭，比只是穿過的影線更有力。',
-  // **Volume.** A real breakout usually comes with clearly higher volume than recent candles. A breakout on light volume is suspect.
-  '9x7vcpsar3': '**成交量。**真正的突破通常伴隨明顯高於近期陰陽燭的成交量。成交量少的突破值得懷疑。',
-  // **The retest.** After breaking out, price often returns to the level. If it holds there (old resistance acting as support), the breakout is confirmed.
-  'ut1l3aon0s': '**回測。**突破後，價格常常回到該價位。如果它在那裡守住（舊阻力位變成支持位），突破就得到確認。',
-  // **The bigger trend.** Breakouts in the direction of the larger trend succeed more often than those against it.
-  '1dxv66g9m6m': '**大趨勢。**順著大趨勢方向的突破，成功率比逆勢的高。',
-  // Two ways to trade a breakout
-  'bdejksmamd': '交易突破的兩種方法',
-  // **Enter on the breakout candle.** You are in early, but you will be caught by more fakeouts.
-  '2fy5dhyms6w': '**在突破陰陽燭入場。**你入場得早，但會遇到更多假突破。',
-  // **Wait for the retest.** Fewer fakeouts and a nearby place for your stop, but sometimes price never comes back and you miss the move.
-  'e6fzwklkvn': '**等待回測。**假突破較少，止蝕位也就在附近，但有時價格永遠不會回來，你會錯過整段走勢。',
+  // **A close, not a wick**, beyond the level.
+  '19e77oaagbr': '越過價位的是**收市，不是影線**。',
+  // **Volume** clearly higher than recent candles.
+  'is61e4sy9c': '**成交量**明顯高於最近的陰陽燭。',
+  // **The retest**: old resistance holding as support confirms it.
+  '15zwdpqfl8p': '**回測**：舊阻力位守住成為支持位，就確認了突破。',
+  // **The bigger trend**: breakouts with it succeed more often.
+  '1v3fe3auh63': '**大趨勢**：順著大趨勢的突破較常成功。',
+  // **Enter on the breakout**: in early, but caught by more fakeouts.
+  '10krfa4h47j': '**在突破時入場**：入場早，但會遇到更多假突破。',
+  // **Wait for the retest**: fewer fakeouts and a closer stop, but sometimes you miss the move.
+  '19mje0xav31': '**等待回測**：假突破較少、止蝕較近，但有時會錯過走勢。',
   // Where the stop goes
   'qyulo38q92': '止蝕放在哪裡',
-  // For a breakout above resistance, a common stop-loss is just back inside the range, below the broken level. If price returns there, the breakout has failed and you want to be out.
-  '1qrw48vvmqu': '對於升穿阻力位的突破，常見的止蝕位是剛好回到區間內、被突破的價位下方。如果價格回到那裡，突破就失敗了，你應該離場。',
-  // Most breakouts fail or retest
-  '1jh65ak0jjl': '大部分突破都會失敗或回測',
-  // Do not chase a candle that has already run a long way past the level. The further you buy from the level, the larger your stop has to be and the worse the trade.
-  '1he9ge9p5b3': '不要追已經遠離價位的陰陽燭。你買入的位置離價位愈遠，止蝕就要愈大，交易也就愈差。',
+  // Just back inside the range, below the broken level. If price returns there, the breakout has failed.
+  '257qq7ky0cl': '剛好在區間內、已突破的價位之下。如果價格回到那裡，突破就失敗了。',
+  // Do not chase
+  '16t6qk7y0u9': '不要追價',
+  // The further you buy from the level, the larger the stop and the worse the trade.
+  '25kz0f5o9px': '買入的位置離價位越遠，止蝕就越大，交易也越差。',
   // What defines an uptrend?
   'soy677xdrg': '甚麼定義了上升趨勢？',
   // Three up candles in a row
   '1j9a5jhjrkl': '連續三支上升陰陽燭',
+  // Three
+  '1lnqr2w8l9a': '三次',
   // Higher highs and higher lows
   '10m2pf6gr6i': '更高的高點和更高的低點',
   // Price above 100
@@ -192,12 +180,8 @@ export default {
   '1a1qhptmr35': '上升趨勢是一連串擺動高點和擺動低點，每一個都高於上一個。',
   // Swing highs: 50, 48, 45. Swing lows: 44, 42, 39. The market is in:
   '1pjtx8mkpri': '擺動高點：50、48、45。擺動低點：44、42、39。市場處於：',
-  // An uptrend
-  'gngbvvxpta': '上升趨勢',
   // A downtrend
   '127i4pgomu3': '下跌趨勢',
-  // A range
-  '14jq54fy0f3': '區間',
   // A breakout
   '1edkipaig6b': '突破',
   // Lower highs and lower lows define a downtrend.
@@ -214,10 +198,10 @@ export default {
   '1uke7e8hnn0': '成交量很少的一天',
   // A lower high shows buyers could not push as far as before. The trend is broken if price then falls below the last higher low.
   'ug4d39s6wq': '更低的高點顯示買方無法再推得那麼遠。之後如果價格跌穿最近一個更高的低點，趨勢就被打破了。',
+  // A lower high
+  'kivbvwudvv': '更低的高點',
   // Highs and lows are roughly level, with no clear direction. This is called:
   '1stoaqcr3td': '高點和低點大致持平，沒有明確方向。這叫做：',
-  // A trend
-  '1vhjsq54tl0': '趨勢',
   // A liquidation
   '131dklwxngs': '強制平倉',
   // A spread
@@ -264,6 +248,8 @@ export default {
   '10zujc7hyuq': '哪一個價位很可能最強？',
   // One touched once on the 1-minute chart
   '18lk41eq7tl': '在 1 分鐘圖上被觸及一次的價位',
+  // One
+  '281h3ebu7y4': '一次',
   // One that turned price three times on the daily chart
   'vhhw0o8oex': '在日線圖上令價格轉向三次的價位',
   // One you drew at a random price
@@ -276,6 +262,8 @@ export default {
   '16lbkjcvrcu': '畫上升趨勢線時，你要連接：',
   // Two swing highs
   '1kuosnpi6g0': '兩個擺動高點',
+  // Two
+  '17simvfbflf': '兩次',
   // Two swing lows
   '13i282jp0oq': '兩個擺動低點',
   // The first and last candle
@@ -286,12 +274,6 @@ export default {
   '130tc0zvvqx': '上升趨勢線連接擺動低點。下跌趨勢線連接擺動高點。',
   // How many touches confirm a trend line?
   '1houv7n8x8v': '觸及多少次才能確認一條趨勢線？',
-  // One
-  '281h3ebu7y4': '一次',
-  // Two
-  '17simvfbflf': '兩次',
-  // Three
-  '1lnqr2w8l9a': '三次',
   // Ten
   '2b7p5c87dcx': '十次',
   // Any two points make a line. A third touch that holds shows other traders are respecting it.
@@ -346,12 +328,8 @@ export default {
   '2zzsiuwmxr': '以大成交量收市越過價位，顯示真正的買盤，而不是短暫的穿越。',
   // After a breakout above 110, price returns to 110, holds, and turns up. This is called:
   '1awom5tdyy7': '突破 110 之後，價格回到 110，守住，然後轉升。這叫做：',
-  // A fakeout
-  '13k7ccw5jet': '假突破',
   // A retest that confirms the breakout
   '1ko2nd7f9ge': '確認突破的回測',
-  // A lower high
-  'kivbvwudvv': '更低的高點',
   // Old resistance acting as support on the retest is confirmation that the breakout is real.
   '16tgjoihtpx': '舊阻力位在回測時作為支持位，就是突破真實的確認。',
   // You buy a breakout above 110. Where does a sensible stop-loss go?

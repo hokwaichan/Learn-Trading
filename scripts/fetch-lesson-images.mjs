@@ -116,6 +116,8 @@ for (const [id, entry] of Object.entries(list)) {
       result[id] = await fetchOne(id, entry);
       console.log(`fetched  ${id}  (${result[id].license}, ${result[id].author})`);
     }
+    // Wiki signatures leave "( talk )" after a user name; it is not part of the credit.
+    result[id].author = result[id].author.replace(/\s*\(\s*talk\s*\)/gi, '').trim();
     const versions = localized(id, entry);
     if (versions) result[id] = { ...result[id], localized: versions };
     else delete result[id].localized;

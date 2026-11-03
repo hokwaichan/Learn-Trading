@@ -204,5 +204,347 @@ export const IMAGES: Record<string, LessonImage> = {
     "license": "CC0",
     "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
     "source": "https://commons.wikimedia.org/wiki/File:Candlestick_pattern_bearish_three_black_crows.svg"
+  },
+  "head-and-shoulders": {
+    "file": "head-and-shoulders.jpg",
+    "width": 900,
+    "height": 846,
+    "author": "Altafqadir",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Head_and_Shoulders_Top.jpg"
+  },
+  "double-top": {
+    "file": "double-top.jpg",
+    "width": 900,
+    "height": 756,
+    "author": "Altafqadir",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Double_top_formation.jpg"
+  },
+  "sma-vs-ema": {
+    "file": "sma-vs-ema.png",
+    "width": 1000,
+    "height": 747,
+    "author": "Alex Kofman",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Moving_Average_Types_comparison_-_Simple_and_Exponential.png"
+  },
+  "bollinger-spx": {
+    "file": "bollinger-spx.png",
+    "width": 1000,
+    "height": 800,
+    "author": "Bbands",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:BollingerBandsSPX.svg"
+  },
+  "atr-chart": {
+    "file": "atr-chart.png",
+    "width": 1000,
+    "height": 761,
+    "author": "HendrikHeuvelrug",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Average_true_range_14.png"
+  },
+  "djia-volume": {
+    "file": "djia-volume.png",
+    "width": 1000,
+    "height": 707,
+    "author": "Jashuah",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:DJIA_Trading_Volume.png"
+  },
+  "cme-building": {
+    "file": "cme-building.jpg",
+    "width": 1000,
+    "height": 750,
+    "author": "liz_noise",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Chicago_Mercantile_Exchange_1.jpg"
+  },
+  "contango-backwardation": {
+    "file": "contango-backwardation.png",
+    "width": 900,
+    "height": 667,
+    "author": "Suicup",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Contangobackwardation.png"
+  },
+  "payoff-long-call": {
+    "file": "payoff-long-call.png",
+    "width": 500,
+    "height": 327,
+    "author": "Gxti",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Long_call_option.svg"
+  },
+  "payoff-long-put": {
+    "file": "payoff-long-put.png",
+    "width": 500,
+    "height": 327,
+    "author": "Gxti",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Long_put_option.svg"
+  },
+  "payoff-short-call": {
+    "file": "payoff-short-call.png",
+    "width": 500,
+    "height": 327,
+    "author": "Gxti",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Short_call_option.svg"
+  },
+  "payoff-short-put": {
+    "file": "payoff-short-put.png",
+    "width": 500,
+    "height": 327,
+    "author": "Gxti",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Short_put_option.svg"
+  },
+  "payoff-covered-call": {
+    "file": "payoff-covered-call.png",
+    "width": 500,
+    "height": 309,
+    "author": "Consci",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Covered_call.svg"
+  },
+  "payoff-iron-condor": {
+    "file": "payoff-iron-condor.png",
+    "width": 500,
+    "height": 312,
+    "author": "Consci",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Flat_iron_condor.svg"
+  },
+  "volatility-smile": {
+    "file": "volatility-smile.png",
+    "width": 800,
+    "height": 800,
+    "author": "Brianegge at English Wikipedia",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Volatility_smile.svg"
+  },
+  "vix-monthly": {
+    "file": "vix-monthly.png",
+    "width": 1000,
+    "height": 555,
+    "author": "Ldecola",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Monthly_mean_of_VIX_volatility_index.png"
+  },
+  "prospect-theory": {
+    "file": "prospect-theory.png",
+    "width": 700,
+    "height": 666,
+    "author": "Halunkilein",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Prospect_Theory_Value_Function.svg"
+  },
+  "crash-crowd": {
+    "file": "crash-crowd.jpg",
+    "width": 1000,
+    "height": 787,
+    "author": "Associated Press",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Crowds_gathering_outside_New_York_Stock_Exchange.jpg"
+  },
+  "fed-building": {
+    "file": "fed-building.jpg",
+    "width": 1000,
+    "height": 562,
+    "author": "G. Edward Johnson",
+    "license": "CC BY 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:2025_construction_Eccles_Federal_Reserve_Building_Washington_DC_2025-02-10_12-05-42.jpg"
+  },
+  "fed-funds-rate": {
+    "file": "fed-funds-rate.png",
+    "width": 1000,
+    "height": 750,
+    "author": "Kbh3rd",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Federal_Funds_Rate_(effective).svg"
+  },
+  "us-cpi": {
+    "file": "us-cpi.png",
+    "width": 1000,
+    "height": 595,
+    "author": "Original image by donarreiskoffer , new SVG version made with Gnumeric (from BLS data; now covers 1913–2022)",
+    "license": "CC BY-SA 3.0",
+    "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+    "source": "https://commons.wikimedia.org/wiki/File:US_Consumer_Price_Index_Graph.svg"
+  },
+  "fibonacci-retracement": {
+    "file": "fibonacci-retracement.png",
+    "width": 1000,
+    "height": 1079,
+    "author": "Profesor von Bohemia",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Fibonacci_retracement.png"
+  },
+  "rsi-divergence": {
+    "file": "rsi-divergence.png",
+    "width": 1000,
+    "height": 991,
+    "author": "Bundesstefan",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bitcoin_RSI14_Divergence.png"
+  },
+  "london-exchange": {
+    "file": "london-exchange.jpg",
+    "width": 600,
+    "height": 450,
+    "author": "gren",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Paternoster_Square.jpg"
+  },
+  "nasdaq-marketsite": {
+    "file": "nasdaq-marketsite.jpg",
+    "width": 600,
+    "height": 600,
+    "author": "ajay_suresh",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Nasdaq_MarketSite_(51494550508).jpg"
+  },
+  "time-zones": {
+    "file": "time-zones.png",
+    "width": 1200,
+    "height": 651,
+    "author": "Heitordp",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:World_Time_Zones_Map.svg"
+  },
+  "correlation-positive": {
+    "file": "correlation-positive.jpg",
+    "width": 500,
+    "height": 300,
+    "author": "Monika Wahi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Scatter_plot_showing_strong_positive_correlation.jpg"
+  },
+  "correlation-negative": {
+    "file": "correlation-negative.jpg",
+    "width": 500,
+    "height": 300,
+    "author": "Monika Wahi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Scatter_plot_showing_strong_negative_correlation.jpg"
+  },
+  "correlation-low": {
+    "file": "correlation-low.jpg",
+    "width": 500,
+    "height": 300,
+    "author": "Monika Wahi",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Scatter_plot_showing_low_correlation.jpg"
+  },
+  "bitcoin-price-log": {
+    "file": "bitcoin-price-log.png",
+    "width": 1000,
+    "height": 562,
+    "author": "FrankAndProust",
+    "license": "CC0",
+    "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "source": "https://commons.wikimedia.org/wiki/File:Bitcoin_price_usd_logarithmic.svg"
+  },
+  "bitcoin-mining": {
+    "file": "bitcoin-mining.jpg",
+    "width": 1000,
+    "height": 563,
+    "author": "Marko Ahtisaari",
+    "license": "CC BY 2.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Bitcoin_mining_farm.jpg"
+  },
+  "currency-exchange": {
+    "file": "currency-exchange.jpg",
+    "width": 1000,
+    "height": 1333,
+    "author": "Mark Lowen",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Istanbul_currency_exchange_office,_August_13,_2018.jpg"
+  },
+  "overfitting": {
+    "file": "overfitting.png",
+    "width": 700,
+    "height": 700,
+    "author": "Chabacano",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Overfitting.svg"
+  },
+  "pyramid-scheme": {
+    "file": "pyramid-scheme.png",
+    "width": 700,
+    "height": 450,
+    "author": "Security and Exchange commission, U.S. Federal Govt. This vector version by Mysid",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Pyramid_scheme_diagram.svg"
+  },
+  "charles-ponzi": {
+    "file": "charles-ponzi.jpg",
+    "width": 500,
+    "height": 300,
+    "author": "Boston Library ( NYT ); en.wikipedia.org",
+    "license": "Public domain",
+    "licenseUrl": null,
+    "source": "https://commons.wikimedia.org/wiki/File:Charles_Ponzi.jpg"
+  },
+  "pump-and-dump": {
+    "file": "pump-and-dump.png",
+    "width": 1000,
+    "height": 563,
+    "author": "Raidgar98",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:Visualisation_of_pump_and_dump_scam_based_on_SLO-BNB_40-minutes_action.png"
+  },
+  "tokyo-exchange": {
+    "file": "tokyo-exchange.jpg",
+    "width": 600,
+    "height": 863,
+    "author": "Kakidai",
+    "license": "CC BY-SA 4.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+    "source": "https://commons.wikimedia.org/wiki/File:The_Tokyo_Stock_Exchange_-_main_room_1.jpg"
+  },
+  "hong-kong-exchange": {
+    "file": "hong-kong-exchange.jpg",
+    "width": 600,
+    "height": 800,
+    "author": "WiNG",
+    "license": "CC BY 3.0",
+    "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+    "source": "https://commons.wikimedia.org/wiki/File:HK_Exchange_Square.jpg"
   }
 };

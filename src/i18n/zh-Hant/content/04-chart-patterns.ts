@@ -2,72 +2,80 @@
 // Keyed by textKey(english), with the English above each entry. The test in
 // src/i18n/i18n.test.ts prints any entry that is missing after the English changes.
 export default {
+  // M
+  'ue2pee72pv': 'M',
   // Chart patterns
   '13kpc9aus5u': '圖表形態',
   // Shapes that form over many candles and hint at a reversal or a continuation.
   '1qyf8h2zrxy': '經過多支陰陽燭形成、暗示反轉或延續的形狀。',
   // Head and shoulders
   'jsw5x3esad': '頭肩頂',
-  // Three peaks with the middle one highest: the classic sign that an uptrend is running out of buyers.
-  '1nxj26ksom': '三個峰頂、中間最高：上升趨勢買家耗盡的經典跡象。',
-  // A **chart pattern** is a shape formed by many candles. Like candle patterns they describe a struggle between buyers and sellers, only over a longer time. Patterns come in two families: **reversal patterns**, which suggest a trend is ending, and **continuation patterns**, which suggest a pause before the trend resumes.
-  'p5u75wlreb': '**圖表形態**是由多支陰陽燭形成的形狀。與陰陽燭形態一樣，它描述買賣雙方的角力，只是時間更長。形態分為兩大類：**反轉形態**暗示趨勢即將結束，**延續形態**暗示趨勢恢復前的停頓。',
-  // The shape
-  '1idi9fkhhdg': '形狀',
-  // The **head and shoulders** is a reversal pattern that forms at the top of an uptrend. It has three peaks:
-  '1dx2096220d': '**頭肩頂**是在上升趨勢頂部形成的反轉形態。它有三個峰頂：',
-  // The **left shoulder**: a high, then a pullback.
-  '231dix4mqa6': '**左肩**：一個高點，然後回調。',
-  // The **head**: a higher high, then a pullback to roughly the same low.
-  '5t07ysjs8y': '**頭部**：一個更高的高點，然後回調到大約相同的低點。',
-  // The **right shoulder**: a lower high, about level with the left shoulder.
-  'qt5n8bk0d4': '**右肩**：一個更低的高點，與左肩大致齊平。',
-  // The line joining the two pullback lows is the **neckline**. The pattern is only complete when price closes below it.
-  '3pzs5h0u2p': '連接兩個回調低點的線叫**頸線**。只有收市跌穿頸線，形態才算完成。',
-  // Head and shoulders. The right shoulder is a lower high: buyers could not reach the previous peak. The break below the neckline completes it.
-  '20kyxlln2o2': '頭肩頂。右肩是更低的高點：買方未能到達上一個峰頂。跌穿頸線令形態完成。',
-  // Left shoulder
-  '1ra4jhvylq7': '左肩',
   // Head
   '16jm0h96fdm': '頭部',
+  // Three peaks with the middle one highest: the classic sign that an uptrend is running out of buyers.
+  '1nxj26ksom': '三個峰頂、中間最高：上升趨勢買家耗盡的經典跡象。',
+  // A **chart pattern** is a shape made by many candles. **Reversal patterns** suggest a trend is ending; **continuation patterns** suggest a pause before it resumes. The **head and shoulders** is the classic reversal at the top of an uptrend.
+  '1j7pixkje7j': '**圖表形態**是由多支陰陽燭組成的形狀。**反轉形態**暗示趨勢即將結束；**延續形態**暗示趨勢恢復前的停頓。**頭肩頂**是上升趨勢頂部的經典反轉形態。',
+  // Diagram of a head and shoulders top: left shoulder, higher head, right shoulder, a neckline under them, and the projected fall after the break
+  '1j9qopu7sfb': '頭肩頂示意圖：左肩、更高的頭部、右肩，下方的頸線，以及突破後預計的跌幅',
+  // Three peaks, the middle one highest. The fall after the neckline breaks is often about the height of the head above the neckline.
+  'butxgd59ac': '三個高峰，中間最高。頸線被突破後的跌幅，通常約等於頭部高出頸線的距離。',
+  // **Left shoulder**: a high, then a pullback.
+  '1xnl5u9ljuh': '**左肩**：一個高點，然後回調。',
+  // Left shoulder
+  '1ra4jhvylq7': '左肩',
+  // **Head**: a higher high, then a pullback to about the same low.
+  'ryy0lt5s3m': '**頭部**：一個更高的高點，然後回調到大約同一個低點。',
+  // **Right shoulder**: a lower high. Buyers are weakening.
+  '8gak3l5iml': '**右肩**：一個更低的高點。買家正在減弱。',
   // Right shoulder
   'xw1mmj3n10': '右肩',
+  // The line under the two pullbacks is the **neckline**. The pattern is complete only when price closes below it.
+  'dusld26r8': '兩次回調低點之間的線是**頸線**。只有價格收市跌穿頸線，形態才算完成。',
+  // Head and shoulders. The right shoulder is a lower high: buyers could not reach the previous peak. The break below the neckline completes it.
+  '20kyxlln2o2': '頭肩頂。右肩是更低的高點：買方未能到達上一個峰頂。跌穿頸線令形態完成。',
+  // The right shoulder
+  '11shkoblxvk': '右肩',
   // Neckline
   '28d04ocp8yp': '頸線',
   // Neckline breaks
   '14id175ceh5': '跌穿頸線',
-  // Why it works
-  'q4ieo9bqyy': '它為甚麼有效',
-  // It is the end of an uptrend seen through its structure. The head is a higher high, so the trend still looks healthy. The right shoulder is a **lower high**: the first sign buyers are weakening. The break of the neckline is the lower low that confirms it.
-  '1z14e1a59o7': '這是從結構看上升趨勢的終結。頭部是更高的高點，所以趨勢看起來仍然健康。右肩是**更低的高點**：買方轉弱的第一個跡象。跌穿頸線就是確認它的更低的低點。',
-  // Trading it
-  '1h1z8fed3hw': '交易這個形態',
-  // **Entry**: after a close below the neckline, or on a retest of the neckline from below.
-  '96gs1tyiqc': '**入場**：收市跌穿頸線之後，或在頸線從下方回測時。',
+  // **Entry**: a close below the neckline, or its retest from below.
+  'k4wjcrejzi': '**入場**：收市跌穿頸線，或從下方回測頸線時。',
   // **Stop-loss**: above the right shoulder.
   '3py50waqqw': '**止蝕**：右肩之上。',
-  // **Target**: measure the height from the neckline to the top of the head, and project that distance down from the neckline.
-  '21mnqp341t2': '**目標**：量度由頸線到頭部頂端的高度，再由頸線向下投射同樣的距離。',
+  // **Target**: the head's height above the neckline, projected down from the neckline.
+  '2c7swg3r4yq': '**目標**：頭部高出頸線的距離，由頸線向下投射。',
   // Target = neckline - (head - neckline)
   'ucd2qede5e': '目標 = 頸線 -（頭部 - 頸線）',
   // In the chart above: 106 - (118 - 106) = 94. This is a rough guide, not a promise.
   '21xo9h867d3': '以上圖為例：106 -（118 - 106）= 94。這只是大概的指引，不是承諾。',
   // Inverse head and shoulders
   '1t4xv5jr05j': '頭肩底',
-  // The same pattern upside down, at the bottom of a downtrend, is a bullish reversal: three troughs with the middle one lowest, completed by a break above the neckline.
-  '1azq9qrhk9w': '同一個形態倒轉過來、出現在下跌趨勢底部，就是看漲反轉：三個谷底、中間最低，升穿頸線即告完成。',
+  // U
+  'a6jb5q0mjd': 'U',
+  // Up
+  'iriabmm8us': '向上',
+  // Upside down at the bottom of a downtrend, it is a bullish reversal, completed by a break above the neckline.
+  'maww1yhha3': '倒轉出現在下跌趨勢底部，就是看漲的反轉形態，以升穿頸線完成。',
   // Wait for the neckline
   '1fbbvhdy5cs': '等待頸線',
-  // Many would-be head and shoulders never complete. Price bounces off the neckline and the uptrend continues. Acting before the break means betting on a pattern that does not exist yet.
-  '25q74c4vgn6': '很多看似頭肩頂的形態最終沒有完成。價格在頸線反彈，上升趨勢繼續。在突破之前行動，就是押注一個還未存在的形態。',
+  // W
+  '4v4khl6q3g': 'W',
+  // Many never complete: price bounces off the neckline and the uptrend carries on.
+  'i945g2a5tm': '很多都不會完成：價格在頸線反彈，上升趨勢繼續。',
   // Double tops and double bottoms
   '1o4p79dhn2x': '雙頂和雙底',
   // Price tries the same level twice and fails. A simple reversal pattern built on support and resistance.
   'ju98nn0ag0': '價格兩次嘗試同一價位都失敗。建基於支持位和阻力位的簡單反轉形態。',
-  // Double top
-  'ibuc2k9co0': '雙頂',
-  // A **double top** forms after a rise: price reaches a high, pulls back, rises to about the same high again, and fails. It looks like the letter M. The second failure shows that buyers could not push through resistance, and the pattern completes when price falls below the low between the two peaks.
-  '1q3bq9mam3w': '**雙頂**在上升之後形成：價格到達高位、回調、再升到大約相同的高位，然後失敗。它看起來像字母 M。第二次失敗顯示買方無法突破阻力位，價格跌穿兩個峰頂之間的低點時形態完成。',
+  // A **double top** is two failures at the same high, shaped like an M. It completes when price breaks below the low between the peaks. A **double bottom** is the mirror image, a W, completed by a break above the middle high.
+  'k7dwrisuif': '**雙頂**是在同一高點兩次失敗，形狀像 M。價格跌穿兩峰之間的低點時完成。**雙底**是它的鏡像，形狀像 W，以升穿中間高點完成。',
+  // Diagram of a double top: two peaks at the same height, a confirmation line under the dip between them, and price falling through it
+  'b7lzrt7fsv': '雙頂示意圖：兩個同樣高的高峰，兩峰之間低點下的確認線，以及價格跌穿它',
+  // A double top
+  '2e1s7zujv3p': '雙頂',
+  // A double top: buyers fail twice at the same price, then the dip between the peaks gives way.
+  'hsz9e5qwa9': '雙頂：買家在同一價格兩次失敗，然後兩峰之間的低點失守。',
   // A double top. Two failures at the same resistance, completed by the break below the middle low.
   '21vgdl4xniq': '雙頂。在同一阻力位兩次失敗，跌穿中間低點即告完成。',
   // First top
@@ -78,10 +86,6 @@ export default {
   '4pz5ed9ilf': '兩個頂之間的支持位',
   // Break confirms
   '15w5r0mlhjw': '跌破確認',
-  // Double bottom
-  '12ru5qpi1lk': '雙底',
-  // A **double bottom** is the reverse, after a fall: two lows at about the same level with a bounce between them, shaped like a W. It completes when price rises above the high of that bounce.
-  '1r3u6b8v9j4': '**雙底**則相反，出現在下跌之後：兩個大約同一水平的低點，中間有一次反彈，形狀像 W。價格升穿該反彈的高點時形態完成。',
   // A double bottom. Sellers failed twice at the same support, then price broke above the middle high.
   '1kgukcxqr97': '雙底。賣方兩次在同一支持位失敗，之後價格升穿中間的高點。',
   // First bottom
@@ -90,40 +94,36 @@ export default {
   '14f30odo7eb': '第二個底守住',
   // Resistance between the bottoms
   '15cslgraudh': '兩個底之間的阻力位',
-  // Trading them
-  '1wnm3atfsj0': '交易這些形態',
-  // **Entry**: on a close beyond the middle level (below it for a double top, above it for a double bottom).
-  '1zm5hdw1u2t': '**入場**：收市穿越中間價位時（雙頂是跌穿，雙底是升穿）。',
+  // **Entry**: a close beyond the middle level.
+  '1f06ofdwdh7': '**入場**：收市越過中間的價位。',
   // **Stop-loss**: beyond the two tops or bottoms.
   '1jdcrkjjxx9': '**止蝕**：兩個頂或兩個底之外。',
-  // **Target**: the height of the pattern projected from the break. For the double top above: 107 - (115 - 107) = 99.
-  'kz0ac01mmy': '**目標**：由突破點投射形態的高度。以上面的雙頂為例：107 -（115 - 107）= 99。',
-  // What makes one more reliable
-  'no4dd8wyiu': '甚麼令它更可靠',
-  // A clear trend leading into it. There has to be something to reverse.
-  'y1rsndpbg9': '之前有一段明確的趨勢。要有東西可以反轉。',
-  // Reasonable spacing between the two peaks. Two peaks three candles apart are just noise.
-  '1gqvfcroncb': '兩個峰頂之間有合理的距離。相隔三支陰陽燭的兩個峰頂只是雜訊。',
-  // Lower volume on the second peak, showing less enthusiasm.
-  '2f17bdwwnjj': '第二個峰頂成交量較少，顯示熱情減退。',
+  // **Target**: the pattern's height from the break. Above: 107 - (115 - 107) = 99.
+  '24dis5p36l9': '**目標**：形態的高度由突破點投射。上圖：107 - (115 - 107) = 99。',
+  // More reliable with a clear trend before it, real spacing between the peaks, and less volume on the second one.
+  '2dim51gdmzh': '之前有明顯趨勢、兩峰之間有足夠距離、第二個高峰成交量較少，就更可靠。',
   // Two touches are not a pattern yet
   '1pjbag10q36': '兩次觸及還不算形態',
-  // Price testing a high twice is extremely common in healthy uptrends, just before it breaks through. Until the middle level breaks, it is only a range.
-  'awhlnkxsh8': '在健康的上升趨勢中，價格在突破前兩次測試高位是極之常見的。在中間價位被突破之前，它只是一個區間。',
-  // Triple tops and bottoms
-  'jeukks5nil': '三重頂和三重底',
-  // The same idea with three attempts. More failures at a level make the eventual break more significant.
-  'e9whtrlkx2': '同一個概念，但有三次嘗試。在一個價位失敗的次數愈多，最終的突破就愈重要。',
+  // Healthy uptrends often test a high twice before breaking through. Until the middle level breaks, it is only a range.
+  'spn0i1q4h6': '健康的上升趨勢常在突破前兩次測試同一高點。中間價位被突破之前，它只是一個區間。',
   // Triangles
   '1ruxkte4pm6': '三角形',
   // Price coiling into a narrower and narrower range before it breaks out.
   '1p5nz1juwbj': '價格在愈來愈窄的範圍內收縮，然後突破。',
-  // A **triangle** forms when the swings get smaller and smaller, so that lines drawn through the highs and the lows converge. Buyers and sellers are squeezing towards a decision. There are three kinds.
-  '17aw45ojof6': '當擺動愈來愈小，令穿過高點和低點的線逐漸匯聚，就形成**三角形**。買賣雙方正被擠向一個決定。三角形有三種。',
-  // Ascending triangle
-  '1cvu3qr42c4': '上升三角形',
-  // A flat top (resistance at the same price each time) with **rising lows**. Buyers are stepping in sooner on each dip while sellers defend one level. It usually breaks upwards.
-  '15auiojemkx': '平頂（每次都在相同價格遇到阻力）加上**不斷抬高的低點**。買方每次回落都更早入場，賣方則守住同一價位。通常會向上突破。',
+  // In a **triangle** the swings shrink until lines through the highs and lows meet. Buyers and sellers are squeezing towards a decision.
+  '21de76r866k': '在**三角形**中，擺動幅度不斷縮小，直到穿過高點和低點的線相交。買賣雙方正被擠向一個決定。',
+  // **Ascending**: flat top, rising lows. Usually breaks up.
+  '22wx77b9ru0': '**上升三角形**：頂部平坦，低點上升。通常向上突破。',
+  // Ascending
+  'fi0zou6z3': '上升三角形',
+  // **Descending**: flat bottom, falling highs. Usually breaks down.
+  'qlqwbftpxb': '**下降三角形**：底部平坦，高點下降。通常向下突破。',
+  // Descending
+  '1l7bx4s3pli': '下降三角形',
+  // **Symmetrical**: both converge. Usually follows the earlier trend, but wait for the break.
+  'x7lrk1d69r': '**對稱三角形**：兩邊收窄。通常跟隨之前的趨勢，但要等突破。',
+  // Symmetrical
+  '274gbbynl7g': '對稱三角形',
   // An ascending triangle: flat resistance, rising lows, then an upward breakout.
   '31aqt28x65': '上升三角形：平坦的阻力位、不斷抬高的低點，然後向上突破。',
   // Flat resistance
@@ -132,64 +132,38 @@ export default {
   'q5fatjicl8': '不斷抬高的低點',
   // Breakout
   '206zcav29u0': '突破',
-  // Descending triangle
-  '1p2pyqmrrgq': '下降三角形',
-  // The mirror image: a flat bottom (support) with **falling highs**. Sellers are getting more aggressive while buyers defend one level. It usually breaks downwards.
-  '205yagub1mr': '它的鏡像：平底（支持位）加上**不斷降低的高點**。賣方愈來愈進取，買方則守住同一價位。通常會向下跌破。',
-  // Symmetrical triangle
-  '1iytrrzba5l': '對稱三角形',
-  // Falling highs **and** rising lows, converging evenly. Neither side is winning. It tends to break in the direction of the trend that came before it, but can go either way, so wait for the break.
-  '1jnvenba01a': '不斷降低的高點**和**不斷抬高的低點，均勻地匯聚。雙方都沒有佔上風。它往往會沿之前趨勢的方向突破，但兩邊都有可能，所以要等待突破。',
   // A symmetrical triangle in an uptrend: lower highs, higher lows, then a break in the direction of the earlier trend.
   '19hg09pmjlu': '上升趨勢中的對稱三角形：更低的高點、更高的低點，然後沿之前的趨勢方向突破。',
   // Falling highs
   'qbecuwtrc0': '不斷降低的高點',
-  // Trading triangles
-  '1u81x2xlmfo': '交易三角形',
-  // **Entry**: on a close outside the triangle, ideally with higher volume. Volume normally shrinks as the triangle forms.
-  'g7qifh2i57': '**入場**：收市在三角形之外時，最好伴隨較大的成交量。三角形形成期間成交量通常會萎縮。',
-  // **Stop-loss**: back inside the triangle, beyond the last swing.
-  '1uwlbe12p4n': '**止蝕**：回到三角形之內、最後一個擺動點之外。',
-  // **Target**: the height of the triangle at its widest point, projected from the breakout.
-  'upjoah6h3m': '**目標**：三角形最闊處的高度，由突破點投射。',
+  // **Entry**: a close outside the triangle, ideally on rising volume.
+  '2gmpg6oijvo': '**入場**：收市在三角形之外，最好成交量上升。',
+  // **Stop-loss**: back inside, beyond the last swing.
+  'xnphkdudjh': '**止蝕**：放回三角形內，最近一個擺動點之外。',
+  // **Target**: the triangle's widest height, projected from the breakout.
+  'x211egt5i4': '**目標**：三角形最闊處的高度，由突破點投射。',
   // Late breakouts are weak
   '3qq4e3tv3a': '後段的突破較弱',
-  // A breakout that happens in the last quarter of the triangle, near the point where the lines meet, tends to be feeble. The best ones happen about half to three quarters of the way along.
-  'iwxzokukn9': '在三角形最後四分之一、接近兩線交會點時發生的突破往往乏力。最好的突破發生在大約一半至四分之三的位置。',
-  // Same rules as any breakout
-  '1vzz5lnheum': '規則與任何突破相同',
-  // Everything from the Breakouts and fakeouts lesson applies here: prefer a close over a wick, look for volume, and consider waiting for a retest.
-  '1k0qti210da': '「突破和假突破」一課的所有內容都適用：看收市而不看影線、留意成交量，並考慮等待回測。',
+  // The best breaks come half to three quarters of the way along. Near the tip they tend to fizzle.
+  '1c6r3li0hlv': '最好的突破在三角形一半至四分之三的位置出現。接近尖端時往往後勁不繼。',
   // Flags and wedges
   'jpxiu6gugp': '旗形和楔形',
+  // Flag
+  '1lkl12f1is0': '旗',
   // A flag is a brief pause in a strong move. A wedge is a move that is losing steam.
   '1g5u5k0y3m4': '旗形是強勁走勢中的短暫停頓。楔形是正在失去動力的走勢。',
-  // Flags
-  '2fbeyvu1ixl': '旗形',
-  // A **flag** is a continuation pattern. It has two parts: a sharp, almost vertical move called the **flagpole**, then a short, tight drift against that move, the **flag**. The drift is traders taking profit, not a change of mind. When it ends, the original move often resumes.
-  '4u2y217ow1': '**旗形**是延續形態。它分兩部分：一段急劇、近乎垂直的走勢叫**旗桿**，然後是一段短而緊湊、與該走勢相反的漂移，即**旗**。這段漂移是交易者獲利回吐，而不是改變主意。漂移結束時，原來的走勢常常會恢復。',
+  // A **flag** is a sharp move, the **flagpole**, followed by a short tight drift the other way, the **flag**. The drift is profit-taking; when it ends the move often resumes.
+  '1y0kub1xbtu': '**旗形**是一段急劇走勢（**旗桿**），之後是一段短而窄、方向相反的漂移（**旗**）。漂移是獲利回吐；結束後走勢常會恢復。',
   // A bull flag: a sharp rise, a shallow drift downwards on lighter volume, then the rise continues.
   'e0fvxn5ve1': '牛旗：急升，一段在較少成交量下的淺度向下漂移，然後升勢繼續。',
   // Flagpole
   '10pmhhj5bru': '旗桿',
-  // Flag
-  '1lkl12f1is0': '旗',
-  // A **bull flag** follows a sharp rise and drifts down or sideways.
-  '1ujeek1izan': '**牛旗**出現在急升之後，向下或橫向漂移。',
-  // A **bear flag** follows a sharp fall and drifts up or sideways.
-  '23yc9ff3090': '**熊旗**出現在急跌之後，向上或橫向漂移。',
-  // A **pennant** is the same idea, but the pause is a small symmetrical triangle instead of a channel.
-  '1uevv8lppg2': '**三角旗**是同一個概念，但停頓是一個細小的對稱三角形，而不是通道。',
-  // Trade a flag on the break out of it in the direction of the pole, with a stop-loss beyond the other side of the flag. A common target is the height of the flagpole added to the breakout point.
-  '1jhysyk06if': '在價格沿旗桿方向突破旗形時交易，止蝕放在旗形另一邊之外。常見的目標是把旗桿的高度加到突破點上。',
-  // Wedges
-  '1uyqqly6bfv': '楔形',
-  // A **wedge** looks like a triangle that is tilted: both lines slope the same way, and they converge.
-  '14mf7p25eov': '**楔形**看起來像傾斜了的三角形：兩條線向同一方向傾斜，並逐漸匯聚。',
-  // A **rising wedge** has higher highs and higher lows, but each push up gains less than the last. The advance is tiring. It usually breaks **down**.
-  '1tt84ibnteb': '**上升楔形**有更高的高點和更高的低點，但每次上推的升幅都比上一次少。升勢正在疲倦。它通常會**向下**跌破。',
-  // A **falling wedge** has lower highs and lower lows, with each drop smaller than the last. The decline is tiring. It usually breaks **up**.
-  '29jb2nlkxqv': '**下降楔形**有更低的高點和更低的低點，每次下跌都比上一次小。跌勢正在疲倦。它通常會**向上**突破。',
+  // **Bull flag** after a rise, **bear flag** after a fall. A **pennant** pauses in a small triangle instead.
+  '18rnzmc8x2m': '上升後的是**牛旗**，下跌後的是**熊旗**。**三角旗**則是以小三角形停頓。',
+  // Enter on the break in the pole's direction, stop beyond the flag, target the pole's height.
+  'etmy604056': '沿旗桿方向突破時入場，止蝕放在旗之外，目標是旗桿的高度。',
+  // A **wedge** has both lines sloping the same way and converging. A **rising wedge** makes smaller and smaller gains and usually breaks **down**; a **falling wedge** usually breaks **up**.
+  '1rawe2n387l': '**楔形**的兩條線向同一方向傾斜並收窄。**上升楔形**的升幅越來越小，通常**向下**突破；**下降楔形**通常**向上**突破。',
   // A rising wedge. Price is still making higher highs, but by less each time, and then breaks down.
   '19ls48yfyt3': '上升楔形。價格仍在創出更高的高點，但每次升幅都較少，然後向下跌破。',
   // Highs rising slowly
@@ -198,68 +172,48 @@ export default {
   's6qulj9vf': '低點上升得較快',
   // Breaks down
   '1pgqd9p83dx': '向下跌破',
-  // Flag or wedge?
-  '1moiizwzgxk': '旗形還是楔形？',
-  // In a flag the lines are roughly parallel and the pause is brief, a handful of candles to a few dozen. In a wedge the lines converge and the pattern is the whole move, taking much longer.
-  '20gp61ltxj1': '旗形的兩條線大致平行，停頓很短，由幾支到幾十支陰陽燭。楔形的兩條線會匯聚，形態就是整段走勢，花的時間長得多。',
   // A flag needs a pole
   'zvgo93k3os': '旗形需要旗桿',
-  // A gentle drift after a gentle rise is not a flag. The pattern depends on the sharp move before it: that is what shows strong interest in one direction.
-  '1tliow7byba': '溫和上升之後的溫和漂移不是旗形。這個形態依賴之前的急劇走勢：正是它顯示了某個方向的強烈興趣。',
+  // A gentle drift after a gentle rise is not a flag. The sharp move is what shows strong interest.
+  'vyp70xl8sq': '溫和上升後的溫和漂移不是旗形。急劇的走勢才顯示有強烈興趣。',
   // Cup and handle
   'wg2yo9s1lq': '杯柄形態',
+  // Cup
+  '4qk0zfqwz2': '杯',
   // A rounded recovery followed by a small dip: a slow continuation pattern in uptrends.
   'y48s2d7xrp': '以圓弧形回升，然後小幅回落：上升趨勢中一個緩慢的延續形態。',
-  // The **cup and handle** is a bullish continuation pattern. It forms after a rise, and takes longer than most patterns: weeks or months on a daily chart.
-  '1kb010p3pcd': '**杯柄形態**是看漲的延續形態。它在上升之後形成，所需時間比大部分形態長：在日線圖上要幾星期或幾個月。',
-  // The **cup**: price pulls back from a high, levels out, and gradually climbs back to about the same high. The bottom should be rounded like a U, not a sharp V.
-  '1fw25jp4e8z': '**杯**：價格從高位回調、走平，然後逐漸回升到大約相同的高位。底部應該像 U 一樣圓，而不是尖尖的 V。',
-  // The **handle**: on reaching the old high, price dips again, but only a little, and drifts sideways or slightly down for a short time.
-  '25l63hf8o90': '**柄**：回到舊高位時，價格再次回落，但只是少許，並在短時間內橫行或輕微向下漂移。',
-  // The **breakout**: price rises above the top of the cup.
-  '10krjfhfco0': '**突破**：價格升穿杯的頂部。',
+  // The **cup and handle** is a slow bullish continuation, weeks or months on a daily chart: a rounded U-shaped **cup** back to the old high, a shallow **handle** dip, then a breakout above the rim.
+  '12k6f7anmm7': '**杯柄形態**是緩慢的看漲延續形態，在日線圖上需要數星期至數月：一個圓弧 U 形的**杯**回到舊高點，一個淺的**柄**回落，然後突破杯口。',
   // A cup and handle. A rounded base recovers to the old high, a shallow handle forms, and price breaks out.
   '1tu472okvjb': '杯柄形態。圓弧形的底部回升至舊高位，形成一個淺的柄，然後價格突破。',
   // Rim of the cup
   '1wq2d53x2dx': '杯口',
-  // Cup
-  '4qk0zfqwz2': '杯',
   // Handle
   '1khxobrihrx': '柄',
-  // What is happening
-  '2edi5ssckl5': '發生了甚麼',
-  // The rounded bottom shows selling drying up gradually and buyers slowly returning. Back at the old high, people who bought there earlier and sat through the dip sell to get out even: that is the handle. Once they are gone, there is little left to stop the price.
-  'tloq78mb19': '圓弧形的底部顯示賣壓逐漸消退，買家慢慢回來。回到舊高位時，之前在那裡買入、捱過回落的人會賣出以打和離場：這就是柄。他們一走，就幾乎沒有東西可以阻擋價格。',
-  // **Entry**: on a close above the rim of the cup, ideally on higher volume.
-  'ndzpdqdt02': '**入場**：收市高於杯口時，最好伴隨較大的成交量。',
-  // **Stop-loss**: below the low of the handle.
-  'xmdae89084': '**止蝕**：柄的低點之下。',
-  // **Target**: the depth of the cup added to the breakout point. Here: 112 + (112 - 102.5) = 121.5.
-  '19iwdlps7to': '**目標**：把杯的深度加到突破點上。這裡是：112 +（112 - 102.5）= 121.5。',
-  // Signs of a good one
-  'bihfsge4ck': '好形態的跡象',
-  // The cup is rounded and not too deep, typically giving back a third to a half of the previous rise.
-  'jv4k1527mm': '杯是圓弧形而且不太深，通常回吐之前升幅的三分之一至一半。',
-  // The handle is shallow and stays in the upper half of the cup.
-  '133avwj3h6s': '柄很淺，並保持在杯的上半部。',
-  // Volume fades through the base and the handle, then rises on the breakout.
-  'h9hngbb0s': '成交量在底部和柄形成期間逐漸減少，突破時則上升。',
+  // The rounded base shows selling drying up. The handle is earlier buyers getting out at break-even; once they are gone, little stands in the way.
+  'titsi2ffuo': '圓弧底顯示賣壓逐漸消失。柄是較早的買家在打和位離場；他們走了之後，上升就少了阻礙。',
+  // **Entry**: a close above the rim, ideally on higher volume.
+  '1xql5fod7fh': '**入場**：收市高於杯口，最好成交量較大。',
+  // **Stop-loss**: below the handle.
+  '278ru07unuf': '**止蝕**：柄的低點之下。',
+  // **Target**: the cup's depth added to the rim. Here: 112 + (112 - 102.5) = 121.5.
+  '1gxpzubefyx': '**目標**：杯的深度加到杯口。這裡：112 + (112 - 102.5) = 121.5。',
+  // Good ones: a rounded, not-too-deep cup and a shallow handle in its upper half.
+  '11nizsj4ba6': '好的形態：圓弧而不太深的杯，以及位於杯上半部的淺柄。',
   // Patterns are easy to imagine
   '1ebjwlztyzm': '形態很容易憑想像看出來',
-  // Given enough charts you can find a cup, a flag or a head and shoulders almost anywhere. A pattern only becomes useful when it gives you a clear entry, a clear stop and a target worth the risk. If you have to squint, it is not there.
-  '12sitzj3wde': '只要看夠多圖表，你幾乎在任何地方都能找到杯、旗或頭肩頂。只有當形態給你清晰的入場點、清晰的止蝕，以及值得冒險的目標時，它才有用。如果要瞇著眼才看得到，它就不存在。',
-  // End of the pattern modules
-  'g93i758tks': '形態單元完結',
-  // You now have the vocabulary of price action: candles, structure, levels and patterns. The Trainer lets you practise recognising them on real charts.
-  '1qj6yejjdn5': '你現在已掌握價格行為的詞彙：陰陽燭、結構、價位和形態。訓練場讓你在真實圖表上練習辨認它們。',
+  // With enough charts you can see a pattern anywhere. It is only useful if it gives a clear entry, stop and target. If you have to squint, it is not there.
+  'dlhryeex97': '看夠多圖表，你在哪裡都能看到形態。只有能給出清晰入場、止蝕和目標的形態才有用。如果要瞇起眼才看到，它就不存在。',
+  // Practise them
+  'kud950a6uq': '練習辨認它們',
+  // The Trainer shows chart patterns on real and constructed charts and asks you to name them.
+  '124eif98nl4': '訓練場會在真實和構造的圖表上顯示圖表形態，讓你說出它們的名稱。',
   // In a head and shoulders top, which peak is the highest?
   'mar5v77zhd': '在頭肩頂中，哪個峰頂最高？',
   // The left shoulder
   '1mn0fq6bafp': '左肩',
   // The head
   '20wtwpsmeeu': '頭部',
-  // The right shoulder
-  '11shkoblxvk': '右肩',
   // They are all equal
   '1gi0pyjqw7v': '全部一樣高',
   // The head is the middle and highest peak, with a lower shoulder on each side.
@@ -294,14 +248,8 @@ export default {
   '16udjk9cjce': '頭部是更高的高點。右肩無法與它看齊，上升趨勢就是這樣開始終結的。',
   // A double top looks like which letter?
   'hghg3m5sb9': '雙頂看起來像哪個字母？',
-  // W
-  '4v4khl6q3g': 'W',
-  // M
-  'ue2pee72pv': 'M',
   // V
   '1ygns93txrz': 'V',
-  // U
-  'a6jb5q0mjd': 'U',
   // Two peaks with a dip between them: an M. A double bottom is a W.
   '272zl0h3fh6': '兩個峰頂之間有一次回落：M。雙底則是 W。',
   // A double bottom is confirmed when price:
@@ -354,12 +302,6 @@ export default {
   '1mglhjuun00': '平坦的阻力位加上更高的低點：買方愈來愈心急。通常會向上突破。',
   // Which triangle most often breaks downwards?
   '1q4qb0krbkr': '哪一種三角形最常向下跌破？',
-  // Ascending
-  'fi0zou6z3': '上升三角形',
-  // Descending
-  '1l7bx4s3pli': '下降三角形',
-  // Symmetrical
-  '274gbbynl7g': '對稱三角形',
   // None
   'd5920flkwz': '都不是',
   // A descending triangle has flat support and lower highs: sellers are becoming more aggressive.
@@ -382,10 +324,14 @@ export default {
   'w7xg0grihm': '向上，沿之前趨勢的方向',
   // Downwards
   '29bs8oi5nan': '向下',
+  // Down
+  '9smctyojxa': '向下',
   // It will never break
   'tayhn46imn': '它永遠不會突破',
   // Sideways for ever
   '1ezgti9mpxa': '永遠橫行',
+  // Sideways
+  'mjc9zginna': '橫向',
   // Symmetrical triangles tend to continue the prior trend, though you should wait for the actual break.
   'yc3f284bh6': '對稱三角形往往延續之前的趨勢，但你應該等待真正的突破。',
   // What are the two parts of a flag pattern?
@@ -398,12 +344,6 @@ export default {
   '26v8kr855y': '旗桿顯示某個方向的強烈興趣。旗是恢復前的短暫停頓。',
   // A rising wedge usually breaks:
   '1si7yss9t2z': '上升楔形通常會向哪裡突破？',
-  // Up
-  'iriabmm8us': '向上',
-  // Down
-  '9smctyojxa': '向下',
-  // Sideways
-  'mjc9zginna': '橫向',
   // It never breaks
   '23lciw4xjhn': '它永遠不會突破',
   // Each push up gains less than the last, so the advance is tiring. Rising wedges tend to break down.
@@ -452,8 +392,6 @@ export default {
   'a1tzqh3st4': '圓弧形的 U',
   // A flat line
   'gw9c555amy': '一條平線',
-  // A double top
-  '2e1s7zujv3p': '雙頂',
   // A rounded base shows selling fading gradually. A sharp V is a different, less reliable shape.
   '1ww4z9h187f': '圓弧形的底部顯示賣壓逐漸減弱。尖尖的 V 是另一種較不可靠的形狀。',
   // Where is the entry on a cup and handle?
