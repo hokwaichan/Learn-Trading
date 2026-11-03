@@ -10,30 +10,18 @@ export default {
   '17gsmueopr3': '業績',
   // Four times a year a company reports how it did. The reaction depends on expectations, not on the numbers alone.
   '1zb34jtb650': '公司每年四次報告它的表現。市場的反應取決於預期，而不只是數字本身。',
-  // Charts show what price has done. **Fundamental analysis** looks at why: the real-world facts that make something worth more or less. You do not need to become an analyst, but you do need to know which events move prices, so they do not surprise you.
-  '2eyv3alt3kp': '圖表顯示價格做了甚麼。**基本分析**則看為甚麼：令某樣東西價值變高或變低的現實因素。你不需要成為分析師，但你需要知道哪些事件會推動價格，免得被它們嚇一跳。',
-  // What earnings are
-  'q2jpl5baw': '業績是甚麼',
-  // Public companies must report their financial results every three months. This **earnings report** covers a **quarter** and includes:
-  'c7nrq5rtr6': '上市公司每三個月必須報告財務業績。這份**業績報告**涵蓋一個**季度**，內容包括：',
-  // **Revenue**: total money from sales.
-  '1zblkuactoz': '**收入**：銷售所得的總金額。',
-  // **Earnings** (profit): what is left after all costs.
-  '1unwc4ey2wx': '**盈利**：扣除所有成本後剩下的部分。',
-  // **Earnings per share (EPS)**: profit divided by the number of shares. The headline figure.
-  '1ma7d8jwjc': '**每股盈利（EPS）**：盈利除以股份數目。最受關注的數字。',
-  // **Guidance**: the company's own forecast for coming quarters. Often the most important part.
-  '16i74n9nd0y': '**業績指引**：公司對未來幾個季度的自家預測。往往是最重要的部分。',
-  // Why expectations matter more than results
-  'dorr4i1x8l': '為甚麼預期比結果更重要',
-  // Before the report, analysts publish forecasts. Their average is the **consensus** estimate, and the current share price already reflects it. So the stock reacts to the **surprise**: the gap between what was reported and what was expected.
-  'n5o7p6hyc9': '報告公佈前，分析師會發表預測。它們的平均就是**市場預期**，而目前的股價已經反映了它。所以股價的反應取決於**意外**：公佈結果與預期之間的差距。',
-  // Results better than expected are a **beat**; worse are a **miss**.
-  '1w1zz9xlmxt': '結果好於預期叫**勝預期**；差於預期叫**遜預期**。',
-  // A company can report record profits and fall 10%, because the market expected even more, or because guidance was weak.
-  '10dhzwyi9tu': '一間公司可以公佈創紀錄的盈利卻下跌 10%，因為市場預期更多，或者業績指引疲弱。',
-  // A company can report a loss and rise, because the loss was smaller than feared.
-  '1kk4easq7eq': '一間公司可以公佈虧損卻上升，因為虧損比擔心的少。',
+  // **Fundamental analysis** asks why prices move: the real-world facts behind them. You do not need to be an analyst, but you should know which events move prices.
+  '222dzlwshn8': '**基本分析**問的是價格為甚麼移動：背後的真實因素。你不用成為分析師，但應該知道哪些事件會推動價格。',
+  // Every quarter, public companies publish an **earnings report**:
+  '1vqwhmb6z95': '上市公司每個季度都會公佈**業績報告**：',
+  // **Revenue**: money from sales. **Earnings**: profit after costs.
+  '1ehdewmb8x9': '**收入**：銷售所得。**盈利**：扣除成本後的利潤。',
+  // **Earnings per share (EPS)**: profit divided by shares, the headline figure.
+  'f601kprq6r': '**每股盈利（EPS）**：盈利除以股數，最受注目的數字。',
+  // **Guidance**: the forecast of the company itself, often the most important part.
+  '2gbmfrnw4iw': '**業績指引**：公司自己的預測，往往是最重要的部分。',
+  // The average analyst forecast, the **consensus**, is already in the price. The stock reacts to the **surprise**: a **beat** or a **miss** against it. Record profits can fall 10% if more was expected; a loss can rise if it was smaller than feared.
+  'amvpc5l7ls': '分析師的平均預測，即**市場預期**，已經反映在股價中。股價對**意外**作出反應：相對預期是**勝預期**還是**遜預期**。如果市場預期更多，創紀錄的盈利也可以令股價跌 10%；虧損比擔心的少，股價也可以上升。',
   // Good news, falling price
   '1cv1sks65en': '好消息，價格下跌',
   // Analysts expect EPS of $2.00. The stock has risen 20% in the past month on optimism.
@@ -46,58 +34,50 @@ export default {
   '1nrb23zw4b6': '股價低開 8%。勝預期早已反映在價格中；疲弱的指引則沒有。',
   // Tesla daily. Look for the days where price jumps or drops sharply from one day to the next, leaving a gap: many of them are the day after an earnings report.
   'joo0pdiuz2': 'Tesla 日線圖。找出價格由一天到下一天大幅跳升或下跌、留下裂口的日子：很多都是業績公佈後的第二天。',
-  // What this means for trading
-  'jikptxs9v': '這對交易有甚麼意義',
-  // **Gaps.** Earnings are released outside trading hours, so the price opens at a new level. A stop-loss does not protect you from a gap: you are filled at the open, wherever that is.
-  '1zrq9o645vm': '**裂口。**業績在交易時間以外公佈，所以價格會在新的水平開市。止蝕不能保護你免受裂口影響：你會以開市價成交，不論是多少。',
-  // **Know the date.** Check when a company reports before holding its stock or options across that day.
-  '2e3kpntf3y7': '**知道日期。**持有一間公司的股票或期權跨過業績日之前，先查看它何時公佈。',
-  // **Options get expensive.** Implied volatility rises into earnings and collapses afterwards (IV crush, from the Options module).
-  '1apwzifpdc8': '**期權會變貴。**引伸波幅在業績前上升，之後崩潰（期權單元講過的引伸波幅急跌）。',
-  // **Post-earnings drift.** After a big surprise, prices often keep moving in the same direction for days or weeks.
-  '2ggies48bpx': '**業績後漂移。**在大幅意外之後，價格往往會在幾天或幾星期內繼續朝同一方向移動。',
+  // **Gaps**: reports come out of hours, and a stop does not protect you from a gap.
+  '1n2jz05sv7t': '**裂口**：業績在交易時段外公佈，止蝕無法保護你免受裂口影響。',
+  // **Know the date** before holding a stock or its options across it.
+  '4i7wah4lsn': '持有股票或其期權跨越業績日之前，**先知道日期**。',
+  // **Options get expensive** before earnings, then IV collapses.
+  'wp5h2awr7r': '業績前**期權會變貴**，之後引伸波幅急跌。',
+  // **Post-earnings drift**: after a big surprise, price often keeps going for days or weeks.
+  '143hmu3yzxt': '**業績後漂移**：大幅意外之後，價格往往會沿同一方向走數日至數星期。',
   // Key valuation word: P/E
   'joor14nm1b': '重要的估值詞彙：市盈率',
-  // The **price-to-earnings ratio** is the share price divided by annual EPS. A P/E of 30 means investors pay $30 for each $1 of yearly profit, usually because they expect profits to grow. High-P/E stocks fall hardest when growth disappoints.
-  'wuai5k163z': '**市盈率**是股價除以年度每股盈利。市盈率 30 代表投資者為每 $1 年度盈利付出 $30，通常是因為他們預期盈利會增長。當增長令人失望時，高市盈率股票跌得最重。',
+  // The **price-to-earnings ratio** is share price divided by yearly EPS. A P/E of 30 means paying $30 per $1 of profit, betting on growth; such stocks fall hardest when growth disappoints.
+  'ofizupg5nt': '**市盈率**是股價除以全年每股盈利。市盈率 30 代表為每 $1 盈利付 $30，押注增長；增長令人失望時，這類股票跌得最厲害。',
   // Holding through earnings is a gamble
   '23o5oyp7nw6': '持倉跨過業績是一場賭博',
-  // Nobody knows the surprise in advance, and the reaction is often the opposite of what the numbers suggest. Many traders reduce or close positions before a report and re-enter after.
-  '7xevfsrhkn': '沒有人預先知道意外是甚麼，而市場的反應常常與數字所暗示的相反。很多交易者會在報告前減持或平倉，之後再重新入場。',
+  // Nobody knows the surprise, and the reaction often contradicts the numbers. Many traders cut size before a report.
+  '1hjqfy3kotp': '沒有人知道意外是甚麼，而反應往往與數字相反。很多交易者在業績前減少持倉。',
   // Interest rates
   'ttp56f14c0': '利率',
   // The price of money. When it changes, the value of almost everything else changes with it.
   '19v0rn038l6': '金錢的價格。它一改變，幾乎所有其他東西的價值都會隨之改變。',
-  // An **interest rate** is the cost of borrowing money, and the reward for lending it. Each country's **central bank** (the Federal Reserve in the US, the European Central Bank in the euro area) sets a base rate that influences every other rate in the economy.
-  'j9nw9rkaj': '**利率**是借錢的成本，也是借出資金的回報。每個國家的**中央銀行**（美國的聯儲局、歐元區的歐洲央行）會設定一個基準利率，影響經濟中所有其他利率。',
-  // Why central banks move rates
-  '9hx5uivuvy': '央行為甚麼調整利率',
-  // When the economy overheats and **inflation** (the general rise in prices) is too high, they **raise** rates. Borrowing gets expensive, spending slows, and price rises cool.
-  '1vmh7atnl2y': '當經濟過熱、**通脹**（物價普遍上升）太高時，它們會**加息**。借貸變貴，消費放緩，物價升勢降溫。',
-  // When the economy is weak, they **cut** rates. Borrowing gets cheap, which encourages spending and investment.
-  '1216skcu2lc': '當經濟疲弱時，它們會**減息**。借貸變便宜，從而鼓勵消費和投資。',
-  // How rates move markets
-  '1jterc91skr': '利率如何推動市場',
-  // **Stocks**: higher rates generally hurt. Companies pay more on their debt, consumers spend less, and safe investments like bonds start paying enough to compete. Fast-growing companies whose profits lie far in the future are hit hardest.
-  '3nwsj89pdn': '**股票**：利率較高通常不利。公司要為債務付更多利息，消費者減少開支，而債券這類安全投資開始提供有競爭力的回報。盈利遠在將來的高增長公司受打擊最大。',
-  // **Bonds**: bond prices fall when rates rise, because existing bonds pay less than newly issued ones.
-  'jlekszfy7j': '**債券**：加息時債券價格下跌，因為現有債券的回報比新發行的少。',
-  // **Currencies**: a country with rising rates tends to see its currency strengthen, because investors move money there to earn the higher return.
-  '1k37121abti': '**貨幣**：加息國家的貨幣往往會轉強，因為投資者把資金轉到那裡賺取較高回報。',
-  // **Crypto and other risky assets**: tend to do well when money is cheap and badly when it is expensive.
-  '1c70yqkg2ef': '**加密貨幣和其他高風險資產**：資金便宜時往往表現好，資金昂貴時表現差。',
-  // **Gold**: often falls when rates rise, since it pays no interest.
-  'fagtltzr1b': '**黃金**：加息時常常下跌，因為它不支付利息。',
+  // An **interest rate** is the cost of borrowing money. Each **central bank**, such as the Federal Reserve in the US, sets a base rate that steers every other rate.
+  '1gdvra6exlh': '**利率**是借錢的成本。每個**中央銀行**（例如美國的聯邦儲備局）設定一個基準利率，引導其他所有利率。',
+  // The marble Eccles Building of the Federal Reserve in Washington, DC, under renovation
+  '1y4cf3ntmi': '華盛頓特區聯邦儲備局的大理石埃克爾斯大樓，正在翻新',
+  // The Federal Reserve in Washington. Its rate decisions move markets around the world.
+  '1de7352gnob': '華盛頓的聯邦儲備局。它的利率決定影響全球市場。',
+  // With **inflation** too high they **raise** rates to cool spending; in a weak economy they **cut** to encourage it.
+  '1ifvw46bz5p': '**通脹**太高時，它們**加息**以冷卻消費；經濟疲弱時，它們**減息**以鼓勵消費。',
+  // A line chart of the US federal funds rate from 1954 to 2022, peaking near 19% around 1981 and near zero after 2008 and 2020
+  '10186fiiozq': '美國聯邦基金利率 1954 至 2022 年的線圖，約 1981 年見頂接近 19%，2008 年和 2020 年後接近零',
+  // The US base rate since 1954: near 20% in the early 1980s, near zero after 2008 and 2020.
+  'i575gm1wb9': '美國自 1954 年以來的基準利率：1980 年代初接近 20%，2008 年和 2020 年後接近零。',
+  // **Stocks** usually suffer from higher rates, growth companies most.
+  'g3gzuduppi': '**股票**通常因加息而受壓，增長股最嚴重。',
+  // **Bonds** fall as rates rise.
+  'o4jyy6rymd': '利率上升時**債券**下跌。',
+  // **Currencies** with rising rates tend to strengthen.
+  '1ya2ldlt037': '利率上升的**貨幣**往往轉強。',
+  // **Crypto and gold** tend to do worse when money is expensive.
+  '4ap5q1oig2': '資金昂貴時，**加密貨幣和黃金**往往表現較差。',
   // EUR/USD from mid-2021 to mid-2023. The US central bank raised rates faster than the European one through 2022, and the euro fell against the dollar before recovering as the gap narrowed.
   'yvhyibt8z0': '2021 年年中至 2023 年年中的歐元／美元。整個 2022 年美國央行加息比歐洲央行快，歐元兌美元下跌，之後隨差距收窄而回升。',
-  // It is expectations again
-  '22kz6psh9i2': '又是預期',
-  // As with earnings, markets react to the difference between what happens and what was expected. A rate rise everyone saw coming may move nothing. What moves prices is:
-  'mrgotav63e': '與業績一樣，市場對實際發生的事與預期之間的差距作出反應。人人都預料到的加息可能甚麼都推動不了。推動價格的是：',
-  // A decision different from the forecast.
-  '1dfbm9hrs71': '與預測不同的決定。',
-  // The central bank's statement and press conference, which hint at future moves. Traders call a tone leaning towards higher rates **hawkish** and one leaning towards lower rates **dovish**.
-  '1be66trxzrf': '央行的聲明和記者會，它們會暗示未來的動向。交易者把傾向加息的語調叫**鷹派**，傾向減息的叫**鴿派**。',
+  // Again, markets react to surprises. An expected move may change nothing; a different decision or a **hawkish** (towards higher rates) or **dovish** (towards lower) tone does.
+  'snbnvzc4r4': '市場同樣是對意外作出反應。預期中的變動可能毫無影響；不同的決定，或**鷹派**（傾向加息）或**鴿派**（傾向減息）的語調才會。',
   // A cut that sends stocks down
   'ev3kkc9ygc': '令股市下跌的減息',
   // The market expects a 0.50 point rate cut.
@@ -108,36 +88,28 @@ export default {
   '12smlhzoh6p': '雖然仍然是減息，但比已反映的幅度小。',
   // Stocks fall: relative to expectations, policy just got tighter.
   '155322r8m7p': '股市下跌：相對預期而言，政策其實收緊了。',
-  // Rates and options
-  '1ajuu3twy5c': '利率和期權',
-  // Rho, the least-watched Greek, measures this effect on option prices. It is small for short-dated options.
-  '101qcbb77wc': 'Rho 是最少人留意的希臘字母，量度的正是這種對期權價格的影響。對短期期權來說影響很小。',
   // Decision days are volatile
   '15ndb09zk79': '議息日波動很大',
-  // Central bank announcements are scheduled well in advance. In the minutes around them prices can whip violently in both directions before choosing one. Tight stops get hit in the noise.
-  '1hxc6zd95y5': '央行公佈的時間早已預定。在公佈前後幾分鐘，價格可以在兩個方向劇烈擺動，然後才選擇一個方向。窄的止蝕會在雜訊中被觸發。',
+  // Around the announcement prices can whip both ways before picking one. Tight stops get hit in the noise.
+  '1kf8ilym9lv': '公佈前後，價格可能先兩邊急劇擺動，才選擇方向。窄止蝕會在雜訊中被觸發。',
   // Economic news
   '1fsvi8fp7m4': '經濟新聞',
   // A handful of scheduled data releases move every market. Know when they are and what they mean.
   'r3bflah83g': '少數幾項預定公佈的數據會推動每一個市場。要知道它們何時公佈，以及代表甚麼。',
-  // Governments and agencies publish statistics about the economy on a fixed schedule. A few of these reports reliably move prices, because they shape what central banks will do next. An **economic calendar** lists them with their dates and the forecasts.
-  'w44ufqzq3t': '政府和機構會按固定時間表公佈經濟統計數據。其中幾份報告總會推動價格，因為它們影響央行下一步的行動。**經濟日誌**列出它們的日期和預測。',
-  // The reports that matter most
-  'i6j9j08khs': '最重要的報告',
-  // **Inflation (CPI)**: the Consumer Price Index measures how fast prices are rising. High inflation makes rate rises more likely. Usually the most market-moving release.
-  '1yz2nb6d8sd': '**通脹（CPI）**：消費物價指數量度物價上升得有多快。高通脹令加息更有可能。通常是最能推動市場的數據。',
-  // **Jobs (non-farm payrolls)**: the monthly US employment report: jobs added and the unemployment rate. Released on the first Friday of the month.
-  'yltlclpb4j': '**就業（非農就業人數）**：美國每月的就業報告：新增職位和失業率。每月第一個星期五公佈。',
-  // **GDP**: Gross Domestic Product, the total output of the economy. Two consecutive quarters of shrinking GDP is a common definition of a **recession**.
-  'tfxfuuushp': '**本地生產總值（GDP）**：經濟的總產出。連續兩個季度 GDP 收縮，是**衰退**的常見定義。',
-  // **Central bank decisions**: the rate decision itself and the statement that follows.
-  '2dlqvt7juxg': '**央行決定**：議息決定本身及其後的聲明。',
-  // **PMI surveys**: monthly surveys of business managers. Above 50 means activity is growing; below 50, shrinking.
-  'k7vkxo330l': '**採購經理指數（PMI）**：每月對企業經理的調查。高於 50 代表活動在增長；低於 50 代表在收縮。',
-  // Good news can be bad news
-  'xsejc5jd3i': '好消息可以是壞消息',
-  // The reaction is not always intuitive, because markets care about what the data means for interest rates.
-  '1oxi337caar': '市場的反應並不總是符合直覺，因為市場在乎的是數據對利率有甚麼影響。',
+  // A few scheduled statistics move every market because they shape what central banks do next. An **economic calendar** lists their dates and forecasts.
+  'b0iaey5uff': '幾項預定公佈的統計數據會推動所有市場，因為它們影響中央銀行下一步的決定。**經濟日誌**列出公佈日期和預測。',
+  // A chart of the US Consumer Price Index from 1913 to 2022, with its yearly percentage change
+  'h8gpxzll5h': '美國消費物價指數 1913 至 2022 年的圖表，以及按年變化百分比',
+  // US consumer prices since 1913 (blue) and their yearly change (red). Inflation spikes reshape markets.
+  '279405h06kw': '美國自 1913 年以來的消費物價（藍色）及按年變化（紅色）。通脹急升會重塑市場。',
+  // **Inflation (CPI)**: how fast prices are rising. Usually the biggest mover.
+  '23ozg205k6j': '**通脹（CPI）**：物價上升的速度。通常影響最大。',
+  // **Jobs (non-farm payrolls)**: US hiring and unemployment, the first Friday of each month.
+  'jchcjozkbg': '**就業（非農就業人數）**：美國的招聘和失業率，每月第一個星期五公佈。',
+  // **GDP**: total output. Two shrinking quarters is a common definition of a **recession**.
+  'pkl74ajqrh': '**本地生產總值（GDP）**：經濟總產出。連續兩個季度收縮是**衰退**的常見定義。',
+  // **Central bank decisions** and **PMI surveys** (above 50 means business is growing).
+  '6pfolpfh64': '**央行決定**和**採購經理指數（PMI）**調查（高於 50 代表業務正在擴張）。',
   // Strong jobs, falling stocks
   '17eirqgy2a7': '就業強勁，股市下跌',
   // The jobs report shows far more hiring than forecast.
@@ -146,36 +118,28 @@ export default {
   '27v9buyt2o': '經濟強勁：對股市一定是好事吧？',
   // But strong hiring can push wages and inflation up, making rate rises more likely.
   '1m2ygc9abm8': '但強勁的招聘可能推高工資和通脹，令加息更有可能。',
-  // Stocks fall and the currency rises. When rates are the market's main worry, good economic news can be bad market news.
-  '1oiz53ymwa7': '股市下跌，貨幣上升。當利率是市場的主要憂慮時，好的經濟消息可以是壞的市場消息。',
+  // Stocks fall and the currency rises. When rates are the main worry of the market, good economic news can be bad market news.
+  '1nozh4cxqgx': '股市下跌，貨幣上升。當利率是市場的主要憂慮，好的經濟消息可以是壞的市場消息。',
   // SPY through 2022, a year dominated by inflation reports and rate rises. Many of the sharpest single-day moves fell on the days inflation data or central bank decisions were released.
   'p7v3fwg9cu': '2022 年全年的 SPY，那一年由通脹報告和加息主導。很多單日最急劇的波動，都發生在通脹數據或央行決定公佈的日子。',
-  // Unscheduled news
-  '1pkeszuia7w': '突發新聞',
-  // Some events arrive without warning: wars, political shocks, a bank failing, an exchange being hacked, a regulator's announcement. These cause the biggest gaps because nobody is positioned for them. You cannot predict them. You can only make sure no single position is large enough to ruin you when one happens, which is what the Risk management module is for.
-  '2ae2n02z05w': '有些事件毫無預警地到來：戰爭、政治衝擊、銀行倒閉、交易所被黑客入侵、監管機構的公告。這些事件造成最大的裂口，因為沒有人為它們做好準備。你無法預測它們。你只能確保沒有任何一個持倉大到在事件發生時足以毀掉你，這正是風險管理單元的用途。',
-  // How traders deal with news
-  '2g8bnc0ou1s': '交易者如何應對新聞',
-  // Check the economic calendar at the start of each week.
-  'auv6b5rn8r': '每星期開始時查看經濟日誌。',
-  // Before a major release, reduce size, widen stops, or stand aside. Spreads widen and slippage increases around the announcement.
-  'mev2or3yw6': '重要數據公佈前，減少規模、放闊止蝕，或者不參與。公佈前後差價會擴闊，滑價會增加。',
-  // Do not trade the first spike. The initial move often reverses within minutes.
-  'ro9c7rtrce': '不要交易第一下急升。最初的走勢常常在幾分鐘內逆轉。',
-  // Let the market settle, then trade the direction it chooses using the same setups as always.
-  '26vvslu0ry6': '讓市場平靜下來，然後用一貫的形態，順著它選擇的方向交易。',
+  // Unscheduled shocks, such as wars, bank failures or hacks, cause the biggest gaps. You cannot predict them, only keep every position small enough to survive one.
+  'qntlp6g012': '戰爭、銀行倒閉或黑客入侵等突發事件會造成最大的裂口。你無法預測，只能令每個持倉都小得足以承受。',
+  // Check the calendar each week.
+  '10j84hhyrvb': '每星期查看經濟日誌。',
+  // Before a big release, cut size, widen stops or stand aside.
+  '1t4hc94p6uh': '重大數據公佈前，減少規模、放闊止蝕或站在一旁。',
+  // Do not trade the first spike; it often reverses within minutes.
+  '28bem90b3qp': '不要交易第一下急升急跌；它往往在幾分鐘內反轉。',
+  // Once it settles, trade the chosen direction with your usual setups.
+  '1u72hjjz21b': '市場穩定下來後，用你平常的形態順着選定的方向交易。',
   // Technical and fundamental together
   '2fd4vawgp7v': '技術分析和基本分析一起用',
-  // News explains why a market moves; the chart shows where and how. A support level that holds through bad news is stronger than one that has not been tested. Many traders use fundamentals to choose what and when to trade, and charts to choose the entry, stop and target.
-  '65pkwuz6p8': '新聞解釋市場為甚麼移動；圖表顯示在哪裡和怎樣移動。一個在壞消息中守住的支持位，比未經測試的更強。很多交易者用基本因素選擇交易甚麼和何時交易，用圖表選擇入場、止蝕和目標。',
+  // News explains why a market moves; the chart shows where. Many traders use fundamentals to pick what and when, and charts for entry, stop and target.
+  '26z2ex6w0p6': '消息解釋市場為甚麼移動；圖表顯示在哪裡移動。很多交易者用基本因素選擇交易甚麼和何時交易，再用圖表定入場、止蝕和目標。',
   // "Buy the rumour, sell the news"
   '1y5705xe36t': '「憑消息買入，消息公佈時賣出」',
-  // Prices often rise in anticipation of an expected good event, then fall when it actually happens, because everyone who wanted to buy already has. By the time news is public, it is usually too late to trade on it.
-  '7je9bomvmj': '價格常常在預期的好事發生前上升，然後在它真正發生時下跌，因為所有想買的人都已經買了。等新聞公開時，通常已經太遲。',
-  // End of the curriculum
-  'z7on5ut58u': '課程完結',
-  // You have covered the full path from what a market is to option strategies. Reading is the easy part. Use the Trainer, Replay and paper trading to turn it into skill, and the Journal to find out what actually works for you.
-  'eflq9jujap': '你已經走完由市場是甚麼到期權策略的整條路。閱讀是容易的部分。用訓練場、歷史重播和模擬交易把它轉化為技巧，再用交易日誌找出真正適合你的方法。',
+  // Prices often rise before an expected good event and fall when it happens. Public news is usually too late to trade.
+  't689sb1gbv': '價格往往在預期中的好消息之前上升，在消息出現時下跌。公開的消息通常已太遲，不能用來交易。',
   // How often do public companies report earnings?
   '1youwpdzsnj': '上市公司多久報告一次業績？',
   // Every month
@@ -248,6 +212,8 @@ export default {
   'u8c7w4lkwp': '削弱本國貨幣',
   // Higher rates make borrowing expensive, slowing spending and price rises.
   'u857vlszh2': '利率較高令借貸變貴，令消費和物價升勢放緩。',
+  // Higher rates
+  '1kd0jqcow7i': '加息',
   // How do rising interest rates generally affect stock prices?
   '1zowqj2fyj2': '加息通常如何影響股價？',
   // They help
@@ -288,10 +254,10 @@ export default {
   'g2mnmeucsw': '被形容為「鷹派」的央行聲明傾向於：',
   // Lower rates
   'mpw64it7pw': '減息',
-  // Higher rates
-  '1kd0jqcow7i': '加息',
   // No change ever
   'np9hrhz8fq': '永遠不變',
+  // No change
+  'mmt5uahm2w': '沒有變化',
   // Printing money
   '11zv1yswhzp': '印鈔',
   // Hawkish means favouring higher rates to fight inflation. Dovish means favouring lower rates.
@@ -326,8 +292,6 @@ export default {
   '4nrw8fw0n3': '活動在增長',
   // Activity is shrinking
   '129wumpo01t': '活動在收縮',
-  // No change
-  'mmt5uahm2w': '沒有變化',
   // High inflation
   '4evnmmo7ef': '高通脹',
   // Above 50 is expansion; below 50 is contraction.

@@ -10,12 +10,14 @@ export default {
   'kadhnqo4y7': 'FOMO、報復式交易和過度交易',
   // Three ways emotion pushes you into trades your rules would never allow.
   '4gl7qqoeeb': '情緒推你做出規則永遠不會容許的交易的三種方式。',
-  // You can know every pattern and indicator in this course and still lose money, because the hardest part of trading is doing what you planned when real feelings are involved. The three habits in this lesson are the most common account-killers.
-  '1cdcwk9ip4j': '即使你知道這個課程中的每一個形態和指標，仍然可能虧錢，因為交易最難的部分，是在真實情緒介入時照計劃去做。這一課的三個習慣是最常見的帳戶殺手。',
-  // FOMO: fear of missing out
-  'r4zqxyk0z': 'FOMO：害怕錯過',
-  // **FOMO** is the urge to jump into a move that is already under way because everyone else seems to be making money. The price has run, the news is excited, and you buy near the top with no plan.
-  'xd6qclgq2h': '**FOMO** 是因為似乎人人都在賺錢，而衝動追入已經展開的走勢。價格已經跑了一大段，新聞一片興奮，你在接近頂部、毫無計劃地買入。',
+  // The hardest part of trading is doing what you planned when real feelings are involved. These three habits kill the most accounts.
+  'dfni40ng9f': '交易最難的部分，是在真實情緒出現時仍然照計劃做。以下三個習慣毀掉最多帳戶。',
+  // A dense crowd of people in hats packed outside the New York Stock Exchange in 1929
+  '137fny2b4ts': '1929 年，紐約證券交易所外擠滿戴帽子的人群',
+  // Crowds outside the New York Stock Exchange in the 1929 crash. Fear and greed spread through a crowd fast.
+  'vp6trukf78': '1929 年股災時紐約證券交易所外的人群。恐懼和貪婪在人群中傳得很快。',
+  // **FOMO**, fear of missing out, is jumping into a move already under way because everyone seems to be making money. You buy near the top with no plan.
+  '1un7ace1wrj': '**FOMO**（害怕錯過）是因為人人似乎都在賺錢，而追入已在進行中的走勢。你在接近頂部時毫無計劃地買入。',
   // A FOMO entry. The move was obvious only after most of it had happened. Buying there meant a far-away stop and a nearby top.
   '1o51wsrcdke': '一次 FOMO 入場。走勢在大部分已經發生之後才變得明顯。在那裡買入，代表止蝕很遠，頂部卻很近。',
   // A planned entry was here
@@ -24,36 +26,24 @@ export default {
   'w79cxlyvcu': 'FOMO 在這裡買入',
   // Late buyers sit in losses
   '7o6vf8pbz7': '遲來的買家陷入虧損',
-  // **How to spot it**: you feel rushed, you have no stop-loss in mind, and your reason is "it is going up".
-  '2ddzqj87zib': '**如何察覺**：你感到急躁、心中沒有止蝕位，理由是「它在升」。',
-  // **What to do**: ask where your stop would be. If the only sensible stop is far below, the entry is late. Wait for a pullback or let it go.
-  '23841zwezrt': '**該怎樣做**：問自己止蝕會在哪裡。如果唯一合理的止蝕遠在下方，這個入場點就太遲了。等待回調，或者放過它。',
-  // There is always another trade
-  'qzuhj7rre6': '永遠還有下一宗交易',
-  // Markets offer setups every day. Missing one costs nothing. Chasing one without a plan often costs a lot.
-  '1t4iglm5h4z': '市場每天都有形態出現。錯過一個毫無代價。毫無計劃地追一個，代價往往很大。',
+  // **FOMO**: you feel rushed, have no stop in mind, and the reason is "it is going up". If the only sensible stop is far away, you are late. Let it go.
+  'gseeblu6m7': '**FOMO**：你感到急躁、心中沒有止蝕，理由是「它在上升」。如果唯一合理的止蝕很遠，你已經遲了。放過它。',
+  // If the only sensible stop is far away, you are late. Wait for a pullback or skip it.
+  '1kvkhrveuwu': '如果唯一合理的止蝕很遠，你就太遲了。等待回調或跳過它。',
+  // **Revenge trading**: a bigger trade straight after a loss to win it back, made when judgement is worst. Rule: after two losses or -3% in a day, stop until tomorrow.
+  'g09ox3kkho': '**報復式交易**：虧損後立即做更大的交易想贏回來，而那正是判斷力最差的時候。規則：連輸兩次或一日虧損 3%，就停到明天。',
   // Revenge trading
   '1dzlqndx8an': '報復式交易',
-  // **Revenge trading** is taking a new trade straight after a loss in order to win the money back, usually bigger and with less thought. The loss stings, and you want it gone.
-  'mor5vhbvyh': '**報復式交易**是在虧損後立即開新倉，為了把錢贏回來，通常注碼更大、考慮更少。虧損令人刺痛，你想它消失。',
-  // It fails because your judgement is at its worst right after a loss, and because increasing size while judging badly is how a small loss becomes a big one.
-  '1l6vl4nmwmq': '它會失敗，因為你的判斷在虧損後正處於最差的狀態，而在判斷差的時候加大規模，正是小虧損變成大虧損的方式。',
-  // **How to spot it**: you are trading because of the last trade, not because of a setup. You feel angry or impatient.
-  'mj5v97xuii': '**如何察覺**：你交易是因為上一宗交易，而不是因為形態。你感到憤怒或不耐煩。',
-  // **What to do**: set a rule in advance. For example: after two losses in a row, or a 3% loss in a day, stop trading until tomorrow. Close the chart.
-  '1m9smszu6m1': '**該怎樣做**：預先定下規則。例如：連輸兩宗，或一天虧損 3%，就停止交易直至明天。關掉圖表。',
-  // Overtrading
-  '2dcvha6ipa8': '過度交易',
-  // **Overtrading** is taking too many trades: from boredom, from wanting action, or from believing more trades mean more profit. Each one pays fees and spread, and most are low-quality setups you would have skipped on a calm day.
-  '1vjut6j0gkv': '**過度交易**是做太多交易：因為無聊、想找刺激，或以為交易愈多賺愈多。每宗交易都要付手續費和差價，而大部分都是你在平靜的日子會跳過的低質素形態。',
-  // **How to spot it**: many trades, shrinking account, and you cannot say what the setup was for half of them.
-  '1dhjk23u4s6': '**如何察覺**：交易很多、帳戶縮水，而且有一半交易你說不出是甚麼形態。',
-  // **What to do**: limit trades per day or week. Require every trade to match a written setup. Quality over quantity is not a slogan here; it is arithmetic.
-  '25sqix728dk': '**該怎樣做**：限制每天或每星期的交易數目。要求每宗交易都符合寫下來的形態。質素重於數量在這裡不是口號，而是算術。',
+  // **Overtrading**: too many trades from boredom or wanting action. Each pays fees, and most are setups you would skip on a calm day. Limit trades and require a written setup for each.
+  '2axcm6f6ned': '**過度交易**：因為無聊或想要刺激而做太多交易。每宗都要付手續費，而大部分是平靜時你會跳過的形態。限制交易次數，每宗都要符合寫下的形態。',
+  // There is always another trade
+  'qzuhj7rre6': '永遠還有下一宗交易',
+  // Missing a setup costs nothing. Chasing one without a plan often costs a lot.
+  '1c1u6wgczm7': '錯過一個形態不用付出任何代價。沒有計劃地追逐一個，往往代價很大。',
   // The pattern they share
   '27n67ev005': '它們的共通點',
-  // All three are trades entered to change how you feel, not because the chart met your rules. If the reason for a trade is an emotion, the answer is no.
-  'ystulh746s': '三者都是為了改變自己的感受而入場，而不是因為圖表符合你的規則。如果交易的理由是一種情緒，答案就是不。',
+  // All three are trades made to change how you feel, not because the chart met your rules. If the reason is an emotion, the answer is no.
+  '17l7ugejnth': '三者都是為了改變感受而做的交易，而不是因為圖表符合你的規則。如果理由是情緒，答案就是不做。',
   // Tag your emotions
   '13d0lrixlg7': '標記你的情緒',
   // The journal lets you tag each paper trade with how you felt: calm, FOMO, revenge, bored. After a few dozen trades the Analytics page will show you which feelings cost you money. Most people are surprised.
@@ -62,16 +52,18 @@ export default {
   '39ia26jari': '損失厭惡',
   // Losses hurt about twice as much as gains feel good. That bias makes traders cut winners and hold losers.
   '18fed67jz28': '虧損帶來的痛苦大約是盈利帶來快樂的兩倍。這種偏差令交易者過早獲利、死抱虧損。',
-  // Psychologists have measured it repeatedly: losing $100 feels roughly twice as bad as gaining $100 feels good. This is **loss aversion**, and it pushes traders into exactly the wrong behaviour.
-  '21xp1xwke0d': '心理學家反覆量度過：輸 $100 的感覺大約是贏 $100 的兩倍差。這就是**損失厭惡**，它把交易者推向完全錯誤的行為。',
-  // What it does to you
-  '20qt3xv3jik': '它對你做了甚麼',
-  // **You hold losers too long.** While the trade is open the loss is "not real yet". Closing it makes it real, so you wait and hope, and move the stop-loss away.
-  'erjwbrc6a1': '**你死抱虧損的交易太久。**交易未平倉時，虧損「還不是真的」。平倉會令它變成真的，所以你等待、祈求，還把止蝕移遠。',
-  // **You cut winners too early.** A profit on screen feels like something you could lose, so you grab it quickly.
-  'qbp1ighvv9': '**你過早平掉盈利的交易。**螢幕上的盈利感覺像隨時會失去的東西，所以你急忙落袋。',
-  // The result is small wins and large losses: a negative risk/reward ratio created entirely by your own behaviour. A strategy designed to make 2R per win ends up making 0.5R, and one designed to lose 1R ends up losing 3R.
-  'ji0s5b1g8x': '結果是小賺大蝕：完全由你自己的行為造成的負風險回報比。一個設計成每次勝利賺 2R 的策略最後只賺 0.5R，一個設計成每次虧損 1R 的策略最後虧 3R。',
+  // Losing $100 feels about twice as bad as gaining $100 feels good. This is **loss aversion**.
+  '19plnkv9x92': '輸 $100 的感覺，大約比賺 $100 的快樂強一倍。這就是**損失厭惡**。',
+  // The prospect theory value function: an S-shaped curve that falls more steeply for losses than it rises for gains
+  'a260w3ckex': '前景理論的價值函數：一條 S 形曲線，虧損一邊下降得比收益一邊上升得更陡',
+  // How gains and losses feel. The curve drops more steeply on the left: a loss hurts more than the same gain pleases.
+  '9jwgw705o6': '收益和虧損的感受。左邊的曲線下降更陡：虧損帶來的痛苦，比同等收益帶來的快樂更大。',
+  // **You hold losers too long**: closing makes the loss real, so you hope and move the stop.
+  '1bk4qtetvgd': '**你死抱虧損的交易太久**：平倉會令虧損變成真實，所以你寄望回升並移動止蝕。',
+  // **You cut winners too early**: a profit feels like something you could lose, so you grab it.
+  '1y5afzrl2p8': '**你過早平掉盈利的交易**：帳面利潤感覺可能會失去，所以你急着落袋。',
+  // The result is small wins and large losses, a bad risk/reward made entirely by behaviour: 2R winners shrink to 0.5R and 1R losses grow to 3R.
+  '287h10j8yoq': '結果是小賺大蝕，完全由行為造成的差劣風險回報：2R 的盈利縮成 0.5R，1R 的虧損擴大到 3R。',
   // Loss aversion on a chart. The plan said to exit at the stop for a 1R loss. Moving the stop twice, then giving up, turned it into 4R.
   'kriefau4wh': '圖表上的損失厭惡。計劃是在止蝕出場，虧損 1R。移動止蝕兩次再放棄，把它變成了 4R。',
   // Entry 102
@@ -86,100 +78,70 @@ export default {
   '2bguige90oi': '入場',
   // Give up
   'vabvx899lo': '放棄',
-  // The traps
-  '17megtfz75f': '陷阱',
-  // **"It will come back."** Sometimes it does. The times it does not are the ones that destroy accounts.
-  'n0otuimscr': '**「它會回來的。」**有時候會。不回來的那些時候，就是摧毀帳戶的時候。',
-  // **"I will sell when I am back to even."** The market does not know or care what you paid. Your entry price is irrelevant to where price goes next.
-  '2asnkcp48u8': '**「回本就賣。」**市場不知道、也不在乎你買入的價錢。你的入場價與價格之後的走向毫無關係。',
-  // **Averaging down.** Buying more of a loser to lower your average price increases your exposure to the very thing that is going wrong.
-  '29q7zwc2tmc': '**向下攤平。**加買虧損的持倉以拉低平均價，只會增加你在錯誤方向上的風險。',
-  // **The sunk cost.** Time and money already spent on a trade are gone either way. The only question is: would I open this position now, at this price? If not, close it.
-  '93p0mxd61o': '**沉沒成本。**已經花在一宗交易上的時間和金錢，無論如何都已經沒了。唯一的問題是：我現在會以這個價格開立這個持倉嗎？如果不會，就平倉。',
-  // Related biases
-  '2go6104yrmq': '相關的偏差',
-  // **Confirmation bias**: once in a trade, you notice evidence that agrees with you and dismiss evidence that does not.
-  '8j8aqhat11': '**確認偏誤**：一旦入市，你只留意同意你的證據，忽略相反的證據。',
-  // **Recency bias**: the last few trades feel like the whole truth. Three wins and you feel invincible; three losses and the strategy feels broken.
-  'orqb2dih5e': '**近期偏差**：最近幾宗交易感覺就是全部真相。贏三次就覺得自己無敵；輸三次就覺得策略失效。',
-  // **Overconfidence**: after a winning streak, traders increase size just in time for the streak to end.
-  '1y6kv70kb13': '**過度自信**：連勝之後，交易者加大規模，剛好趕上連勝結束。',
-  // What actually helps
-  'ov6dmtpkze': '真正有幫助的方法',
-  // **Decide the exit before the entry.** Set the stop-loss and target when you are calm and have no position. Place them as real orders.
-  '1vxsj3g167d': '**入場前先決定出場。**在平靜、沒有持倉時設定止蝕和目標。把它們落成真正的訂單。',
-  // **Risk an amount you do not care about.** If a 1% loss does not hurt, you will not fight it.
-  'cbak7ynrf7': '**承受你不在乎的金額風險。**如果 1% 的虧損不會令你難受，你就不會跟它對抗。',
-  // **Think in series, not single trades.** One loss among a hundred is nothing. Treat every trade as one of many.
-  '18gcile42lf': '**以一連串交易思考，而不是單一交易。**一百宗中的一次虧損微不足道。把每宗交易看作眾多交易之一。',
-  // **Never widen a stop.** Make it a rule with no exceptions.
-  'upwz5dn288': '**永遠不要放闊止蝕。**把它定為沒有例外的規則。',
+  // **"It will come back."** The times it does not are the ones that destroy accounts.
+  '1gl9ilh1mq5': '**「它會回來的。」**它沒有回來的那幾次，正是毀掉帳戶的時候。',
+  // **"I will sell at break-even."** The market does not care what you paid.
+  'q3j88k80gl': '**「回本就賣。」**市場不在乎你付了多少。',
+  // **Averaging down** adds to exactly what is going wrong.
+  '2dv9pq5o4at': '**向下攤平**正是在加碼出錯的東西。',
+  // Averaging down
+  'ub722ugihv': '向下攤平',
+  // **Sunk cost**: ask only "would I open this position now, at this price?" If not, close it.
+  '2f8whmu72xk': '**沉沒成本**：只問「我現在會以這個價格開這個倉嗎？」如果不會，就平倉。',
+  // **Confirmation, recency and overconfidence**: you see what agrees with you, over-trust the last few trades, and size up just before a streak ends.
+  '1axffnhffvz': '**確認偏誤、近期偏差和過度自信**：你只看見支持自己的證據，過分相信最近幾宗交易，並在連勝結束前加大規模。',
+  // **Decide the exit before the entry**, and place it as a real order.
+  's9manjisdf': '**入場前先決定出場**，並以真實訂單放好。',
+  // **Risk an amount you do not mind losing.** A 1% loss is easy to accept.
+  '1ugazmb1opw': '**承受你不介意輸掉的金額風險。**1% 的虧損很容易接受。',
+  // **Think in series.** One loss in a hundred is nothing.
+  '2a44180g3p4': '**以一連串交易思考。**一百宗中輸一宗不算甚麼。',
+  // **Never widen a stop.**
+  'vypjpf0n9h': '**永遠不要放闊止蝕。**',
+  // Never
+  '221ct4go232': '永遠不要',
   // A loss is a cost of doing business
   '1451cz4jxuw': '虧損是做生意的成本',
-  // A shop pays rent whether or not it sells anything that day. A stopped-out trade is your rent: the cost of being in the market for the trades that work. Taken at the planned size, it is not a mistake.
-  'x15erecb2z': '店舖不論當天有沒有賣出東西都要交租。被止蝕的交易就是你的租金：為了那些奏效的交易而留在市場中的成本。以計劃的規模承受它，並不是錯誤。',
+  // A stopped-out trade at the planned size is your rent for being in the market. It is not a mistake.
+  '18xe9avjffe': '按計劃規模被止蝕的交易，是你留在市場的租金。它不是錯誤。',
   // Paper trading hides this
   '987byybisb': '模擬交易會掩蓋這一點',
-  // With pretend money nothing hurts, so you will follow your rules easily. The feelings in this module only appear with real money. That is the main limit of practising here, and worth remembering before you ever trade for real.
-  '7u4zhmrv4d': '用假的資金，甚麼都不會痛，所以你會輕易遵守規則。這個單元講的情緒只會在用真錢時出現。這是在這裡練習的主要局限，在你真正交易之前值得記住。',
+  // With pretend money nothing hurts. These feelings only appear with real money, so remember them before you ever trade for real.
+  'zfd2zemu3t': '用假錢時甚麼都不痛。這些感受只會在真錢交易時出現，所以在真正交易前要記住它們。',
   // Why a trading plan matters
   '1noq8wldh63': '為甚麼交易計劃重要',
   // A written set of rules made while calm, so you do not have to make decisions while stressed.
   '239c9gv2m4t': '一套在平靜時寫下的規則，讓你不必在壓力下做決定。',
-  // A **trading plan** is a written document that says what you trade, when you enter, when you exit, how much you risk, and when you stop. Its whole purpose is to move decisions from the moment of stress to a moment of calm.
-  'tkgdv1e6dv': '**交易計劃**是一份書面文件，寫明你交易甚麼、何時入場、何時出場、承受多少風險，以及何時停止。它的全部目的，是把決定由壓力的時刻移到平靜的時刻。',
-  // Without one, every trade is improvised, and you cannot tell whether a result came from your method or from luck. With one, every trade is either "followed the plan" or "broke the plan", and you can improve.
-  '1r7min8z8i0': '沒有計劃，每宗交易都是即興的，你無法分辨結果來自你的方法還是運氣。有了計劃，每宗交易不是「依計劃」就是「違反計劃」，你就能改進。',
-  // What goes in it
-  'vjsef41zlz': '計劃包括甚麼',
-  // **Markets and timeframe.** For example: BTC and ETH on the 4-hour chart.
-  'fo8c3ie56m': '**市場和時間週期。**例如：比特幣和以太幣的 4 小時圖。',
-  // **Setups.** The exact conditions that must be true for an entry. For example: price in an uptrend above the 50 EMA, pulls back to support, prints a bullish reaction candle.
-  '17vy473wgfr': '**形態。**入場前必須成立的確切條件。例如：價格處於上升趨勢、高於 50 EMA，回調到支持位，出現看漲的反應陰陽燭。',
-  // **Entry rule.** Market order on the close of the reaction candle.
-  '1h59z89n3z': '**入場規則。**在反應陰陽燭收市時落市價單。',
-  // **Stop-loss rule.** Below the swing low, at least 1.5 ATR from entry.
-  'm4g4m3rxvo': '**止蝕規則。**在擺動低點之下，距離入場價至少 1.5 個 ATR。',
-  // **Target and exit rule.** First target at 2R; then trail the stop under each higher low.
-  '1i12du6v0zc': '**目標和出場規則。**第一個目標在 2R；之後把止蝕移到每個更高的低點之下。',
-  // **Risk rule.** 1% of the account per trade. No more than three open positions.
-  '1xft3qvtrlf': '**風險規則。**每宗交易承受帳戶 1% 的風險。同時最多三個持倉。',
-  // **Stop-trading rules.** Stop for the day after two losses or -3%. Halve size after a 10% drawdown.
-  '1u5xpemq41y': '**停止交易規則。**連輸兩宗或虧損 3% 就當日停止。回撤 10% 後規模減半。',
-  // **Review.** Journal every trade. Review weekly.
-  '6z58kv8a4i': '**檢討。**每宗交易都記錄在交易日誌。每星期檢討。',
-  // A pre-trade checklist
-  '1gcp7ci9rwo': '交易前檢查清單',
-  // Before every trade, answer in writing:
-  '1mqkhy0yh9z': '每宗交易之前，以文字回答：',
-  // Which setup from my plan is this?
-  'hawdvhumhu': '這是我計劃中的哪一個形態？',
-  // Where is the stop, and why there?
-  'su2129caav': '止蝕在哪裡，為甚麼在那裡？',
-  // Where is the target, and what is the risk/reward?
-  '24gdt28433w': '目標在哪裡，風險回報比是多少？',
-  // What is my position size for 1% risk?
-  'o2ioq4ttyg': '承受 1% 風險時我的持倉規模是多少？',
-  // How do I feel right now? If the answer is rushed, angry or bored, do not trade.
-  'i1zy6d45ta': '我現在感覺如何？如果答案是急躁、憤怒或無聊，就不要交易。',
-  // Sizing is the part of the checklist people skip most. Work it out for a trade you are considering:
-  'u1fxe6h9wz': '計算規模是檢查清單中最常被跳過的部分。為你正在考慮的交易計算一下：',
-  // The journal closes the loop
-  '1d7496yct4a': '交易日誌完成整個循環',
-  // A plan is a guess about what works. A **journal** is how you find out. Record each trade: the setup, the reasoning, the result, and whether you followed the rules. After 30 to 50 trades the numbers show which setups make money and which rules you keep breaking.
-  '1n52mn1temu': '計劃是對甚麼有效的猜測。**交易日誌**是你找出答案的方法。記錄每宗交易：形態、理由、結果，以及是否遵守了規則。做了 30 至 50 宗交易後，數字會顯示哪些形態賺錢、哪些規則你經常違反。',
-  // A losing trade that followed the plan is a **good trade**.
-  '13gv54zn4fl': '依照計劃而虧損的交易是**好交易**。',
-  // A winning trade that broke the plan is a **bad trade**. It teaches you a habit that will cost you later.
-  '2dyf068n4z1': '違反計劃而賺錢的交易是**壞交易**。它教會你一個日後會令你付出代價的習慣。',
+  // A **trading plan** writes down what you trade, when you enter and exit, how much you risk, and when you stop. It moves decisions from moments of stress to moments of calm, and lets you tell method from luck.
+  't3ycozs7pc': '**交易計劃**寫下你交易甚麼、何時入場出場、承受多少風險，以及何時停止。它把決定從壓力時刻移到冷靜時刻，並讓你分辨方法和運氣。',
+  // **Markets and timeframe**: for example, BTC and ETH on the 4-hour chart.
+  '23z4a58tef4': '**市場和時間週期**：例如 4 小時圖上的 BTC 和 ETH。',
+  // **Setups**: the exact conditions, such as an uptrend above the 50 EMA, a pullback to support and a bullish reaction candle.
+  '148el2f90pb': '**形態**：確切的條件，例如在 50 EMA 之上的上升趨勢、回調到支持位，以及一支看漲的反應陰陽燭。',
+  // **Entry, stop and target**: enter on the close; stop below the swing low and at least 1.5 ATR away; first target 2R, then trail.
+  '1ca5hh0md2t': '**入場、止蝕和目標**：收市時入場；止蝕在擺動低點之下且至少 1.5 個 ATR；第一目標 2R，之後移動止蝕。',
+  // **Risk**: 1% per trade, at most three open positions.
+  '1xep85qkg66': '**風險**：每宗 1%，最多三個未平倉持倉。',
+  // **Stop-trading rules**: stop for the day after two losses or -3%; halve size after a 10% drawdown.
+  '2674swfhlls': '**停止交易規則**：連輸兩次或虧損 3% 就停止當日交易；回撤 10% 後規模減半。',
+  // **Review**: journal every trade, review weekly.
+  '1r95umhyqv9': '**檢討**：每宗交易都寫交易日誌，每星期檢討。',
+  // Before every trade
+  '13t5o8u70la': '每宗交易之前',
+  // Which setup is this, where is the stop and why, what is the risk/reward, and what size gives 1% risk?
+  'gvrr75y2xt': '這是哪個形態？止蝕在哪裡、為甚麼？風險回報是多少？多大規模才是 1% 風險？',
+  // How do I feel? Rushed, angry or bored means no trade.
+  '10oklcr7um2': '我現在感覺如何？急躁、憤怒或無聊，就不交易。',
+  // A **journal** shows whether the plan works. After 30 to 50 trades, the numbers show which setups pay and which rules you break. A loss that followed the plan is a **good trade**; a win that broke it is a **bad trade**.
+  '1rj4ktwf2xj': '**交易日誌**顯示計劃是否有效。做了 30 至 50 宗交易後，數字會顯示哪些形態賺錢、你常違反哪些規則。遵守計劃的虧損是**好交易**；違反計劃的盈利是**壞交易**。',
   // Do not change the plan in the middle of a trade
   '5pw9zbz7iw': '不要在交易途中改變計劃',
-  // Adjust rules only during a review, away from the screen, based on a meaningful number of trades. Changing them while a position is open is not improving the plan; it is abandoning it.
-  '11agva3725h': '只在檢討時、離開螢幕、根據足夠數量的交易來調整規則。在持倉期間改變規則不是改進計劃，而是放棄它。',
+  // Change rules only in a review, away from the screen, after enough trades.
+  '215safb3uz6': '只在檢討時、離開屏幕、累積足夠交易後才修改規則。',
   // Start small and simple
   '4m33zktw8l': '由細小和簡單開始',
-  // One market, one timeframe, one setup, 1% risk. A plan you can write on an index card and actually follow beats a sophisticated one you ignore.
-  '1gpwaocu2f0': '一個市場、一個時間週期、一個形態、1% 風險。一個能寫在索引卡上並真正執行的計劃，勝過一個你會忽略的複雜計劃。',
+  // One market, one timeframe, one setup, 1% risk. A plan on an index card that you follow beats a clever one you ignore.
+  '1twvnm4nu2x': '一個市場、一個時間週期、一個形態、1% 風險。一張你會照做的卡片計劃，勝過一份你會忽略的精巧計劃。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
   // Every paper trade is logged to the Journal automatically with a chart snapshot. Add your reasoning and an emotion tag, then use Analytics to see your results by setup and by emotion.
@@ -216,8 +178,6 @@ export default {
   '24ef05d92y1': '「其他人在做甚麼？」',
   // "How fast is it moving?"
   '29o8qb3vjdf': '「它移動得有多快？」',
-  // If the only sensible stop is far away, you are late. Wait for a pullback or skip it.
-  '1kvkhrveuwu': '如果唯一合理的止蝕很遠，你就太遲了。等待回調或跳過它。',
   // What is a practical defence against revenge trading?
   'ogix769axz': '對抗報復式交易的實際方法是甚麼？',
   // Trading bigger after losses
@@ -284,8 +244,6 @@ export default {
   '2260gmh8qfr': '每分鐘查看交易',
   // Setting the stop-loss and target before entering, as real orders
   'wc8io76flh': '入場前以真正的訂單設定止蝕和目標',
-  // Averaging down
-  'ub722ugihv': '向下攤平',
   // Increasing size after wins
   '16ksbwrfurp': '贏錢後加大規模',
   // Deciding the exit while calm removes the in-the-moment decision.
@@ -342,8 +300,6 @@ export default {
   '1i1acxiapl6': '在檢討時、離開螢幕、根據足夠數量的交易',
   // After every loss
   'vlfscotdw5': '每次虧損之後',
-  // Never
-  '221ct4go232': '永遠不要',
   // Changing rules mid-trade is abandoning the plan, not improving it.
   'htnmypeowv': '在交易途中修改規則是放棄計劃，而不是改進它。',
   // Which of these belongs in a trading plan?
