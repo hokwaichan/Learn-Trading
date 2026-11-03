@@ -53,9 +53,11 @@ export interface ChartLayout {
 }
 
 export interface LessonProgress {
+  /** When the lesson was first read to the end (or its quiz finished, which implies it). */
   completedAt?: number;
   /** Best quiz score as a fraction 0-1. */
   bestScore?: number;
+  /** Quiz attempts; 0 when the lesson has been read but not tested. */
   attempts: number;
 }
 

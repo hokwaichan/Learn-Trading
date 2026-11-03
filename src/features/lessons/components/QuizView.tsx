@@ -15,7 +15,7 @@ export interface QuizViewProps {
 }
 
 /**
- * The end-of-lesson quiz. Each question gives feedback as soon as it is
+ * A lesson's quiz, on its own page (/quiz/...). Each question gives feedback as soon as it is
  * answered. Answers are shown in a different order on every attempt, so the
  * position of the right one cannot be learned.
  */
@@ -42,7 +42,7 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
   };
 
   return (
-    <section aria-labelledby="quiz-title" className="not-prose mt-10 border-t border-border pt-6">
+    <section aria-labelledby="quiz-title" className="not-prose mt-2">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <h2 id="quiz-title" className="text-xl font-semibold text-fg">
           {t('Check your understanding')}
@@ -125,8 +125,8 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
             </p>
             <p className="text-sm text-muted">
               {correct === questions.length
-                ? t('Lesson complete. On to the next one.')
-                : t('Lesson complete. Read the explanations above, or try again with the answers in a new order.')}
+                ? t('Full marks. On to the next quiz.')
+                : t('Read the explanations above, or try again with the answers in a new order.')}
             </p>
           </div>
           <Button

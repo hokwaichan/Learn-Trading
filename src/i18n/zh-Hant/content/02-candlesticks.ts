@@ -10,30 +10,28 @@ export default {
   '1f107t0q38l': '實體和影線',
   // Each candle packs four prices into one shape: where price opened, closed, and how far it travelled.
   '16rkfhy4767': '每支陰陽燭把四個價格濃縮成一個形狀：價格在哪裡開市、收市，以及走了多遠。',
-  // A price chart could just be a line joining closing prices, but that hides most of what happened. A **candlestick** shows four prices for one period of time:
-  '10ar6b1xr39': '價格圖表可以只是一條連接收市價的線，但那樣會隱藏大部分發生過的事。**陰陽燭**顯示一段時間內的四個價格：',
-  // **Open**: the first price of the period.
-  '1skcmdcue7o': '**開市**：該時段的第一個價格。',
-  // **High**: the highest price reached.
-  '1yijc9yt30n': '**最高**：到達過的最高價格。',
-  // **Low**: the lowest price reached.
-  '1f576nyvud2': '**最低**：到達過的最低價格。',
-  // **Close**: the last price of the period.
-  'ase0o9wux0': '**收市**：該時段的最後一個價格。',
-  // Together these are called **OHLC**. The thick part of the candle, the **body**, spans the open and the close. The thin lines above and below, the **wicks** (also called shadows), reach to the high and the low.
-  '1lz3unyqko': '這四個價格合稱 **OHLC**。陰陽燭粗的部分是**實體**，由開市價延伸至收市價。上下的細線是**影線**（亦稱燭芯），延伸至最高價和最低價。',
-  // Colour tells you the direction. If the close is above the open, price rose during the period and the candle is drawn in the "up" colour. If the close is below the open, price fell and it is drawn in the "down" colour. Drag the sliders to build your own candle:
-  '2045fw7xnzt': '顏色告訴你方向。如果收市高於開市，價格在該時段上升，陰陽燭以「上升」的顏色畫出。如果收市低於開市，價格下跌，以「下跌」的顏色畫出。拖動滑桿，砌出你自己的陰陽燭：',
+  // A **candlestick** packs four prices for one period into one shape: the open, high, low and close, called **OHLC**. The thick **body** spans the open and close; the thin **wicks** reach the high and low.
+  '21iyzcmxs7u': '**陰陽燭**把一段時間內的四個價格濃縮成一個形狀：開市、最高、最低和收市，合稱 **OHLC**。粗的**實體**由開市延伸至收市；細的**影線**延伸至最高和最低價。',
+  // Diagram of one candlestick, labelled high, open, close and low, with the upper shadow, real body and lower shadow
+  '15y4g3svv7r': '一支陰陽燭的示意圖，標示最高、開市、收市和最低，以及上影線、實體和下影線',
+  // One candle. Wicks are also called shadows.
+  '2409ko7yqzb': '一支陰陽燭。影線亦稱燭芯。',
+  // Two candles side by side: a rising candle that closes above its open, and a falling candle that closes below its open
+  '79wqmpzpzj': '兩支並排的陰陽燭：一支收市高於開市的上升陰陽燭，和一支收市低於開市的下跌陰陽燭',
+  // Close above the open: price rose, drawn in the up colour. Close below the open: price fell, drawn in the down colour.
+  'sq09gtw7st': '收市高於開市：價格上升，以上升的顏色畫出。收市低於開市：價格下跌，以下跌的顏色畫出。',
+  // Drag the sliders to build your own candle:
+  'ya1n8hnry0': '拖動滑桿，砌出你自己的陰陽燭：',
   // Reading the shape
   '1dttvrvepv1': '解讀形狀',
-  // A **long body** means price moved decisively one way and stayed there. One side was in control.
-  '25jekhlt1sj': '**長實體**代表價格果斷地朝一個方向移動並停留在那裡。其中一方佔主導。',
-  // A **short body** means the open and close were close together: buyers and sellers roughly cancelled out.
-  '1pz7q4nsx34': '**短實體**代表開市和收市很接近：買賣雙方大致互相抵消。',
-  // A **long upper wick** means price went up and was pushed back down. Sellers rejected the higher prices.
-  '290itskwdim': '**長上影線**代表價格上升後被壓回。賣方拒絕了較高的價格。',
-  // A **long lower wick** means price went down and was pushed back up. Buyers rejected the lower prices.
-  '2aadxoawuc7': '**長下影線**代表價格下跌後被推回。買方拒絕了較低的價格。',
+  // **Long body**: one side was in control all period.
+  'uts9huzw4w': '**長實體**：一方在整段時間佔主導。',
+  // **Short body**: buyers and sellers roughly cancelled out.
+  '2eae8g8c15l': '**短實體**：買賣雙方大致互相抵消。',
+  // **Long upper wick**: price went up and was pushed back down. Sellers rejected higher prices.
+  '140cnixzz4o': '**長上影線**：價格上升後被壓回。賣方拒絕了較高的價格。',
+  // **Long lower wick**: price went down and was pushed back up. Buyers rejected lower prices.
+  '1dk1yi9p5iz': '**長下影線**：價格下跌後被推回。買方拒絕了較低的價格。',
   // Try it on a real chart
   'mh8kgeryxw': '在真實圖表上試試',
   // Open the Charts page and click any candle. The Explain tab describes that exact candle in these terms.
@@ -42,60 +40,64 @@ export default {
   '1om777qb269': '時間週期',
   // The same market looks different depending on how much time each candle covers.
   '230fg4uafno': '同一個市場看起來會有所不同，視乎每支陰陽燭涵蓋多少時間。',
-  // The **timeframe** is how much time one candle represents. On a 1-hour chart each candle is one hour of trading; on a daily chart each is one day. The app offers 1 minute, 5 minutes, 15 minutes, 1 hour, 4 hours and 1 day.
-  '242wx90le49': '**時間週期**是一支陰陽燭代表的時間。在 1 小時圖上，每支陰陽燭是一小時的交易；在日線圖上，每支是一天。這個應用程式提供 1 分鐘、5 分鐘、15 分鐘、1 小時、4 小時和 1 日。',
-  // It is all the same price data, grouped differently. Twenty-four 1-hour candles contain exactly the same trading as one daily candle: the daily open is the first hourly open, the daily close is the last hourly close, and the daily high and low are the extremes of the whole day.
-  '9z3emas3nv': '這些全是同一份價格數據，只是分組方式不同。二十四支 1 小時陰陽燭包含的交易，與一支日線陰陽燭完全相同：日線的開市價是第一個小時的開市價，收市價是最後一個小時的收市價，最高和最低價是全日的極端值。',
+  // The **timeframe** is how much time one candle covers, from 1 minute to 1 day in this app. It is the same data grouped differently: twenty-four 1-hour candles make exactly one daily candle.
+  '20kg7aipxk9': '**時間週期**是一支陰陽燭涵蓋的時間，在這個應用程式中由 1 分鐘到 1 日。這是同一份數據的不同分組：二十四支 1 小時陰陽燭剛好組成一支日線陰陽燭。',
   // Apple on the daily timeframe. Each candle is one full trading day. On a 1-hour chart every one of these would be several candles, with far more small wiggles.
   '1az4suq6lpy': '蘋果公司的日線圖。每支陰陽燭是一整個交易日。在 1 小時圖上，每一支都會變成好幾支陰陽燭，還有多得多的細小起伏。',
-  // What changes with the timeframe
-  '27guqdwnu3c': '時間週期改變了甚麼',
-  // **Short timeframes** (1 to 15 minutes) show a lot of detail and a lot of noise: small moves that mean little. Patterns appear often and fail often.
-  'eee41o18kq': '**短時間週期**（1 至 15 分鐘）顯示大量細節和大量雜訊：意義不大的細小波動。形態經常出現，也經常失效。',
-  // **Long timeframes** (4 hours, 1 day) hide the noise and show the bigger direction. Signals are rarer and more reliable, but you wait longer and stops need to be wider.
-  '1w7bjl6fg9c': '**長時間週期**（4 小時、1 日）隱藏雜訊，顯示較大的方向。訊號較少但較可靠，不過你要等得更久，止蝕也要更闊。',
-  // Which to use
-  '1wuauctrd3t': '應該用哪一個',
-  // It depends on how long you plan to hold a trade. Someone holding for minutes watches the 1 and 5 minute charts. Someone holding for days or weeks watches the daily. As a beginner, start with the 4-hour or daily chart: things happen slowly enough to think.
-  'rd9xtai1m0': '視乎你打算持倉多久。持倉幾分鐘的人看 1 分鐘和 5 分鐘圖；持倉幾日或幾星期的人看日線。作為新手，先從 4 小時圖或日線圖開始：事情發生得夠慢，讓你有時間思考。',
+  // **Short timeframes** (1 to 15 minutes): lots of detail and lots of noise. Patterns appear often and fail often.
+  'vun55q2o1v': '**短時間週期**（1 至 15 分鐘）：大量細節和大量雜訊。形態經常出現，也經常失效。',
+  // **Long timeframes** (4 hours, 1 day): the bigger direction. Fewer, more reliable signals, but wider stops and more waiting.
+  '13thtw5x9qi': '**長時間週期**（4 小時、1 日）：較大的方向。訊號較少但較可靠，不過止蝕更闊、要等更久。',
+  // Match the timeframe to how long you hold: minutes, watch the 1 and 5 minute charts; days, watch the daily. Beginners do best on the 4-hour or daily, where there is time to think.
+  '1n41oihdtg8': '按持倉時間選擇時間週期：持倉幾分鐘，看 1 分鐘和 5 分鐘圖；持倉幾日，看日線。新手最好用 4 小時圖或日線圖，有時間思考。',
   // Look one level up
   '1v8htft7wan': '看高一級',
-  // A common habit is to check the next timeframe up before trading. A rise on the 15-minute chart is less convincing if the daily chart is falling hard. Trade in the direction of the bigger picture when you can.
-  '1yvs4hphy4': '常見的習慣是交易前先看高一級的時間週期。如果日線圖正在急跌，15 分鐘圖上的上升就沒那麼有說服力。盡可能順著大局的方向交易。',
+  // Check the next timeframe up before trading. A rise on the 15-minute chart is less convincing if the daily chart is falling hard.
+  '1ylgrbdg8jy': '交易前先看高一級的時間週期。如果日線圖正在急跌，15 分鐘圖上的上升就沒那麼有說服力。',
   // The newest candle is unfinished
   '44wg14mvy': '最新的陰陽燭未完成',
-  // The last candle on a live chart is still forming. Its close, high and low keep changing until its period ends, so wait for a candle to finish before reading its shape.
-  '2c9s4cni1e2': '即時圖表上最後一支陰陽燭仍在形成。在時段結束前，它的收市、最高和最低價都會不斷變化，所以要等陰陽燭完成後才解讀它的形狀。',
+  // The last candle on a live chart keeps changing until its period ends. Wait for it to close before reading its shape.
+  '12ob1o23hu5': '即時圖表上最後一支陰陽燭在時段結束前會不斷變化。等它收市後才解讀它的形狀。',
   // Single-candle patterns
   '227bn27cjk7': '單支陰陽燭形態',
   // Doji, hammer, shooting star and marubozu: four shapes that say something about who is in control.
   '1h9mhkuh2en': '十字星、錘頭、射擊之星和光頭光腳陰陽燭：四個能說明誰在主導的形狀。',
-  // A few candle shapes have names because traders have long read them the same way. A named shape is a hint about the balance between buyers and sellers, never a promise. Where it appears matters as much as the shape.
-  '1m5qhwh6q23': '有幾種陰陽燭形狀有名稱，因為交易者一直以同一方式解讀它們。有名稱的形狀只是暗示買賣雙方的力量平衡，從來不是承諾。它出現的位置和形狀本身一樣重要。',
   // Doji
   'lln2fctvkm': '十字星',
-  // A **doji** opens and closes at almost the same price, so its body is a thin line with wicks either side. Buyers and sellers ended in a draw. After a strong move it suggests the move is tiring.
-  'dj62gzsdj0': '**十字星**的開市價和收市價幾乎相同，所以實體是一條細線，兩邊有影線。買賣雙方打成平手。在強勁走勢之後出現，暗示走勢開始疲倦。',
+  // Some candle shapes have names because traders read them the same way. Each one is a hint about who is in control, never a promise, and where it appears matters as much as the shape.
+  '13hw7ww3774': '有些陰陽燭形狀有名稱，因為交易者一直以同一方式解讀它們。每一個都只是暗示誰在主導，從來不是承諾，而且出現的位置和形狀本身一樣重要。',
   // Hammer
   'w3ye98d4ey': '錘頭',
-  // A **hammer** has a small body at the top and a long lower wick, at least twice the body. Price fell hard during the period and buyers pushed it all the way back. It matters after a decline, where it can mark buyers stepping in. The same shape after a rise is called a **hanging man** and is a warning instead.
-  '63doov0e69': '**錘頭**的細小實體位於頂部，下影線很長，至少是實體的兩倍。價格在該時段大幅下跌，買方又把它一路推回去。它在下跌之後才有意義，可能代表買方入場。同樣的形狀出現在上升之後叫**上吊線**，反而是警號。',
+  // Hanging man
+  '1vsfsmxl5dx': '上吊線',
+  // Inverted hammer
+  '28w0z9tz56t': '倒錘頭',
   // Shooting star
   'cdwugpaglq': '射擊之星',
-  // A **shooting star** is the hammer upside down: small body at the bottom, long upper wick. Price rose hard and sellers pushed it back. It matters after a rise. The same shape after a decline is an **inverted hammer**.
-  '1f4yiu0jxyu': '**射擊之星**是倒轉的錘頭：細小實體在底部，上影線很長。價格大幅上升，賣方又把它壓回去。它在上升之後才有意義。同樣的形狀出現在下跌之後叫**倒錘頭**。',
+  // Each shape shown at the end of the move that gives it meaning.
+  '23ihpa4cr1m': '每個形狀都畫在令它有意義的走勢末端。',
+  // **Hammer**: small body on top, long lower wick, after a fall. Price was pushed down and buyers pushed it all the way back.
+  '1znryhix4e7': '**錘頭**：細小實體在頂部，下影線很長，出現在下跌之後。價格被壓低，買方又把它一路推回去。',
+  // **Hanging man**: the same shape after a rise. A warning instead.
+  '9de8gsxsmv': '**上吊線**：同樣的形狀出現在上升之後，反而是警號。',
+  // **Shooting star**: small body at the bottom, long upper wick, after a rise. Sellers pushed price back down.
+  '2emkz3lk3ms': '**射擊之星**：細小實體在底部，上影線很長，出現在上升之後。賣方把價格壓回去。',
+  // **Inverted hammer**: the same shape after a fall.
+  '1wzxkzo6pmn': '**倒錘頭**：同樣的形狀出現在下跌之後。',
+  // **Doji**: open and close almost equal, a draw. After a strong move it suggests the move is tiring.
+  '25igd3bit24': '**十字星**：開市和收市幾乎相同，打成平手。在強勁走勢之後出現，暗示走勢開始疲倦。',
+  // **Marubozu**: almost all body, no wicks. One side in control from start to finish.
+  '1jvxmhohf2v': '**光頭光腳陰陽燭**：幾乎全是實體，沒有影線。一方由頭到尾都佔主導。',
   // Marubozu
   '189oug5poew': '光頭光腳陰陽燭',
-  // A **marubozu** is almost all body, with little or no wick. Price opened at one extreme and closed at the other. It shows one side in control from start to finish, and suggests the move may continue.
-  '12h392lbxkc': '**光頭光腳陰陽燭**幾乎全是實體，很少或沒有影線。價格在一個極端開市，在另一個極端收市。它顯示一方由頭到尾都佔主導，暗示走勢可能延續。',
   // Four named candles in context. The hammer comes after a fall and the shooting star after a rise, which is what gives them meaning.
   '28k7wn8e3bz': '四種有名稱的陰陽燭放在背景中看。錘頭出現在下跌之後，射擊之星出現在上升之後，這正是它們有意義的原因。',
   // How to use them
   '1gdx7f4bi9': '如何使用它們',
-  // **Context first.** A hammer in the middle of a sideways market means nothing. A hammer after a long fall, at a price where buyers appeared before, is worth noticing.
-  '2cqi17wxwsb': '**背景優先。**在橫行市中間出現的錘頭毫無意義。在長時間下跌之後、在之前曾有買家出現的價位出現的錘頭，才值得留意。',
-  // **Wait for confirmation.** Many traders want the next candle to move in the expected direction before acting.
-  'erua6gv02y': '**等待確認。**很多交易者會等下一支陰陽燭朝預期方向移動才行動。',
+  // **Context first.** A hammer after a long fall, at a price where buyers appeared before, is worth noticing. In the middle of a sideways market it means nothing.
+  '160xblk42c3': '**背景優先。**在長時間下跌之後、在之前曾有買家出現的價位出現的錘頭，才值得留意。在橫行市中間出現則毫無意義。',
+  // **Wait for confirmation.** Many traders want the next candle to move the expected way first.
+  '1tactwmmhe8': '**等待確認。**很多交易者會等下一支陰陽燭先朝預期方向移動。',
   // **They fail often.** Treat a pattern as one piece of evidence, and always have a stop-loss.
   '15tnobpqcn0': '**它們經常失效。**把形態當作一份證據，並且永遠設好止蝕。',
   // Practise spotting them
@@ -106,48 +108,52 @@ export default {
   '1ol3ovitdzg': '多支陰陽燭形態',
   // Engulfing, morning and evening star, harami, and three soldiers or crows: patterns made of two or three candles.
   '2fpmyw18aeg': '吞沒、早晨之星和黃昏之星、孕線，以及紅三兵或三隻烏鴉：由兩至三支陰陽燭組成的形態。',
-  // Some patterns take two or three candles to form. They describe a small story: one side in control, then losing it. As with single candles, they matter most after a clear move.
-  '1soyot3yqeb': '有些形態需要兩三支陰陽燭才能形成。它們描述一個小故事：一方佔主導，然後失去主導。與單支陰陽燭一樣，它們在明顯的走勢之後最有意義。',
-  // Engulfing (two candles)
-  'u1on525kx1': '吞沒（兩支陰陽燭）',
-  // A **bullish engulfing** pattern is a down candle followed by a larger up candle whose body completely covers the first body. Sellers were in charge, then buyers overwhelmed them in a single period. A **bearish engulfing** is the reverse: an up candle swallowed by a larger down candle.
-  '1mlsmedan49': '**看漲吞沒**形態是一支下跌陰陽燭之後出現一支更大的上升陰陽燭，其實體完全覆蓋第一支的實體。賣方原本主導，之後買方在一段時間內就把他們壓倒。**看跌吞沒**則相反：一支上升陰陽燭被一支更大的下跌陰陽燭吞沒。',
-  // Harami (two candles)
-  '181abjvm2c9': '孕線（兩支陰陽燭）',
-  // A **harami** is the opposite arrangement: a large candle followed by a small one whose body sits entirely inside the first. The strong move has stalled. It is a weaker signal than engulfing: it shows hesitation, not a takeover.
-  '18a07ht4f6g': '**孕線**的排列相反：一支大陰陽燭之後出現一支小陰陽燭，其實體完全位於第一支之內。強勁的走勢停頓了。它是比吞沒弱的訊號：它顯示的是猶豫，而不是接管。',
-  // Morning star and evening star (three candles)
-  '2mpcbge6qm': '早晨之星和黃昏之星（三支陰陽燭）',
-  // A **morning star** appears after a decline: a long down candle, then a small-bodied candle showing indecision, then a long up candle that closes well into the first candle. Selling, a pause, then buying. The **evening star** is the mirror image after a rise.
-  'oz6ft99t63': '**早晨之星**出現在下跌之後：一支長的下跌陰陽燭，然後一支實體細小、顯示猶豫的陰陽燭，再一支長的上升陰陽燭，收市深入第一支之內。先賣出、再停頓，然後買入。**黃昏之星**是上升之後的鏡像。',
-  // A bullish engulfing pattern ends the fall on the left. An evening star ends the rise on the right.
-  '1jr8a7gg9db': '左邊一個看漲吞沒形態結束了下跌。右邊一個黃昏之星結束了上升。',
+  // Two and three-candle patterns tell a small story: one side in control, then losing it. Like single candles, they matter most after a clear move.
+  '2fr6s1byoxq': '兩支和三支陰陽燭的形態描述一個小故事：一方佔主導，然後失去主導。與單支陰陽燭一樣，它們在明顯的走勢之後最有意義。',
   // Bullish engulfing
   '20wajkwzla9': '看漲吞沒',
+  // Bearish engulfing
+  '24ix3uz6mnc': '看跌吞沒',
+  // Harami
+  '202uub5ftft': '孕線',
+  // Doji star
+  '9yh6ya8jbh': '星形十字',
+  // Morning star
+  '1gitc12qgkm': '早晨之星',
   // Evening star
   'ib65dzfrqw': '黃昏之星',
-  // Three white soldiers and three black crows
-  '23sg4vmombw': '紅三兵和三隻烏鴉',
-  // **Three white soldiers** are three long up candles in a row, each opening inside the previous body and closing higher. Buyers are firmly in control. **Three black crows** are three long down candles in a row: sellers in control. They show strength, though after three big candles the move may already be stretched.
-  'ktwvaqoekl': '**紅三兵**是連續三支長的上升陰陽燭，每支都在上一支實體內開市，並收市更高。買方牢牢控制大局。**三隻烏鴉**是連續三支長的下跌陰陽燭：賣方控制大局。它們顯示強勢，但三支大陰陽燭之後，走勢可能已經走得太遠。',
-  // Three white soldiers on the way up, three black crows on the way down.
-  '1nfatf1ycq5': '上升途中的紅三兵，下跌途中的三隻烏鴉。',
   // Three white soldiers
   '1oryq4xhasc': '紅三兵',
   // Three black crows
   '76bvfu4rfd': '三隻烏鴉',
+  // In these traditional drawings a white candle rose and a black candle fell.
+  '1wuy34t1z1c': '在這些傳統畫法中，白色陰陽燭代表上升，黑色代表下跌。',
+  // **Engulfing**: a candle whose body swallows the previous body, in the other direction. A takeover.
+  'dyma0tmiuu': '**吞沒**：一支陰陽燭的實體把前一支的實體完全覆蓋，方向相反。一次接管。',
+  // **Harami**: a small body sitting inside the previous large one. Hesitation, a weaker signal than engulfing.
+  'fvpp6sohwa': '**孕線**：細小實體位於前一支大陰陽燭之內。代表猶豫，訊號比吞沒弱。',
+  // **Doji star**: a doji after a long candle. The move has stalled.
+  '9sjq458c3i': '**星形十字**：長陰陽燭之後出現十字星。走勢停頓了。',
+  // **Morning star** and **evening star**: a long candle, a small pause, then a long candle the other way. A turn after a fall, or after a rise.
+  'xhaqceoy7q': '**早晨之星**和**黃昏之星**：一支長陰陽燭、一個小停頓，然後一支方向相反的長陰陽燭。分別是下跌後和上升後的轉向。',
+  // **Three white soldiers** and **three black crows**: three long candles in a row one way. Strength, though the move may already be stretched.
+  '263gck66fz6': '**紅三兵**和**三隻烏鴉**：連續三支同方向的長陰陽燭。顯示力量，但走勢可能已經過度延伸。',
+  // A bullish engulfing pattern ends the fall on the left. An evening star ends the rise on the right.
+  '1jr8a7gg9db': '左邊一個看漲吞沒形態結束了下跌。右邊一個黃昏之星結束了上升。',
+  // An evening star
+  'yx9gtsoqjm': '黃昏之星',
+  // Three white soldiers on the way up, three black crows on the way down.
+  '1nfatf1ycq5': '上升途中的紅三兵，下跌途中的三隻烏鴉。',
   // Keep them in proportion
   '231tx8ouqxd': '保持合理的比重',
-  // These patterns say who won the last two or three periods. They say nothing certain about the next ten.
-  'q4snjbdjcy': '這些形態說明了最近兩三段時間誰贏了。它們對之後十段時間沒有任何確定的說法。',
-  // They carry more weight on longer timeframes and at prices that have mattered before (support and resistance, in the next module).
-  'luq4xk4neq': '它們在較長的時間週期、以及之前曾經重要的價位（支持位和阻力位，下一個單元會講）上更有份量。',
-  // Higher volume on the candle that completes the pattern makes it more convincing.
-  '28orkur0bua': '完成形態的那支陰陽燭成交量較大，會令它更有說服力。',
+  // They say who won the last two or three periods, nothing certain about the next ten.
+  '6cj9rphs4s': '它們說明誰贏了最近兩三個時段，對之後十個時段則沒有任何確定的說法。',
+  // They carry more weight on longer timeframes, at prices that mattered before, and with higher volume on the final candle.
+  '7anm9qaf5v': '它們在較長的時間週期、在過去重要的價位，以及最後一支陰陽燭成交量較大時更有份量。',
   // Easy to see in hindsight
   '25kfuwjwnxs': '事後很容易看見',
-  // Looking back at a chart, every turning point seems to have a pattern on it. You do not see all the times the same pattern appeared and nothing happened. Judge patterns by trading them on paper, not by scrolling back.
-  '2753aap4zo0': '回看圖表時，每個轉折點似乎都有一個形態。但你看不到同一個形態出現後甚麼都沒發生的所有時候。應該用模擬交易去評價形態，而不是靠往回捲動圖表。',
+  // Scrolling back, every turning point seems to have a pattern. You do not see the times the same pattern appeared and nothing happened. Judge patterns by trading them on paper.
+  'vb4qsnlibr': '回看圖表時，每個轉折點似乎都有形態。你看不到同一形態出現後甚麼都沒發生的那些時候。用模擬交易來評估形態。',
   // Which two prices does the body of a candle span?
   '1lrbkwha0h8': '陰陽燭的實體橫跨哪兩個價格？',
   // The high and the low
@@ -192,6 +198,8 @@ export default {
   'o64tze2zii': '強勁的賣盤',
   // Indecision: buyers and sellers roughly cancelled out
   '17vgk6rz8ew': '猶豫不決：買賣雙方大致互相抵消',
+  // Indecision
+  '3c470ctg0o': '猶豫不決',
   // The market was closed
   '19bqzxa0ieu': '市場休市',
   // A small body means the open and close were close together, so neither side won the period.
@@ -262,8 +270,6 @@ export default {
   'm3fd865zzw': '射擊之星顯示賣方拒絕較高的價格。這在價格一直上升之後才有意義。',
   // What does a marubozu show?
   'crmvs1m56n': '光頭光腳陰陽燭顯示甚麼？',
-  // Indecision
-  '3c470ctg0o': '猶豫不決',
   // One side in control from open to close
   '1xwxsn03ysc': '由開市到收市都是一方主導',
   // A reversal is certain
@@ -298,12 +304,6 @@ export default {
   '136jcb3r3gf': '十字星顯示買賣雙方打成平手。在強勁走勢之後，這是疲倦的跡象，而不是保證會反轉。',
   // A small down candle is followed by a larger up candle whose body completely covers it. This is a:
   'y5gi1vqv9u': '一支細小的下跌陰陽燭之後出現一支更大的上升陰陽燭，其實體完全覆蓋前者。這是：',
-  // Bearish engulfing
-  '24ix3uz6mnc': '看跌吞沒',
-  // Harami
-  '202uub5ftft': '孕線',
-  // Morning star
-  '1gitc12qgkm': '早晨之星',
   // An up candle swallowing the previous down candle is a bullish engulfing pattern: buyers overwhelmed sellers.
   '11vg8f1428x': '一支上升陰陽燭吞沒上一支下跌陰陽燭，就是看漲吞沒形態：買方壓倒了賣方。',
   // How is a harami different from an engulfing pattern?
@@ -332,8 +332,6 @@ export default {
   '14wfzricab3': '先賣出、再停頓，然後買入：長的下跌、細小實體、長的上升。它出現在下跌之後。',
   // Three long down candles in a row, each closing lower, are called:
   '144axy8rbgc': '連續三支長的下跌陰陽燭，每支收市都更低，叫做：',
-  // An evening star
-  'yx9gtsoqjm': '黃昏之星',
   // A triple top
   '1ihof4u34is': '三重頂',
   // Three black crows show sellers firmly in control. Three white soldiers are the bullish version.

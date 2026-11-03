@@ -56,6 +56,7 @@ for (const href of links) {
     canvases: [...document.querySelectorAll('article figure')].filter((f) => f.querySelector('canvas')).length,
     widgets: document.querySelectorAll('article section[aria-label]:not([aria-labelledby])').length,
     questions: document.querySelectorAll('article fieldset').length,
+    quizLink: Boolean(document.querySelector('article a[href^="/quiz/"]')),
     failed: document.body.innerText.includes('This screen hit a problem') || document.body.innerText.includes('Could not load this chart'),
     overflow: document.documentElement.scrollWidth - window.innerWidth,
     wideBlocks: [...document.querySelectorAll('article p, article li')].filter((el) => el.getBoundingClientRect().width > 760).length,
@@ -63,12 +64,13 @@ for (const href of links) {
   charts += info.canvases;
   widgets += info.widgets;
   const lessonCharts = info.figures; // payoff and diagram figures have no canvas; only price charts do
-  if (!info.title || info.failed || info.questions < 3 || info.overflow > 0 || info.wideBlocks > 0 || (lessonCharts === 0 && info.widgets === 0)) {
+  // Lessons only teach: no questions inline, just a link to the lesson's quiz page.
+  if (!info.title || info.failed || info.questions > 0 || !info.quizLink || info.overflow > 0 || info.wideBlocks > 0 || (lessonCharts === 0 && info.widgets === 0)) {
     broken++;
     problems.push(`${href} ${JSON.stringify(info)}`);
   }
 }
-check(`all ${links.length} lessons render with a title, an interactive block and a quiz`, broken === 0, problems.slice(0, 3).join(' | '));
+check(`all ${links.length} lessons render with a title, an interactive block and a link to their quiz`, broken === 0, problems.slice(0, 3).join(' | '));
 check('price charts drew in lessons', charts >= 30, `${charts} charts`);
 check('interactive widgets rendered', widgets >= 25, `${widgets} widgets`);
 check('no errors while opening every lesson', errors.length === 0, [...new Set(errors)].slice(0, 3).join(' | '));
@@ -94,29 +96,46 @@ const linkedIds = await page.locator('article a[href^="/glossary#"]').evaluateAl
 check('each term is linked only once per lesson', new Set(linkedIds).size === linkedIds.length, `${linkedIds.length} links`);
 await page.mouse.move(5, 5);
 
-// Quiz
-const fieldsets = page.locator('article fieldset');
+// Reading to the end marks the lesson read; the quiz lives on its own page.
+await page.locator('article').evaluate((el) => el.parentElement.scrollTo({ top: el.parentElement.scrollHeight }));
+await page.waitForTimeout(400);
+check('reading to the end marks the lesson completed', await page.getByText('Completed', { exact: true }).isVisible());
+check('the streak starts', (await page.getByRole('img', { name: '1 day streak' }).count()) === 1);
+await page.getByRole('link', { name: 'Take the quiz' }).click();
+await page.waitForURL('**/quiz/basics/order-types');
+await page.getByRole('heading', { name: 'Order types: market, limit and stop', level: 1 }).waitFor();
+check('the lesson links to its quiz page', true);
+
+const fieldsets = page.locator('main fieldset');
+await fieldsets.first().waitFor();
 const count = await fieldsets.count();
+check('the quiz page has the questions', count >= 3, `${count} questions`);
 const firstOrder = await fieldsets.first().locator('button').allInnerTexts();
 await fieldsets.nth(0).locator('button').first().click();
-check('answering shows an explanation at once', await page.locator('article [role="status"]').first().isVisible());
+check('answering shows an explanation at once', await page.locator('main [role="status"]').first().isVisible());
 check('an answered question is locked', await fieldsets.nth(0).locator('button').first().isDisabled());
 check('the correct answer is labelled in words, not only colour', (await fieldsets.nth(0).getByText('Correct answer').count()) === 1);
 for (let i = 1; i < count; i++) await fieldsets.nth(i).locator('button').first().click();
 check('finishing the quiz shows a score', await page.getByText(/You got \d of \d\./).isVisible());
-check('the lesson is marked completed', await page.getByText('Completed', { exact: true }).isVisible());
 await page.screenshot({ path: `${OUT}/learn.quiz.png`, fullPage: false });
-check('the streak starts', (await page.getByRole('img', { name: '1 day streak' }).count()) === 1);
 await page.getByRole('button', { name: 'Try again' }).click();
 const secondOrder = await fieldsets.first().locator('button').allInnerTexts();
 check('a retry resets the quiz', !(await fieldsets.nth(0).locator('button').first().isDisabled()));
 console.log(`INFO  answer order, first attempt: ${firstOrder.map((t) => t.slice(0, 18)).join(' | ')}`);
 console.log(`INFO  answer order, retry:         ${secondOrder.map((t) => t.slice(0, 18)).join(' | ')}`);
+check('the quiz links back to its lesson', await page.getByRole('link', { name: 'Review the lesson' }).isVisible());
+await page.getByRole('link', { name: /^Next quiz/ }).click();
+await page.waitForURL('**/quiz/basics/bid-ask-spread');
+check('Next quiz goes to the following lesson\'s quiz', true);
 
-await page.getByRole('link', { name: /^Next/ }).click();
-await page.waitForURL('**/learn/basics/bid-ask-spread');
+await page.goto(`${BASE}/quiz`, { waitUntil: 'domcontentloaded' });
+await page.getByRole('heading', { name: 'Quizzes', level: 1 }).waitFor();
+check('the Quizzes page shows the best score', await page.getByText(/Best \d+%/).first().isVisible());
+check('the Quizzes page lists all eighteen modules', (await page.locator('main section[aria-labelledby^="quiz-module-"]').count()) === 18);
+await page.screenshot({ path: `${OUT}/quizzes.png` });
+
+await page.goto(`${BASE}/learn/basics/bid-ask-spread`, { waitUntil: 'domcontentloaded' });
 await page.getByRole('heading', { name: 'Bid, ask and the spread', level: 1 }).waitFor();
-check('Next goes to the following lesson', true);
 check('the new lesson starts at the top', (await page.locator('article').evaluate((el) => el.parentElement.scrollTop)) === 0);
 
 await page.goto(`${BASE}/learn`, { waitUntil: 'domcontentloaded' });
@@ -195,7 +214,7 @@ const phone = await browser.newContext({ viewport: { width: 390, height: 844 }, 
 const m = await phone.newPage();
 where = 'phone';
 track(m, () => where);
-for (const path of ['/learn', '/learn/candlesticks/candle-anatomy', '/learn/options/advanced-strategies', '/learn/basics/bid-ask-spread', '/glossary']) {
+for (const path of ['/learn', '/learn/candlesticks/candle-anatomy', '/learn/options/advanced-strategies', '/learn/basics/bid-ask-spread', '/quiz', '/quiz/candlesticks/multi-candle-patterns', '/glossary']) {
   await m.goto(BASE + path, { waitUntil: 'domcontentloaded' });
   await m.locator('main h1').first().waitFor();
   await m.waitForTimeout(500);

@@ -27,6 +27,6 @@ export function LessonsPage() {
       />
     );
   }
-  // The key gives each lesson fresh quiz and widget state.
+  // The key gives each lesson fresh widget state.
   return <LessonView key={`${module.id}/${lesson.id}`} module={module} lesson={lesson} />;
 }

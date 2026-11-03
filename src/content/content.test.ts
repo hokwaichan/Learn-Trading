@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { describe, expect, it } from 'vitest';
 import { runBacktest, validateStrategy, warmupBars } from '@/lib/backtest';
 import { parseStaticFile } from '@/lib/data/static';
@@ -7,6 +7,7 @@ import { seededRandom } from '@/lib/random';
 import { INDICATORS } from '@/lib/indicators';
 import type { Candle, ChartExample, LessonBlock } from '@/types';
 import { GLOSSARY, getGlossaryEntry } from './glossary';
+import { IMAGES } from './images';
 import { allLessons, getLesson, lessonKey, MODULES, neighbours, nextLesson } from './lessons';
 import { getQuiz, QUIZZES } from './quizzes';
 import { BACKTEST_PRESETS } from './strategies';
@@ -37,8 +38,16 @@ function blockText(block: LessonBlock): string[] {
       return [block.example.caption, ...(block.example.annotations ?? []).map((a) => a.label)];
     case 'widget':
       return [];
+    case 'image':
+      return [block.alt, ...(block.caption ? [block.caption] : [])];
+    case 'gallery':
+      return [...block.items.map((item) => item.label), ...(block.caption ? [block.caption] : [])];
   }
 }
+
+/** Ids of the pictures a block shows. */
+const blockImages = (block: LessonBlock): string[] =>
+  block.type === 'image' ? [block.image] : block.type === 'gallery' ? block.items.map((item) => item.image) : [];
 
 function checkChart(example: ChartExample, where: string) {
   expect(example.caption.length, `${where}: caption`).toBeGreaterThan(20);
@@ -81,6 +90,18 @@ function checkChart(example: ChartExample, where: string) {
   }
 }
 
+describe('lesson pictures', () => {
+  const used = new Set(lessons.flatMap((l) => l.blocks.flatMap(blockImages)));
+
+  it.each(Object.entries(IMAGES))('%s is saved, credited and openly licensed', (id, image) => {
+    expect(existsSync(`public/images/lessons/${image.file}`), 'file is in public/images/lessons').toBe(true);
+    expect(image.author.length).toBeGreaterThan(1);
+    expect(image.source).toMatch(/^https:\/\/commons\.wikimedia\.org\//);
+    expect(image.license).toMatch(/^(CC0|Public domain|PD|CC BY(-SA)? \d)/i);
+    expect(used.has(id), 'is shown in a lesson (remove it from scripts/lesson-images.json if not)').toBe(true);
+  });
+});
+
 describe('curriculum', () => {
   it('has the eighteen modules in order', () => {
     expect(MODULES.map((m) => m.id)).toEqual([
@@ -103,9 +124,9 @@ describe('curriculum', () => {
     expect(lesson.title.length).toBeGreaterThan(3);
     expect(lesson.summary.length).toBeGreaterThan(20);
     expect(lesson.minutes).toBeGreaterThan(0);
-    // A short explanation ...
+    // A short explanation, carried by pictures where it can be ...
     const words = lesson.blocks.flatMap(blockText).join(' ').split(/\s+/).length;
-    expect(words, 'word count').toBeGreaterThan(180);
+    expect(words, 'word count').toBeGreaterThan(100);
     expect(lesson.blocks[0].type, 'opens with a paragraph or heading').toMatch(/paragraph|heading/);
     // ... an interactive example ...
     const interactive = lesson.blocks.filter((b) => b.type === 'chart' || b.type === 'widget');
@@ -113,6 +134,8 @@ describe('curriculum', () => {
     for (const block of lesson.blocks) {
       if (block.type === 'widget') expect(WIDGETS).toContain(block.widget);
       if (block.type === 'chart') checkChart(block.example, key);
+      for (const id of blockImages(block)) expect(IMAGES, `${key}: picture "${id}" is in content/images.ts`).toHaveProperty([id]);
+      if (block.type === 'image') expect(block.alt.length, `${key}: picture description`).toBeGreaterThan(10);
       for (const text of blockText(block)) {
         expect((text.match(/\*\*/g) ?? []).length % 2, `bold markers come in pairs: ${text.slice(0, 40)}`).toBe(0);
         expect(text.includes('—'), 'no em dashes').toBe(false);

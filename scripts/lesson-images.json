@@ -1,0 +1,23 @@
+{
+  "nyse-trading-floor": { "file": "Trading floor of the New York Stock Exchange, New York City LCCN2011632435.tif", "width": 1000 },
+  "traded-stock-certificate": { "file": "Cumberland Telephone and Telegraph Company Stock Certificate, 1880s.jpg", "width": 500 },
+  "traded-banknotes": { "file": "Euro Series Banknotes (2019).jpg", "width": 500 },
+  "traded-bitcoin": { "file": "Physical Bitcoin 2011 Casascius 1 Bitcoin Coin Token.png", "width": 500 },
+  "traded-futures-pit": { "file": "Board Of Trade Pit Of Craziness (265184314).jpg", "width": 500 },
+  "bull-and-bear": { "file": "Bulle und Bär Frankfurt.jpg", "width": 1000 },
+  "order-book-depth": { "file": "Level 2 order book and market depth chart.png", "width": 1000 },
+  "candle-scheme": { "file": "Candlestick chart scheme 01-en.svg", "width": 700 },
+  "candle-bull-bear": { "file": "Candlestick chart scheme 03-en.svg", "width": 700 },
+  "pattern-hammer": { "file": "Candlestick pattern hammer.svg", "width": 400 },
+  "pattern-hanging-man": { "file": "Candlestick pattern hangingman.svg", "width": 400 },
+  "pattern-shooting-star": { "file": "Candlestick pattern Shooting Star.svg", "width": 400 },
+  "pattern-inverted-hammer": { "file": "Candlestick pattern bullish inverted hammer.svg", "width": 400 },
+  "pattern-doji-star": { "file": "Candlestick pattern Doji Star.svg", "width": 400 },
+  "pattern-bullish-engulfing": { "file": "Candlestick pattern bullish engulfing.svg", "width": 400 },
+  "pattern-bearish-engulfing": { "file": "Candlestick pattern bearish engulfing.svg", "width": 400 },
+  "pattern-bullish-harami": { "file": "Candlestick pattern bullish harami.svg", "width": 400 },
+  "pattern-morning-star": { "file": "Candlestick pattern bullish Moring Star.svg", "width": 400 },
+  "pattern-evening-star": { "file": "Candlestick pattern bearish Evening Star.svg", "width": 400 },
+  "pattern-three-white-soldiers": { "file": "Candlestick pattern bullish three white soldiers.svg", "width": 400 },
+  "pattern-three-black-crows": { "file": "Candlestick pattern bearish three black crows.svg", "width": 400 }
+}

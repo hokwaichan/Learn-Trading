@@ -20,6 +20,8 @@ interface ProgressStore extends ProgressState {
   markActiveToday: () => void;
   /** Remembers the lesson being read, for "continue learning". */
   visitLesson: (moduleId: string, lessonId: string) => void;
+  /** Records that a lesson was read to the end. */
+  readLesson: (key: string) => void;
   /** Records a finished quiz. `score` is the fraction answered correctly. */
   completeLesson: (key: string, score: number) => void;
   /** Records that today's daily challenge was finished. */
@@ -42,6 +44,15 @@ export const useProgress = create<ProgressStore>()(
         set((s) =>
           s.lastLesson?.moduleId === moduleId && s.lastLesson.lessonId === lessonId ? s : { lastLesson: { moduleId, lessonId } },
         ),
+      readLesson: (key) =>
+        set((s) => {
+          if (s.lessons[key]?.completedAt) return s;
+          const today = dayKey();
+          return {
+            lessons: { ...s.lessons, [key]: { ...s.lessons[key], attempts: s.lessons[key]?.attempts ?? 0, completedAt: Date.now() } },
+            activeDays: s.activeDays.includes(today) ? s.activeDays : [...s.activeDays, today],
+          };
+        }),
       completeLesson: (key, score) =>
         set((s) => {
           const previous = s.lessons[key];

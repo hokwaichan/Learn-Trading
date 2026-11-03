@@ -19,6 +19,14 @@ export const formula = (expression: string, explanation: string): LessonBlock =>
 export const worked = (title: string, ...steps: string[]): LessonBlock => ({ type: 'worked-example', title, steps });
 export const chart = (example: ChartExample): LessonBlock => ({ type: 'chart', example });
 export const widget = (name: LessonWidget, props?: Record<string, unknown>): LessonBlock => ({ type: 'widget', widget: name, props });
+/** A picture from content/images.ts. `alt` describes it for screen readers; `caption` is shown under it. */
+export const img = (image: string, alt: string, caption?: string): LessonBlock => ({ type: 'image', image, alt, caption });
+/** A row of small pictures, each with a short label: `gallery([['pattern-hammer', 'Hammer'], ...], 'Caption.')`. */
+export const gallery = (items: [image: string, label: string][], caption?: string): LessonBlock => ({
+  type: 'gallery',
+  items: items.map(([image, label]) => ({ image, label })),
+  caption,
+});
 
 export interface LessonInput {
   id: string;

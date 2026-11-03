@@ -1,11 +1,12 @@
-import { useMemo, type ReactNode } from 'react';
+import { useMemo, useState, type ReactNode } from 'react';
 import { AlertTriangle, Info, OctagonAlert } from 'lucide-react';
-import { cn, GlossaryTerm } from '@/components/ui';
+import { cn, GlossaryTerm, Modal } from '@/components/ui';
 import { GLOSSARY } from '@/content/glossary';
+import { IMAGES } from '@/content/images';
 import { t } from '@/i18n';
 import { buildMatcher, linkLessonBlocks, type TextSegment } from '@/lib/glossaryLinker';
 import type { PayoffLeg } from '@/lib/pricing/payoff';
-import type { Lesson, LessonBlock } from '@/types';
+import type { Lesson, LessonBlock, LessonImage } from '@/types';
 import { LessonChart } from './LessonChart';
 import { GreekSlider, PayoffWidget, type GreekFocus } from './widgets/OptionWidgets';
 import { CandleAnatomy, ExpectancySim, LeverageDemo, OrderBook, PositionSizeWidget } from './widgets/TradingWidgets';
@@ -57,6 +58,109 @@ function Widget({ block }: { block: Extract<LessonBlock, { type: 'widget' }> }):
     case 'greek-slider':
       return <GreekSlider focus={(props.focus as GreekFocus) ?? 'delta'} type={(props.type as 'call' | 'put') ?? 'call'} />;
   }
+}
+
+const imageUrl = (image: LessonImage) => `${import.meta.env.BASE_URL}images/lessons/${image.file}`;
+
+/** Who made the pictures and under which licence, each linked to its source. */
+function Credits({ images }: { images: LessonImage[] }) {
+  const unique = [...new Map(images.map((im) => [`${im.author}|${im.license}`, im])).values()];
+  const link = 'underline decoration-border underline-offset-2 hover:text-fg';
+  return (
+    <span className="block text-xs text-muted">
+      {t('Picture')}:{' '}
+      {unique.map((im, i) => (
+        <span key={im.source}>
+          {i > 0 && '; '}
+          <a href={im.source} target="_blank" rel="noreferrer" className={link}>
+            {im.author}
+          </a>
+          {', '}
+          {im.licenseUrl ? (
+            <a href={im.licenseUrl} target="_blank" rel="noreferrer" className={link}>
+              {im.license}
+            </a>
+          ) : (
+            im.license
+          )}
+        </span>
+      ))}
+      {' · Wikimedia Commons'}
+    </span>
+  );
+}
+
+/**
+ * A picture on a white panel, so dark-on-transparent diagrams read in both themes. Tap to enlarge.
+ * `fill` stretches the panel to the full width (gallery tiles); otherwise it hugs the picture.
+ */
+function Picture({ image, alt, className, fill }: { image: LessonImage; alt: string; className?: string; fill?: boolean }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <>
+      <button
+        type="button"
+        onClick={() => setOpen(true)}
+        aria-label={t('Enlarge picture: {alt}', { alt })}
+        className={cn(
+          'block max-w-full cursor-zoom-in overflow-hidden rounded-card border border-border bg-white p-2',
+          fill ? 'w-full' : 'mx-auto w-fit',
+        )}
+      >
+        <img
+          src={imageUrl(image)}
+          alt={alt}
+          width={image.width}
+          height={image.height}
+          loading="lazy"
+          decoding="async"
+          className={cn('mx-auto max-w-full object-contain', className)}
+        />
+      </button>
+      <Modal open={open} onClose={() => setOpen(false)} title={alt} size="lg">
+        <div className="rounded-card bg-white p-2">
+          <img src={imageUrl(image)} alt={alt} className="mx-auto max-h-[65dvh] w-auto max-w-full object-contain" />
+        </div>
+        <div className="mt-2">
+          <Credits images={[image]} />
+        </div>
+      </Modal>
+    </>
+  );
+}
+
+function ImageBlock({ block }: { block: Extract<LessonBlock, { type: 'image' }> }) {
+  const image = IMAGES[block.image];
+  if (!image) return null;
+  return (
+    <figure className="my-6">
+      <Picture image={image} alt={block.alt} className="h-auto max-h-[420px] w-auto" />
+      <figcaption className="mt-2 space-y-1">
+        {block.caption && <span className="block text-sm text-muted">{block.caption}</span>}
+        <Credits images={[image]} />
+      </figcaption>
+    </figure>
+  );
+}
+
+function GalleryBlock({ block }: { block: Extract<LessonBlock, { type: 'gallery' }> }) {
+  const items = block.items.filter((item) => IMAGES[item.image]);
+  return (
+    <figure className="my-6">
+      <ul className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+        {items.map((item) => (
+          <li key={item.image} className="flex flex-col gap-1.5">
+            <Picture image={IMAGES[item.image]} alt={item.label} className="h-32 w-full" fill />
+            <span className="text-center text-sm font-medium text-fg">{item.label}</span>
+          </li>
+        ))}
+      </ul>
+      <figcaption className="mt-2 space-y-1">
+        {block.caption && <span className="block text-sm text-muted">{block.caption}</span>}
+        <Credits images={items.map((item) => IMAGES[item.image])} />
+      </figcaption>
+    </figure>
+  );
 }
 
 /** Renders the blocks of a lesson. Glossary terms are linked once per lesson. */
@@ -133,6 +237,10 @@ export function LessonBlocks({ lesson }: { lesson: Lesson }) {
             return <LessonChart key={i} example={block.example} id={`${lesson.moduleId}-${lesson.id}-${i}`} />;
           case 'widget':
             return <Widget key={i} block={block} />;
+          case 'image':
+            return <ImageBlock key={i} block={block} />;
+          case 'gallery':
+            return <GalleryBlock key={i} block={block} />;
         }
       })}
     </>

@@ -69,7 +69,8 @@ a sub-folder.
 | Screen | Address | What it is for |
 | --- | --- | --- |
 | Home | `/` | Where you left off, the daily challenge, your account and what to practise |
-| Lessons | `/learn` | 18 modules, 86 lessons, each with interactive charts and a quiz |
+| Lessons | `/learn` | 18 modules, 86 lessons that only teach: pictures, interactive charts and short text |
+| Quizzes | `/quiz` | A short quiz for every lesson, on its own page, with your best scores |
 | Trainer | `/trainer` | Pattern, smart money and options drills, scheduled by spaced repetition |
 | Glossary | `/glossary` | Every term, searchable; terms are linked automatically in lessons |
 | Charts | `/charts/:symbol` | Chart workspace with indicators, structure overlays, drawings and spot paper trading |
@@ -283,7 +284,9 @@ question quiz; chart annotations land on the chart; glossary links resolve.
    }
    ```
 
-2. Add its quiz to the matching file in `content/quizzes/`, under the same id:
+2. Add its quiz to the matching file in `content/quizzes/`, under the same id. Quizzes are
+   not shown in the lesson: they run on the Quizzes page (`/quiz/<module>/<lesson>`), and the
+   lesson ends with a link to it. A lesson counts as completed once it is read to the end.
 
    ```ts
    'my-lesson': [
@@ -299,6 +302,19 @@ question quiz; chart annotations land on the chart; glossary links resolve.
 
 Glossary terms are linked automatically the first time each appears in a
 lesson. Every lesson needs at least one `chart(...)` or `widget(...)`.
+
+### Pictures in lessons
+
+Lessons explain with pictures where they can, and keep the text short.
+
+- `img('id', 'What it shows, for screen readers', 'Optional caption.')` shows one picture.
+- `gallery([['id', 'Label'], ...], 'Optional caption.')` shows small labelled pictures side by side.
+
+Pictures come from Wikimedia Commons and are saved in the repo, so lessons work offline. To add
+one, put its Commons file name in `scripts/lesson-images.json` and run `npm run fetch-images`. The
+script downloads it to `public/images/lessons/`, refuses anything that is not public domain or
+Creative Commons, and records the author and licence in `src/content/images.ts`, which every
+picture shows under it. `npm test` fails if a picture is missing, uncredited or not used.
 
 ### Charts in lessons
 

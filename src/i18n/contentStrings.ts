@@ -20,7 +20,7 @@ const NOT_TEXT = new Set([
   'id', 'moduleId', 'lessonId', 'quizId', 'correctChoiceId', 'lesson', 'symbol', 'timeframe', 'type', 'kind',
   'tone', 'widget', 'family', 'bias', 'detectorId', 'outlook', 'seeAlso', 'related', 'aliases', 'indicator',
   'comparator', 'side', 'direction', 'expiry', 'source', 'strategy', 'operand', 'output', 'field', 'sizing',
-  'answer', 'distractors', 'combine', 'op', 'english', 'focus',
+  'answer', 'distractors', 'combine', 'op', 'english', 'focus', 'image',
 ]);
 
 /** Candle data and indicator parameters carry no text. */

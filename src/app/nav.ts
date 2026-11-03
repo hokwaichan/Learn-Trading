@@ -3,6 +3,7 @@ import {
   Calculator,
   ChartCandlestick,
   ChartColumn,
+  ClipboardCheck,
   FlaskConical,
   GitFork,
   GraduationCap,
@@ -47,7 +48,8 @@ export const NAV: NavGroup[] = [
     label: msg('Learn'),
     items: [
       { id: 'lessons', label: msg('Lessons'), to: '/learn', icon: GraduationCap, keywords: 'curriculum course modules' },
-      { id: 'trainer', label: msg('Trainer'), to: '/trainer', icon: Target, keywords: 'pattern drills quiz practice' },
+      { id: 'quizzes', label: msg('Quizzes'), to: '/quiz', icon: ClipboardCheck, keywords: 'test questions exam check understanding' },
+      { id: 'trainer', label: msg('Trainer'), to: '/trainer', icon: Target, keywords: 'pattern drills practice' },
       { id: 'glossary', label: msg('Glossary'), to: '/glossary', icon: BookA, keywords: 'terms definitions jargon' },
     ],
   },

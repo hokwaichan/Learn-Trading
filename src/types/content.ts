@@ -20,6 +20,18 @@ export interface ChartExample {
   caption: string;
 }
 
+/** A picture from Wikimedia Commons, saved in public/images/lessons/ (see scripts/fetch-lesson-images.mjs). */
+export interface LessonImage {
+  file: string;
+  width: number;
+  height: number;
+  author: string;
+  license: string;
+  licenseUrl: string | null;
+  /** The file's page on Wikimedia Commons. */
+  source: string;
+}
+
 export type LessonWidget =
   | 'greek-slider'
   | 'leverage-demo'
@@ -38,6 +50,10 @@ export type LessonBlock =
   | { type: 'formula'; expression: string; explanation: string }
   | { type: 'worked-example'; title: string; steps: string[] }
   | { type: 'chart'; example: ChartExample }
+  /** One picture, by its id in content/images.ts. `alt` says what it shows; `caption` is optional. */
+  | { type: 'image'; image: string; alt: string; caption?: string }
+  /** Several small labelled pictures side by side, such as a set of candle patterns. */
+  | { type: 'gallery'; items: { image: string; label: string }[]; caption?: string }
   | { type: 'widget'; widget: LessonWidget; props?: Record<string, unknown> };
 
 export interface Lesson {

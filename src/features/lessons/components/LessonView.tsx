@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { ArrowLeft, ArrowRight, CheckCircle2, Clock, List } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CheckCircle2, ClipboardCheck, Clock, List } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Badge, BottomSheet, Button, cn } from '@/components/ui';
 import { lessonKey, neighbours } from '@/content/lessons';
@@ -9,26 +9,45 @@ import { useProgress } from '@/stores';
 import type { Lesson, Module } from '@/types';
 import { LessonBlocks } from './LessonBlocks';
 import { LessonOutline } from './LessonOutline';
-import { QuizView } from './QuizView';
 
 const NAV_LINK =
   'flex min-w-0 flex-1 flex-col gap-0.5 rounded-card border border-border px-4 py-3 text-sm transition-colors duration-150 hover:border-accent hover:bg-raised';
 
-/** One lesson: outline on the left, reading column in the centre, quiz at the end. */
+/**
+ * One lesson: outline on the left, reading column in the centre. Lessons only teach; the
+ * quiz lives on its own page, linked at the end. Reaching the end marks the lesson read.
+ */
 export function LessonView({ module, lesson }: { module: Module; lesson: Lesson }) {
   const key = lessonKey(lesson);
   const record = useProgress((s) => s.lessons[key]);
   const visitLesson = useProgress((s) => s.visitLesson);
-  const completeLesson = useProgress((s) => s.completeLesson);
+  const readLesson = useProgress((s) => s.readLesson);
   const quiz = getQuiz(lesson.quizId);
   const { previous, next } = neighbours(lesson);
   const [outlineOpen, setOutlineOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     visitLesson(module.id, lesson.id);
     scrollRef.current?.scrollTo({ top: 0 });
   }, [module.id, lesson.id, visitLesson]);
+
+  useEffect(() => {
+    const end = endRef.current;
+    if (!end) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          readLesson(key);
+          observer.disconnect();
+        }
+      },
+      { root: scrollRef.current },
+    );
+    observer.observe(end);
+    return () => observer.disconnect();
+  }, [key, readLesson]);
 
   return (
     <div className="flex h-full">
@@ -74,7 +93,28 @@ export function LessonView({ module, lesson }: { module: Module; lesson: Lesson 
 
           <LessonBlocks lesson={lesson} />
 
-          {quiz && <QuizView key={quiz.id} quiz={quiz} bestScore={record?.bestScore} onFinish={(score) => completeLesson(key, score)} />}
+          <div ref={endRef} aria-hidden />
+
+          {quiz && (
+            <aside className="not-prose mt-10 flex flex-wrap items-center gap-4 rounded-card border border-accent/40 bg-accent/10 px-4 py-4">
+              <ClipboardCheck aria-hidden className="size-6 shrink-0 text-accent-text" />
+              <div className="min-w-0 flex-1">
+                <p className="font-semibold text-fg">{t('Test what you learned')}</p>
+                <p className="text-sm text-muted">
+                  {record?.bestScore != null
+                    ? t('Your best score is {pct}%. Take the quiz again any time.', { pct: Math.round(record.bestScore * 100) })
+                    : t('{n} short questions on this lesson, on the Quizzes page.', { n: quiz.questions.length })}
+                </p>
+              </div>
+              <Link
+                to={`/quiz/${module.id}/${lesson.id}`}
+                className="inline-flex h-10 shrink-0 items-center gap-2 rounded-control bg-accent px-4 text-sm font-semibold text-on-solid hover:brightness-110"
+              >
+                {record?.bestScore != null ? t('Retake the quiz') : t('Take the quiz')}
+                <ArrowRight aria-hidden className="size-4" />
+              </Link>
+            </aside>
+          )}
 
           <nav aria-label={t('Lesson navigation')} className="not-prose mt-10 flex flex-col gap-3 sm:flex-row">
             {previous ? (
