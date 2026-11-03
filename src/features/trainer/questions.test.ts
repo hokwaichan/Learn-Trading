@@ -8,7 +8,8 @@ import { CANDLE_PATTERN_IDS, patternsAt, type CandlePatternId } from '@/lib/patt
 import { breakEvens, payoffExtremes, strategyPnlAtExpiry } from '@/lib/pricing/payoff';
 import { buildLegs, roundStrike, strikeStepFor } from '@/lib/pricing/templates';
 import { seededRandom } from '@/lib/random';
-import { newCard } from '@/lib/srs/sm2';
+import { newCard, reviewCard } from '@/lib/srs/sm2';
+import { QUIZZES } from '@/content/quizzes';
 import type { ReviewCard } from '@/types';
 import { conceptQuestion, patternQuestion } from './challenge';
 import {
@@ -16,7 +17,9 @@ import {
   buildQuestion,
   candlestickQuestion,
   chartQuestion,
+  dueQuizIds,
   indexPatterns,
+  quizQuestion,
   NEXT_HORIZON,
   nextQuestion,
   outlookQuestion,
@@ -414,5 +417,56 @@ describe('smart money drill', () => {
       const q = structureQuestion('change-of-character', datasets, rand)!;
       expect(q.chart!.reveal[0].time).toBeGreaterThan(q.chart!.candles[q.chart!.candles.length - 1].time);
     }
+  });
+});
+
+describe('quiz review', () => {
+  const DAY = 86_400_000;
+  const first = QUIZZES[0].questions[0];
+  const second = QUIZZES[1].questions[1];
+  /** A quiz card after one answer at NOW. */
+  const answered = (id: string, right: boolean): Record<string, ReviewCard> => {
+    const card = reviewCard(newCard('quiz', id, NOW), right, NOW);
+    return { [card.id]: card };
+  };
+
+  it('brings a missed question back the next day, not before', () => {
+    const cards = answered(first.id, false);
+    expect(dueQuizIds(cards, NOW + DAY / 2)).toEqual([]);
+    expect(dueQuizIds(cards, NOW + DAY)).toEqual([first.id]);
+  });
+
+  it('leaves out questions answered right the first time', () => {
+    expect(dueQuizIds(answered(first.id, true), NOW + 30 * DAY)).toEqual([]);
+  });
+
+  it('asks the most overdue question first', () => {
+    const later = reviewCard(newCard('quiz', second.id, NOW + DAY), false, NOW + DAY);
+    const cards = { ...answered(first.id, false), [later.id]: later };
+    expect(dueQuizIds(cards, NOW + 5 * DAY)).toEqual([first.id, second.id]);
+  });
+
+  it('asks the quiz question again with its answers and explanation', () => {
+    const q = quizQuestion(first.id, seededRandom(3))!;
+    expect(q.drill).toBe('quiz');
+    expect(q.kind).toBe('quiz');
+    expect(q.prompt).toBe(first.prompt);
+    expect(q.choices.map((c) => c.id).sort()).toEqual(first.choices.map((c) => c.id).sort());
+    expect(q.correctId).toBe(first.correctChoiceId);
+    expect(q.explanation.paragraphs).toEqual([first.explanation]);
+    expect(q.explanation.lesson).toBe(first.id.split('/').slice(0, 2).join('/'));
+    expect(quizQuestion('no/such/question', seededRandom(1))).toBeNull();
+  });
+
+  it('is offered in review mode and in the mix only when something is due', () => {
+    const due = answered(first.id, false);
+    const context = (cards: Record<string, ReviewCard>, now: number) => ({ datasets, index, cards, now, rand: seededRandom(4) });
+    expect(availableKinds('review', context({}, NOW))).toEqual([]);
+    expect(availableKinds('review', context(due, NOW))).toEqual([]);
+    expect(availableKinds('review', context(due, NOW + DAY))).toEqual(['quiz']);
+    expect(availableKinds('mixed', context({}, NOW))).not.toContain('quiz');
+    expect(availableKinds('mixed', context(due, NOW + DAY))).toContain('quiz');
+    expect(buildQuestion('review', context(due, NOW + DAY))!.refId).toBe(first.id);
+    expect(buildQuestion('review', context(due, NOW))).toBeNull();
   });
 });

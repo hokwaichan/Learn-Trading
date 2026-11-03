@@ -52,7 +52,8 @@ export interface JournalEntry {
 /** One spaced-repetition card, scheduled with SM-2. */
 export interface ReviewCard {
   id: string;
-  kind: 'pattern' | 'what-next' | 'option-payoff' | 'option-outlook' | 'concept';
+  /** `quiz` cards are lesson quiz questions; refId is the question id (`module/lesson/n`). */
+  kind: 'pattern' | 'what-next' | 'option-payoff' | 'option-outlook' | 'concept' | 'quiz';
   refId: string;
   ease: number;
   intervalDays: number;

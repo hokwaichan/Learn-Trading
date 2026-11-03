@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { ArrowRight, Check, X } from 'lucide-react';
+import { ArrowRight, Check, ClipboardCheck, X } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { Badge, Button, cn, ErrorState, LoadingState, Tabs } from '@/components/ui';
+import { Badge, Button, cn, EmptyState, ErrorState, LoadingState, Tabs } from '@/components/ui';
 import { t } from '@/i18n';
 import { useProgress } from '@/stores';
 import { useTrainerData } from '../hooks/useTrainerData';
@@ -11,6 +11,7 @@ import { QuestionVisual } from './QuestionVisual';
 
 const MODES: { id: DrillMode; label: string }[] = [
   { id: 'mixed', label: t('Mixed') },
+  { id: 'review', label: t('Quiz review') },
   { id: 'candlestick', label: t('Candlesticks') },
   { id: 'chart', label: t('Chart patterns') },
   { id: 'structure', label: t('Smart money') },
@@ -20,9 +21,10 @@ const MODES: { id: DrillMode; label: string }[] = [
 
 const MODE_KEY = 'tradeschool.ui.trainerMode';
 
+/** The drill from the address (/trainer?mode=review), else the last one used, else Mixed. */
 function savedMode(): DrillMode {
   try {
-    const value = localStorage.getItem(MODE_KEY);
+    const value = new URLSearchParams(window.location.search).get('mode') ?? localStorage.getItem(MODE_KEY);
     return MODES.some((m) => m.id === value) ? (value as DrillMode) : 'mixed';
   } catch {
     return 'mixed';
@@ -74,7 +76,7 @@ export function TrainerPage() {
 
   // Ask the first question, and a fresh one when the mode changes or the
   // price history a mode needs has just finished loading.
-  const canAsk = availableKinds(mode, data).length > 0;
+  const canAsk = availableKinds(mode, { ...data, cards, now: Date.now() }).length > 0;
   const [asked, setAsked] = useState<{ mode: DrillMode; canAsk: boolean } | null>(null);
   useEffect(() => {
     if (asked?.mode === mode && (asked.canAsk || !canAsk)) return;
@@ -163,8 +165,21 @@ export function TrainerPage() {
           </div>
         </header>
 
-        {!question && data.status === 'loading' && <LoadingState className="h-80 rounded-card border border-border" label={t('Loading price history')} />}
-        {!question && data.status === 'error' && (
+        {!question && mode === 'review' && (
+          <EmptyState
+            className="h-80 rounded-card border border-border"
+            icon={<ClipboardCheck />}
+            title={t('Nothing to review right now')}
+            description={t('Questions you get wrong in a quiz come back here the next day, and keep coming back until you know them.')}
+            action={
+              <Link to="/quiz" className="text-sm text-accent-text underline underline-offset-4">
+                {t('Go to the quizzes')}
+              </Link>
+            }
+          />
+        )}
+        {!question && mode !== 'review' && data.status === 'loading' && <LoadingState className="h-80 rounded-card border border-border" label={t('Loading price history')} />}
+        {!question && mode !== 'review' && data.status === 'error' && (
           <ErrorState
             className="h-80 rounded-card border border-border"
             title={t('Could not load price history')}

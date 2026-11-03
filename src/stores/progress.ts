@@ -13,6 +13,7 @@ const DEFAULT_PROGRESS: ProgressState = {
   activeDays: [],
   challengeDays: [],
   cards: {},
+  moduleTests: {},
 };
 
 interface ProgressStore extends ProgressState {
@@ -24,6 +25,8 @@ interface ProgressStore extends ProgressState {
   readLesson: (key: string) => void;
   /** Records a finished quiz. `score` is the fraction answered correctly. */
   completeLesson: (key: string, score: number) => void;
+  /** Records a finished end-of-module test. */
+  completeModuleTest: (moduleId: string, score: number) => void;
   /** Records that today's daily challenge was finished. */
   completeChallenge: () => void;
   /** Records one trainer answer and reschedules that item. */
@@ -69,6 +72,18 @@ export const useProgress = create<ProgressStore>()(
             activeDays: s.activeDays.includes(today) ? s.activeDays : [...s.activeDays, today],
           };
         }),
+      completeModuleTest: (moduleId, score) =>
+        set((s) => {
+          const previous = s.moduleTests?.[moduleId];
+          const today = dayKey();
+          return {
+            moduleTests: {
+              ...s.moduleTests,
+              [moduleId]: { bestScore: Math.max(previous?.bestScore ?? 0, score), attempts: (previous?.attempts ?? 0) + 1 },
+            },
+            activeDays: s.activeDays.includes(today) ? s.activeDays : [...s.activeDays, today],
+          };
+        }),
       recordReview: (kind, refId, wasCorrect) =>
         set((s) => {
           const now = Date.now();
@@ -96,7 +111,17 @@ export const useProgress = create<ProgressStore>()(
         // v1 -> v2: the trainer added spaced-repetition cards.
         1: (old) => ({ ...old, cards: {} }),
       }) as (p: unknown, v: number) => ProgressStore,
-      partialize: ({ markActiveToday: _m, visitLesson: _v, completeLesson: _c, completeChallenge: _cc, recordReview: _rr, reset: _r, ...data }) => data,
+      partialize: ({
+        markActiveToday: _m,
+        visitLesson: _v,
+        readLesson: _rl,
+        completeLesson: _c,
+        completeModuleTest: _cm,
+        completeChallenge: _cc,
+        recordReview: _rr,
+        reset: _r,
+        ...data
+      }) => data,
     },
   ),
 );

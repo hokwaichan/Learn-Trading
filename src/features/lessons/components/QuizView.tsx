@@ -3,6 +3,7 @@ import { Check, RotateCcw, X } from 'lucide-react';
 import { Badge, Button, cn, ProgressBar, Trans } from '@/components/ui';
 import { t } from '@/i18n';
 import { hashString, shuffled } from '@/lib/random';
+import { useProgress } from '@/stores';
 import type { Quiz } from '@/types';
 import { LessonChart } from './LessonChart';
 
@@ -20,6 +21,7 @@ export interface QuizViewProps {
  * position of the right one cannot be learned.
  */
 export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
+  const recordReview = useProgress((s) => s.recordReview);
   const [attempt, setAttempt] = useState(0);
   const [answers, setAnswers] = useState<Record<string, string>>({});
 
@@ -36,6 +38,9 @@ export function QuizView({ quiz, bestScore, onFinish }: QuizViewProps) {
     if (answers[questionId]) return;
     const next = { ...answers, [questionId]: choiceId };
     setAnswers(next);
+    // Every answer feeds spaced repetition: questions you miss come back in the Trainer's quiz review.
+    const question = questions.find((q) => q.id === questionId);
+    if (question) recordReview('quiz', questionId, choiceId === question.correctChoiceId);
     if (Object.keys(next).length === questions.length) {
       onFinish(questions.filter((question) => next[question.id] === question.correctChoiceId).length / questions.length);
     }

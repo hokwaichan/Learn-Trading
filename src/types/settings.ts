@@ -71,4 +71,6 @@ export interface ProgressState {
   challengeDays: string[];
   /** Trainer history, one spaced-repetition card per pattern or drill item, keyed by card id. */
   cards: Record<string, ReviewCard>;
+  /** End-of-module tests, keyed by module id. Missing in data saved before they existed. */
+  moduleTests?: Record<string, { bestScore: number; attempts: number }>;
 }

@@ -134,6 +134,35 @@ check('the Quizzes page shows the best score', await page.getByText(/Best \d+%/)
 check('the Quizzes page lists all eighteen modules', (await page.locator('main section[aria-labelledby^="quiz-module-"]').count()) === 18);
 await page.screenshot({ path: `${OUT}/quizzes.png` });
 
+// End-of-module test: questions mixed from every lesson in the module.
+await page.goto(`${BASE}/quiz/basics`, { waitUntil: 'domcontentloaded' });
+await page.getByRole('heading', { name: 'Basics', level: 1 }).waitFor();
+const testQuestions = page.locator('main fieldset');
+await testQuestions.first().waitFor();
+const testCount = await testQuestions.count();
+check('a module test asks ten questions', testCount === 10, `${testCount}`);
+for (let i = 0; i < testCount; i++) await testQuestions.nth(i).locator('button').first().click();
+check('finishing the module test shows a score', await page.getByText(/You got \d+ of 10\./).isVisible());
+await page.goto(`${BASE}/quiz`, { waitUntil: 'domcontentloaded' });
+await page.getByRole('heading', { name: 'Quizzes', level: 1 }).waitFor();
+check('the Quizzes page shows the module test score', await page.getByRole('link', { name: /Module test: best \d+%/ }).first().isVisible());
+
+// Missed questions come back a day later in the Trainer. Make them due now instead of waiting.
+await page.evaluate(() => {
+  const saved = JSON.parse(localStorage.getItem('tradeschool.progress'));
+  for (const card of Object.values(saved.state.cards)) if (card.kind === 'quiz') card.dueAt = 0;
+  localStorage.setItem('tradeschool.progress', JSON.stringify(saved));
+});
+await page.reload({ waitUntil: 'domcontentloaded' });
+await page.getByRole('heading', { name: 'Quizzes', level: 1 }).waitFor();
+check('missed questions are offered for review', await page.getByText(/\d+ missed questions to review/).isVisible());
+await page.getByRole('link', { name: 'Review them' }).click();
+await page.waitForURL('**/trainer?mode=review');
+await page.getByText(/^Quiz review: /).first().waitFor({ timeout: 8000 }).catch(() => {});
+check('the Trainer asks a missed quiz question again', await page.getByText(/^Quiz review: /).first().isVisible());
+await page.getByRole('group', { name: 'Answers' }).getByRole('button').first().click();
+check('the review question explains its answer', await page.locator('main [role="status"]').first().isVisible());
+
 await page.goto(`${BASE}/learn/basics/bid-ask-spread`, { waitUntil: 'domcontentloaded' });
 await page.getByRole('heading', { name: 'Bid, ask and the spread', level: 1 }).waitFor();
 check('the new lesson starts at the top', (await page.locator('article').evaluate((el) => el.parentElement.scrollTop)) === 0);

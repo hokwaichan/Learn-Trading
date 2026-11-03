@@ -16,6 +16,7 @@ const routes: RouteObject[] = [
   { path: 'learn', lazy: page(() => import('@/features/lessons'), (m) => m.LessonsPage) },
   { path: 'learn/:moduleId/:lessonId', lazy: page(() => import('@/features/lessons'), (m) => m.LessonsPage) },
   { path: 'quiz', lazy: page(() => import('@/features/lessons'), (m) => m.QuizzesPage) },
+  { path: 'quiz/:moduleId', lazy: page(() => import('@/features/lessons'), (m) => m.QuizzesPage) },
   { path: 'quiz/:moduleId/:lessonId', lazy: page(() => import('@/features/lessons'), (m) => m.QuizzesPage) },
   { path: 'trainer', lazy: page(() => import('@/features/trainer'), (m) => m.TrainerPage) },
   { path: 'glossary', lazy: page(() => import('@/features/glossary'), (m) => m.GlossaryPage) },

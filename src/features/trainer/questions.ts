@@ -1,4 +1,6 @@
+import { getLesson } from '@/content/lessons';
 import { CANDLESTICK_PATTERNS, CHART_PATTERNS, getPattern } from '@/content/patterns';
+import { QUIZZES } from '@/content/quizzes';
 import { getStrategyTemplate, OPTION_STRATEGIES, OUTLOOK_SCENARIOS } from '@/content/strategies';
 import { t } from '@/i18n';
 import { formatPct, formatSignedPct } from '@/lib/format';
@@ -11,8 +13,8 @@ import { findFairValueGaps, findStructureBreaks, findSweeps, findSwings } from '
 import { pickWeighted } from '@/lib/srs/sm2';
 import type { Candle, ReviewCard } from '@/types';
 
-export type DrillMode = 'mixed' | 'candlestick' | 'chart' | 'structure' | 'next' | 'options';
-export type DrillKind = 'candlestick' | 'chart' | 'structure' | 'next' | 'payoff' | 'outlook';
+export type DrillMode = 'mixed' | 'review' | 'candlestick' | 'chart' | 'structure' | 'next' | 'options';
+export type DrillKind = 'candlestick' | 'chart' | 'structure' | 'next' | 'payoff' | 'outlook' | 'quiz';
 
 /** A series of real candles the trainer can cut questions from. */
 export interface Dataset {
@@ -56,10 +58,12 @@ export const DRILL_NAMES: Record<DrillKind, string> = {
   next: t('What happened next?'),
   payoff: t('Payoff diagram'),
   outlook: t('Strategy for an outlook'),
+  quiz: t('Quiz review'),
 };
 
 const KINDS_BY_MODE: Record<DrillMode, DrillKind[]> = {
-  mixed: ['candlestick', 'chart', 'structure', 'next', 'payoff', 'outlook'],
+  mixed: ['candlestick', 'chart', 'structure', 'next', 'payoff', 'outlook', 'quiz'],
+  review: ['quiz'],
   candlestick: ['candlestick'],
   chart: ['chart'],
   structure: ['structure'],
@@ -68,7 +72,7 @@ const KINDS_BY_MODE: Record<DrillMode, DrillKind[]> = {
 };
 
 /** How often each drill comes up in mixed mode. */
-const MIX_WEIGHT: Record<DrillKind, number> = { candlestick: 3, chart: 3, structure: 2, next: 2, payoff: 1.5, outlook: 1.5 };
+const MIX_WEIGHT: Record<DrillKind, number> = { candlestick: 3, chart: 3, structure: 2, next: 2, payoff: 1.5, outlook: 1.5, quiz: 3 };
 
 const CONTEXT = 44; // candles shown before a candlestick pattern
 const AFTER_PATTERN = 8; // candles revealed after it
@@ -438,6 +442,44 @@ export function outlookQuestion(id: string, rand: () => number): TrainerQuestion
   };
 }
 
+// ── Quiz review ────────────────────────────────────────────────────────
+// Every quiz answer is recorded as a `quiz` card. Questions you have got wrong at
+// least once come back here when spaced repetition says they are due.
+
+const QUIZ_QUESTIONS = new Map(QUIZZES.flatMap((quiz) => quiz.questions.map((q) => [q.id, q] as const)));
+
+/** Quiz questions you have missed before that are due again, most overdue first. */
+export function dueQuizIds(cards: Record<string, ReviewCard>, now: number): string[] {
+  return Object.values(cards)
+    .filter((c) => c.kind === 'quiz' && c.lapses > 0 && c.dueAt <= now && QUIZ_QUESTIONS.has(c.refId))
+    .sort((a, b) => a.dueAt - b.dueAt)
+    .map((c) => c.refId);
+}
+
+/** A missed quiz question asked again, with its answers in a new order. */
+export function quizQuestion(id: string, rand: () => number): TrainerQuestion | null {
+  const question = QUIZ_QUESTIONS.get(id);
+  if (!question) return null;
+  const [moduleId, lessonId] = id.split('/');
+  const lesson = getLesson(moduleId, lessonId);
+  const choices = shuffled(question.choices, int(rand, 1e9)).map((c) => ({ id: c.id, label: c.text }));
+  return {
+    key: `quiz-${id}-${choices.map((c) => c.id).join('')}`,
+    drill: 'quiz',
+    kind: 'quiz',
+    refId: id,
+    topic: lesson ? t('Quiz review: {lesson}', { lesson: lesson.title }) : t('Quiz review'),
+    prompt: question.prompt,
+    choices,
+    correctId: question.correctChoiceId,
+    explanation: {
+      heading: question.choices.find((c) => c.id === question.correctChoiceId)?.text ?? '',
+      paragraphs: [question.explanation],
+      lesson: lesson ? `${moduleId}/${lessonId}` : undefined,
+    },
+  };
+}
+
 export interface QuestionContext {
   datasets: Dataset[];
   index: PatternIndex;
@@ -450,8 +492,12 @@ export interface QuestionContext {
 }
 
 /** Drill kinds that can be asked right now. Two of them need price history to have loaded. */
-export function availableKinds(mode: DrillMode, context: Pick<QuestionContext, 'datasets' | 'index'>): DrillKind[] {
+export function availableKinds(
+  mode: DrillMode,
+  context: Pick<QuestionContext, 'datasets' | 'index'> & Partial<Pick<QuestionContext, 'cards' | 'now'>>,
+): DrillKind[] {
   return KINDS_BY_MODE[mode].filter((kind) => {
+    if (kind === 'quiz') return dueQuizIds(context.cards ?? {}, context.now ?? Date.now()).length > 0;
     if (kind === 'candlestick') return Object.keys(context.index).length > 0;
     if (kind === 'next' || kind === 'structure') return context.datasets.length > 0;
     return true;
@@ -485,6 +531,9 @@ export function buildQuestion(mode: DrillMode, context: QuestionContext): Traine
       question = structureQuestion(pickWeighted(ids, cards, (id) => `concept:smc-${id}`, now, rand, avoid?.replace('smc-', '') as StructureItemId | undefined), context.datasets, rand);
     } else if (drill === 'next') {
       question = nextQuestion(context.datasets, rand);
+    } else if (drill === 'quiz') {
+      const due = dueQuizIds(cards, now);
+      question = quizQuestion(due.find((id) => id !== avoid) ?? due[0], rand);
     } else if (drill === 'payoff') {
       const ids = PAYOFF_STRATEGIES.map((s) => s.id);
       question = payoffQuestion(pickWeighted(ids, cards, (id) => `option-payoff:${id}`, now, rand, avoid), rand);
