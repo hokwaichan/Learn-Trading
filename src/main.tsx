@@ -28,6 +28,14 @@ async function start() {
       <App />
     </StrictMode>,
   );
+
+  // The service worker (dist/sw.js, built from pwa/service-worker.js) makes the app
+  // installable and usable offline. Only production builds have one.
+  if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register(`${import.meta.env.BASE_URL}sw.js`, { scope: import.meta.env.BASE_URL }).catch(() => {
+      // No offline support (private window, or an old browser): the app works online as before.
+    });
+  }
 }
 
 void start();

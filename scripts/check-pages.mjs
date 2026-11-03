@@ -8,11 +8,15 @@ import { extname, join } from 'node:path';
 import { chromium } from 'playwright';
 
 const BASE = '/Learn-Trading/';
-const TYPES = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.json': 'application/json', '.woff2': 'font/woff2' };
+const TYPES = {
+  '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml', '.json': 'application/json',
+  '.woff2': 'font/woff2', '.webmanifest': 'application/manifest+json', '.png': 'image/png', '.jpg': 'image/jpeg',
+};
 
 const server = createServer((req, res) => {
   const path = decodeURIComponent(new URL(req.url, 'http://x').pathname);
-  const file = path.startsWith(BASE) ? join('dist', path.slice(BASE.length)) : null;
+  // Like GitHub Pages, a folder serves its index.html.
+  const file = path.startsWith(BASE) ? join('dist', path.slice(BASE.length) || 'index.html') : null;
   if (file && existsSync(file) && statSync(file).isFile()) {
     res.writeHead(200, { 'content-type': TYPES[extname(file)] ?? 'application/octet-stream' });
     return res.end(readFileSync(file));
@@ -55,6 +59,31 @@ check('an unknown path shows the app’s not-found page', await page.getByText(/
 const missing = failed.filter((f) => /\.(js|css|svg|json|png|woff2?)$/.test(f));
 check('no failed requests for site files', missing.length === 0, missing.slice(0, 3).join(' | '));
 check('no page errors', errors.length === 0, errors.slice(0, 2).join(' | '));
+// ── Installable and offline ────────────────────────────────────────────
+const manifest = await (await fetch(url('manifest.webmanifest'))).json();
+check('the app manifest is served', manifest.display === 'standalone' && manifest.icons.some((i) => i.sizes === '512x512'));
+const app = await browser.newContext();
+const tab = await app.newPage();
+tab.on('pageerror', (e) => errors.push(`offline: ${e.message}`));
+await tab.goto(url(''), { waitUntil: 'networkidle' });
+const ready = await tab.evaluate(async () => {
+  const registration = await navigator.serviceWorker.ready;
+  // Wait until every file is downloaded (install finished) and the worker controls the page.
+  for (let i = 0; i < 100 && !(registration.active?.state === 'activated' && navigator.serviceWorker.controller); i++) await new Promise((r) => setTimeout(r, 100));
+  return Boolean(navigator.serviceWorker.controller);
+});
+check('the service worker installs and takes control', ready);
+await app.setOffline(true);
+await tab.goto(url('learn/candlesticks/multi-candle-patterns'), { waitUntil: 'load' });
+await tab.getByRole('heading', { level: 1, name: 'Multi-candle patterns' }).waitFor({ timeout: 10000 }).catch(() => {});
+check('offline: a lesson opens', await tab.getByRole('heading', { level: 1, name: 'Multi-candle patterns' }).isVisible());
+const pictures = await tab.locator('article figure img').evaluateAll((imgs) => imgs.map((img) => img.complete && img.naturalWidth > 0));
+check('offline: its pictures load', pictures.length > 0 && pictures.every(Boolean), `${pictures.filter(Boolean).length}/${pictures.length}`);
+await tab.goto(url('quiz/basics/order-types'), { waitUntil: 'load' });
+await tab.locator('main fieldset').first().waitFor({ timeout: 10000 }).catch(() => {});
+check('offline: a quiz opens', (await tab.locator('main fieldset').count()) >= 3);
+await app.close();
+
 await browser.close();
 server.close();
 process.exitCode = results.every(Boolean) ? 0 : 1;

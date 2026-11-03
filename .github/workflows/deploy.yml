@@ -2,6 +2,9 @@
 # The site is served from https://<user>.github.io/<repo>/, so the build is
 # told its base path, and index.html is copied to 404.html so that opening a
 # deep link such as /Learn-Trading/charts/BTCUSDT still loads the app.
+#
+# Nothing is published unless the unit tests, the build, and the browser checks
+# (every screen driven in a real browser, plus the accessibility audit) pass.
 name: Deploy to GitHub Pages
 
 on:
@@ -22,8 +25,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
         with:
           node-version: 22
           cache: npm
@@ -37,8 +40,43 @@ jobs:
         with:
           path: dist
 
+  browser:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Start the app
+        run: |
+          npm run dev -- --port 5173 --strictPort > dev-server.log 2>&1 &
+          curl --silent --retry 30 --retry-connrefused --retry-delay 1 --output /dev/null http://localhost:5173/
+      - name: Smoke tests
+        run: npm run smoke
+      - name: Accessibility audit
+        run: npm run a11y
+      - name: Pages build, install and offline use
+        run: |
+          npm run build
+          cp dist/index.html dist/404.html
+          node scripts/check-pages.mjs
+        env:
+          BASE_PATH: /Learn-Trading/
+      - name: Keep the screenshots of a failed run
+        if: failure()
+        uses: actions/upload-artifact@v5
+        with:
+          name: browser-check-screenshots
+          path: |
+            .screenshots
+            dev-server.log
+
   deploy:
-    needs: build
+    needs: [build, browser]
     runs-on: ubuntu-latest
     environment:
       name: github-pages

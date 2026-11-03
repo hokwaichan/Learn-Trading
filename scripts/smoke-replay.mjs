@@ -3,7 +3,7 @@
 //
 // Most of it runs on the bundled AAPL daily history, so the prices are the
 // same on every run.
-import { mkdirSync } from 'node:fs';
+import { mkdirSync, readFileSync } from 'node:fs';
 import { chromium } from 'playwright';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:5173';
@@ -200,7 +200,11 @@ await page.waitForTimeout(300);
 check('reset clears the replay trades', await page.getByText(/0 trades so far/).isVisible());
 
 // ── End of history ─────────────────────────────────────────────────────
-const recent = new Date(Date.now() - 12 * 86_400_000).toISOString().slice(0, 10);
+// Twelve days before the last bundled AAPL candle, not before today: the bundled
+// history ends when it was last downloaded, and today keeps moving.
+const aaplCandles = JSON.parse(readFileSync('public/data/AAPL.json', 'utf8')).candles;
+const lastAapl = aaplCandles[aaplCandles.length - 1][0] * 1000;
+const recent = new Date(lastAapl - 12 * 86_400_000).toISOString().slice(0, 10);
 await u.start('AAPL', recent);
 for (let i = 0; i < 3; i++) await u.bar.getByRole('button', { name: 'Forward 10 candles' }).click({ timeout: 2000 }).catch(() => {});
 check('running out of history says so and disables the controls', (await u.bar.getByText('End of history').isVisible()) && (await u.bar.getByRole('button', { name: 'Play' }).isDisabled()));
