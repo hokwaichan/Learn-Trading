@@ -10,20 +10,32 @@ export default {
   '1eocs7tmw9i': '交易時段和殺戮時段',
   // When you trade matters as much as what you trade. The day has three sessions, and most of the movement happens in a few hours of them.
   '21vehy1xuel': '甚麼時候交易，與交易甚麼同樣重要。一天有三個交易時段，而大部分波動發生在其中幾個小時。',
-  // **ICT** stands for Inner Circle Trader, the name used by the trader whose teaching most of smart money concepts comes from. Where SMC is mostly about price, ICT adds **time**: the idea that markets behave differently at different hours, and that setups should only be taken in certain windows.
-  'r9yztas5s2': '**ICT** 是 Inner Circle Trader 的縮寫，是聰明錢概念大部分教學來源那位交易者所用的名稱。聰明錢概念主要關於價格，ICT 則加入**時間**：市場在不同鐘點有不同表現，交易形態只應在某些時段內進行。',
-  // The three sessions
-  'sjpdhr39dk': '三個交易時段',
-  // Currencies, and to a large extent crypto and index futures, follow the business day around the world. Each stretch is called a trading **session**.
-  'o7pkvpou4q': '貨幣，以及很大程度上的加密貨幣和指數期貨，跟隨全球各地的辦公時間運行。每一段時間叫一個交易**時段**。',
-  // **Asia** (roughly 7pm to 4am New York time): usually the quietest. Price often moves sideways in a narrow range.
-  '2fsawl2x6iz': '**亞洲時段**（約紐約時間晚上 7 時至凌晨 4 時）：通常最平靜。價格常在窄幅區間內橫行。',
-  // **London** (3am to noon New York time): volume arrives. The day’s high or low is often made in the first hours.
-  '2d1u12ps21g': '**倫敦時段**（紐約時間凌晨 3 時至中午 12 時）：成交量湧入。當日的高點或低點常在最初幾小時內出現。',
-  // **New York** (8am to 5pm New York time): the busiest, especially while London is still open. Most US economic news is released at 8:30am.
-  '4usuooimqn': '**紐約時段**（紐約時間上午 8 時至下午 5 時）：最繁忙，尤其是倫敦仍然開市的時候。大部分美國經濟數據在上午 8:30 公佈。',
-  // One day, one candle per hour. Asia builds a tight range. London opens by dropping below it, then reverses and rallies. New York continues the move. The low of the day was made in the London kill zone.
-  'p9jc9c9ewg': '一天，每小時一支陰陽燭。亞洲時段形成窄幅區間。倫敦開市時先跌穿區間，然後反轉上升。紐約時段延續走勢。當日低點在倫敦殺戮時段出現。',
+  // **ICT** (Inner Circle Trader) adds **time** to smart money concepts: markets behave differently at different hours, so setups are only taken in certain windows.
+  '2ehv2axwby1': '**ICT**（Inner Circle Trader）為聰明錢概念加入**時間**：市場在不同鐘點表現不同，所以交易形態只在某些時段內進行。',
+  // Asia
+  '2chj199sukf': '亞洲',
+  // Asia: Tokyo
+  '1al9d1znnc0': '亞洲：東京',
+  // Asia: Hong Kong
+  '15jy5kf5m84': '亞洲：香港',
+  // London
+  '11zpkzobtxq': '倫敦',
+  // New York
+  '6gh639vftn': '紐約',
+  // The trading day follows business hours around the world: Asia, then London, then New York.
+  '1nva5djo4l1': '交易日跟隨全球各地的辦公時間：先亞洲，再倫敦，然後紐約。',
+  // A world map divided into coloured time zones
+  '1xvw3wwrv1h': '一幅以不同顏色劃分時區的世界地圖',
+  // World time zones. When one financial centre closes, the next opens.
+  '23fwtmiorjv': '世界時區。一個金融中心收市，下一個就開市。',
+  // **Asia** (about 7pm to 4am New York time): quietest, often a narrow range.
+  '1z7gc53mgd': '**亞洲時段**（約紐約時間晚上 7 時至凌晨 4 時）：最平靜，常在窄幅區間內橫行。',
+  // **London** (3am to noon): volume arrives; the high or low of the day often forms early.
+  '1r3aiq73ilc': '**倫敦時段**（凌晨 3 時至中午）：成交量湧入；當日高位或低位常在早段出現。',
+  // **New York** (8am to 5pm): busiest while London is still open. Most US news comes at 8:30am.
+  '14nsdu52yos': '**紐約時段**（早上 8 時至下午 5 時）：與倫敦重疊時最繁忙。大部分美國數據在早上 8 時 30 分公布。',
+  // One day, one candle per hour. Asia builds a tight range, London sweeps its low and reverses, New York continues. The low of the day came in the London kill zone.
+  '25r8torl3r8': '一天，每小時一支陰陽燭。亞洲形成窄幅區間，倫敦掃過其低位後反轉，紐約延續走勢。當日低位出現在倫敦殺戮時段。',
   // Asia: quiet range
   '1gpqmjdon2h': '亞洲：平靜的區間',
   // London: sweep of the Asian low
@@ -32,30 +44,26 @@ export default {
   'zobfq2ugbm': '紐約：延續',
   // Kill zones
   '1sueqcuatbd': '殺戮時段',
-  // A **kill zone** is a window inside a session when ICT traders expect the important move of the day to begin. The commonly taught ones, in New York time, are:
-  '15hqptfimih': '**殺戮時段**是交易時段內，ICT 交易者預期當日重要走勢開始的時間窗口。常見的教法（紐約時間）是：',
-  // **London kill zone**: 2am to 5am.
-  'g9i955nhfe': '**倫敦殺戮時段**：凌晨 2 時至 5 時。',
-  // **New York kill zone**: 7am to 10am.
-  'szlxni5372': '**紐約殺戮時段**：上午 7 時至 10 時。',
-  // **London close**: 10am to noon, when London traders close positions and the morning move often partly reverses.
-  '1lyoiyz8mnt': '**倫敦收市**：上午 10 時至中午 12 時，倫敦交易者平倉，早上的走勢常會部分回吐。',
-  // **Asian kill zone**: 8pm to midnight, mostly relevant to yen and Australian dollar pairs.
-  'm9an0kqsp6': '**亞洲殺戮時段**：晚上 8 時至午夜，主要與日圓和澳元貨幣對有關。',
-  // Different teachers shift these by half an hour either way. The principle is what matters: trade when there is volume, and stand aside when there is not.
-  '1wpzugjuk8h': '不同的導師會把時間前後調整半小時。重要的是原則：有成交量時交易，沒有時就旁觀。',
-  // Why time helps
-  '1jl9hd5r1zh': '時間為甚麼有幫助',
-  // Moves made on high volume are more likely to continue. The same pattern at 6pm New York time, when little is trading, means much less.
-  '14n6vuow5s1': '大成交量下的走勢較可能延續。同一個形態在紐約時間下午 6 時、交投稀疏時出現，意義就小得多。',
-  // It limits how long you look at charts. A day trader who only trades one kill zone works three hours, not twelve.
-  'xxewuiscxx': '它限制你看圖的時間。只交易一個殺戮時段的即日交易者，工作三小時而不是十二小時。',
-  // Session highs and lows are liquidity. The Asian range in particular is a target for the London open.
-  '19xfa7sj1cn': '時段的高低點就是流動性。尤其是亞洲區間，是倫敦開市的目標。',
+  // A **kill zone** is a window when the important move of the day tends to begin. In New York time:
+  'fumz5u2h14': '**殺戮時段**是當日重要走勢往往開始的時間窗口。以紐約時間計：',
+  // **London**: 2am to 5am.
+  '27ymokfdork': '**倫敦**：凌晨 2 時至 5 時。',
+  // **New York**: 7am to 10am.
+  'oaozj4e43l': '**紐約**：早上 7 時至 10 時。',
+  // **London close**: 10am to noon, when the morning move often partly reverses.
+  't6wb8ssjze': '**倫敦收市**：早上 10 時至中午，早段走勢常部分回吐。',
+  // **Asia**: 8pm to midnight, mostly for yen and Australian dollar pairs.
+  'n123ktp7tf': '**亞洲**：晚上 8 時至午夜，主要適用於日圓和澳元貨幣對。',
+  // Moves on high volume are more likely to continue.
+  '16e9ggappns': '高成交量下的走勢較可能延續。',
+  // Trading one kill zone means three hours of screen time, not twelve.
+  '3ubrs6e9r8': '只交易一個殺戮時段，即是看盤三小時，而不是十二小時。',
+  // Session highs and lows are liquidity; the Asian range is a common London target.
+  '1zkjhwxf3ld': '時段高低位就是流動性；亞洲區間是倫敦常見的目標。',
   // Crypto runs all night, but not evenly
   '1f094e6ek0k': '加密貨幣通宵運行，但並不平均',
-  // Bitcoin trades around the clock and at weekends, yet its busiest hours are still the London and New York overlap. Weekend moves happen on thin volume and reverse more often.
-  'ej4n2jxm4h': '比特幣全天候交易，週末也不停，但最繁忙的時間仍是倫敦和紐約重疊時段。週末的走勢在稀薄成交量下發生，較常反轉。',
+  // Bitcoin trades around the clock, yet its busiest hours are still the London and New York overlap. Weekend moves are thin and reverse more often.
+  '1nhwmeljxam': '比特幣全天候交易，但最繁忙的時間仍是倫敦和紐約重疊的時段。週末走勢成交稀薄，較常反轉。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
   // On an intraday chart open Overlays and switch on Sessions or Kill zones. Times are converted from New York time, including daylight saving.
@@ -64,46 +72,44 @@ export default {
   '1ypdc0dzexv': '三力模型',
   // Accumulation, manipulation, distribution: a simple model of how a day or a week unfolds, and why the first move is often the wrong one.
   't5faccdxl3': '累積、操控、派發：一個描述一天或一星期如何展開的簡單模型，以及為甚麼第一個走勢常常是錯的。',
-  // Look at any daily candle and it has four prices: open, high, low and close. On an up day, price usually opens, dips to make the low first, and then travels up to close near the high. ICT turns that observation into a model called the **power of three**, or AMD.
-  '10cgaay12zn': '看任何一支日線陰陽燭，它有四個價格：開市、最高、最低和收市。在上升的日子，價格通常開市後先下跌創出低點，然後一路上升到接近最高位收市。ICT 把這個觀察變成一個叫**三力模型**（AMD）的模型。',
-  // **Accumulation.** Price moves sideways near the open. Orders build up on both sides of a small range.
-  '1kzeqs0caak': '**累積。**價格在開市附近橫行。小區間兩邊的訂單逐漸累積。',
-  // **Manipulation.** Price breaks out of that range the wrong way: down, on a day that will end up. Stops are triggered and breakout traders are drawn in. ICT calls this false move the **Judas swing**.
-  '1p68hwcqn7i': '**操控。**價格向錯誤方向突破區間：在一個最終會上升的日子向下突破。止蝕盤被觸發，突破交易者被吸引入場。ICT 把這個假走勢叫做**猶大擺動**。',
-  // **Distribution.** The real move of the day: price reverses through the range and trends in the true direction, often into the close.
-  '6m6o99qdt9': '**派發。**當日真正的走勢：價格反轉穿過區間，沿真正方向發展，常常一直到收市。',
-  // A quiet range near the open, a drop below it that makes the low of the day, then a steady rise for the rest of the day. Anyone who sold the breakdown was on the wrong side.
-  'ofgxnhx8jn': '開市附近一個平靜的區間，跌穿它創出當日低點，然後全日穩步上升。任何在跌破時賣出的人都站錯了邊。',
   // Accumulation
   '28irhnqgqts': '累積',
+  // Accumulation, manipulation, distribution
+  '1z3d4qw5pkx': '累積、操控、派發',
+  // On an up day price usually opens, dips to make the low first, then travels up to close near the high. ICT calls this the **power of three**, or AMD.
+  '13zs1h9euaw': '在上升的日子，價格通常開市後先下跌創出低點，然後一路上升到接近最高位收市。ICT 把這叫做**三力模型**（AMD）。',
+  // **Accumulation**: sideways near the open; orders build on both sides.
+  '10e26g57x21': '**累積**：開市附近橫行；買賣兩邊的訂單逐漸累積。',
+  // **Manipulation**: a break the wrong way that triggers stops, the **Judas swing**.
+  'qz8wyy4vv4': '**操控**：向錯誤方向突破並觸發止蝕盤，即**猶大擺動**。',
+  // **Distribution**: the real move, through the range and on into the close.
+  '1bikw0i4gi9': '**派發**：真正的走勢，穿過區間並一直延續到收市。',
+  // A quiet range, a drop below it that makes the low of the day, then a steady rise. Anyone who sold the breakdown was on the wrong side.
+  'uai58m0a7o': '一段平靜區間，一次跌穿區間並創出當日低位的下跌，然後穩步上升。沽出跌破的人站錯了邊。',
   // Manipulation: the false move
   '1pyeo6qktu1': '操控：假走勢',
   // Distribution: the real move
   'mic2oax53m': '派發：真走勢',
-  // Using it
-  'mrxntxfkuu': '運用它',
-  // **Start with a bias.** The model only helps if you already have a view, from the higher timeframe, of which way the day is likely to go.
-  '290607g484q': '**先有方向偏好。**只有當你已從較高時間週期對當日可能走向有看法，這個模型才有幫助。',
-  // **Do not trade the first breakout of the opening range.** If you expect an up day, a drop below the range early in the session is the move to buy after it fails, not to sell.
-  '24grahlehyd': '**不要交易開市區間的第一次突破。**如果你預期當日上升，時段早段跌穿區間是等它失敗後買入的走勢，而不是賣出的。',
-  // **Look for it in the kill zones.** The manipulation leg typically happens at the London or New York open.
-  'co2gl6d600': '**在殺戮時段內尋找它。**操控的一段通常在倫敦或紐約開市時發生。',
-  // **It scales.** The same three phases are described on the weekly chart: a quiet Monday, a false move on Tuesday or Wednesday, and the real move into Friday.
-  'de5rwhhed8': '**它可以放大。**週線圖上也描述了同樣的三個階段：平靜的星期一，星期二或星期三的假走勢，以及到星期五的真走勢。',
-  // How much to trust it
-  'q6vnxqr3vr': '可以有多信任它',
-  // On an up day the low has to come before the high more often than not; that is close to arithmetic. The hard part is knowing in advance that it will be an up day. When your bias is wrong, the "manipulation" turns out to be the real move, and buying it is catching a falling knife.
-  'golahpn37q': '在上升的日子，低點多數時候要比高點先出現；這差不多是算術。難處在於事先知道當日會上升。當你的方向偏好錯了，「操控」原來就是真走勢，買入它就是接下跌的刀。',
+  // **Start with a bias** from the higher timeframe; the model is useless without one.
+  'ytizd3l6l8': '**先有方向偏好**，來自較高時間框架；沒有偏好，這個模型毫無用處。',
+  // **Do not trade the first breakout** of the opening range. If you expect an up day, buy after the early drop fails.
+  '6u6eqnxtjw': '**不要交易開市區間的第一次突破。**如果你預期當日上升，等早段下跌失敗後才買入。',
+  // **Look for it in the kill zones.**
+  '2ekn08z5qm': '**在殺戮時段內尋找它。**',
+  // **It scales**: a quiet Monday, a false move midweek, the real move into Friday.
+  'aar5elf6bf': '**它適用於不同尺度**：平靜的星期一、週中的假走勢、到星期五的真正走勢。',
   // A model, not a schedule
   '2xr1l50xy4': '是模型，不是時間表',
-  // Plenty of days open and trend in one direction with no false move at all, and plenty chop sideways. Use the power of three to avoid chasing the first move, not as a promise of what comes next. A stop-loss below the manipulation low is what keeps a wrong bias cheap.
-  '25tqun2o37n': '很多日子開市後就單向發展，完全沒有假走勢，也有很多日子橫行反覆。用三力模型避免追逐第一個走勢，而不是當作接下來會發生甚麼的承諾。放在操控低點之下的止蝕，才能令錯誤的方向偏好代價較低。',
+  // Many days trend with no false move, and many chop. When your bias is wrong, the "manipulation" is the real move. A stop below the manipulation low keeps a wrong bias cheap.
+  '9r104f8ybo': '很多日子沒有假走勢就直接單邊行走，也有很多日子反覆上落。當你的偏好錯了，所謂「操控」就是真正的走勢。止蝕設在操控低位下方，可令錯誤偏好的代價很小。',
   // The optimal trade entry
   '22alxb2aers': '最佳交易入場點',
   // A specific Fibonacci zone, 62% to 79% of the way back, that ICT traders wait for before joining a move.
   '1fi76gnhi3v': '一個特定的斐波那契區域，回撤 62% 至 79%，ICT 交易者等價格到達這裡才加入走勢。',
-  // The **optimal trade entry** (OTE) is ICT’s answer to a practical question: after a strong move, how far should you let price pull back before entering? The answer is the zone between the 62% and 79% Fibonacci retracements of that move, with 70.5% as the ideal spot.
-  'ut2rud07j8': '**最佳交易入場點**（OTE）是 ICT 對一個實際問題的答案：強勁走勢之後，應該讓價格回調多遠才入場？答案是該走勢 62% 至 79% 斐波那契回撤之間的區域，理想位置是 70.5%。',
+  // 62% to 79%
+  '2do97uj4nqs': '62% 至 79%',
+  // The **optimal trade entry** (OTE) is the zone between the 62% and 79% retracements of a move, with 70.5% as the ideal spot.
+  '1ctp5oik1c9': '**最佳交易入場點**（OTE）是一段走勢 62% 至 79% 回調之間的區域，70.5% 為理想位置。',
   // A rise from 100 to 120. The OTE zone is a pullback to between 107.6 (62%) and 104.2 (79%). Price reaches it, turns, and makes a new high.
   '1dlwy2uxa7o': '由 100 升到 120。最佳交易入場點區域是回調到 107.6（62%）至 104.2（79%）之間。價格到達這裡，轉向，再創新高。',
   // OTE zone: 62% to 79%
@@ -114,156 +120,118 @@ export default {
   '16drvz7am1u': '走勢起點',
   // End of the move
   '16424qnnxu8': '走勢終點',
-  // Why that zone
-  '155vdye3lui': '為甚麼是這個區域',
-  // **It is deep in discount.** Below the 50% line, so you are buying in the cheaper half of the range.
-  '26cx89872gq': '**它深入折讓區。**位於 50% 線以下，所以你在區間較便宜的一半買入。',
-  // **The stop is close.** The idea is wrong if price passes the start of the move, so a stop just beyond it is only a short distance from an entry at 70%.
-  'l75v5af4af': '**止蝕很近。**如果價格越過走勢起點，想法就錯了，所以剛好在起點之外的止蝕，距離 70% 的入場點只是很短的距離。',
-  // **The target is far.** The first target is the end of the move, and the next is an extension beyond it. That combination gives a risk/reward of 3 to 1 or better.
-  '1y5lpsb093n': '**目標很遠。**第一個目標是走勢終點，下一個是超越它的延伸位。這個組合帶來 3 比 1 或更好的風險回報。',
+  // **Deep in discount**: below the 50% line, the cheaper half.
+  '1fe65j3cb2p': '**深入折讓區**：在 50% 線下方，較便宜的一半。',
+  // **Close stop**: just beyond the start of the move.
+  '1utcythyu09': '**止蝕近**：就在走勢起點之外。',
+  // **Far target**: the end of the move and beyond, often 3 to 1 or better.
+  '24aqutjx0uc': '**目標遠**：走勢終點及更遠，常有 3 比 1 或更好。',
   // An OTE long
   '254s1cbjwd0': '一宗最佳交易入場點做多',
   // The move ran from 100 to 120.
   'rsfugw46dr': '走勢由 100 升到 120。',
-  // Entry at the 70.5% retracement: 120 - 20 x 0.705 = 105.9.
-  '278rgqe86zv': '在 70.5% 回撤入場：120 - 20 x 0.705 = 105.9。',
-  // Stop-loss just below the start of the move: 99.5. Risk: 6.4.
-  'dlnqngkgj5': '止蝕剛好在走勢起點之下：99.5。風險：6.4。',
-  // First target, the high at 120: reward 14.1, about 2.2 to 1.
-  '39bxo3jnke': '第一個目標，120 的高點：回報 14.1，約 2.2 比 1。',
-  // Second target, the 127% extension at 125.4: reward 19.5, about 3 to 1.
-  '23pd78h1p8e': '第二個目標，125.4 的 127% 延伸位：回報 19.5，約 3 比 1。',
-  // When to draw it
-  'x08cnyvv3b': '甚麼時候畫它',
-  // Only after a move that broke structure. A random swing inside a range does not qualify.
-  '1rheplxnahk': '只在突破了結構的走勢之後。區間內的隨意擺動不算。',
-  // Draw from the low to the high of that move in an uptrend, from the high to the low in a downtrend.
-  'zttx8bj3um': '上升趨勢中由該走勢的低點畫到高點，下跌趨勢中由高點畫到低點。',
-  // Look for something else inside the zone: an order block or a fair value gap. The entry is where they overlap.
-  '27hj3b3ojsr': '在區域內尋找其他東西：訂單塊或公允價值缺口。兩者重疊的地方就是入場點。',
-  // Prefer it during a kill zone.
-  'cx4vjp62t4': '最好在殺戮時段內。',
+  // Entry at 70.5%: 120 - 20 x 0.705 = 105.9.
+  '80t64yny11': '在 70.5% 入場：120 - 20 x 0.705 = 105.9。',
+  // Stop just below the start: 99.5. Risk: 6.4.
+  '1fah0om4dgc': '止蝕設在起點下方：99.5。風險：6.4。',
+  // Target the high at 120: about 2.2 to 1. The 127% extension at 125.4: about 3 to 1.
+  'fgg5d8numh': '目標 120 的高位：約 2.2 比 1。127% 延伸位 125.4：約 3 比 1。',
+  // Only after a move that broke structure.
+  'lcv9hmnml9': '只在打破結構的走勢之後。',
+  // Draw low to high in an uptrend, high to low in a downtrend.
+  'huwyrighlf': '上升趨勢由低畫到高，下跌趨勢由高畫到低。',
+  // Enter where an order block or fair value gap overlaps the zone, ideally in a kill zone.
+  'dfraqac2cd': '在訂單塊或公允價值缺口與該區重疊處入場，最好在殺戮時段內。',
   // The cost of waiting
   '285v7rvnsc3': '等待的代價',
-  // Strong trends often pull back only to the 38% or 50% line and leave. A trader who insists on the OTE zone misses those entirely. That is a real cost: the trades you skip are often the strongest ones. The benefit is that the trades you do take have small stops and large targets, so you can be wrong often and still come out ahead.
-  'cj4s7yvf8e': '強勁的趨勢常常只回調到 38% 或 50% 線就離開。堅持要最佳交易入場點區域的交易者會完全錯過這些機會。這是真實的代價：你跳過的交易往往是最強勁的。好處是你做的交易止蝕小、目標大，所以你可以經常出錯而仍然獲利。',
-  // A deep pullback is also what a reversal looks like
-  '11uyxqr99t0': '深度回調也是反轉的樣子',
-  // Price falling 70% of the way back is, by definition, a move that has nearly been cancelled. Do not buy the zone blindly. Wait for the lower timeframe to show a change of character upward, and keep the stop.
-  'p1k3rm1enr': '價格回落 70%，按定義是一段幾乎被抵銷的走勢。不要盲目在區域內買入。等較低時間週期出現向上的特性轉變，並保留止蝕。',
+  // Strong trends often pull back only to 38% or 50%, so you miss them. And a 70% pullback is nearly a reversal: wait for the lower timeframe to turn, and keep the stop.
+  '13mzldmrls4': '強勢趨勢常只回調到 38% 或 50%，你便會錯過。而 70% 的回調已接近反轉：等較低時間框架轉向，並保留止蝕。',
   // Breaker and mitigation blocks
   '8461075tss': '突破塊和緩解塊',
   // What happens to an order block that fails. In ICT terms it does not disappear: it changes sides.
   '16torvqrzkl': '失效的訂單塊會怎樣。在 ICT 的說法中，它不會消失：它會轉換角色。',
-  // Not every order block holds. When price runs straight through one, ICT traders do not delete it. They relabel it, on the same logic as support turning into resistance.
-  '13025k3czf1': '不是每個訂單塊都守得住。價格直接穿過一個訂單塊時，ICT 交易者不會刪除它，而是重新標記它，道理與支持位變成阻力位相同。',
-  // Breaker blocks
-  'begzmtdgkc': '突破塊',
-  // A **breaker block** is an order block that failed after price had first swept liquidity. Take a bullish order block: price leaves it, makes a higher high that takes out the stops above the previous high, then turns and falls straight through the block. Everyone who bought at the block is now losing. When price climbs back to it, they sell to get out at break-even, and the old support acts as resistance.
-  '84htxvxbmj': '**突破塊**是價格先掃過流動性後才失效的訂單塊。以看漲訂單塊為例：價格離開它，創出更高的高點，取走之前高點之上的止蝕盤，然後轉向直接跌穿訂單塊。所有在訂單塊買入的人現在都在虧損。價格回升到這裡時，他們賣出以打和離場，舊的支持位就成為阻力位。',
-  // Buyers defend the zone near 104 twice. After the second bounce price makes a higher high, then falls through the zone. The retest from below fails at the same prices: the block has become a breaker.
-  '1c8bg0eag1b': '買家兩次守住 104 附近的區域。第二次反彈後價格創出更高的高點，然後跌穿區域。由下方回測時在同一價格失敗：訂單塊已變成突破塊。',
+  // When price runs straight through an order block, ICT relabels it, the same logic as support turning into resistance.
+  'ywlvoirhm0': '當價格直接穿過一個訂單塊，ICT 會為它重新命名，道理與支持位變成阻力位相同。',
+  // Buyers defend the zone near 104 twice. After a higher high, price falls through it. The retest from below fails at the same prices: the block is now a breaker.
+  'hcgvkxov8h': '買家兩次守住 104 附近的區域。創出更高高位後，價格跌穿它。從下方回測時在同一價位失敗：這個區塊已成為突破塊。',
   // Failed block, now a breaker
   'yn5enpz0f7': '失效的訂單塊，現在是突破塊',
   // Higher high: stops taken
   'ri7nfo81gb': '更高的高點：止蝕盤被取走',
   // Retest from below
   '23gzbb0mysa': '由下方回測',
-  // Mitigation blocks
-  'v9bymqdbbo': '緩解塊',
-  // A **mitigation block** is the same idea without the sweep. Price fails to make a new high, turns down, and breaks the block. Because no liquidity was taken first, ICT regards it as the weaker of the two. In both cases "mitigation" refers to trapped traders reducing their loss when price returns to their entry.
-  'fobt4tnr1c': '**緩解塊**是沒有掃蕩的同一個概念。價格未能創出新高，轉向下跌，跌穿訂單塊。因為之前沒有取走流動性，ICT 認為它是兩者中較弱的一個。在兩種情況下，「緩解」都是指被困的交易者在價格回到他們的入場價時減少虧損。',
-  // Telling the three apart
-  '2493gkxj9ex': '分辨三者',
-  // **Order block**: the origin of a move that broke structure. Trade its first return, in the direction of the move.
-  '1spdo0xs99n': '**訂單塊**：突破結構的走勢的起點。沿走勢方向交易它的第一次回來。',
-  // **Breaker block**: a failed order block, where price took liquidity before failing. Trade its retest in the new direction.
-  '1ngvr78ooi8': '**突破塊**：失效的訂單塊，價格在失效前取走了流動性。沿新方向交易它的回測。',
-  // **Mitigation block**: a failed order block with no sweep first. Same trade, lower confidence.
-  'wsuf3b437q': '**緩解塊**：之前沒有掃蕩的失效訂單塊。同樣的交易，信心較低。',
-  // Trading a breaker
-  '2c207werht0': '交易突破塊',
+  // **Order block**: the origin of a move that broke structure. Trade its first return.
+  '1dcrfizkhae': '**訂單塊**：打破結構的走勢的起點。交易它的第一次回測。',
+  // **Breaker block**: a failed order block, after price first swept liquidity. Trapped buyers sell at break-even on the retest.
+  '4d8j5pdykk': '**突破塊**：失敗的訂單塊，價格之前先掃過流動性。被困的買家在回測時以打和價沽出。',
+  // **Mitigation block**: a failed block with no sweep first. Same trade, lower confidence.
+  '2eq3vpqdyto': '**緩解塊**：失敗前沒有先掃過流動性的區塊。同樣交易，信心較低。',
   // Mark the block when price closes through it.
   'f7qf8107g8': '價格收市穿過訂單塊時標記它。',
-  // Wait for price to return to it from the other side.
-  '2eyegf0xiwt': '等價格從另一邊回到這裡。',
-  // Enter on a rejection there, with the stop beyond the far edge of the block.
-  '1cnzhqd36bk': '在那裡出現拒絕時入場，止蝕放在訂單塊遠端邊緣之外。',
-  // Target the next liquidity pool in the new direction.
-  '116dvqw3gcd': '以新方向上的下一個流動性池為目標。',
+  // Wait for a return from the other side.
+  '2b46cdfbg6t': '等價格從另一邊回來。',
+  // Enter on rejection, stop beyond the far edge.
+  '1ubfloc8tia': '出現拒絕時入場，止蝕設在區塊遠端之外。',
+  // Target the next liquidity pool.
+  '91s3g5xboe': '目標是下一個流動性池。',
   // You have seen this before
   '1u6s78fpqhw': '你之前見過這個',
-  // This is role reversal from the Support and resistance lesson, applied to a zone and given a name. If the names start to feel like a lot, hold on to the plain version: broken support tends to become resistance, most reliably when buyers have just been trapped.
-  '1qole4190h0': '這就是「支持位與阻力位」課堂中的角色互換，應用到一個區域並取了名字。如果名稱開始令你覺得太多，就抓住樸素的版本：被突破的支持位往往變成阻力位，在買家剛被困住時最可靠。',
+  // This is role reversal from the Support and resistance lesson, given a name: broken support tends to become resistance.
+  '2acryh8yd8m': '這就是支持與阻力一課中的角色互換，只是給了個名字：被跌破的支持位往往變成阻力位。',
+  // Support
+  '1osc7jo1bd9': '支持',
   // Naming is not predicting
   '28gzhm6go0': '命名不等於預測',
-  // ICT has a label for a zone that holds and a different label for one that fails, so the framework can describe any outcome. That makes it sound more complete than it is. Before price reaches a zone, write down which outcome you are trading and where you are wrong.
-  'oyctbmli67': 'ICT 為守得住的區域有一個名稱，為失效的區域又有另一個名稱，所以這個框架可以描述任何結果。這令它聽起來比實際更完整。在價格到達區域之前，寫下你交易的是哪一個結果，以及在哪裡證明你錯了。',
+  // ICT has a label for a zone that holds and one for a zone that fails, so it can describe any outcome. Decide before price arrives which outcome you are trading and where you are wrong.
+  'w3hxlrk1n0': 'ICT 為守住的區域有一個名稱，為失敗的區域又有另一個，所以它能解釋任何結果。在價格到達前，先決定你交易哪個結果，以及在哪裏證明你錯了。',
   // An ICT-style trade plan
   '1r6t9abdmul': 'ICT 風格的交易計劃',
   // The concepts as a routine you could follow every day: bias, time, liquidity, entry, risk. Plus a frank look at what the method cannot do.
   '1vm5i7slaep': '把這些概念變成每天可以遵循的程序：方向偏好、時間、流動性、入場、風險。再加上坦白檢視這個方法做不到甚麼。',
-  // Concepts are only useful as a sequence of decisions. This is how the pieces from the last two modules fit into a daily routine. Each step either moves you forward or ends the day with no trade.
-  '223a5qn0tl4': '概念只有作為一連串決定才有用。以下是前兩個單元的各部分如何融入每日程序。每一步要麼讓你繼續，要麼以當日不交易結束。',
-  // **Bias.** On the daily and 4-hour charts, is structure bullish or bearish? Which pool of liquidity is price most likely reaching for next: the previous day’s high, or its low? If you cannot say, there is no trade today.
-  '1ni0rdm25v2': '**方向偏好。**在日線和 4 小時圖上，結構是看漲還是看跌？價格接下來最可能伸手去拿哪個流動性池：前一日的高點還是低點？如果你說不出來，今天就沒有交易。',
-  // **Time.** Wait for a kill zone. Outside it, do nothing.
-  '22mt485zpgv': '**時間。**等待殺戮時段。時段以外，甚麼都不做。',
-  // **Liquidity.** Inside the kill zone, wait for price to sweep a level against your bias: the Asian range low or the previous day’s low for a long.
-  '1sgduq1t00': '**流動性。**在殺戮時段內，等價格掃過一個與你方向偏好相反的價位：做多時是亞洲區間低點或前一日低點。',
-  // **Shift.** After the sweep, look for a change of character on the 5 or 15-minute chart, made with large candles.
-  'mxxeknknou': '**轉向。**掃蕩之後，在 5 分鐘或 15 分鐘圖上尋找以大陰陽燭完成的特性轉變。',
-  // **Entry.** Place a limit order in the fair value gap or order block that move left behind, ideally inside the optimal trade entry zone.
-  '1y3d72yv5o8': '**入場。**在那段走勢留下的公允價值缺口或訂單塊落限價單，最好位於最佳交易入場點區域內。',
-  // **Risk.** Stop-loss beyond the sweep. Size the position so that stop costs 1% of the account or less. Target the liquidity on the other side.
-  '1y4ojv49584': '**風險。**止蝕放在掃蕩之外。調整持倉規模，令觸及止蝕的損失是戶口的 1% 或以下。以另一邊的流動性為目標。',
-  // Size comes from the stop
-  'ljwcxm734': '規模由止蝕決定',
-  // The entry model gives you a stop distance. That distance, not how confident you feel, decides how much you trade. Try it: put in a tight stop and a wide one and watch the size change while the money at risk stays the same.
-  '1jh3c48r01m': '入場模型給你一個止蝕距離。決定你交易多少的是這個距離，而不是你感覺有多自信。試試看：輸入一個窄止蝕和一個闊止蝕，看著規模改變，而承受風險的金額保持不變。',
+  // Each step either moves you forward or ends the day with no trade.
+  '14etbtg6j71': '每一步要麼讓你繼續，要麼令當日不交易。',
+  // **Bias**: on the daily and 4-hour, which liquidity is price reaching for next? No answer, no trade.
+  '1fs52jdir6c': '**方向偏好**：在日線和 4 小時圖上，價格下一步會去拿哪裏的流動性？答不出，就不交易。',
+  // **Time**: wait for a kill zone.
+  '18owmr58wg6': '**時間**：等殺戮時段。',
+  // **Liquidity**: wait for a sweep against your bias, such as the Asian low for a long.
+  'tyhjvbngry': '**流動性**：等一次逆你偏好的掃蕩，例如做多時掃過亞洲低位。',
+  // **Shift**: a change of character on the 5 or 15-minute chart.
+  'u29tm7yde3': '**轉變**：5 或 15 分鐘圖出現特性轉變。',
+  // **Entry**: a limit order in the fair value gap or order block, ideally in the OTE zone.
+  '1wzgcdeyzfx': '**入場**：在公允價值缺口或訂單塊掛限價單，最好在最佳交易入場區內。',
+  // **Risk**: stop beyond the sweep, 1% of the account or less, target the liquidity opposite.
+  '2e4c7z0iivh': '**風險**：止蝕設在掃蕩之外，不多於戶口 1%，目標是對面的流動性。',
+  // The stop distance, not your confidence, decides the size. Try a tight and a wide stop:
+  '11r3nvic4ie': '決定倉位大小的是止蝕距離，不是你的信心。試試窄止蝕和闊止蝕：',
   // A day that fits the plan
   '215eoafoz3j': '符合計劃的一天',
-  // Bias: daily structure is bullish and yesterday’s high at 105 has not been taken.
-  '2ba1paluq8p': '方向偏好：日線結構看漲，昨日 105 的高點未被取走。',
-  // At 3am New York time price drops under the Asian low of 99.5 to 98.2 and closes back above.
-  '5vznvyftos': '紐約時間凌晨 3 時，價格跌穿 99.5 的亞洲低點至 98.2，然後收市回到其上方。',
-  // The 15-minute chart closes above its last swing high at 100.6, leaving a fair value gap from 99.6 to 100.1.
-  '1tev0re0c3x': '15 分鐘圖收市高於最近 100.6 的擺動高點，留下 99.6 至 100.1 的公允價值缺口。',
-  // Limit buy at 99.9, stop at 98, risk 1.9. Account $10,000, risking 1%: $100 / 1.9 = 52 units.
-  '1uf844k7qh2': '在 99.9 限價買入，止蝕 98，風險 1.9。戶口 $10,000，承受 1% 風險：$100 / 1.9 = 52 單位。',
-  // Target yesterday’s high at 105: reward 5.1, about 2.7 to 1.
-  '26mje9e9j4o': '以昨日 105 的高點為目標：回報 5.1，約 2.7 比 1。',
-  // What ICT gets right
-  '8qhuswosk3': 'ICT 做對了甚麼',
-  // Wait for price to come to you instead of chasing.
-  '28hkuoz0xmq': '等價格來找你，而不是追價。',
-  // Trade only when the market is active.
-  '66mg0zzjz8': '只在市場活躍時交易。',
-  // Know where other traders’ stops are, and do not put yours in the same place.
-  'j7dfyjpfe3': '知道其他交易者的止蝕在哪裡，不要把你的放在同一個地方。',
-  // Define the risk before entering.
-  '5c880zyphy': '入場前先界定風險。',
-  // What to be sceptical about
-  'w9c29f9r81': '需要保持懷疑的地方',
-  // **The story.** The claim that an algorithm deliberately hunts retail stops is not something a chart can prove. Price reaching for obvious levels is explained just as well by ordinary order flow.
-  '1ojragt7rjd': '**故事。**說某個演算法刻意獵殺散戶止蝕，這不是圖表能證明的。價格伸手去拿明顯的價位，用普通的訂單流也同樣解釋得到。',
-  // **The flexibility.** With sweeps, blocks, breakers, gaps and several timeframes, almost any chart can be explained afterwards. An explanation after the fact is not an edge.
-  '1u6y3pk53f5': '**靈活性。**有掃蕩、訂單塊、突破塊、缺口和多個時間週期，幾乎任何圖表都能在事後解釋。事後的解釋不是優勢。',
-  // **The evidence.** Results shown online are selected winners. There is no independent, published record showing these methods are profitable for the people who learn them.
-  'bsicpdmaq5': '**證據。**網上展示的成績是挑選過的贏錢交易。沒有獨立、公開的紀錄顯示這些方法對學習它們的人有利可圖。',
+  // Bias bullish; yesterday’s high at 105 untouched.
+  '6xfg930per': '偏好看好；昨日 105 的高位未被觸及。',
+  // At 3am price dips under the Asian low of 99.5 to 98.2 and closes back above.
+  'joqfe9tq4c': '凌晨 3 時價格跌穿亞洲低位 99.5 至 98.2，然後收回上方。',
+  // The 15-minute chart breaks its swing high at 100.6, leaving a gap from 99.6 to 100.1.
+  '1ab96adgh3j': '15 分鐘圖升穿 100.6 的擺動高位，留下 99.6 至 100.1 的缺口。',
+  // Buy 99.9, stop 98, risk 1.9. $10,000 at 1%: $100 / 1.9 = 52 units.
+  '13d1mt367yq': '買入 99.9，止蝕 98，風險 1.9。$10,000 以 1% 計：$100 / 1.9 = 52 單位。',
+  // Target 105: about 2.7 to 1.
+  'n2z0l2f3kd': '目標 105：約 2.7 比 1。',
+  // Right and sceptical
+  '20g9uonshsl': '做得對的與要存疑的',
+  // **Right**: wait for price to come to you, trade active hours, know where stops are, define risk first.
+  '17273ztlc5a': '**做得對**：等價格來找你、在活躍時段交易、知道止蝕盤在哪、先定好風險。',
+  // **The story**: an algorithm hunting retail stops cannot be proven from a chart.
+  '2brliobrwzd': '**故事**：演算法專門獵殺散戶止蝕，這無法從圖表證明。',
+  // **The flexibility**: almost any chart can be explained afterwards.
+  'r3ar1vemc1': '**彈性**：幾乎任何圖表都能事後解釋。',
+  // **The evidence**: online results are selected winners; there is no independent record.
+  '241fiwre7f4': '**證據**：網上展示的是挑選過的贏單；沒有獨立的紀錄。',
   // Most day traders lose money
   '13s777afvs7': '大部分即日交易者都虧錢',
-  // Studies of real brokerage accounts consistently find that the large majority of day traders lose over time, whatever method they use. Treat any system, this one included, as unproven until your own journal says otherwise, and prove it on paper before risking money.
-  '2ajsapg6yml': '對真實證券戶口的研究一致發現，不論用甚麼方法，絕大多數即日交易者長期都在虧損。把任何系統（包括這一個）都視為未經證實，直到你自己的交易日誌說明不是，並在用真錢冒險前先以模擬交易證明它。',
+  // Studies of real brokerage accounts find most day traders lose over time, whatever the method. Prove any system on paper first.
+  '25xq7aea8b': '對真實證券戶口的研究發現，無論用甚麼方法，大部分即日交易者長期都輸錢。任何系統都要先在模擬盤上證明。',
   // Which session is usually the quietest?
   'm0njlz8pkf': '哪個交易時段通常最平靜？',
-  // London
-  '11zpkzobtxq': '倫敦',
-  // New York
-  '6gh639vftn': '紐約',
-  // Asia
-  '2chj199sukf': '亞洲',
   // The London and New York overlap
   '1ccibgxdwe3': '倫敦和紐約重疊時段',
   // Asia is typically the lowest-volume session, and price often stays in a narrow range.
@@ -320,8 +288,6 @@ export default {
   '1dw8yl3en6g': '三力模型的三個階段是甚麼？',
   // Open, high, close
   '1xko4uz2gqq': '開市、最高、收市',
-  // Accumulation, manipulation, distribution
-  '1z3d4qw5pkx': '累積、操控、派發',
   // Sweep, shift, return
   '1hoclta7gus': '掃蕩、轉向、回來',
   // Asia, London, New York
@@ -382,8 +348,6 @@ export default {
   'bb5rc6qn6y': '23.6% 至 38.2%',
   // 38.2% to 50%
   '1athwixyj71': '38.2% 至 50%',
-  // 62% to 79%
-  '2do97uj4nqs': '62% 至 79%',
   // 100% to 127%
   '18pkhmr5pn5': '100% 至 127%',
   // The OTE is the deep pullback between the 62% and 79% retracements, ideally about 70.5%.
@@ -452,8 +416,6 @@ export default {
   '1am2vdk61sr': '同樣是失效，但之前沒有取走流動性，所以被視為較弱。',
   // Price breaks down through a bullish order block and later rises back to it. What do ICT traders expect?
   '1sd526e9e0v': '價格跌穿一個看漲訂單塊，之後回升到這裡。ICT 交易者預期甚麼？',
-  // Support
-  '1osc7jo1bd9': '支持',
   // Resistance: trapped buyers selling to get out
   '2gj3r7pvsru': '阻力：被困的買家賣出離場',
   // A gap
