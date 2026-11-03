@@ -10,24 +10,18 @@ export default {
   '1c3g6rwd0h9': '持倉規模與 1% 規則',
   // Decide how many dollars you can lose first. The size of the trade follows from that.
   '1y1phl0vteo': '先決定你能輸多少錢，交易規模由此而來。',
-  // **Risk management** is everything you do to make sure that being wrong, which will happen often, does not take you out of the game. It matters more than your entry method. A mediocre strategy with good risk control survives; a good strategy with bad risk control does not.
-  '29961mm5zbk': '**風險管理**是你為確保判斷錯誤（這會經常發生）不會令你出局所做的一切。它比你的入場方法更重要。一個平庸的策略配合良好的風險控制可以生存；一個好策略配合差劣的風險控制則不能。',
-  // The 1% rule
-  'bguwwbw09v': '1% 規則',
-  // The best-known guideline: **never risk more than 1% of your account on a single trade**. "Risk" means the amount you lose if your stop-loss is hit, not the size of the position.
-  '2e16co8fam6': '最廣為人知的指引：**每宗交易承受的風險永遠不要超過帳戶的 1%**。「風險」指觸及止蝕時你會輸掉的金額，而不是持倉的大小。',
-  // With a $10,000 account, 1% is $100. Ten losing trades in a row, which will happen eventually, cost about 10% of the account. Annoying, but you carry on. At 10% risk per trade, the same streak leaves you with about a third of your money.
-  '1wy8ibdnrnv': '以 $10,000 的帳戶計，1% 是 $100。連輸十宗交易（遲早會發生）大約會損失帳戶的 10%。令人氣餒，但你可以繼續。如果每宗交易承受 10% 風險，同樣的連敗會令你只剩大約三分之一的資金。',
-  // Sizing a position
-  '16ermrdiu04': '決定持倉規模',
-  // **Position sizing** works backwards from the risk:
-  '1pw4rhhu3fa': '**持倉規模**由風險倒推計算：',
-  // Decide the dollars at risk: account x risk percentage.
-  '1wr4mleheqe': '決定承受風險的金額：帳戶 x 風險百分比。',
-  // Decide where the stop-loss goes, from the chart. The gap between entry and stop is the risk per unit.
-  '17x93mu6t4q': '從圖表決定止蝕放在哪裡。入場價與止蝕價之間的差距就是每單位風險。',
-  // Divide: dollars at risk / risk per unit = number of units.
-  'hh0umhtqmx': '相除：承受風險的金額 / 每單位風險 = 單位數目。',
+  // **Risk management** keeps being wrong, which happens often, from ending your trading. It matters more than your entry method.
+  '1imlr5n8ws2': '**風險管理**確保經常出現的判斷錯誤，不會令你的交易生涯結束。它比入場方法更重要。',
+  // The best-known rule: **never risk more than 1% of your account on one trade**. Risk is what you lose if the stop is hit, not the size of the position. On $10,000, ten losses in a row at 1% cost about 10%; at 10% per trade they leave about a third.
+  '1g6zx6dvvln': '最著名的規則：**每宗交易承受的風險永遠不要超過帳戶的 1%**。風險是觸及止蝕時輸掉的金額，不是持倉的大小。以 $10,000 計，每宗 1% 連輸十次約虧 10%；每宗 10% 則只剩約三分之一。',
+  // Dollars at risk = account x risk percentage.
+  '253ql6kzoe': '承受風險的金額 = 帳戶 x 風險百分比。',
+  // Put the stop where the chart says. Entry minus stop is the risk per unit.
+  '2b818091n7h': '按圖表放止蝕。入場價減止蝕價就是每單位風險。',
+  // Entry
+  '5p496sooaa': '入場',
+  // Units = dollars at risk / risk per unit.
+  '1ev20m5u8oz': '單位數 = 承受風險的金額 / 每單位風險。',
   // Position size = (account x risk %) / |entry price - stop price|
   'qk08jc6h6d': '持倉規模 =（帳戶 x 風險 %）/ |入場價 - 止蝕價|',
   // The stop decides the size. A wider stop means a smaller position, so the dollar risk stays the same.
@@ -42,78 +36,62 @@ export default {
   '17cpgqln35v': '規模：$100 / $2 = 50 股，價值 $2,500。',
   // If the stop is hit you lose 50 x $2 = $100, exactly 1%.
   'kpmau361x4': '如果觸及止蝕，你會輸 50 x $2 = $100，剛好 1%。',
-  // Try different accounts, risk levels and stops:
-  'hp59h6nwtn': '試試不同的帳戶、風險水平和止蝕：',
-  // What this fixes
-  '1r6vczqp8o8': '這解決了甚麼',
-  // Every trade risks the same amount, so one bad trade cannot do unusual damage.
-  '9iisgdjkxw': '每宗交易承受同樣的金額風險，所以一宗壞交易不會造成異常的損害。',
-  // Volatile instruments automatically get smaller positions, because their stops are wider.
-  'szc8pk2u8w': '波動大的品種會自動得到較小的持倉，因為它們的止蝕較闊。',
-  // You know your worst case before you click, which makes it much easier to follow the plan.
-  '13dbb3edqio': '按下按鈕之前你已經知道最壞情況，這令你更容易按計劃執行。',
+  // Every trade then risks the same amount, volatile markets get smaller positions automatically, and you know the worst case before you click.
+  'nbtnlseri1': '這樣每宗交易承受的風險都一樣，波動大的市場自動用較小持倉，而且按下前就知道最壞情況。',
   // In this app
   '1fjqwz7ng0w': '在這個應用程式中',
   // The order ticket has this calculator built in: enter your risk percentage and stop price and it fills in the size. It warns you if a trade risks more than 2% or has no stop-loss.
   'fvbr8gk90d': '下單面板內置了這個計算機：輸入你的風險百分比和止蝕價，它就會填上規模。如果交易風險超過 2% 或沒有止蝕，它會警告你。',
   // Position size is not risk
   '14vu0n99rgu': '持倉規模不等於風險',
-  // A $5,000 position with a stop 1% away risks $50. A $1,000 position with no stop risks $1,000. Always think in terms of what you lose at the stop.
-  '1p03vd3eyt2': '一個 $5,000、止蝕距離 1% 的持倉承受 $50 風險。一個 $1,000、沒有止蝕的持倉承受 $1,000 風險。永遠以觸及止蝕時會輸多少來思考。',
+  // A $5,000 position with a stop 1% away
+  'h7vi2gqx1j': '一個 $5,000、止蝕距離 1% 的持倉',
+  // A $5,000 position with a stop 1% away risks $50. A $1,000 position with no stop risks $1,000.
+  '29j0qugoun9': '止蝕在 1% 之外的 $5,000 持倉，風險是 $50。沒有止蝕的 $1,000 持倉，風險是 $1,000。',
   // Where to put a stop-loss
   '13nf4ag813l': '止蝕應該放在哪裡',
   // A stop belongs where the chart proves your idea wrong, not where the loss feels comfortable.
   '6rngpjqftk': '止蝕應該放在圖表證明你的想法錯誤的地方，而不是虧損感覺舒服的地方。',
-  // A **stop-loss** answers one question: at what price is my reason for this trade no longer true? Put it there. Then size the position so that getting stopped costs your chosen risk.
-  '298wmoe4vo6': '**止蝕**回答一個問題：在甚麼價格，我做這宗交易的理由就不再成立？把它放在那裡。然後決定持倉規模，令觸及止蝕時的損失剛好等於你選擇的風險。',
-  // Three sound ways to place one
-  '2g84hpjr4r9': '三種合理的放置方法',
-  // **Structure**: beyond the level that should hold. For a long, just below the support or swing low you are trading from. If price gets there, the setup has failed.
-  '1c0m5s8nyze': '**結構**：放在應該守住的價位之外。做多時，放在你所依據的支持位或擺動低點下方少許。如果價格到了那裡，形態就失敗了。',
-  // **Volatility**: a multiple of ATR from your entry, commonly 1.5 to 3 ATR. This keeps the stop outside normal noise for that instrument.
-  '173exqk57sq': '**波幅**：距離入場價若干倍 ATR，通常為 1.5 至 3 個 ATR。這能令止蝕位於該品種的正常雜訊之外。',
-  // **Both**: below the structure level plus a small ATR buffer, so an ordinary wick does not take you out.
-  '1g0gpiueh5a': '**兩者結合**：放在結構價位下方，再加少許 ATR 緩衝，令普通的影線不會把你踢出場。',
+  // Put the **stop-loss** where your reason for the trade stops being true. Then size the position so that being stopped costs your chosen risk.
+  '2cka2709foc': '把**止蝕**放在你入市理由不再成立的地方。然後調整持倉規模，令觸及止蝕的損失等於你選定的風險。',
+  // **Structure**: just beyond the level that should hold, such as below the support you are buying.
+  'cmmnpdfg0z': '**結構**：剛好在應該守住的價位之外，例如你買入的支持位之下。',
+  // **Volatility**: 1.5 to 3 ATR from entry, outside normal noise.
+  '3hgir32q3p': '**波幅**：距離入場價 1.5 至 3 個 ATR，在正常雜訊之外。',
+  // **Both**: below the level plus a small ATR buffer.
+  'htm66tt9gx': '**兩者結合**：價位之下再加少量 ATR 緩衝。',
   // Three candidate stops for a long entered on the bounce from support. Too tight gets hit by noise; the structural stop survives; an arbitrary wide stop risks more than the idea needs.
   'x3aqqczdlu': '在支持位反彈時入場做多的三個候選止蝕。太窄會被雜訊觸發；結構性止蝕能守住；隨意的闊止蝕承受的風險比想法所需的更多。',
   // Support
   '1osc7jo1bd9': '支持位',
-  // Entry
-  '5p496sooaa': '入場',
   // Too tight: inside the noise
   'xrc2dpfz5r': '太窄：位於雜訊之內',
   // Structural: below support with a buffer
   '6qaitet5oy': '結構性：支持位下方加緩衝',
   // Too wide: far beyond where the idea fails
   '27ehv40uo6s': '太闊：遠超想法失效的位置',
-  // Common mistakes
-  'th8l6jpb23': '常見錯誤',
-  // **Choosing the stop from the loss you want.** "I only want to lose $20, so the stop goes here" puts it wherever the money says, usually inside the noise. Choose the stop from the chart and adjust the size instead.
-  '1ldcipagw05': '**由想輸的金額去決定止蝕。**「我只想輸 $20，所以止蝕放在這裡」，這會把止蝕放在金錢決定的地方，通常位於雜訊之內。應該從圖表決定止蝕，再調整規模。',
-  // **Too tight.** You are stopped out again and again by normal movement, then watch price go where you expected.
-  '5v6krkmtr7': '**太窄。**你一次又一次被正常的波動止蝕出場，然後看著價格走到你預期的地方。',
-  // **Exactly on the obvious level.** Many stops sit right at round numbers and visible lows. Price often dips just through them. Give it a little room.
-  '26ncr2dlptx': '**剛好放在明顯的價位。**很多止蝕盤都放在整數和明顯的低點。價格常常剛好穿過它們少許。給它一點空間。',
-  // **Moving the stop away when price approaches.** This turns a planned small loss into an unplanned large one.
-  '25eqr5m6h5m': '**價格逼近時把止蝕移遠。**這會把計劃中的小虧損變成計劃外的大虧損。',
-  // Trailing stops
-  '1vd1r13a6a2': '移動止蝕',
-  // A **trailing stop** moves in your favour as the trade works, never against. For a long you might raise it to just under each new higher low, or keep it 2 ATR below the highest close. It locks in profit while leaving room for the trend to continue.
-  '1ung36nbn7x': '**移動止蝕**隨交易向有利方向發展而移動，永不後退。做多時，你可以把它提高到每個新的更高低點下方少許，或保持在最高收市價下方 2 個 ATR。它在鎖定盈利的同時，給趨勢延續留有空間。',
+  // **Stop chosen from the loss you want**: it lands inside the noise. Pick it from the chart and change the size instead.
+  '1mzjgjdj7ao': '**由想輸的金額去決定止蝕**：止蝕會落在雜訊之內。應按圖表選止蝕，改為調整規模。',
+  // **Exactly on the obvious level**: price often dips just through round numbers and visible lows. Leave a little room.
+  '240o61ixqaw': '**剛好放在明顯的價位**：價格常會稍為跌穿整數和明顯低點。留一點空間。',
+  // **Moving it away as price approaches**: a planned small loss becomes an unplanned big one.
+  'qzfre82f14': '**價格逼近時把止蝕移遠**：計劃中的小虧損會變成計劃外的大虧損。',
+  // A **trailing stop** only moves in your favour, for example under each new higher low, locking in profit while the trend runs.
+  '3pk45bxwqe': '**移動止蝕**只向對你有利的方向移動，例如放在每個新的更高低點之下，在趨勢延續時鎖定利潤。',
   // A stop you move is not a stop
   '1g274gqm7on': '會移動的止蝕不是止蝕',
-  // The one rule: you may move a stop to reduce risk, never to increase it. If you find yourself widening it "to give the trade room", the trade is already wrong and you are refusing to accept it.
-  'u0kj0x4b7q': '唯一的規則：你可以為了降低風險而移動止蝕，但永遠不能為了增加風險而移動。如果你發現自己「為了給交易空間」而把止蝕放闊，這宗交易已經錯了，只是你拒絕接受。',
+  // Move a stop to reduce risk, never to increase it.
+  'a6ljm1xyu9': '移動止蝕只可以減少風險，永遠不可以增加風險。',
   // Break-even stops
   'n3m1v2ma3r': '保本止蝕',
-  // Once a trade has moved a good distance in your favour, many traders move the stop to their entry price so the trade can no longer lose. Do it too early and normal pullbacks will take you out of good trades.
-  'yilq12vlvx': '交易向有利方向走了一段好距離後，很多交易者會把止蝕移到入場價，令交易不會再虧錢。如果做得太早，正常的回調會把你踢出好的交易。',
+  // Moving the stop to entry once a trade is well in profit stops it losing, but doing it too early gets you shaken out of good trades.
+  '1od7r25j1h8': '交易大幅獲利後把止蝕移到入場價，可以令它不再虧損，但太早這樣做會令你在好交易中被震出場。',
   // Risk/reward ratio
   '9ybkifk0p2': '風險回報比',
   // Compare what you could make with what you could lose before every trade.
   '1c68slritka': '每宗交易之前，比較你可能賺多少和可能輸多少。',
-  // The **risk/reward ratio** compares the distance to your target with the distance to your stop. If you risk $1 to make $2, the ratio is 1:2. Traders also say the trade offers **2R**, where **R** is the amount risked.
-  '1z9jpd6uioc': '**風險回報比**比較到目標的距離和到止蝕的距離。如果你冒 $1 風險去賺 $2，比率就是 1:2。交易者也會說這宗交易提供 **2R**，其中 **R** 是承受風險的金額。',
+  // The **risk/reward ratio** compares the distance to the target with the distance to the stop. Risking $1 to make $2 is 1:2, or **2R**, where **R** is the amount risked.
+  '1p2eplklo8k': '**風險回報比**比較到目標的距離和到止蝕的距離。冒 $1 風險賺 $2 是 1:2，即 **2R**，**R** 是承受的風險金額。',
   // Reward-to-risk = |target - entry| / |entry - stop|
   '13jsodjm827': '回報風險比 = |目標 - 入場| / |入場 - 止蝕|',
   // Entry 100, stop 95, target 115: reward 15, risk 5, so 3R (or 1:3).
@@ -128,10 +106,8 @@ export default {
   'bfogwb372b': '目標 111：回報 9，即 3R',
   // Enter
   '2bguige90oi': '入場',
-  // Why it matters so much
-  '1lz12g8xc7z': '它為甚麼如此重要',
-  // The ratio decides how often you need to be right. At 1:1 you must win more than half your trades to profit. At 1:2 you break even winning only a third. At 1:3, a quarter.
-  '1l55sk4sqra': '這個比率決定你需要多常判斷正確。以 1:1 計，你必須贏超過一半的交易才能獲利。以 1:2 計，只贏三分之一就能打和。以 1:3 計，四分之一就夠。',
+  // The ratio sets how often you must be right: at 1:1 more than half the time, at 1:2 a third, at 1:3 a quarter.
+  '47qm2apwh': '這個比率決定你需要對多少次：1:1 要對一半以上，1:2 要三分之一，1:3 要四分之一。',
   // Break-even win rate = 1 / (1 + reward-to-risk)
   '2cn437n2nx0': '損益平衡勝率 = 1 /（1 + 回報風險比）',
   // 1:1 needs 50%.  1:2 needs 33.3%.  1:3 needs 25%.  Fees push all of these slightly higher.
@@ -146,32 +122,22 @@ export default {
   '1pmvai7cm8o': '六宗虧損：6 x $100 = -$600。',
   // Net: +$200, despite losing more often than winning.
   '15fxvd36xg5': '淨結果：+$200，雖然輸的次數比贏的多。',
-  // Using it before a trade
-  '16xubcdzxxu': '在交易前運用它',
-  // Find your stop from the chart (previous lesson).
-  '1bd8tnkxjai': '從圖表找出你的止蝕（上一課）。',
-  // Find a realistic target: the next resistance, a measured pattern target, a multiple of ATR.
-  '3mgpvhf26e': '找出一個實際的目標：下一個阻力位、量度出的形態目標、若干倍的 ATR。',
-  // Work out the ratio. Many traders skip anything under 1:2.
-  '1miu3k9p7cs': '計算比率。很多交易者會跳過低於 1:2 的交易。',
+  // Before a trade: find the stop from the chart, find a realistic target such as the next resistance, and skip anything under about 1:2.
+  'x8isnjb4yl': '交易前：按圖表找止蝕，找一個實際的目標（例如下一個阻力位），低於約 1:2 的就跳過。',
   // The target must be realistic
   'pmefcd7gl3': '目標必須實際',
-  // Any trade can show 1:5 if you put the target somewhere price is unlikely to reach. A reward that rarely arrives is worth little. Set targets where the chart gives a reason, such as just before resistance.
-  '12bxqcbanlf': '只要把目標放在價格不太可能到達的地方，任何交易都可以顯示 1:5。很少兌現的回報價值不大。把目標放在圖表給你理由的地方，例如阻力位之前少許。',
-  // Do not judge the ratio alone
-  '2b1x73xv6hg': '不要單看比率',
-  // A 1:5 setup that works one time in ten loses money. A 1:1 setup that works seven times in ten is excellent. The ratio and the win rate have to be read together, which is the next lesson.
-  '1n9uimqpgli': '一個 1:5 的形態如果十次只成功一次，會虧錢。一個 1:1 的形態如果十次成功七次，則非常出色。比率和勝率必須一起看，這就是下一課。',
+  // Any trade shows 1:5 if the target is somewhere price will rarely reach. Put it where the chart gives a reason.
+  '1sywthlzoiw': '只要把目標放在價格很少到達的地方，任何交易都可以顯示 1:5。把目標放在圖表有理由的位置。',
+  // Read it with the win rate
+  '29uo4qyp36z': '與勝率一起看',
+  // A 1:5 setup that works one time in ten loses money; a 1:1 that works seven in ten is excellent.
+  '1mj31elblkr': '十次只成功一次的 1:5 形態會虧錢；十次成功七次的 1:1 形態則非常好。',
   // Win rate vs expectancy
   'lcutedrmed': '勝率與期望值',
   // A high win rate does not mean you are profitable. Expectancy is the number that does.
   '1wf3vzwlx9v': '高勝率不代表你有利可圖。期望值才是關鍵數字。',
-  // The **win rate** is the percentage of your trades that make money. Beginners chase a high win rate because winning feels good. But a strategy can win 90% of the time and lose money, or win 30% and make a fortune.
-  '1qst3g93aii': '**勝率**是你的交易中賺錢的百分比。新手追求高勝率，因為贏的感覺很好。但一個策略可以贏 90% 卻虧錢，也可以只贏 30% 卻賺大錢。',
-  // Expectancy
-  '120gjn8bj0w': '期望值',
-  // **Expectancy** is the average amount you make per trade over many trades. It combines how often you win with how much you win and lose.
-  '1ac9vfcidsy': '**期望值**是多宗交易下平均每宗能賺多少。它結合了你贏的頻率，以及你贏和輸的金額。',
+  // The **win rate** is the share of trades that make money. It feels good, but a strategy can win 90% of the time and lose money. **Expectancy**, the average result per trade, is what counts.
+  '1u8fr7z0zf6': '**勝率**是賺錢交易所佔的比例。贏的感覺很好，但一個策略可以九成時間贏而仍然虧錢。重要的是**期望值**，即每宗交易的平均結果。',
   // Expectancy = (win rate x average win) - (loss rate x average loss)
   'trdwgcvb4u': '期望值 =（勝率 x 平均盈利）-（敗率 x 平均虧損）',
   // Positive means the strategy makes money over time. Negative means it loses, however good it feels.
@@ -192,40 +158,28 @@ export default {
   'atjlhk0f62': '期望值 = 0.35 x 300 - 0.65 x 100 = 105 - 65 = 每宗交易 +$40。',
   // Loses most days. Makes $4,000 over 100 trades.
   '6a43ufquad': '大部分日子都在輸。100 宗交易後賺 $4,000。',
-  // Expectancy in R
-  '18suvvztm1d': '以 R 計的期望值',
-  // It is clearer to measure in **R**, multiples of the amount risked. If every loss is 1R and your average winner is 2R, then winning 40% of the time gives 0.4 x 2 - 0.6 x 1 = +0.2R per trade. Risking $100 a trade, that is $20 per trade on average.
-  '1jqbkyefoel': '以 **R**（承受風險金額的倍數）來量度會更清楚。如果每次虧損都是 1R，平均盈利是 2R，那麼 40% 的勝率就是 0.4 x 2 - 0.6 x 1 = 每宗交易 +0.2R。每宗交易承受 $100 風險，即平均每宗賺 $20。',
-  // Why you need many trades
-  '14jlf23ty9m': '為甚麼你需要大量交易',
-  // Expectancy is an average, and averages only show up over a large number of trades. A strategy with +0.2R expectancy can easily lose eight times in a row. Judging it on ten trades tells you almost nothing. Thirty is a bare minimum and a hundred is better.
-  '28yxupq1j75': '期望值是平均數，而平均數只會在大量交易後才顯現。一個期望值 +0.2R 的策略很容易連輸八次。只看十宗交易來評價它幾乎甚麼都說明不了。三十宗是最低限度，一百宗更好。',
-  // Set a win rate and an average win, then draw a few runs of 50 trades. Every run uses exactly the same odds:
-  '1xitn6jcfnn': '設定勝率和平均盈利，然後模擬幾輪各 50 宗的交易。每一輪用的勝算完全相同：',
-  // A string of losses does not prove a strategy is broken.
-  '8nvtm90byf': '一連串的虧損並不證明策略失效。',
-  // A string of wins does not prove it works.
-  '168du10fjyo': '一連串的勝利並不證明策略有效。',
-  // This is why you keep a **journal**: so you can calculate your real numbers instead of going on feeling.
-  '2a4tnriqugu': '這就是你要寫**交易日誌**的原因：讓你計算真實的數字，而不是憑感覺。',
+  // In **R**: losses of 1R and winners of 2R at a 40% win rate give 0.4 x 2 - 0.6 x 1 = +0.2R per trade.
+  '648cu19tqw': '以 **R** 計：虧損 1R、勝利 2R、勝率 40%，得出 0.4 x 2 - 0.6 x 1 = 每宗交易 +0.2R。',
+  // +0.2R
+  '29mi1cqb9n3': '+0.2R',
+  // An average only appears over many trades. A +0.2R strategy can easily lose eight in a row, so judge it on at least 30 trades, ideally 100. Draw a few runs with the same odds:
+  'e53x8zkpu': '平均值只會在很多宗交易後出現。+0.2R 的策略很容易連輸八次，所以至少要看 30 宗交易，最好 100 宗。用同樣的機率畫幾次：',
+  // A losing streak does not prove a strategy broken, and a winning one does not prove it works. A **journal** gives you your real numbers.
+  'p95p8tmg1y': '連輸不能證明策略失效，連贏也不能證明它有效。**交易日誌**給你真實的數字。',
   // The Analytics page works out your win rate, average win and loss, expectancy and average R from your paper trades, and the Backtester reports the same for a rule set on historical data.
   'j2bvazqa4f': '績效分析頁會根據你的模擬交易計算勝率、平均盈虧、期望值和平均 R，回測器也會為一套規則在歷史數據上報告同樣的數字。',
   // Losing streaks are normal
   '1wamdqkyia0': '連續虧損是正常的',
-  // With a 40% win rate, six losses in a row will happen roughly once every twenty-odd trades. If your risk per trade is small, that streak costs 6% and you carry on. If it is large, the streak ends your account before the average can work.
-  'd7ltfd0c7v': '以 40% 的勝率計，大約每二十多宗交易就會出現一次連輸六宗。如果你每宗交易的風險很小，這段連敗只損失 6%，你可以繼續。如果風險很大，連敗會在平均數發揮作用之前就結束你的帳戶。',
+  // At a 40% win rate, six losses in a row turn up about once every twenty-odd trades. With small risk per trade it costs 6% and you carry on.
+  'je6bx25oap': '勝率 40% 時，大約每二十多宗交易就會出現一次六連輸。每宗風險小的話，只損失 6%，你可以繼續。',
   // Drawdown
   '1dq61tgrxpu': '回撤',
   // The fall from a peak in your account. The deeper it goes, the harder it is to climb out.
   '1vokb9h34ud': '帳戶由高峰的回落。回落得愈深，就愈難爬回來。',
-  // A **drawdown** is the drop in your account from its highest point to a later low, usually given as a percentage. If your account grew to $12,000 and then fell to $9,600, that is a 20% drawdown, even though you are only 4% below your $10,000 start.
-  '170qeote2vt': '**回撤**是帳戶由最高點跌至之後低點的幅度，通常以百分比表示。如果你的帳戶增長到 $12,000 然後跌到 $9,600，即使只比起始的 $10,000 低 4%，回撤也是 20%。',
-  // **Maximum drawdown** is the largest such drop over a period. It is the most honest measure of how painful a strategy is to trade.
-  '1yj89cwsm0j': '**最大回撤**是一段時期內最大的一次回落。它是量度一個策略交易起來有多痛苦的最誠實指標。',
-  // The arithmetic that hurts
-  '1awjy3u76qg': '令人痛苦的算術',
-  // Losses and gains are not symmetric. After a loss you have less money, so you need a bigger percentage gain to get back.
-  '1w1yp0zi8wp': '虧損和盈利並不對稱。虧損之後你的資金變少了，所以需要更大的百分比收益才能回本。',
+  // A **drawdown** is the fall from the highest point of your account to a later low. Up to $12,000 then down to $9,600 is a 20% drawdown, even though you are only 4% below a $10,000 start. **Maximum drawdown**, the largest one, is the most honest measure of how painful a strategy is.
+  'mflvw3lw2z': '**回撤**是帳戶由最高點跌到之後低點的幅度。升到 $12,000 再跌到 $9,600 是 20% 回撤，即使你只比 $10,000 本金低 4%。**最大回撤**，即最大的一次，最能誠實反映一個策略有多難捱。',
+  // After a loss you have less money, so you need a bigger gain to get back:
+  'n8430nkzrv': '虧損後你的資金變少，所以需要更大的升幅才能回本：',
   // Gain needed to recover = loss / (1 - loss)
   '29pgylskh4m': '回本所需收益 = 虧損 /（1 - 虧損）',
   // Lose 10%, need 11%.  Lose 20%, need 25%.  Lose 50%, need 100%.  Lose 90%, need 900%.
@@ -234,38 +188,32 @@ export default {
   '154x4bnpp4p': '把這看作帳戶結餘而不是價格。由 120 的高峰跌到 96 的低點是 20% 的回撤，從那裡要賺 25% 才能回本。',
   // Peak: 120
   '26z1v5e2g0y': '高峰：120',
-  // Trough: 96, a 20% drawdown
-  '1fwx6liptrz': '谷底：96，即 20% 回撤',
   // Peak
   '1jjt59f8e2z': '高峰',
+  // Trough: 96, a 20% drawdown
+  '1fwx6liptrz': '谷底：96，即 20% 回撤',
   // Trough
   'e06b5o8t20': '谷底',
-  // Why small risk per trade is the answer
-  '1dm30zwkvbd': '為甚麼每宗交易承受小風險就是答案',
-  // At 1% risk, a ten-trade losing streak is about a 10% drawdown: recoverable with an 11% gain.
-  '1smq2z1ecws': '以 1% 風險計，連輸十宗交易約為 10% 回撤：賺 11% 就能回本。',
-  // At 5% risk, the same streak is about 40%: you need 67% to recover.
-  '35jgspl6px': '以 5% 風險計，同樣的連敗約為 40%：你需要 67% 才能回本。',
-  // At 10% risk, it is about 65%: you need 186%.
-  'byazomvih4': '以 10% 風險計，約為 65%：你需要 186%。',
-  // Every strategy has losing streaks. Position sizing decides whether a streak is a setback or the end.
-  '1rmcfr743uw': '每個策略都有連敗。持倉規模決定一段連敗只是挫折，還是終結。',
-  // Managing a drawdown
-  'fzmi86xvys': '管理回撤',
-  // **Set a limit in advance.** For example: after a 10% drawdown, halve position sizes; after 20%, stop and review.
-  'onro0neni2': '**預先設定上限。**例如：回撤 10% 後把持倉規模減半；回撤 20% 後停止並檢討。',
-  // **Daily loss limit.** Stop trading for the day after losing, say, 3%. This prevents one bad day from becoming a disaster.
-  '1b40iz6x831': '**每日虧損上限。**例如虧損 3% 後當日停止交易。這能防止一個壞日子變成災難。',
-  // **Do not increase size to win it back.** That is how a 15% drawdown becomes 50%.
-  'katxt2shw0': '**不要為了贏回來而加大規模。**15% 的回撤就是這樣變成 50% 的。',
+  // At 1% risk, ten losses in a row is about a 10% drawdown, back with an 11% gain.
+  'wj00bfmxo7': '每宗 1% 風險，連輸十次約回撤 10%，賺 11% 即可回本。',
+  // At 5% risk, about 40%: you need 67%.
+  '13d931z0d8y': '每宗 5% 風險，約 40%：需要 67%。',
+  // At 10% risk, about 65%: you need 186%.
+  '268a5qu456h': '每宗 10% 風險，約 65%：需要 186%。',
+  // **Set limits in advance**: halve size after a 10% drawdown, stop and review after 20%.
+  'wyy7ya4vun': '**預先設定上限**：回撤 10% 後把規模減半，20% 後停止並檢討。',
+  // **Daily loss limit**: stop for the day after losing, say, 3%.
+  '1i595dkzd2v': '**每日虧損上限**：輸了例如 3% 就停止當日交易。',
+  // **Never size up to win it back.** That turns 15% into 50%.
+  '11qk2hymy5q': '**永遠不要為了贏回來而加大規模。**這會把 15% 變成 50%。',
   // Leverage makes drawdowns faster
   '1jyqpir68x0': '槓桿令回撤來得更快',
-  // Leverage multiplies the dollar size of every loss. A strategy that draws down 15% unleveraged draws down far more at 5x, and a liquidation is a 100% loss of the margin on that trade in one step.
-  '2cv5vrwjpyi': '槓桿會放大每次虧損的金額。一個不用槓桿時回撤 15% 的策略，用 5 倍槓桿時回撤會大得多，而強制平倉就是一步之間輸掉該交易 100% 的保證金。',
-  // End of the risk module
-  'p5tb8ba27a': '風險單元完結',
-  // If you remember one thing from the whole course: size every trade from the stop, risk a small fixed share of the account, and never move a stop to make a loss bigger.
-  '1xpnin3w06n': '如果整個課程你只記住一件事：每宗交易都由止蝕決定規模、只承受帳戶一個細小而固定的比例風險，以及永遠不要為了令虧損變大而移動止蝕。',
+  // Leverage multiplies every loss, and a liquidation loses the whole margin on that trade in one step.
+  '1y0s6089is8': '槓桿放大每一次虧損，而強制平倉一步就輸掉該交易的全部保證金。',
+  // The one thing to remember
+  '1wt1st5lxzg': '要記住的一件事',
+  // Size every trade from the stop, risk a small fixed share of the account, and never move a stop to make a loss bigger.
+  '51l1f15apo': '按止蝕決定每宗交易的規模，只拿帳戶的一小部分固定比例冒險，永遠不要為了令虧損更大而移動止蝕。',
   // Under the 1% rule, "risk" means:
   '1nflzimdxb7': '在 1% 規則下，「風險」指：',
   // The size of the position
@@ -296,8 +244,6 @@ export default {
   '1e2l0vnafy4': '規模 = 承受風險的金額 / 止蝕距離。距離加倍，規模就減半。',
   // Which trade risks more?
   '50e47fttk9': '哪一宗交易承受的風險較大？',
-  // A $5,000 position with a stop 1% away
-  'h7vi2gqx1j': '一個 $5,000、止蝕距離 1% 的持倉',
   // A $1,000 position with no stop at all
   '14yhqfdyeuo': '一個 $1,000、完全沒有止蝕的持倉',
   // They risk the same
@@ -424,8 +370,6 @@ export default {
   'g7qqd8dsfr': '-0.2R',
   // 0R
   'p1kqyn6dy1': '0R',
-  // +0.2R
-  '29mi1cqb9n3': '+0.2R',
   // +0.9R
   '21huzffkrsq': '+0.9R',
   // 0.3 x 3 - 0.7 x 1 = 0.9 - 0.7 = +0.2R per trade.
