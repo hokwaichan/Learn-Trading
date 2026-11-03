@@ -87,18 +87,40 @@ function readRegistry() {
   }
 }
 
+/**
+ * Versions of a picture with its drawn-in labels translated, made by hand from the
+ * Commons original (allowed by its licence) and saved beside it, such as
+ * candle-scheme.zh-Hant.png. The list names them: "localized": { "zh-Hant": "<file>" }.
+ */
+function localized(id, entry) {
+  if (!entry.localized) return undefined;
+  const out = {};
+  for (const [locale, file] of Object.entries(entry.localized)) {
+    const path = join(OUT_DIR, file);
+    if (!existsSync(path)) throw new Error(`${id}: ${locale} version ${file} is missing from public/images/lessons`);
+    const png = readFileSync(path);
+    if (png.toString('ascii', 1, 4) !== 'PNG') throw new Error(`${id}: ${file} is not a PNG`);
+    out[locale] = { file, width: png.readUInt32BE(16), height: png.readUInt32BE(20) };
+  }
+  return out;
+}
+
 const result = {};
 let failed = 0;
 for (const [id, entry] of Object.entries(list)) {
   const kept = previous[id];
-  if (!all && kept && existsSync(join(OUT_DIR, kept.file))) {
-    result[id] = kept;
-    continue;
-  }
   try {
-    result[id] = await fetchOne(id, entry);
-    console.log(`fetched  ${id}  (${result[id].license}, ${result[id].author})`);
+    if (!all && kept && existsSync(join(OUT_DIR, kept.file))) {
+      result[id] = kept;
+    } else {
+      result[id] = await fetchOne(id, entry);
+      console.log(`fetched  ${id}  (${result[id].license}, ${result[id].author})`);
+    }
+    const versions = localized(id, entry);
+    if (versions) result[id] = { ...result[id], localized: versions };
+    else delete result[id].localized;
   } catch (e) {
+    delete result[id];
     failed++;
     console.error(`failed   ${e.message}`);
   }

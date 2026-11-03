@@ -95,6 +95,10 @@ describe('lesson pictures', () => {
 
   it.each(Object.entries(IMAGES))('%s is saved, credited and openly licensed', (id, image) => {
     expect(existsSync(`public/images/lessons/${image.file}`), 'file is in public/images/lessons').toBe(true);
+    for (const [locale, copy] of Object.entries(image.localized ?? {})) {
+      expect(['zh-Hant'], `${id}: translated copy is for a supported language`).toContain(locale);
+      expect(existsSync(`public/images/lessons/${copy.file}`), `${id}: ${locale} copy is in public/images/lessons`).toBe(true);
+    }
     expect(image.author.length).toBeGreaterThan(1);
     expect(image.source).toMatch(/^https:\/\/commons\.wikimedia\.org\//);
     expect(image.license).toMatch(/^(CC0|Public domain|PD|CC BY(-SA)? \d)/i);

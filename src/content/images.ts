@@ -72,7 +72,14 @@ export const IMAGES: Record<string, LessonImage> = {
     "author": "Probe-meteo.com",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Candlestick_chart_scheme_01-en.svg"
+    "source": "https://commons.wikimedia.org/wiki/File:Candlestick_chart_scheme_01-en.svg",
+    "localized": {
+      "zh-Hant": {
+        "file": "candle-scheme.zh-Hant.png",
+        "width": 960,
+        "height": 960
+      }
+    }
   },
   "candle-bull-bear": {
     "file": "candle-bull-bear.png",
@@ -81,7 +88,14 @@ export const IMAGES: Record<string, LessonImage> = {
     "author": "Probe-meteo.com",
     "license": "CC BY-SA 3.0",
     "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
-    "source": "https://commons.wikimedia.org/wiki/File:Candlestick_chart_scheme_03-en.svg"
+    "source": "https://commons.wikimedia.org/wiki/File:Candlestick_chart_scheme_03-en.svg",
+    "localized": {
+      "zh-Hant": {
+        "file": "candle-bull-bear.zh-Hant.png",
+        "width": 960,
+        "height": 640
+      }
+    }
   },
   "pattern-hammer": {
     "file": "pattern-hammer.png",

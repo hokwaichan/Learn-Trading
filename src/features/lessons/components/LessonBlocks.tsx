@@ -3,7 +3,7 @@ import { AlertTriangle, Info, OctagonAlert } from 'lucide-react';
 import { cn, GlossaryTerm, Modal } from '@/components/ui';
 import { GLOSSARY } from '@/content/glossary';
 import { IMAGES } from '@/content/images';
-import { t } from '@/i18n';
+import { getLocale, t } from '@/i18n';
 import { buildMatcher, linkLessonBlocks, type TextSegment } from '@/lib/glossaryLinker';
 import type { PayoffLeg } from '@/lib/pricing/payoff';
 import type { Lesson, LessonBlock, LessonImage } from '@/types';
@@ -60,7 +60,9 @@ function Widget({ block }: { block: Extract<LessonBlock, { type: 'widget' }> }):
   }
 }
 
-const imageUrl = (image: LessonImage) => `${import.meta.env.BASE_URL}images/lessons/${image.file}`;
+/** The version to show: one with its drawn-in labels translated, when there is one for this language. */
+const version = (image: LessonImage) => image.localized?.[getLocale()] ?? image;
+const imageUrl = (image: LessonImage) => `${import.meta.env.BASE_URL}images/lessons/${version(image).file}`;
 
 /** Who made the pictures and under which licence, each linked to its source. */
 function Credits({ images }: { images: LessonImage[] }) {
@@ -86,6 +88,7 @@ function Credits({ images }: { images: LessonImage[] }) {
         </span>
       ))}
       {' · Wikimedia Commons'}
+      {images.some((im) => version(im) !== im) && ` · ${t('labels translated by TradeSchool')}`}
     </span>
   );
 }
@@ -110,8 +113,8 @@ function Picture({ image, alt, className, fill }: { image: LessonImage; alt: str
         <img
           src={imageUrl(image)}
           alt={alt}
-          width={image.width}
-          height={image.height}
+          width={version(image).width}
+          height={version(image).height}
           loading="lazy"
           decoding="async"
           className={cn('mx-auto max-w-full object-contain', className)}

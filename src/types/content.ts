@@ -30,6 +30,8 @@ export interface LessonImage {
   licenseUrl: string | null;
   /** The file's page on Wikimedia Commons. */
   source: string;
+  /** Copies with the labels drawn into the picture translated, by locale (e.g. zh-Hant). */
+  localized?: Record<string, { file: string; width: number; height: number }>;
 }
 
 export type LessonWidget =

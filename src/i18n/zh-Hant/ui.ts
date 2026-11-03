@@ -511,6 +511,7 @@ export const UI: Record<string, string> = {
   'Worked example:': '示範計算：',
   'Picture': '圖片',
   'Enlarge picture: {alt}': '放大圖片：{alt}',
+  'labels translated by TradeSchool': '標籤由 TradeSchool 翻譯',
   // features/lessons/components/LessonChart.tsx
   'Unknown symbol {symbol}.': '未知品種 {symbol}。',
   'Loading chart': '正在載入圖表',
