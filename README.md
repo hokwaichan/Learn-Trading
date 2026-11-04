@@ -8,7 +8,8 @@ backend, no login, and no real money.
 
 **Try it: [hokwaichan.github.io/Learn-Trading](https://hokwaichan.github.io/Learn-Trading/)**
 
-Your progress, paper accounts and notes are saved in your own browser, not on a server.
+Your progress, paper accounts and notes are saved in your own browser. If you
+choose to sign in, they are also synced between your devices through Neon.
 
 Available in English and Traditional Chinese (繁體中文), and usable on a phone,
 a tablet or a desktop.
@@ -84,6 +85,58 @@ scripts, styles, pictures and bundled price data are served from the cache. Live
 crypto prices still need a connection. The service worker is registered only in
 production builds, so `npm run dev` is not affected.
 
+### Sync between devices (optional)
+
+Settings has a Sync card. Without signing in, nothing leaves the browser. After
+signing in with an email and password, the same stores a backup contains
+(progress, quiz and trainer history, journal notes, paper accounts, layouts,
+settings) are kept the same on every device.
+
+- **Neon** provides both halves. Neon Auth (Managed Better Auth) handles accounts,
+  and the Neon Data API stores one row per user in `public.progress`. The browser
+  talks to them directly; there is no server of our own. The SDK
+  (`@neon/neon-js`) is loaded only when someone signs in.
+- **Merging** is three-way (`src/lib/sync/merge.ts`). The app remembers a
+  fingerprint of each store from the last sync, so it can tell which side changed
+  it. Lesson progress, trainer cards and journal notes changed on both sides are
+  combined entry by entry; for the other stores the newer change wins, and a new
+  device adopts the cloud copy. `src/stores/sync.ts` runs it on opening, every five
+  minutes and when the app is put away.
+- **Safari and iPhone/iPad** block the sign-in cookie when the site and Neon Auth
+  are on different domains, as on GitHub Pages. There the card says so and points
+  to Export and Import. The Vercel copy of the site (below) proxies Neon Auth
+  through its own domain, so it works in every browser.
+- `npm run smoke:sync` checks two devices against the real Neon project. It
+  creates throwaway accounts, so it is not part of `npm run smoke` or CI.
+
+The database was set up with:
+
+```sql
+CREATE TABLE public.progress (
+  user_id text PRIMARY KEY DEFAULT auth.user_id(),
+  data jsonb NOT NULL,
+  updated_at timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT progress_size CHECK (pg_column_size(data) < 2000000)
+);
+ALTER TABLE public.progress ENABLE ROW LEVEL SECURITY;
+CREATE POLICY progress_owner ON public.progress FOR ALL TO authenticated
+  USING ((select auth.user_id()) = user_id) WITH CHECK ((select auth.user_id()) = user_id);
+GRANT SELECT, INSERT, UPDATE, DELETE ON public.progress TO authenticated;
+```
+
+The anonymous role has no grants, and the Data API only accepts browser requests
+from the site's own addresses. Each address the app is served from must also be a
+trusted domain in Neon Auth. `VITE_NEON_URL` points the app at another Neon
+database, and setting it to an empty value hides sync.
+
+### Vercel
+
+`vercel.json` builds the same app for Vercel at the root of its domain, with
+`VITE_NEON_AUTH_PROXY=1`. That makes the app reach Neon Auth at `/api/auth` on its
+own origin, which Vercel forwards to Neon, so the sign-in cookie is first-party.
+The service worker never caches anything under `api/`. Every push to `main`
+deploys both GitHub Pages and Vercel.
+
 ## What is in it
 
 | Screen | Address | What it is for |
@@ -101,7 +154,7 @@ production builds, so `npm run dev` is not affected.
 | Journal | `/journal` | Every paper trade, logged automatically, with your notes |
 | Analytics | `/analytics` | What your trades add up to, and where results come from |
 | Calculators | `/tools` | Position size, risk/reward, compounding and more |
-| Settings | `/settings` | Language, theme, fees, account reset, export and import |
+| Settings | `/settings` | Language, theme, fees, account reset, sync between devices, export and import |
 
 Ctrl+K (Cmd+K on a Mac) opens a command palette that searches screens,
 symbols, lessons and glossary terms.

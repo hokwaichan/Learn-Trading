@@ -19,6 +19,7 @@ import { formatMoney } from '@/lib/format';
 import { DEFAULT_SETTINGS, useAccount, useSettings } from '@/stores';
 import type { Theme } from '@/types';
 import { DataCard } from './DataCard';
+import { SyncCard } from './SyncCard';
 
 /** A percentage text field bound to a fraction in settings (0.001 <-> "0.1"). */
 function PercentField({
@@ -175,6 +176,8 @@ export function SettingsPage() {
           </Button>
         </div>
       </Card>
+
+      <SyncCard />
 
       <DataCard />
 

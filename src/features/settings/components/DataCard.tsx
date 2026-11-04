@@ -44,7 +44,7 @@ export function DataCard() {
   return (
     <Card title={t('Your data')}>
       <p className="text-sm text-muted">
-        {t('Everything is stored in this browser only: nothing is sent to a server, and there is no account. Clearing your browser data erases it, so export a backup if it matters to you.')}
+        {t('Everything is stored in this browser. Unless you sign in to sync above, nothing is sent to a server. Clearing your browser data erases it, so export a backup or turn on sync if it matters to you.')}
       </p>
       <div className="mt-4 flex flex-wrap gap-2">
         <Button icon={<Download aria-hidden className="size-4" />} onClick={exportAll}>

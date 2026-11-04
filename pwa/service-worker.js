@@ -15,6 +15,7 @@ const FILES = __FILES__;
 const CACHE = `tradeschool-${VERSION}`;
 // The app shell. Named directly rather than './', which needs the host to map folders to index.html.
 const SHELL = new URL('index.html', self.location).href;
+const API_PATH = new URL('api/', self.location).pathname;
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -36,7 +37,10 @@ self.addEventListener('activate', (event) => {
 
 self.addEventListener('fetch', (event) => {
   const request = event.request;
-  if (request.method !== 'GET' || new URL(request.url).origin !== self.location.origin) return;
+  const url = new URL(request.url);
+  if (request.method !== 'GET' || url.origin !== self.location.origin) return;
+  // Sign-in requests proxied through the site (see vercel.json) must always reach the server.
+  if (url.pathname.startsWith(API_PATH)) return;
 
   if (request.mode === 'navigate') {
     event.respondWith(

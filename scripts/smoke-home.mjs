@@ -134,7 +134,7 @@ check('a calculator keeps what was typed when you come back', (await field('Stop
 // ── Export and import ──────────────────────────────────────────────────
 await page.goto(`${BASE}/settings`, { waitUntil: 'domcontentloaded' });
 await page.getByRole('button', { name: 'Export all data' }).waitFor({ timeout: 10000 });
-check('settings says the data stays in this browser', await page.getByText(/Everything is stored in this browser only/).isVisible());
+check('settings says the data stays in this browser unless you sync', await page.getByText(/Everything is stored in this browser\. Unless you sign in to sync/).isVisible());
 const [download] = await Promise.all([page.waitForEvent('download'), page.getByRole('button', { name: 'Export all data' }).click()]);
 const backupPath = await download.path();
 const backup = JSON.parse(readFileSync(backupPath, 'utf8'));
