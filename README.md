@@ -47,10 +47,16 @@ routes such as `/settings` are not turned into Windows paths.
 ## Deploying
 
 Every push to `main` builds the app and publishes it to GitHub Pages
-(`.github/workflows/deploy.yml`). The workflow runs the unit tests, builds with
-`BASE_PATH=/<repo name>/` because Pages serves the site from a sub-folder, and
-copies `index.html` to `404.html` so that deep links such as
-`/Learn-Trading/charts/BTCUSDT` load the app instead of a GitHub error page.
+(`.github/workflows/deploy.yml`). The workflow has three jobs:
+
+- **build** runs the unit tests, then type-checks and builds with
+  `BASE_PATH=/<repo name>/` because Pages serves the site from a sub-folder, and
+  copies `index.html` to `404.html` so that deep links such as
+  `/Learn-Trading/charts/BTCUSDT` load the app instead of a GitHub error page.
+- **browser** starts the dev server and runs `npm run smoke` and `npm run a11y` in
+  Chromium, then checks the Pages build with `scripts/check-pages.mjs`, which
+  includes installing the app and opening a lesson and a quiz offline.
+- **deploy** publishes only when both of the others pass.
 
 To check a Pages build locally:
 
@@ -64,14 +70,28 @@ Paths in the code that point at the site itself (the bundled data files, the
 logo, the router) read `import.meta.env.BASE_URL`, so they work at the root and in
 a sub-folder.
 
+### Installing and offline use
+
+The site is an installable app (`public/manifest.webmanifest`, icons in
+`public/icons/`). In Chrome or Edge use Install in the address bar; on an iPhone
+or iPad use Share, then Add to Home Screen.
+
+A service worker keeps it working without a connection. `pwa/service-worker.js`
+is a template: on `npm run build` the `offline()` plugin in `vite.config.ts`
+fills in a version and the list of every built file, and writes `dist/sw.js`.
+Pages load from the network when possible and fall back to the saved copy;
+scripts, styles, pictures and bundled price data are served from the cache. Live
+crypto prices still need a connection. The service worker is registered only in
+production builds, so `npm run dev` is not affected.
+
 ## What is in it
 
 | Screen | Address | What it is for |
 | --- | --- | --- |
 | Home | `/` | Where you left off, the daily challenge, your account and what to practise |
 | Lessons | `/learn` | 18 modules, 86 lessons that only teach: pictures, interactive charts and short text |
-| Quizzes | `/quiz` | A short quiz for every lesson, on its own page, with your best scores |
-| Trainer | `/trainer` | Pattern, smart money and options drills, scheduled by spaced repetition |
+| Quizzes | `/quiz` | A short quiz for every lesson, plus a 10-question test at the end of each module, with your best scores |
+| Trainer | `/trainer` | Pattern, smart money and options drills, plus a Review tab of quiz questions you got wrong, all scheduled by spaced repetition |
 | Glossary | `/glossary` | Every term, searchable; terms are linked automatically in lessons |
 | Charts | `/charts/:symbol` | Chart workspace with indicators, structure overlays, drawings and spot paper trading |
 | Futures | `/futures/:symbol` | The same workspace with leverage, margin, liquidation and funding |
@@ -315,6 +335,11 @@ one, put its Commons file name in `scripts/lesson-images.json` and run `npm run 
 script downloads it to `public/images/lessons/`, refuses anything that is not public domain or
 Creative Commons, and records the author and licence in `src/content/images.ts`, which every
 picture shows under it. `npm test` fails if a picture is missing, uncredited or not used.
+
+A diagram with English labels can have a translated copy. Save it next to the original as
+`<id>.zh-Hant.png` (or `.svg`) and add `"localized": { "zh-Hant": "<file>" }` to its entry in
+`lesson-images.json`. Chinese readers then see that file, and its credit adds that the labels
+were translated.
 
 ### Charts in lessons
 
