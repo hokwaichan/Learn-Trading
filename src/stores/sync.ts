@@ -33,6 +33,12 @@ export const SYNC_URL: string = import.meta.env.VITE_NEON_URL ?? 'https://ep-daw
  */
 const AUTH_PROXY = import.meta.env.VITE_NEON_AUTH_PROXY === '1';
 
+/** Where sync works in every browser, offered to readers of a copy without the proxy. */
+export const SYNC_EVERYWHERE_URL = AUTH_PROXY ? null : 'https://tradeschool-olive.vercel.app';
+
+export const blockedMessage = () =>
+  t('This browser blocked the sign-in on this copy of TradeSchool. Safari and every browser on iPhone and iPad do this here.');
+
 /** Turns the database URL into the Neon Auth and Data API URLs, as the SDK does. */
 function endpoints() {
   const url = new URL(SYNC_URL);
@@ -77,6 +83,8 @@ interface SyncData {
   lastSyncedAt?: number;
   /** Fingerprints of every store at the last sync; undefined before the first. */
   base?: Base;
+  /** The Home page stopped suggesting an account. */
+  promptDismissed?: boolean;
 }
 
 interface SyncStore extends SyncData {
@@ -88,9 +96,33 @@ interface SyncStore extends SyncData {
   sync: () => Promise<string | null>;
   /** Deletes the cloud copy. This browser keeps its data. */
   deleteCloudCopy: () => Promise<string | null>;
+  /** Emails a code for setting a new password. */
+  requestPasswordReset: (email: string) => Promise<string | null>;
+  /** Sets a new password with the emailed code, then signs in with it. */
+  resetPassword: (email: string, code: string, password: string) => Promise<string | null>;
+  dismissPrompt: () => void;
 }
 
-const message = (error: unknown) => (error instanceof Error ? error.message : typeof error === 'object' && error && 'message' in error ? String((error as { message: unknown }).message) : String(error));
+/** Neon Auth error codes people will meet, in words they can act on. */
+const FRIENDLY: Record<string, () => string> = {
+  INVALID_EMAIL_OR_PASSWORD: () => t('That email and password do not match. Check them, or use Forgot password.'),
+  USER_ALREADY_EXISTS: () => t('There is already an account with that email. Sign in instead.'),
+  USER_ALREADY_EXISTS_USE_ANOTHER_EMAIL: () => t('There is already an account with that email. Sign in instead.'),
+  PASSWORD_TOO_SHORT: () => t('Use a password of at least 8 characters.'),
+  INVALID_OTP: () => t('That code is not right. Check the email and try again.'),
+  OTP_EXPIRED: () => t('That code has expired. Ask for a new one.'),
+  TOO_MANY_ATTEMPTS: () => t('Too many tries. Wait a few minutes, then ask for a new code.'),
+};
+
+function message(error: unknown): string {
+  const e = error as { code?: unknown; error?: { code?: unknown }; message?: unknown } | null;
+  // The SDK puts a general code on the error (`invalid_credentials`) and Neon Auth's specific one under `error`.
+  for (const code of [e?.error?.code, e?.code]) {
+    if (typeof code === 'string' && FRIENDLY[code]) return FRIENDLY[code]();
+  }
+  if (typeof navigator !== 'undefined' && navigator.onLine === false) return t('You are offline. Connect to the internet and try again.');
+  return error instanceof Error ? error.message : e && typeof e.message === 'string' ? e.message : String(error);
+}
 
 let running: Promise<string | null> | null = null;
 
@@ -109,13 +141,13 @@ export const useSync = create<SyncStore>()(
             : await c.auth.signIn.email({ email, password });
           if (result.error) {
             set({ status: 'idle' });
-            return result.error.message || t('Could not sign in.');
+            return message(result.error) || t('Could not sign in.');
           }
           // The session lives in a cookie on Neon's domain. Browsers that block cookies from other
           // sites (Safari, and every browser on iPhone and iPad) drop it straight away.
           if (!(await c.auth.getSession()).data?.session) {
             set({ status: 'idle' });
-            return t('This browser blocked the sign-in, so it cannot sync. Safari and every browser on iPhone and iPad block it on this site. Use Chrome, Edge or Firefox on a computer or Android, or move your data with Export and Import below.');
+            return blockedMessage();
           }
           // A different account starts from a clean slate: its cloud copy is unrelated to the last one.
           if (get().email !== email) set({ base: undefined, lastSyncedAt: undefined });
@@ -154,11 +186,32 @@ export const useSync = create<SyncStore>()(
           return message(error);
         }
       },
+
+      requestPasswordReset: async (email) => {
+        try {
+          const { error } = await (await client()).auth.emailOtp.sendVerificationOtp({ email, type: 'forget-password' });
+          return error ? message(error) : null;
+        } catch (error) {
+          return message(error);
+        }
+      },
+
+      resetPassword: async (email, code, password) => {
+        try {
+          const { error } = await (await client()).auth.emailOtp.resetPassword({ email, otp: code, password });
+          if (error) return message(error);
+        } catch (error) {
+          return message(error);
+        }
+        return get().signIn(email, password, false);
+      },
+
+      dismissPrompt: () => set({ promptDismissed: true }),
     }),
     {
       name: 'tradeschool.sync',
       version: 1,
-      partialize: ({ email, lastSyncedAt, base }) => ({ email, lastSyncedAt, base }),
+      partialize: ({ email, lastSyncedAt, base, promptDismissed }) => ({ email, lastSyncedAt, base, promptDismissed }),
     },
   ),
 );

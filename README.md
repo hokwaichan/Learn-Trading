@@ -87,10 +87,17 @@ production builds, so `npm run dev` is not affected.
 
 ### Sync between devices (optional)
 
-Settings has a Sync card. Without signing in, nothing leaves the browser. After
-signing in with an email and password, the same stores a backup contains
-(progress, quiz and trainer history, journal notes, paper accounts, layouts,
-settings) are kept the same on every device.
+Settings has a "Save your progress" card where anyone can create a free account
+with an email and password. Without one, nothing leaves the browser. With one,
+the same stores a backup contains (progress, quiz and trainer history, journal
+notes, paper accounts, layouts, settings) are kept the same on every device.
+
+- Once someone has progress, Home suggests an account, linking to
+  `/settings#sync`. It disappears after signing in or "Not now".
+- Forgot password emails a 6-digit code (Neon Auth's email OTP, sent from
+  Neon's shared address) and signs in with the new password.
+- Common mistakes (wrong password, an email that already has an account, a wrong
+  or expired code, being offline) get plain, translated messages.
 
 - **Neon** provides both halves. Neon Auth (Managed Better Auth) handles accounts,
   and the Neon Data API stores one row per user in `public.progress`. The browser

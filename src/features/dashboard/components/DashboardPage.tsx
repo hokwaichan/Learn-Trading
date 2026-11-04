@@ -10,6 +10,7 @@ import { displaySymbol, findInstrument } from '@/lib/data';
 import { formatMoney, formatSignedMoney } from '@/lib/format';
 import { useAccount, useAccountSnapshot, useProgress, useStreak } from '@/stores';
 import type { EquityPoint, Lesson, Trade } from '@/types';
+import { SaveProgressCard } from './SaveProgressCard';
 
 const linkButton = 'inline-flex h-9 items-center gap-1.5 rounded-control px-3 text-sm font-medium transition-colors duration-150';
 const primaryLink = `${linkButton} bg-accent text-on-solid hover:brightness-110`;
@@ -152,6 +153,8 @@ export function DashboardPage() {
             : t('Learn trading from the ground up: short lessons in plain language, real charts, and practice with simulated money. Nothing here uses real money.')}
         </p>
       </header>
+
+      <SaveProgressCard hasProgress={started || practised > 0 || account.trades.length > 0} />
 
       <div className="grid gap-4 lg:grid-cols-3">
         <ContinueCard lesson={upNext} started={started} done={doneCount} total={all.length} weakest={weakest[0]} />
