@@ -131,11 +131,14 @@ database, and setting it to an empty value hides sync.
 
 ### Vercel
 
-`vercel.json` builds the same app for Vercel at the root of its domain, with
-`VITE_NEON_AUTH_PROXY=1`. That makes the app reach Neon Auth at `/api/auth` on its
-own origin, which Vercel forwards to Neon, so the sign-in cookie is first-party.
-The service worker never caches anything under `api/`. Every push to `main`
-deploys both GitHub Pages and Vercel.
+The Vercel copy is at https://tradeschool-olive.vercel.app. `vercel.json` builds
+the same app at the root of that domain with `VITE_NEON_AUTH_PROXY=1`, so the app
+reaches Neon Auth at `/api/auth` on its own origin. `api/auth.js` is a small Edge
+Function that forwards those requests to Neon Auth with clean headers and keeps
+Neon's cookies on this site, which makes the sign-in cookie first-party (a plain
+rewrite does not work: Neon rejects the forwarded host header). The service
+worker never caches anything under `api/`. Every push to `main` deploys both
+GitHub Pages and Vercel. Vercel login is required only for preview deployments.
 
 ## What is in it
 
