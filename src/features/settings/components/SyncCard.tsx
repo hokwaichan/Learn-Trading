@@ -20,11 +20,15 @@ export function SyncCard() {
   const { hash } = useLocation();
   const busy = working || status === 'syncing';
 
-  // The Home page links here with #sync.
+  // The Home page links here with #sync. The layout moves focus to the page after each
+  // navigation, so wait for that before putting it in the email field.
   useEffect(() => {
     if (hash !== '#sync') return;
-    document.getElementById('sync')?.scrollIntoView({ block: 'start' });
-    document.getElementById('sync-email')?.focus({ preventScroll: true });
+    const timer = window.setTimeout(() => {
+      document.getElementById('sync')?.scrollIntoView({ block: 'start' });
+      document.getElementById('sync-email')?.focus({ preventScroll: true });
+    }, 50);
+    return () => window.clearTimeout(timer);
   }, [hash]);
 
   if (!SYNC_URL) return null;

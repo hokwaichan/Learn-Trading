@@ -3,7 +3,8 @@
 // throwaway accounts, so it is not part of `npm run smoke` or CI.
 // Needs the dev server and internet.
 //   npm run smoke:sync
-import { chromium } from 'playwright';
+//   BASE_URL=https://tradeschool-olive.vercel.app BROWSER=webkit npm run smoke:sync
+import { chromium, webkit } from 'playwright';
 
 const BASE = process.env.BASE_URL ?? 'http://localhost:5173';
 const PASSWORD = 'smoke-test-password-1';
@@ -20,7 +21,8 @@ const progress = (lessons, activeDays) => ({
   version: 2,
 });
 
-const browser = await chromium.launch();
+// BROWSER=webkit checks Safari's engine; against GitHub Pages it is expected to be refused.
+const browser = await (process.env.BROWSER === 'webkit' ? webkit : chromium).launch();
 const errors = [];
 
 async function device(seed, viewport = { width: 1280, height: 900 }) {
