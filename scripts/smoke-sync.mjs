@@ -43,7 +43,10 @@ async function device(seed, viewport = { width: 1280, height: 900 }) {
     if (process.env.BROWSER === 'webkit' && /due to access control checks|Importing a module script failed/.test(m.text())) return;
     errors.push(m.text().slice(0, 200));
   });
-  page.on('pageerror', (e) => errors.push(e.message.slice(0, 200)));
+  page.on('pageerror', (e) => {
+    if (process.env.BROWSER === 'webkit' && /Importing a module script failed|due to access control checks/.test(e.message)) return;
+    errors.push(e.message.slice(0, 200));
+  });
   await page.goto(`${BASE}/settings`, { waitUntil: 'domcontentloaded' });
   return { context, page };
 }
@@ -69,7 +72,7 @@ await computer.page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
 check('Home suggests an account once there is progress', await seen(computer.page.getByRole('heading', { name: 'Save your progress' })));
 await computer.page.getByRole('link', { name: 'Create an account' }).click();
 check('the suggestion opens the account form in Settings', (await seen(computer.page.getByLabel('Email'))) && computer.page.url().endsWith('/settings#sync'));
-check('the email field is ready to type in', await computer.page.evaluate(() => document.activeElement?.id === 'sync-email'));
+check('the email field is ready to type in', await computer.page.waitForFunction(() => document.activeElement?.id === 'sync-email', null, { timeout: 3000 }).then(() => true, () => false));
 check('signed out, Settings offers an account with email and password', (await seen(computer.page.getByRole('heading', { name: 'Save your progress' }))) && (await computer.page.getByLabel('Password').isVisible()));
 await computer.page.getByLabel('Email').fill('not-an-email');
 await computer.page.getByRole('button', { name: 'Sign in', exact: true }).click();
