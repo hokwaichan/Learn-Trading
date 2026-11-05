@@ -38,6 +38,9 @@ async function device(seed, viewport = { width: 1280, height: 900 }) {
     if (/binance|net::ERR_FAILED/.test(m.text() + (m.location().url ?? ''))) return;
     // The deliberate mistakes below (wrong password, used email, wrong code) are refused with these.
     if (/Failed to load resource: the server responded with a status of (400|401|422)/.test(m.text())) return;
+    // Leaving a page starts a sync; when the test reloads straight away, WebKit reports the
+    // cut-off request and module load as these. Chromium shows the same sync with no error.
+    if (process.env.BROWSER === 'webkit' && /due to access control checks|Importing a module script failed/.test(m.text())) return;
     errors.push(m.text().slice(0, 200));
   });
   page.on('pageerror', (e) => errors.push(e.message.slice(0, 200)));
